@@ -30,7 +30,7 @@
         <div class="boxed-page">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
-                    <a class="navbar-brand" href="inicio.html">
+                    <a class="navbar-brand" href="<%=request.getContextPath()%>/ReInciServlet?accion=inicio">
                         <!-- this anchor text for link your home to another page -->
                         <div class="icon">
                             <i class="fa fa-home" aria-hidden="true"></i><!-- this is home icon link get form fornt-awesome icon for home button -->
@@ -39,7 +39,7 @@
                         <div class="name"><span data-text="Inicio">Inicio</span></div>
                         <!-- we are create first menu item name home -->
                     </a>
-                    <a class="navbar-brand" href="Buscar_Incidencia.html">
+                    <a class="navbar-brand" href="<%=request.getContextPath()%>/ReInciServlet?accion=buscarIncidencia">
                         <!-- this anchor text for link your home to another page -->
                         <div class="icon">
                             <i class="fa fa-search" aria-hidden="true"></i><!-- this is home icon link get form fornt-awesome icon for home button -->
