@@ -42,7 +42,7 @@
                     <div class="card-body">
                       <form class="form" role="form" autocomplete="off">
                         <div class="form-group">
-                          <input type="password" class="form-control" id="inputPasswordOld" required="" style="margin-top: 7px">
+                          <label for="inputPasswordOld"></label><input type="password" class="form-control" id="inputPasswordOld" required="" style="margin-top: 7px">
                         </div>
                         <div class="form-group text-center" style="margin-top: 20px">
                           <button type="submit" class="btn btn-primary btn-lg float-right" style="font-size: 18px; border-color: #042354; background-color: #163297; ">Ingresar</button>

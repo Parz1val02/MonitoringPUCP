@@ -52,7 +52,7 @@
           </a>
         </li>
         <li>
-          <a href="restablecer_contrasena_seguridad.html">
+          <a href="<%=request.getContextPath()%>/TablaSeguridad?accion=restablece">
 
             <div class="div-barra-lateral">
               <i class="bi bi-key xaea12 iconos-barra-lateral"></i>
