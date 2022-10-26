@@ -145,12 +145,12 @@
                                     <%for(Incidencia i : listaIncidencias){%>
                                     <div class="card border-black mb-3">
                                         <div class="card-body">
-                                            <h4 class="card-title"><%=i.getNombreIncidencia()%></h4>
+                                            <h4 class="card-title"><%= i.getNombreIncidencia()%></h4>
                                             <div class="row">
-                                                <div class="col-md"><p class="card-text"><%=i.getFecha()%></div>
-                                                <div class="col-md"><p class="card-text"><%=i.getZonaPUCP()%></p></div>
-                                                <div class="col-md"><p class="card-text"><%=i.getTipoIncidencia()%></p></div>
-                                                <div class="col-md"><p class="card-text"><%=i.getNivelUrgencia()%></p></div>
+                                                <div class="col-md"><p class="card-text"><%= i.getFecha()%></div>
+                                                <div class="col-md"><p class="card-text"><%= i.getZonaPUCP()%></p></div>
+                                                <div class="col-md"><p class="card-text"><%= i.getTipoIncidencia()%></p></div>
+                                                <div class="col-md"><p class="card-text"><%= i.getNivelUrgencia()%></p></div>
                                             </div>
                                         </div>
                                     </div>

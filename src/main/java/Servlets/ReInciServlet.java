@@ -2,6 +2,7 @@ package Servlets;
 
 import Beans.Incidencia;
 import Beans.Usuario;
+import Daos.IncidenciaDao;
 import Daos.UsuarioDao;
 import Daos.UsuarioReInciDao;
 import jakarta.servlet.*;
@@ -20,6 +21,7 @@ public class ReInciServlet extends HttpServlet {
         String accion = request.getParameter("accion")==null?"inicio":request.getParameter("accion");
         RequestDispatcher view;
         UsuarioReInciDao uriDao = new UsuarioReInciDao();
+        IncidenciaDao inDao = new IncidenciaDao();
         ArrayList<Incidencia> listaIncidencias = null;
         switch (accion){
             case ("listar") :
@@ -51,7 +53,7 @@ public class ReInciServlet extends HttpServlet {
                 break;
             case("buscarIncidencia"):
                 try {
-                    listaIncidencias = uriDao.obtenerIncidencias();
+                    listaIncidencias = inDao.obtenerIncidencias();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -61,7 +63,7 @@ public class ReInciServlet extends HttpServlet {
                 break;
             case("inicio"):
                 try {
-                    listaIncidencias = uriDao.obtenerIncidencias();
+                    listaIncidencias = inDao.obtenerIncidencias();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

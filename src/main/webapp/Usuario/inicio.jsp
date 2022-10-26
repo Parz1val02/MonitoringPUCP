@@ -56,7 +56,7 @@
                         <div class="name"><span data-text="Registrar Incidencias">Registrar Incidencias</span></div>
                         <!-- we are create first menu item name home -->
                     </a>
-                    <a class="navbar-brand" href="<%=request.getContextPath()%>/ReInciServlet?accion=lista">
+                    <a class="navbar-brand" href="<%=request.getContextPath()%>/ReInciServlet?accion=listar">
                         <!-- this anchor text for link your home to another page -->
                         <div class="icon">
                             <i class="fa fa-star " aria-hidden="true"></i><!-- this is home icon link get form fornt-awesome icon for home button -->
