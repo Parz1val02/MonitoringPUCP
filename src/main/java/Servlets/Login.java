@@ -30,7 +30,10 @@ public class Login extends HttpServlet {
                 view = request.getRequestDispatcher("/Login/OlvidarContrasenia.jsp");
                 view.forward(request, response);
                 break;
-
+            case("doblefactor"):
+                view = request.getRequestDispatcher("/Login/DobleFactor.jsp");
+                view.forward(request, response);
+                break;
         }
     }
     @Override

@@ -45,9 +45,9 @@
     <label>
       <input type="password" placeholder="Contraseña">
     </label>
-    <input type="button" value="Aceptar">
+    <a href="<%=request.getContextPath()%>/Login?accion=doblefactor"><input type="button" value="Aceptar"></a>
     <br>
-    <a style="color:rgb(100,0,0); "href="<%=request.getContextPath()%>/Login?accion=olvidar">He olvidado mi contraseña</a>
+    <a style="color:rgb(100,0,0);" href="<%=request.getContextPath()%>/Login?accion=olvidar">He olvidado mi contraseña</a>
   </div>
 
 </div>
