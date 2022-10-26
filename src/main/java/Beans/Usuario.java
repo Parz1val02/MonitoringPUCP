@@ -14,6 +14,30 @@ public class Usuario {
     private Integer idCategoriaPUCP;
     private long fotoPerfil;
 
+    
+    private String rol;
+    private String categoriaPUCP;
+    
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public String getCategoriaPUCP() {
+        return categoriaPUCP;
+    }
+
+    public void setCategoriaPUCP(String categoriaPUCP) {
+        this.categoriaPUCP = categoriaPUCP;
+    }
+    
+    
+    
+    
+    
 
     public String getCodigo() {
         return codigo;
