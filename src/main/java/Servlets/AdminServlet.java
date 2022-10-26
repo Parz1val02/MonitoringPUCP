@@ -71,6 +71,15 @@ public class AdminServlet extends HttpServlet {
                 view = request.getRequestDispatcher("/Administrador/doblefactorA.jsp");
                 view.forward(request, response);
                 break;
+            case ("verDetalle"):
+                String idIncidencia = request.getParameter("id");
+                Incidencia incidencia = incidenciaDao.obtenerIncidencia(idIncidencia);
+
+                request.setAttribute("Incidencia",incidencia);
+
+                view = request.getRequestDispatcher("/Administrador/detalle_incidencia_admin.jsp");
+                view.forward(request, response);
+                break;    
         }
     }
 
