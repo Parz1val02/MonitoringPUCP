@@ -135,7 +135,11 @@
 										<td><%= usuario.getApellido()%> </td>
 										<td><%= usuario.getCodigo()%> </td>
 										<td><%= usuario.getRol()%> </td>
-                                        <td><%= usuario.getCategoriaPUCP()%> </td>
+                                        <% if(usuario.getCategoriaPUCP()==null){%>
+                                            <td>No tiene categoría</td>
+                                        <%} else { %>
+                                        <td><%= usuario.getCategoriaPUCP()%></td>
+                                        <% }%>
 										 <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
 
 									</tr>
