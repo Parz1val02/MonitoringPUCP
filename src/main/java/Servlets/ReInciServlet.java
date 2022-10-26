@@ -49,6 +49,16 @@ public class ReInciServlet extends HttpServlet {
                 view = request.getRequestDispatcher("/Usuario/RegistrarIncidencia.jsp");
                 view.forward(request, response);
                 break;
+            case("buscarIncidencia"):
+                try {
+                    listaIncidencias = uriDao.obtenerIncidencias();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                request.setAttribute("listaIncidencias",listaIncidencias);
+                view = request.getRequestDispatcher("/Usuario/BuscarIncidencia.jsp");
+                view.forward(request, response);
+                break;
             case("inicio"):
                 try {
                     listaIncidencias = uriDao.obtenerIncidencias();
