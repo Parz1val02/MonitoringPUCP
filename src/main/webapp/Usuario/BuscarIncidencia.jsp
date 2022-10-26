@@ -155,7 +155,7 @@
                                         </div>
                                     </div>
                                     <%}%>
-                                    <!--div class="card border-black mb-3">
+                                    <div class="card border-black mb-3">
                                         <div class="card-body">
                                             <h4 class="card-title">Alerta de Plaga en la Facultad de Química</h4>
                                             <div class="row">
@@ -165,8 +165,8 @@
                                                 <div class="col-md"><p class="card-text">Nivel</p></div>
                                             </div>
                                         </div>
-                                    </div-->
-                                    <!--div class="card border-black mb-3">
+                                    </div>
+                                    <div class="card border-black mb-3">
                                         <div class="card-body">
                                             <h4 class="card-title">Se cayó un proyector en EEGGCC</h4>
                                             <div class="row">
@@ -218,7 +218,7 @@
                                             <h4 class="card-title">Robo de almuerzo en Diodo</h4>
                                             <p class="card-text">This is some text within a card body.</p>
                                         </div>
-                                    </div-->
+                                    </div>
 
                                 </div>
                             </div>
