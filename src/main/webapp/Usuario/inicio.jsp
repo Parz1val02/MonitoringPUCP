@@ -97,6 +97,7 @@
                             <input type="radio" name="position" />
                         </label>
                         <main id="carousel">
+                            <%for(Incidencia i : listaIncidencias){%>
                             <div class="itemm">
                                 <div class="container-fluid">
                                     <div class="col-md-12">
@@ -106,12 +107,12 @@
                                         <div class="container-fluid">
                                             <div class="row">
                                                 <div class="col-md-7">
-                                                    <h6><%= listaIncidencias.get(0).getNombreIncidencia()%></h6>
+                                                    <h6><%= i.getNombreIncidencia()%></h6>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <i class="material-icons">favorite</i>
                                                     <h6>
-                                                        <%= listaIncidencias.get(0).getContadorDestacado()%>
+                                                        <%= i.getContadorDestacado()%>
                                                     </h6>
                                                 </div>
                                             </div>
@@ -121,11 +122,11 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <i class="fa fa-calendar"></i>
-                                                <h6><%= listaIncidencias.get(0).getFecha()%></h6>
+                                                <h6><%= i.getFecha()%></h6>
                                             </div>
                                             <div class="col-md-6">
                                                 <i class="fa fa-location-arrow"></i>
-                                                <h6><%= listaIncidencias.get(0).getZonaPUCP()%></h6>
+                                                <h6><%= i.getZonaPUCP()%></h6>
                                             </div>
                                         </div>
                                     </div>
@@ -133,62 +134,17 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <i class="fa fa-ambulance"></i>
-                                                <h6><%= listaIncidencias.get(0).getTipoIncidencia()%></h6>
+                                                <h6><%= i.getTipoIncidencia()%></h6>
                                             </div>
                                             <div class="col-md-6">
                                                 <i class="material-icons">traffic</i>
-                                                <h6><%= listaIncidencias.get(0).getNivelUrgencia()%></h6>
+                                                <h6><%= i.getNivelUrgencia()%></h6>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="itemm">
-                                <div class="container-fluid">
-                                    <div class="col-md-12">
-                                        <img src="../images/foto.jpg" alt="">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-md-7">
-                                                    <h6><%= listaIncidencias.get(1).getNombreIncidencia()%></h6>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <i class="material-icons">favorite</i>
-                                                    <h6>
-                                                        <%= listaIncidencias.get(1).getContadorDestacado()%>
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <i class="fa fa-calendar"></i>
-                                                <h6><%= listaIncidencias.get(1).getFecha()%></h6>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <i class="fa fa-location-arrow"></i>
-                                                <h6><%= listaIncidencias.get(1).getZonaPUCP()%></h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <i class="fa fa-ambulance"></i>
-                                                <h6><%= listaIncidencias.get(1).getTipoIncidencia()%></h6>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <i class="material-icons">traffic</i>
-                                                <h6><%= listaIncidencias.get(1).getNivelUrgencia()%></h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <%}%>
                         </main>
                     </div>
                 </div>

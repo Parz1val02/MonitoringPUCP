@@ -1,6 +1,8 @@
 package Servlets;
 
 import Beans.Incidencia;
+import Beans.Usuario;
+import Daos.UsuarioDao;
 import Daos.UsuarioReInciDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -15,7 +17,7 @@ public class ReInciServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String accion = request.getParameter("accion")==null?"listar":request.getParameter("accion");
+        String accion = request.getParameter("accion")==null?"inicio":request.getParameter("accion");
         RequestDispatcher view;
         UsuarioReInciDao uriDao = new UsuarioReInciDao();
         ArrayList<Incidencia> listaIncidencias = null;
