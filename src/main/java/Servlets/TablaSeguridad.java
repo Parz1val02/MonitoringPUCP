@@ -46,13 +46,11 @@ public class TablaSeguridad extends HttpServlet {
                 view = request.getRequestDispatcher("/Seguridad/restablecer_contrasena_seguridad.jsp");
                 view.forward(request, response);
                 break;
-
+            case("doblefactor"):
+                view = request.getRequestDispatcher("/Seguridad/doblefactorS.jsp");
+                view.forward(request, response);
+                break;
         }
-
-
-
-
-
     }
 
     @Override

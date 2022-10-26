@@ -47,7 +47,7 @@
                 <div id="sidebar-collapse" style="margin-top: 20px;">
                     <ul class="side-menu metismenu">
                         <li>
-                            <a href="tabla_usuarios_admin.html">
+                            <a href="=request.getContextPath()%>/AdminServlet?accion=tabla_usuarios">
                                 <div class="div-barra-lateral">
                                     <i class="bi bi-people xaea12 iconos-barra-lateral"></i>
                                     <span class="nav-label">Tabla de usuarios</span>
@@ -55,7 +55,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="registrar_usuario_admin.html">
+                            <a href="<%=request.getContextPath()%>/AdminServlet?accion=regitrar_usuario">
                                 <div class="div-barra-lateral">
                                     <i class="bi bi-person-plus xaea12 iconos-barra-lateral"></i>
                                     <span class="nav-label">Registrar Usuario</span>
@@ -63,7 +63,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="incidencia_admin.html">
+                            <a href="<%=request.getContextPath()%>/AdminServlet?accion=incidencias">
                                 <div class="div-barra-lateral">
                                     <i class="bi bi-eye xaea12 iconos-barra-lateral"></i>
                                     <span class="nav-label">Portal de incidencias</span>
@@ -71,7 +71,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="restablecer_contrasena_admin.html">
+                            <a href="<%=request.getContextPath()%>/AdminServlet?accion=cambiar_contrasenia">
                                 <div class="div-barra-lateral">
                                     <i class="bi bi-key xaea12 iconos-barra-lateral"></i>
                                     <span class="nav-label">Cambiar contraseña</span>

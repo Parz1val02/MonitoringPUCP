@@ -63,12 +63,12 @@ public class AdminServlet extends HttpServlet {
                 break;
             case ("cambiar_contrasenia"):
 
-                view = request.getRequestDispatcher("/Administrador/restablecer_contrasena_admin.jsp");
+                view = request.getRequestDispatcher("/Administrador/changepassword.jsp");
                 view.forward(request, response);
                 break;
             case ("doblefactor"):
 
-                view = request.getRequestDispatcher("/Administrador/doblefactor.jsp");
+                view = request.getRequestDispatcher("/Administrador/doblefactorA.jsp");
                 view.forward(request, response);
                 break;
         }

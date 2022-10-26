@@ -123,17 +123,17 @@
             <div class="ibox">
                 <div class="ibox-body">
 
-                    <h1>Lista de Incidencias</h1>
                     <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
-                        <tr>
-                            <th>IdIncidencia</th>
-                            <th>nombreIncidencia</th>
-                            <th>NivelUrgencia</th>
-                            <th>Descripcion</th>
-                            <th>Detalle</th>
-
-                        </tr>
-
+                        <thead>
+                            <tr>
+                                <th>IdIncidencia</th>
+                                <th>nombreIncidencia</th>
+                                <th>NivelUrgencia</th>
+                                <th>Descripcion</th>
+                                <th>Detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         <% for(Incidencia incidencia : listaIncidencias) {%>
                         <tr>
                             <td> <%= incidencia.getIdIncidencia()%>  </td>
@@ -144,6 +144,7 @@
 
                         </tr>
                         <% }%>
+                        </tbody>
                     </table>
                 </div>
             </div>

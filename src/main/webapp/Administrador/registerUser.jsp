@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
+
 <html lang="en">
 
   <head>
@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width initial-scale=1.0">
     <title>Administrador</title>
     <!-- GLOBAL MAINLY STYLES-->
-    <link href="../css/main.min.css" rel="stylesheet" />
+    <link href="css/main.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   </head>
@@ -38,7 +38,7 @@
             </li>
           </ul>
           <!-- END TOP-LEFT TOOLBAR-->
-          <img src="../images/logoTelesystem.png" alt="logo" style="border-top-style: solid;border-bottom-width: 0;border-bottom-style: solid;border-right-width: 0;border-right-style: solid;border-left-width: 0;border-left-style: solid;margin-top: 0px;margin-right: 25px;height: 67px;width: 220px;border-top-width: 0px;">
+          <img src="images/logoTelesystem.png" alt="logo" style="border-top-style: solid;border-bottom-width: 0;border-bottom-style: solid;border-right-width: 0;border-right-style: solid;border-left-width: 0;border-left-style: solid;margin-top: 0px;margin-right: 25px;height: 67px;width: 220px;border-top-width: 0px;">
         </div>
       </header>
       <!-- END HEADER-->
@@ -47,7 +47,8 @@
         <div id="sidebar-collapse" style="margin-top: 20px;">
           <ul class="side-menu metismenu">
             <li>
-              <a href="tabla_usuarios_admin.html">
+              <!-- <a href="tabla_usuarios_admin.html">-->
+              <a href="<%=request.getContextPath()%>/AdminServlet?accion=tabla_usuarios">
                 <div class="div-barra-lateral">
                   <i class="bi bi-people xaea12 iconos-barra-lateral"></i>
                   <span class="nav-label">Tabla de usuarios</span>
@@ -55,7 +56,8 @@
               </a>
             </li>
             <li>
-              <a href="registrar_usuario_admin.html">
+              <!--<a href="registrar_usuario_admin.html"> -->
+              <a href="<%=request.getContextPath()%>/AdminServlet?accion=regitrar_usuario">
                 <div class="div-barra-lateral">
                   <i class="bi bi-person-plus xaea12 iconos-barra-lateral"></i>
                   <span class="nav-label">Registrar Usuario</span>
@@ -63,7 +65,8 @@
               </a>
             </li>
             <li>
-              <a href="incidencia_admin.html">
+              <!-- <a href="incidencia_admin.html"> -->
+              <a href="<%=request.getContextPath()%>/AdminServlet?accion=incidencias">
                 <div class="div-barra-lateral">
                   <i class="bi bi-eye xaea12 iconos-barra-lateral"></i>
                   <span class="nav-label">Portal de incidencias</span>
@@ -71,7 +74,8 @@
               </a>
             </li>
             <li>
-              <a href="restablecer_contrasena_admin.html">
+              <!--  <a href="restablecer_contrasena_admin.html"> -->
+              <a href="<%=request.getContextPath()%>/AdminServlet?accion=cambiar_contrasenia">
                 <div class="div-barra-lateral">
                   <i class="bi bi-key xaea12 iconos-barra-lateral"></i>
                   <span class="nav-label">Cambiar contraseña</span>
