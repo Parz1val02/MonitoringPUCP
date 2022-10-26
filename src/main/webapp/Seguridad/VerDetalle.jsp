@@ -22,37 +22,44 @@
 <body>
     <div class="container" style="margin-top: 50px">
 
-
-            <div class="mb-3">
-                <label class="form-label">Fecha:</label>
-                <input type="text" class="form-control" name="fecha" value="<%=incidencia.getFecha()%>">
+            <label class="form-label">Fecha:</label>
+            <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
+                <input class="form-control" type="text"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
+                <label ><%=incidencia.getFecha()%></label>
             </div>
 
 
-            <div class="mb-3">
-                <label class="form-label">Nombre Incidencia:</label>
-                <input type="text" class="form-control" name="nombreIncidencia" value="<%=incidencia.getNombreIncidencia()%>">
+            <label class="form-label">Nombre Incidencia:</label>
+            <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
+                <input class="form-control" type="text"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
+                <label ><%=incidencia.getNombreIncidencia()%></label>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">Tipo Incidencia:</label>
-                <input type="text" class="form-control" name="tipoIncidencia" value="<%=incidencia.getTipoIncidencia()%>">
+            <label class="form-label">Tipo Incidencia:</label>
+            <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
+                <input class="form-control" type="text"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
+                <label ><%=incidencia.getTipoIncidencia()%></label>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">Zona PUCP:</label>
-                <input type="text" class="form-control" name="zonaPUCP" value="<%=incidencia.getZonaPUCP()%>">
+            <label class="form-label">Zona PUCP:</label>
+            <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
+                <input class="form-control" type="text"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
+                <label ><%=incidencia.getZonaPUCP()%></label>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">Nivel de urgencia:</label>
-                <input type="text" class="form-control" name="nivelDeUrgencia" value="<%=incidencia.getNivelUrgencia()%>">
+
+            <label class="form-label">Nivel de urgencia:</label>
+            <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
+                <input class="form-control" type="text"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
+                <label ><%=incidencia.getNivelUrgencia()%></label>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">Descripcion de la incidencia:</label>
-                <input type="text" class="form-control" name="descripcionIncidencia" value="<%=incidencia.getDescripcion()%>">
+            <label class="form-label">Descripcion de la incidencia:</label>
+            <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
+                <input class="form-control" type="text"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
+                <label ><%=incidencia.getDescripcion()%></label>
             </div>
+
 
             <div class="google-maps" style="text-align: center">  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d9080.838408815116!2d-77.0851327328001!3d-12.069237033787196!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd7a0bfb797e5862e!2sPontificia%20Universidad%20Cat%C3%B3lica%20del%20Per%C3%BA!5e0!3m2!1ses!2spe!4v1665201780059!5m2!1ses!2spe" width="600" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> </div>
 
@@ -61,6 +68,8 @@
                     <a href="#" class="link-primary">Click para ver foto</a>
                 </p>
             </div>
+
+            <!-- formato-->
 
 
 
