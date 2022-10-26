@@ -20,7 +20,7 @@ public class UsuarioDao {
             Statement stmt = conn.createStatement();
 
             //ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios");
-            ResultSet rs = stmt.executeQuery( "SELECT u.codigo, u.nombre, u.apellido, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, u.foto_perfil, r.nombreRol, catpucp.nombreCategoria FROM usuarios u inner join roles r on r.idRoles = u.idRoles inner join categoriapucp catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP");
+            ResultSet rs = stmt.executeQuery( "SELECT u.codigo, u.nombre, u.apellido, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, u.foto_perfil, r.nombreRol, catpucp.nombreCategoria FROM usuarios u inner join roles r on r.idRoles = u.idRoles left join categoriapucp catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP");
 
             while (rs.next()) {
                 Usuario usuario = new Usuario();
