@@ -67,11 +67,12 @@ public class IncidenciaDao {
         String pass = "root";
         String url = "jdbc:mysql://localhost:3306/telesystem_aa?serverTimeZone=America/Lima";
 
-        String sql = "select *, concat(u.nombre,\" \",u.apellido) as `Usuario`\n" +
-                "from Incidencia i \n" +
-                "inner join NivelUrgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
+        String sql = "select i.idIncidencia,i.nombreIncidencia, ti.tipo, i.zonaPUCP, nu.nivel, i.descripcion,i.fecha\n" +
+                "from incidencia i\n" +
                 "inner join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
-                "inner join usuarios u on i.codigousuario = u.codigo";
+                "inner join NivelUrgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
+                "where i.idIncidencia=?";
+
         Incidencia incidencia = null;
         try(Connection conn = DriverManager.getConnection(url, user, pass);
             PreparedStatement pstm = conn.prepareStatement(sql)) {
@@ -83,20 +84,15 @@ public class IncidenciaDao {
             if(rs.next()){
                 incidencia = new Incidencia();
                 incidencia.setIdIncidencia(rs.getInt(1));
-                incidencia.setFecha(rs.getString(2));
-                incidencia.setNombreIncidencia(rs.getString(3));
+                incidencia.setNombreIncidencia(rs.getString(2));
+                incidencia.setTipoIncidencia(rs.getString(3));
                 incidencia.setZonaPUCP(rs.getString(4));
-                incidencia.setLatitud(rs.getDouble(5));
-                incidencia.setLongitud(rs.getDouble(6));
-                incidencia.setValidaIncidencia(rs.getBoolean("validaIncidencia"));
-                incidencia.setDescripcion(rs.getString(8));
-                incidencia.setContador_reabierto(rs.getInt(9));
-                incidencia.setTipoIncidencia(rs.getString("tipo"));
-                incidencia.setNivelUrgencia(rs.getString("nivel"));
-                incidencia.setNombreEstado(rs.getString(12));
-                incidencia.setUsuarios_nombre_completo(rs.getString("Usuario"));
+                incidencia.setNivelUrgencia(rs.getString(5));
+                incidencia.setDescripcion(rs.getString(6));
+                incidencia.setFecha(rs.getString(7));
                 //incidencia.setUsuario(usuario);
             }
+
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
