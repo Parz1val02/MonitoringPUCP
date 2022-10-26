@@ -121,7 +121,7 @@
                                         <th>Apellido</th>
                                         <th>Código PUCP</th>
                                         <th>Rol</th>
-                                        <th>Categoria PUCP</th>
+                                        <th>Categoría PUCP</th>
                                         <th>Detalles</th>
                                     </tr>
                                 </thead>
@@ -144,56 +144,191 @@
 
 									</tr>
 									<% }%>
-
-									
-									<!--
                                     <tr>
-                                        <td style="text-align:center;"><label>
-                                            <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">
-                                        </label></td>
-                                        <td>Rodrigo Barrios Inga</td>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
                                         <td>20202073</td>
-                                        <td>Usuario</td>
-                                        <td><a href="">Ver detalle</a></td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
                                     </tr>
                                     <tr>
-                                        <td style="text-align:center;"><label>
-                                            <input class="form-check-input me-1" type="checkbox" value="" id="Checkbox1">
-                                        </label></td>
-                                        <td>Luis Ramos Torres</td>
-                                        <td>20171198</td>
-                                        <td>Usuario</td>
-                                        <td><a href="">Ver detalle</a></td>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
                                     </tr>
                                     <tr>
-                                        <td style="text-align:center;"><label>
-                                            <input class="form-check-input me-1" type="checkbox" value="" id="Checkbox2">
-                                        </label></td>
-                                        <td>Leonardo Abanto</td>
-                                        <td>20200454</td>
-                                        <td>Seguridad</td>
-                                        <th><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u></th>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
                                     </tr>
                                     <tr>
-                                        <td style="text-align:center;"><label>
-                                            <input class="form-check-input me-1" type="checkbox" value="" id="Checkbox3">
-                                        </label></td>
-                                        <td>Gil Zanabria</td>
-                                        <td>20200334</td>
-                                        <td>Seguridad</td>
-                                        <td><a href="">Ver detalle</a></td>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
                                     </tr>
                                     <tr>
-                                        <td style="text-align:center;"><label>
-                                            <input class="form-check-input me-1" type="checkbox" value="" id="Checkbox4">
-                                        </label></td>
-                                        <td>Danita</td>
-                                        <td>20202330</td>
-                                        <td>Administración</td>
-                                        <td><a href="">Ver detalle</a></td>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
                                     </tr>
-									-->
-									
+                                    <tr>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
+                                    </tr><tr>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
+                                    </tr><tr>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
+                                    </tr><tr>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
+                                    </tr><tr>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Rodrigo</td>
+                                        <td>Barrios</td>
+                                        <td>20202073</td>
+                                        <td>Usuario PUCP</td>
+                                        <td>Alumno</td>
+                                        <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
+
+                                    </tr>
                                 </tbody>
                            
 						   </table>
