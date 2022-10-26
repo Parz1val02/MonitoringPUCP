@@ -8,16 +8,15 @@
     <title>Registrar Incidencias</title>
     <meta name="viewport" content="width=device-width initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../css/style.min.css">
-    <link href="../../css/datatables.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href=../css/style.min.css>
     <!-- CSS de registrar-flujo-usuarioo -->
-    <link rel="stylesheet" href="../../css/Registrar_FlujoUsuario.css">
+    <link rel="stylesheet" href="../css/Registrar_FlujoUsuario.css">
 </head>
 <body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout " >
 <div class="container-fluid" style=" padding: 0px">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #042354; height: 100px;justify-content: flex-end">
-        <img src="../../images/logoTelesystem.png" alt="logo" style="border-top-style: solid;border-bottom-width: 0;border-bottom-style: solid;border-right-width: 0;border-right-style: solid;border-left-width: 0;border-left-style: solid;margin-top: 0px;margin-right: 25px;height: 67px;width: 220px;border-top-width: 0px; ">
+        <img src="../images/logoTelesystem.png" alt="logo" style="border-top-style: solid;border-bottom-width: 0;border-bottom-style: solid;border-right-width: 0;border-right-style: solid;border-left-width: 0;border-left-style: solid;margin-top: 0px;margin-right: 25px;height: 67px;width: 220px;border-top-width: 0px; ">
     </nav>
 </div>
 <div class="boxed-page">
@@ -252,8 +251,11 @@
         </div>
     </div>
 </div>
-<!--CUSTOM SCRIPTS-->
-<script src="../../scripts/flujo-usuario.js"></script> <!--previsualizador de imagenes-->
+    <!--CUSTOM SCRIPTS-->
+    <script src="../scripts/flujo-usuario.js"></script> <!--previsualizador de imagenes-->
+    <!-- CORE SCRIPTS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
 </body>
 </html>
 

@@ -24,9 +24,9 @@ public class IncidenciaDao {
         try (Connection conn = DriverManager.getConnection(url, user, pass);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("select *, concat(u.nombre,\" \",u.apellido) as `Usuario`\n" +
-                     "from Incidencia i \n" +
-                     "inner join NivelUrgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
-                     "inner join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
+                     "from incidencia i \n" +
+                     "inner join nivelurgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
+                     "inner join tipoincidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
                      "inner join usuarios u on i.codigousuario = u.codigo")) {
 
             //Usuario usuario = new Usuario();
@@ -69,8 +69,8 @@ public class IncidenciaDao {
 
         String sql = "select i.idIncidencia,i.nombreIncidencia, ti.tipo, i.zonaPUCP, nu.nivel, i.descripcion,i.fecha\n" +
                 "from incidencia i\n" +
-                "inner join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
-                "inner join NivelUrgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
+                "inner join tipoincidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
+                "inner join nivelurgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
                 "where i.idIncidencia=?";
 
         Incidencia incidencia = null;

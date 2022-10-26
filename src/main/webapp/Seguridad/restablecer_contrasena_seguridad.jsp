@@ -3,19 +3,16 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width initial-scale=1.0">
-  <title>Seguridad</title>
-  <!-- GLOBAL MAINLY STYLES-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-  <!-- PLUGINS STYLES-->
-  <!-- THEME STYLES-->
-  <link href="../../css/main.min.css" rel="stylesheet" />
-  <!-- PAGE LEVEL STYLES-->
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <title>Seguridad</title>
+    <!-- GLOBAL MAINLY STYLES-->
+    <link href="../css/main.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  </head>
 
 <body class="fixed-navbar">
 <div class="page-wrapper">
@@ -35,7 +32,7 @@
         </li>
       </ul>
       <!-- END TOP-LEFT TOOLBAR-->
-      <img src="../../images/logoTelesystem.png" alt="logo" style="border-top-style: solid;border-bottom-width: 0;border-bottom-style: solid;border-right-width: 0;border-right-style: solid;border-left-width: 0;border-left-style: solid;margin-top: 0px;margin-right: 25px;height: 67px;width: 220px;border-top-width: 0px;">
+      <img src="../images/logoTelesystem.png" alt="logo" style="border-top-style: solid;border-bottom-width: 0;border-bottom-style: solid;border-right-width: 0;border-right-style: solid;border-left-width: 0;border-left-style: solid;margin-top: 0px;margin-right: 25px;height: 67px;width: 220px;border-top-width: 0px;">
     </div>
   </header>
   <!-- END HEADER-->
@@ -134,24 +131,6 @@
   </div>
 </div>
 
-<!-- BEGIN PAGA BACKDROPS-->
-<div class="sidenav-backdrop backdrop"></div>
-<div class="preloader-backdrop">
-  <div class="page-preloader">Cargando</div>
-</div>
-<!-- END PAGA BACKDROPS-->
-<!-- CORE PLUGINS-->
-<script src="../../scripts/jquery.min.js" type="text/javascript"></script>
-<script src="../../scripts/popper.min.js" type="text/javascript"></script>
-<script src="../../scripts/bootstrap.min.js" type="text/javascript"></script>
-<script src="../../scripts/metisMenu.min.js" type="text/javascript"></script>
-<script src="../../scripts/jquery.slimscroll.min.js" type="text/javascript"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-
-<!-- PAGE LEVEL PLUGINS-->
-<!-- CORE SCRIPTS-->
-<script src="../../scripts/app.min.js" type="text/javascript"></script>
-<!-- PAGE LEVEL SCRIPTS-->
 </body>
 </html>
 
