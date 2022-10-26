@@ -17,7 +17,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>Monitoring's PUCP</title>
 </head>
 
@@ -25,7 +24,7 @@
 <div class="container-form">
     <div class="welcome-back">
         <div class="message">
-            <h1 style="font-family: 'Arial Black'">Bienvenido a</h1>
+            <h1 style="font-family: 'Arial Black'">Bienvenidos a</h1>
             <h1 style="font-family: 'Arial Black'">MONITORING PUCP</h1>
         </div>
     </div>
@@ -35,14 +34,15 @@
         <label>
             <input type="email" placeholder="Correo">
         </label>
-        <p>Codigo PUCP</p>
+        <p>Código PUCP</p>
         <label>
-            <input type="codigo" placeholder="Codigo PUCP">
+            <input type="codigo" placeholder="Código PUCP">
         </label>
         <input type="button" value="Aceptar">
-        <p>¿Ya esta registrado?</p>
         <br>
-        <a style="color:rgb(128,0,0); "href="<%=request.getContextPath()%>/Login?accion=iniciar">Iniciar Sesion</a>
+        <p>¿Ya está registrado?</p>
+        <br>
+        <a style="color:rgb(128,0,0); "href="<%=request.getContextPath()%>/Login?accion=iniciar">Iniciar Sesión</a>
     </div>
 </div>
 </body>

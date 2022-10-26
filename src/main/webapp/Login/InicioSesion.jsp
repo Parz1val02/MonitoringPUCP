@@ -18,8 +18,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-  <link href="../css/main.min.css" rel="stylesheet" />
   <title>Monitoring's PUCP | Logueo</title>
 </head>
 
@@ -38,14 +36,14 @@
     </div>
   </div>
   <div style="position: relative; left: 100px;top: 100px" class="formulario">
-    <h2 class="create-account">Iniciar Sesion</h2>
-    <p>Codigo PUCP</p>
+    <h2 class="create-account">Iniciar Sesión</h2>
+    <p>Código PUCP</p>
     <label>
-      <input type="codigo" placeholder="Codigo PUCP">
+      <input type="codigo" placeholder="Código PUCP">
     </label>
     <p>Contraseña</p>
     <label>
-      <input type="password" placeholder="Contrasena">
+      <input type="password" placeholder="Contraseña">
     </label>
     <input type="button" value="Aceptar">
     <br>
