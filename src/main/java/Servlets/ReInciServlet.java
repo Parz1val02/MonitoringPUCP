@@ -62,7 +62,7 @@ public class ReInciServlet extends HttpServlet {
                 view.forward(request, response);
                 break;
             case("inicio"):
-                try {
+                /*try {
                     listaDestacados = inDao.obtenerDestacadas();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
@@ -70,6 +70,15 @@ public class ReInciServlet extends HttpServlet {
                 request.setAttribute("listaDestacados",listaDestacados);
                 view = request.getRequestDispatcher("/Usuario/inicio.jsp");
                 view.forward(request,response);
+                break;*/
+                try {
+                    listaIncidencias = inDao.obtenerIncidencias();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                request.setAttribute("listaIncidencias",listaIncidencias);
+                view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
+                view.forward(request, response);
                 break;
         }
 
