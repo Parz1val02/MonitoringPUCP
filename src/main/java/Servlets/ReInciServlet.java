@@ -68,7 +68,7 @@ public class ReInciServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
                 request.setAttribute("listaIncidencias",listaIncidencias);
-                view = request.getRequestDispatcher("/Usuario/inicio.jsp");
+                view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
                 view.forward(request,response);
                 break;
         }
