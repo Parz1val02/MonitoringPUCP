@@ -63,12 +63,12 @@ public class ReInciServlet extends HttpServlet {
                 break;
             case("inicio"):
                 try {
-                    listaIncidencias = inDao.obtenerIncidencias();
+                    listaDestacados = inDao.obtenerDestacadas();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-                request.setAttribute("listaIncidencias",listaIncidencias);
-                view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
+                request.setAttribute("listaDestacados",listaDestacados);
+                view = request.getRequestDispatcher("/Usuario/inicio.jsp");
                 view.forward(request,response);
                 break;
         }
