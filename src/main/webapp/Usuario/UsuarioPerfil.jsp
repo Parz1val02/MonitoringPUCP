@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="Beans.Usuario" %>
 <%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
@@ -82,8 +83,8 @@
                 <div class="page-content fade-in-up col-md-6" style="align-content: center">
                     <div class="imagen">
                         <div class="img">
-                            <a target="blank" href="IMG/usuario.png">
-                                <img src="IMG/usuario.png" alt="Trolltunga Norway">
+                            <a target="blank" href="../images/usuario.png">
+                                <img src="../images/usuario.png" alt="Trolltunga Norway">
                             </a>
                         </div>
                     </div>

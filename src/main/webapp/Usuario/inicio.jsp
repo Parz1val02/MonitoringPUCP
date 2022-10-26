@@ -2,7 +2,7 @@
 <%@ page import="Beans.Incidencia" %>
 <%@ page import="java.util.ArrayList"%>
 <%
-    ArrayList<Incidencia> listaIncidencias = (ArrayList<Incidencia>) request.getAttribute("listaIncidencia");
+    ArrayList<Incidencia> listaIncidencias = (ArrayList<Incidencia>) request.getAttribute("listaIncidencias");
 %>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -16,16 +16,14 @@
         <!-- External CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="../../css/style.min.css">
-        <link rel="stylesheet" href="../../css/flex.css">
+        <link rel="stylesheet" href="../css/style.min.css">
+        <link rel="stylesheet" href="../css/flex.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <script src="../../scripts/app.js"></script>
-        <script src="../../scripts/jquery-1.11.3.min.js"></script>
     </head>
     <body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
         <div class="container-fluid" style=" padding: 0px">
             <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #042354; height: 100px;justify-content: flex-end">
-                <img src="../../images/logoTelesystem.png" alt="logo" style="border-radius: 10px; border-top-style: solid;border-bottom-width: 0;border-bottom-style: solid;border-right-width: 0;border-right-style: solid;border-left-width: 0;border-left-style: solid;margin-top: 0px;margin-right: 25px;height: 67px;width: 220px;border-top-width: 0px; ">
+                <img src="../images/logoTelesystem.png" alt="logo" style="border-radius: 10px; border-top-style: solid;border-bottom-width: 0;border-bottom-style: solid;border-right-width: 0;border-right-style: solid;border-left-width: 0;border-left-style: solid;margin-top: 0px;margin-right: 25px;height: 67px;width: 220px;border-top-width: 0px; ">
             </nav>
         </div>
         <div class="boxed-page">
@@ -83,28 +81,38 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="bi">
-                        <input type="radio" name="position" />
-                        <input type="radio" name="position" />
-                        <input type="radio" name="position" checked/>
-                        <input type="radio" name="position" />
-                        <input type="radio" name="position" />
+                        <label>
+                            <input type="radio" name="position" />
+                        </label>
+                        <label>
+                            <input type="radio" name="position" />
+                        </label>
+                        <label>
+                            <input type="radio" name="position" checked/>
+                        </label>
+                        <label>
+                            <input type="radio" name="position" />
+                        </label>
+                        <label>
+                            <input type="radio" name="position" />
+                        </label>
                         <main id="carousel">
                             <div class="itemm">
                                 <div class="container-fluid">
                                     <div class="col-md-12">
-                                        <img src="../../images/foto.jpg" alt="">
+                                        <img src="../images/foto.jpg" alt="">
                                     </div>
                                     <div class="col-md-12">
                                         <div class="container-fluid">
                                             <div class="row">
                                                 <div class="col-md-7">
-                                                    <h6><%= incidencia[1].getNombreIncidencia()%></h6>
+                                                    <h6><%= listaIncidencias.get(0).getNombreIncidencia()%></h6>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <i class="material-icons">favorite</i>
-                                                    <h8>
-                                                        <%= incidencia[1].getContadorDestacado()%>
-                                                    </h8>
+                                                    <h6>
+                                                        <%= listaIncidencias.get(0).getContadorDestacado()%>
+                                                    </h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -112,12 +120,12 @@
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <i class="fa fa-calendar" src=""></i>
-                                                <h8><%= incidencia[1].getFecha()%></h8>
+                                                <i class="fa fa-calendar"></i>
+                                                <h6><%= listaIncidencias.get(0).getFecha()%></h6>
                                             </div>
                                             <div class="col-md-6">
                                                 <i class="fa fa-location-arrow"></i>
-                                                <h8><%= incidencia[1].getZonaPUCP()%></h8>
+                                                <h6><%= listaIncidencias.get(0).getZonaPUCP()%></h6>
                                             </div>
                                         </div>
                                     </div>
@@ -125,11 +133,11 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <i class="fa fa-ambulance"></i>
-                                                <h8><%= incidencia[1].getTipoIncidencia()%></h8>
+                                                <h6><%= listaIncidencias.get(0).getTipoIncidencia()%></h6>
                                             </div>
                                             <div class="col-md-6">
                                                 <i class="material-icons">traffic</i>
-                                                <h8><%= incidencia[1].getNivelUrgencia()%></h8>
+                                                <h6><%= listaIncidencias.get(0).getNivelUrgencia()%></h6>
                                             </div>
                                         </div>
                                     </div>
@@ -138,19 +146,19 @@
                             <div class="itemm">
                                 <div class="container-fluid">
                                     <div class="col-md-12">
-                                        <img src="../../images/foto.jpg" alt="">
+                                        <img src="../images/foto.jpg" alt="">
                                     </div>
                                     <div class="col-md-12">
                                         <div class="container-fluid">
                                             <div class="row">
                                                 <div class="col-md-7">
-                                                    <h6><%= incidencia[2].getNombreIncidencia()%></h6>
+                                                    <h6><%= listaIncidencias.get(1).getNombreIncidencia()%></h6>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <i class="material-icons">favorite</i>
-                                                    <h8>
-                                                        <%= incidencia[2].getContadorDestacado()%>
-                                                    </h8>
+                                                    <h6>
+                                                        <%= listaIncidencias.get(1).getContadorDestacado()%>
+                                                    </h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -158,12 +166,12 @@
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <i class="fa fa-calendar" src=""></i>
-                                                <h8><%= incidencia[2].getFecha()%></h8>
+                                                <i class="fa fa-calendar"></i>
+                                                <h6><%= listaIncidencias.get(1).getFecha()%></h6>
                                             </div>
                                             <div class="col-md-6">
                                                 <i class="fa fa-location-arrow"></i>
-                                                <h8><%= incidencia[2].getZonaPUCP()%></h8>
+                                                <h6><%= listaIncidencias.get(1).getZonaPUCP()%></h6>
                                             </div>
                                         </div>
                                     </div>
@@ -171,155 +179,17 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <i class="fa fa-ambulance"></i>
-                                                <h8><%= incidencia[2].getTipoIncidencia()%></h8>
+                                                <h6><%= listaIncidencias.get(1).getTipoIncidencia()%></h6>
                                             </div>
                                             <div class="col-md-6">
                                                 <i class="material-icons">traffic</i>
-                                                <h8><%= incidencia[2].getNivelUrgencia()%></h8>
+                                                <h6><%= listaIncidencias.get(1).getNivelUrgencia()%></h6>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="itemm">
-                                <div class="container-fluid">
-                                    <div class="col-md-12">
-                                        <img src="../../images/foto.jpg" alt="">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-md-7">
-                                                    <h6><%= incidencia[3].getNombreIncidencia()%></h6>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <i class="material-icons">favorite</i>
-                                                    <h8>
-                                                        <%= incidencia[3].getContadorDestacado()%>
-                                                    </h8>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <i class="fa fa-calendar" src=""></i>
-                                                <h8><%= incidencia[3].getFecha()%></h8>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <i class="fa fa-location-arrow"></i>
-                                                <h8><%= incidencia[3].getZonaPUCP()%></h8>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <i class="fa fa-ambulance"></i>
-                                                <h8><%= incidencia[3].getTipoIncidencia()%></h8>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <i class="material-icons">traffic</i>
-                                                <h8><%= incidencia[3].getNivelUrgencia()%></h8>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="itemm">
-                                <div class="container-fluid">
-                                    <div class="col-md-12">
-                                        <img src="../../images/foto.jpg" alt="">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-md-7">
-                                                    <h6><%= incidencia[4].getNombreIncidencia()%></h6>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <i class="material-icons">favorite</i>
-                                                    <h8>
-                                                        <%= incidencia[4].getContadorDestacado()%>
-                                                    </h8>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <i class="fa fa-calendar" src=""></i>
-                                                <h8><%= incidencia[4].getFecha()%></h8>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <i class="fa fa-location-arrow"></i>
-                                                <h8><%= incidencia[4].getZonaPUCP()%></h8>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <i class="fa fa-ambulance"></i>
-                                                <h8><%= incidencia[4].getTipoIncidencia()%></h8>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <i class="material-icons">traffic</i>
-                                                <h8><%= incidencia[4].getNivelUrgencia()%></h8>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="itemm">
-                                <div class="container-fluid">
-                                    <div class="col-md-12">
-                                        <img src="../../images/foto.jpg" alt="">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-md-7">
-                                                    <h6><%= incidencia[5].getNombreIncidencia()%></h6>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <i class="material-icons">favorite</i>
-                                                    <h8>
-                                                        <%= incidencia[5].getContadorDestacado()%>
-                                                    </h8>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <i class="fa fa-calendar" src=""></i>
-                                                <h8><%= incidencia[5].getFecha()%></h8>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <i class="fa fa-location-arrow"></i>
-                                                <h8><%= incidencia[5].getZonaPUCP()%></h8>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <i class="fa fa-ambulance"></i>
-                                                <h8><%= incidencia[5].getTipoIncidencia()%></h8>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <i class="material-icons">traffic</i>
-                                                <h8><%= incidencia[5].getNivelUrgencia()%></h8>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <main>
+                        </main>
                     </div>
                 </div>
                 <div class="col-md-4">

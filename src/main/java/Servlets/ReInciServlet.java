@@ -18,10 +18,9 @@ public class ReInciServlet extends HttpServlet {
         String accion = request.getParameter("accion")==null?"listar":request.getParameter("accion");
         RequestDispatcher view;
         UsuarioReInciDao uriDao = new UsuarioReInciDao();
-
+        ArrayList<Incidencia> listaIncidencias = null;
         switch (accion){
             case ("listar") :
-                ArrayList<Incidencia> listaIncidencias = null;
                 try {
                     listaIncidencias = uriDao.obtenerIncidencias();
                 } catch (SQLException e) {
@@ -47,6 +46,16 @@ public class ReInciServlet extends HttpServlet {
             case("registrarIncidencia"):
                 view = request.getRequestDispatcher("/Usuario/RegistrarIncidencia.jsp");
                 view.forward(request, response);
+                break;
+            case("inicio"):
+                try {
+                    listaIncidencias = uriDao.obtenerIncidencias();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                request.setAttribute("listaIncidencias",listaIncidencias);
+                view = request.getRequestDispatcher("/Usuario/inicio.jsp");
+                view.forward(request,response);
                 break;
         }
 
