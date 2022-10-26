@@ -1,0 +1,183 @@
+
+
+
+.campos-registrar-usuario {
+    font-weight: bold;
+}
+
+
+.btn {
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    outline: 0!important;
+    -webkit-transition: all ease-in-out .15s;
+    -o-transition: all ease-in-out .15s;
+    transition: all ease-in-out .15s;
+    position: relative;
+    font-size: 17px;
+}
+
+.btn-default{color:#485b6f;background-color:#e3e6e7;border-color:#c1c4c4}.btn-default.active,.btn-default.disabled,.btn-default.focus,.btn-default:active,.btn-default:disabled,.btn-default:focus,.btn-default:hover{color:#485b6f!important;background-color:#d5dadb!important;border-color:#b4b8b8!important;-webkit-box-shadow:none;box-shadow:none;background-image:none}
+
+.ibox{ border-radius: 0px 0px 0px 0px;
+    -moz-border-radius: 0px 0px 0px 0px;
+    -webkit-border-radius: 0px 0px 0px 0px;
+    border: 1px solid #adb5bd;position:relative;margin-bottom:25px;background-color:#fff;-webkit-box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.43);
+    -moz-box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.05);
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.05);}.ibox .ibox-head{padding:0 20px;border-bottom:1px solid #eee;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;height:50px}.ibox .ibox-head .ibox-title{font-size:16px;font-weight:600}.ibox .ibox-head .ibox-title small{font-weight:400;font-size:13px;color:#777}.ibox .ibox-head .ibox-title small a{color:inherit}.ibox .ibox-head .ibox-tools{position:relative}.ibox .ibox-head .ibox-tools>a{color:#aaa;font-size:14px;padding:0 6px}.ibox .ibox-head .ibox-tools>a:hover{color:#6d7c85}.ibox .ibox-head .nav-tabs{margin:0;border:0;height:100%}.ibox .ibox-head .nav-tabs .nav-link{height:100%;padding:.9rem 1rem}.ibox .ibox-body{padding:15px 20px 20px 20px}.ibox .ibox-footer{padding:10px 0;border-top:1px solid #eee}.ibox.ibox-fullscreen{position:fixed;top:0;left:0;right:0;bottom:0;margin:0;z-index:1005}.ibox.ibox-fullscreen .fullscreen-link>i::before{content:"\f066"}.ibox.collapsed-mode .ibox-collapse>i::before{content:"\f067"}.ibox-primary .ibox-head{color:#fff;background-color:#3498db}.ibox-primary .ibox-head .ibox-tools>a,.ibox-primary .ibox-head .ibox-tools>a:hover{color:#fff}.ibox-success .ibox-head{color:#fff;background-color:#2ecc71}.ibox-success .ibox-head .ibox-tools>a,.ibox-success .ibox-head .ibox-tools>a:hover{color:#fff}.ibox-info .ibox-head{color:#fff;background-color:#23b7e5}.ibox-info .ibox-head .ibox-tools>a,.ibox-info .ibox-head .ibox-tools>a:hover{color:#fff}.ibox-warning .ibox-head{color:#fff;background-color:#f39c12}.ibox-warning .ibox-head .ibox-tools>a,.ibox-warning .ibox-head .ibox-tools>a:hover{color:#fff}.ibox-danger .ibox-head{color:#fff;background-color:#e74c3c}.ibox-danger .ibox-head .ibox-tools>a,.ibox-danger .ibox-head .ibox-tools>a:hover{color:#fff}.ibox-grey .ibox-head{color:#fff;background-color:#bdc3c7}.ibox-grey .ibox-head .ibox-tools>a,.ibox-grey .ibox-head .ibox-tools>a:hover{color:#fff}
+
+
+.page-content{padding-top:20px}
+.fade-in-up{-webkit-animation:fadeInUp .5s;animation:fadeInUp .5s}
+
+
+.label-form-flujousuario {font-size: 15px; color: #495057}
+
+.form-select {font-size: 14px;border: 1px solid #adb5bd}
+
+.form-floating>.form-control, .form-floating>.form-control-plaintext {
+    padding: 1.4rem 0.75rem;
+}
+
+.form-floating>.form-control, .form-floating>.form-control-plaintext, .form-floating>.form-select {
+    height: calc(2.0rem + 27px);
+    line-height: 2.1;
+}
+
+.form-floating>.form-select {
+    padding-top: 1.625rem;
+    padding-bottom: 0.625rem;
+}
+
+
+
+
+.form-control{border: 1px solid #adb5bd;-webkit-border-radius:2px;border-radius:2px;-webkit-box-shadow:none!important;font-size:15px;box-shadow:none!important}.form-control:focus{border-color:#23b7e5}
+/*.form-control{padding-left:12px;padding-right:33px}*/.has-success .form-control,.has-success .form-control:focus{border-color:#2ecc71}.has-success .col-form-label,.has-success .control-label,.has-success .input-icon>i{color:#2ecc71}.has-warning .form-control,.has-warning .form-control:focus{border-color:#f39c12}.has-warning .col-form-label,.has-warning .control-label,.has-warning .input-icon>i{color:#f39c12}.has-error .form-control,.has-error .form-control:focus{border-color:#e74c3c}.has-error .col-form-label,.has-error .control-label,.has-error .error,.has-error .help-block,.has-error .input-icon>i{color:#e74c3c}.help-block.error{color:#e74c3c}
+/*.form-control{border:0;padding:.65rem 1.25rem .65rem 40px;-webkit-border-radius:2px!important;border-radius:2px!important;background-color:#f4f5f9;border-color:#f4f5f9;font-size:13px}*/
+
+
+
+
+
+
+#wrapper {
+
+    width: 100%;
+    margin-bottom: 10%;
+
+}
+
+.preload {
+    padding-top: 20px;
+    text-align: center;
+    display: none;
+}
+
+.activate-preload {
+    display: block;
+}
+
+#container-input {
+    width: 80%;
+
+    margin: 0 auto;
+    border-radius: 0px 0px 0px 0px;
+    -moz-border-radius: 0px 0px 0px 0px;
+    -webkit-border-radius: 0px 0px 0px 0px;
+    -webkit-box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.43);
+    -moz-box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.05);
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.05);
+    border: 1px solid #adb5bd;
+    position: relative;
+    overflow: hidden;
+}
+
+#container-input .wrap-file .content-icon-camera {
+    width: 55px;
+    height: 55px;
+    overflow: hidden;
+}
+
+/*
+#container-input .wrap-file .content-icon-camera:hover {
+    background-color: #e6e6e6;
+}*/
+
+#container-input .wrap-file .content-icon-camera .icon-camera {
+    width: 36px;
+    height: 36px;
+    background: url('/images/camera.png') no-repeat;
+    /*cursor: pointer;*/
+    position: relative;
+    top: 8px;
+    left: 8px;
+}
+
+
+#container-input .wrap-file .content-icon-camera #file {
+    padding: 15px;
+    opacity: 0;
+    position: relative;
+    cursor: pointer;
+    left: -120px;
+    z-index: 1;
+}
+
+#container-input .wrap-file #preview-images .thumbnail {
+    width: 120px;
+    height: 120px;
+    display: inline-block;
+    vertical-align: middle;
+    border: solid 2px #CCC;
+    background-size: cover;
+    position: relative;
+}
+
+#container-input .wrap-file #preview-images .thumbnail:not(:last-child) {
+    margin-right: 5px;
+}
+
+#container-input .wrap-file #preview-images .thumbnail .close-button {
+    width: 20px;
+    height: 20px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 100px;
+    cursor: pointer;
+}
+
+#container-input #publish {
+    padding: 15px 35px;
+    font-size: 1.1em;
+    float: right;
+    border: none;
+    cursor: pointer;
+    background-color: #163297;  /*#163297*/
+    color: #FFF;
+}
+
+#container-input #publish:hover {
+    background-color: #042354;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
