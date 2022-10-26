@@ -101,7 +101,7 @@ public class IncidenciaDao {
 
         return incidencia;
     }
-    public ArrayList<Incidencia> obtenerDestacadas() throws SQLException {
+    /*public ArrayList<Incidencia> obtenerDestacadas() throws SQLException {
 
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -156,5 +156,5 @@ public class IncidenciaDao {
             throwables.printStackTrace();
         }
         return listaDestacadas;
-    }
+    }*/
 }
