@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="Beans.Incidencia" %>
 <%@ page import="java.util.ArrayList"%><%
-    Incidencia[4] listaDestacados  = new Incidencia(); request.getAttribute("listaDestacados");
-
+    //ArrayList<Incidencia> listaDestacados  = new ArrayList<Incidencia>(); request.getAttribute("listaDestacados");
+    ArrayList<Incidencia> listaIncidencias = (ArrayList<Incidencia>) request.getAttribute("listaIncidencias");
 %>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -97,7 +97,7 @@
                             <input type="radio" name="position" />
                         </label>
                         <main id="carousel">
-                            <%for(Incidencia i : listaDestacados){%>
+                            <%for(Incidencia i : listaIncidencias){%>
                             <div class="itemm">
                                 <div class="container-fluid">
                                     <div class="col-md-12">
