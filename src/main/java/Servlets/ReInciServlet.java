@@ -45,7 +45,10 @@ public class ReInciServlet extends HttpServlet {
                 view = request.getRequestDispatcher("/Usuario/UsuarioPerfil.jsp");
                 view.forward(request, response);
                 break;
-
+            case("registrarIncidencia"):
+                view = request.getRequestDispatcher("/Usuario/RegistrarIncidencia.jsp");
+                view.forward(request, response);
+                break;
         }
 
     }
