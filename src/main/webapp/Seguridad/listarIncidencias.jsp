@@ -80,7 +80,7 @@
         <div id="sidebar-collapse" style="margin-top: 20px;">
             <ul class="side-menu metismenu">
                 <li>
-                    <a href="<%=request.getContextPath()%>/TablaSeguridad?accion=listar">
+                    <a href="<%=request.getContextPath()%>/SeguridadServlet?accion=listar">
 
                         <div class="div-barra-lateral">
                             <i class="bi bi-eye xaea12 iconos-barra-lateral"></i>
@@ -91,7 +91,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<%=request.getContextPath()%>/TablaSeguridad?accion=restablece">
+                    <a href="<%=request.getContextPath()%>/SeguridadServlet?accion=restablece">
 
                         <div class="div-barra-lateral">
                             <i class="bi bi-key xaea12 iconos-barra-lateral"></i>
@@ -140,7 +140,7 @@
                             <td><%= incidencia.getNombreIncidencia()%> </td>
                             <td><%= incidencia.getNivelUrgencia()%></td>
                             <td><%= incidencia.getDescripcion()%> </td>
-                            <td><a href="<%=request.getContextPath()%>/TablaSeguridad?accion=verDetalle&id=<%=incidencia.getIdIncidencia()%>">ver detalle</a></td>
+                            <td><a href="<%=request.getContextPath()%>/SeguridadServlet?accion=verDetalle&id=<%=incidencia.getIdIncidencia()%>">ver detalle</a></td>
 
                         </tr>
                         <% }%>

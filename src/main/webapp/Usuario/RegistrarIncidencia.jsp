@@ -1,6 +1,5 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
 <html lang="en"  style="min-height: 100vh">
 <head>
     <meta charset="utf-8">
@@ -22,7 +21,7 @@
 <div class="boxed-page">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/ReInciServlet?accion=inicio">
+            <a class="navbar-brand" href="<%=request.getContextPath()%>/UsuarioServlet?accion=inicio">
                 <!-- this anchor text for link your home to another page -->
                 <div class="icon">
                     <i class="fa fa-home" aria-hidden="true"></i><!-- this is home icon link get form fornt-awesome icon for home button -->
@@ -31,7 +30,7 @@
                 <div class="name"><span data-text="Inicio">Inicio</span></div>
                 <!-- we are create first menu item name home -->
             </a>
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/ReInciServlet?accion=buscarIncidencia">
+            <a class="navbar-brand" href="<%=request.getContextPath()%>/UsuarioServlet?accion=buscarIncidencia">
                 <!-- this anchor text for link your home to another page -->
                 <div class="icon">
                     <i class="fa fa-search" aria-hidden="true"></i><!-- this is home icon link get form fornt-awesome icon for home button -->
@@ -40,7 +39,7 @@
                 <div class="name"><span data-text="Buscar Incidencias">Buscar Incidencias</span></div>
                 <!-- we are create first menu item name home -->
             </a>
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/ReInciServlet?accion=registrarIncidencia">
+            <a class="navbar-brand" href="<%=request.getContextPath()%>/UsuarioServlet?accion=registrarIncidencia">
                 <!-- this anchor text for link your home to another page -->
                 <div class="icon">
                     <i class="fa fa-pencil-square-o " aria-hidden="true"></i><!-- this is home icon link get form fornt-awesome icon for home button -->
@@ -49,7 +48,7 @@
                 <div class="name"><span data-text="Registrar Incidencias">Registrar Incidencias</span></div>
                 <!-- we are create first menu item name home -->
             </a>
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/ReInciServlet?accion=listar">
+            <a class="navbar-brand" href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">
                 <!-- this anchor text for link your home to another page -->
                 <div class="icon">
                     <i class="fa fa-star " aria-hidden="true"></i><!-- this is home icon link get form fornt-awesome icon for home button -->
@@ -58,7 +57,7 @@
                 <div class="name"><span data-text="Mis Incidencias">Mis Incidencias</span></div>
                 <!-- we are create first menu item name home -->
             </a>
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/ReInciServlet?accion=perfil">
+            <a class="navbar-brand" href="<%=request.getContextPath()%>/UsuarioServlet?accion=perfil">
                 <!-- this anchor text for link your home to another page -->
                 <div class="icon">
                     <i class="fa fa-user" aria-hidden="true"></i><!-- this is home icon link get form fornt-awesome icon for home button -->

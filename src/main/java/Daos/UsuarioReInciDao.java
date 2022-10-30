@@ -24,10 +24,10 @@ public class UsuarioReInciDao {
         try (Connection conn = DriverManager.getConnection(url, user, pass);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("select i.idIncidencia,i.nombreIncidencia,concat(u.nombre,\" \",u.apellido) as Usuario, e.estado, i.contadorReabierto, d.contadorDestacado \n" +
-                     "from incidencia i \n" +
-                     "inner join usuarios u on i.codigousuario = u.codigo\n" +
-                     " inner join estadoincidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
-                     " inner join incidenciasdestacadas d on i.idIncidencia = d.idIncidencia")) {
+                     "from Incidencia i \n" +
+                     "inner join Usuarios u on i.codigousuario = u.codigo\n" +
+                     " inner join EstadoIncidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
+                     " inner join IncidenciasDestacadas d on i.idIncidencia = d.idIncidencia")) {
 
             while (rs.next()) {
                 Incidencia incidencia = new Incidencia();
@@ -71,12 +71,12 @@ public class UsuarioReInciDao {
                 "\t\tnu.nivel, i.descripcion,\n" +
                 "  i.nombreIncidencia,concat(u.nombre,\" \",u.apellido) as Usuario, \n" +
                 " e.estado, i.contadorreabierto, d.contadorDestacado, ti.tipo \n" +
-                " from incidencia i \n" +
-                "inner join usuarios u on i.codigousuario = u.codigo\n" +
-                "inner join estadoincidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
-                "inner join incidenciasdestacadas d on i.idIncidencia = d.idIncidencia\n" +
-                "inner join nivelUrgencia nu on nu.IdNivelUrgencia = i.IdNivelUrgencia\n" +
-                "inner join tipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia \n"+
+                " from Incidencia i \n" +
+                "inner join Usuarios u on i.codigousuario = u.codigo\n" +
+                "inner join EstadoIncidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
+                "inner join IncidenciasDestacadas d on i.idIncidencia = d.idIncidencia\n" +
+                "inner join NivelUrgencia nu on nu.IdNivelUrgencia = i.IdNivelUrgencia\n" +
+                "inner join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia \n"+
                 "WHERE i.idIncidencia = ?";
         Incidencia incidencia = null;
         try(Connection conn = DriverManager.getConnection(url, user, pass);
