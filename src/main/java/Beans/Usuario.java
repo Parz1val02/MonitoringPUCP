@@ -9,15 +9,32 @@ public class Usuario {
     private String password;
     private boolean valida;
     private String nickname;
-    private Integer celular;
+    private String celular;
     private Integer idRoles;
     private Integer idCategoriaPUCP;
     private long fotoPerfil;
 
-    
     private String rol;
     private String categoriaPUCP;
-    
+
+    //constructor para el
+    public Usuario(String codigo, String nombre, String apellido, String dni, String password, boolean valida, String nickname, String celular, long fotoPerfil, String rol, String categoriaPUCP) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.password = password;
+        this.valida = valida;
+        this.nickname = nickname;
+        this.celular = celular;
+        this.fotoPerfil = fotoPerfil;
+        this.rol = rol;
+        this.categoriaPUCP = categoriaPUCP;
+    }
+
+    public Usuario() {
+    }
+
     public String getRol() {
         return rol;
     }
@@ -33,10 +50,6 @@ public class Usuario {
     public void setCategoriaPUCP(String categoriaPUCP) {
         this.categoriaPUCP = categoriaPUCP;
     }
-    
-    
-    
-    
     
 
     public String getCodigo() {
@@ -95,11 +108,11 @@ public class Usuario {
         this.nickname = nickname;
     }
 
-    public Integer getCelular() {
+    public String getCelular() {
         return celular;
     }
 
-    public void setCelular(Integer celular) {
+    public void setCelular(String celular) {
         this.celular = celular;
     }
 

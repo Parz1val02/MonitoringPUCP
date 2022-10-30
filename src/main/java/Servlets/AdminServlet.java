@@ -56,7 +56,7 @@ public class AdminServlet extends HttpServlet {
                 view = request.getRequestDispatcher("/Administrador/incidencia_admin.jsp");
                 view.forward(request,response);
                 break;
-            case ("regitrar_usuario"):
+            case ("registrar_usuario"): //crear usuario
 
                 view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
                 view.forward(request, response);
@@ -85,6 +85,31 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
 
+        UsuarioDao usuarioDao = new UsuarioDao();
+
+        switch (action) {
+            case "guardar":
+                String codigo = request.getParameter("codigo");
+                String nombre = request.getParameter("nombre");
+                String apellido = request.getParameter("apellido");
+                String dni = request.getParameter("dni");
+                boolean valida = Boolean.parseBoolean(request.getParameter("valida"));
+                String password = request.getParameter("password");
+                String nickname = request.getParameter("nickname");
+                String celular = request.getParameter("celular"); //string nulo
+                Long foto_perfil = Long.valueOf((request.getParameter("fotoPerfil"))); //string nulo
+                String rol = request.getParameter("rol"); //string nulo
+                String categoriaPUCP = request.getParameter("categoriaPUCP"); //string nulo
+
+                Usuario usuario = new Usuario(codigo,nombre,apellido,dni,password,valida,nickname,celular,foto_perfil,rol,categoriaPUCP);
+
+                usuarioDao.crearUsuario(usuario);
+
+                response.sendRedirect(request.getContextPath() + "/Servlet"); //falta comentar
+                break;
+
+        }
     }
 }

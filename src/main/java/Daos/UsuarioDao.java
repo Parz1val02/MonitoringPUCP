@@ -31,7 +31,7 @@ public class UsuarioDao {
                 usuario.setValida(rs.getBoolean(5));
                 usuario.setPassword(rs.getString(6));
                 usuario.setNickname(rs.getString(7));
-                usuario.setCelular(rs.getInt(8));
+                usuario.setCelular(rs.getString(8));
                 //usuario.setIdRoles(rs.getInt(10));
                 //usuario.setIdCategoriaPUCP(rs.getInt(11));
                 usuario.setRol(rs.getString(10));
@@ -46,8 +46,66 @@ public class UsuarioDao {
 
         return listaUsuarios;
 
+    }
+
+    //crear usuario y guardar en DB
+    public void crearUsuario(Usuario usuario){
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String url = "jdbc:mysql://localhost:3306/telesystem_aa";
+        String sql = "INSERT INTO usuarios (codigo, nombre, apellido, DNI, valida, password, nickname, celular, foto_perfil,rol,categoriPUCP) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+
+
+        try (Connection connection = DriverManager.getConnection(url, "root", "root");
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setString(1, usuario.getCodigo());
+            pstmt.setString(2, usuario.getNombre());
+            pstmt.setString(3, usuario.getApellido());
+            pstmt.setString(4, usuario.getDni());
+            pstmt.setBoolean(5, usuario.isValida());
+            pstmt.setString(6, usuario.getPassword());
+            pstmt.setString(7, usuario.getNickname());
+            pstmt.setString(8, usuario.getCelular()); //nulos
+            pstmt.setLong(9, usuario.getFotoPerfil()); //nulos
+
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
+
+    //eliminar(delete) usuario---por ahora que aparezca modal
+    public void borrar(String codigo) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String url = "jdbc:mysql://localhost:3306/telesystem_aa";
+        String sql = "DELETE FROM usuarios WHERE codigo = ?";
+
+        try (Connection connection = DriverManager.getConnection(url, "root", "root");
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setString(1, codigo);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
 
 }
