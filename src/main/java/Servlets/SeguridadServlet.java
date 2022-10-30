@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@WebServlet(name = "TablaSeguridad", value = "/TablaSeguridad")
+@WebServlet(name = "SeguridadServlet", value = "/SeguridadServlet")
 public class SeguridadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

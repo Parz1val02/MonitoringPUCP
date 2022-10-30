@@ -107,7 +107,7 @@
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Registrar Cambios
                 </button>
-                <form action="<%=request.getContextPath()%>/TablaSeguridad?accion=listar">
+                <form action="<%=request.getContextPath()%>/SeguridadServlet?accion=listar">
                 <button type="submit" class="btn btn-secondary" data-bs-toggle="modal">Cancelar</button>
                 </form>
             </div>
@@ -124,7 +124,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
-                        <form action="<%=request.getContextPath()%>/TablaSeguridad?accion=listar">
+                        <form action="<%=request.getContextPath()%>/SeguridadServlet?accion=listar">
                         <button type="submit" class="btn btn-secondary">Cancelar</button>
                         </form>
                     </div>

@@ -1,9 +1,7 @@
 package Servlets;
 
 import Beans.Incidencia;
-import Beans.Usuario;
 import Daos.IncidenciaDao;
-import Daos.UsuarioDao;
 import Daos.UsuarioReInciDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -13,8 +11,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@WebServlet(name = "ReInciServlet", value = "/ReInciServlet")
-public class ReInciServlet extends HttpServlet {
+@WebServlet(name = "UsuarioServlet", value = "/UsuarioServlet")
+public class UsuarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
