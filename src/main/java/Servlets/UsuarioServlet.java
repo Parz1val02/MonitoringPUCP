@@ -78,6 +78,8 @@ public class UsuarioServlet extends HttpServlet {
                 view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
                 view.forward(request, response);
                 break;
+
+
         }
 
     }

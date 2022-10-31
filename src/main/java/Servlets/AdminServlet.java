@@ -79,7 +79,14 @@ public class AdminServlet extends HttpServlet {
 
                 view = request.getRequestDispatcher("/Administrador/detalle_incidencia_admin.jsp");
                 view.forward(request, response);
-                break;    
+                break;
+
+            case "borrar":  // AdminServlet?action=borrar&id=
+                String codigo = request.getParameter("codigo");
+                usuarioDao.borrar(codigo);
+
+                response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                break;
         }
     }
 
