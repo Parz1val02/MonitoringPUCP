@@ -58,7 +58,7 @@ public class UsuarioDao {
         }
 
         String url = "jdbc:mysql://localhost:3306/telesystem_aa";
-        String sql = "INSERT INTO usuarios (codigo, nombre, apellido, DNI, valida, password, nickname, celular, foto_perfil,rol,categoriPUCP) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO usuarios (codigo, nombre, apellido, DNI, password, nickname, celular) VALUES (?,?,?,?,?,?,?)";
 
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root");
@@ -68,11 +68,11 @@ public class UsuarioDao {
             pstmt.setString(2, usuario.getNombre());
             pstmt.setString(3, usuario.getApellido());
             pstmt.setString(4, usuario.getDni());
-            pstmt.setBoolean(5, usuario.isValida());
-            pstmt.setString(6, usuario.getPassword());
-            pstmt.setString(7, usuario.getNickname());
-            pstmt.setString(8, usuario.getCelular()); //nulos
-            pstmt.setLong(9, usuario.getFotoPerfil()); //nulos
+            //pstmt.setBoolean(5, usuario.isValida());
+            pstmt.setString(5, usuario.getPassword());
+            pstmt.setString(6, usuario.getNickname());
+            pstmt.setString(7, usuario.getCelular()); //nulos
+            //pstmt.setLong(8, usuario.getFotoPerfil()); //nulos
 
             pstmt.executeUpdate();
 

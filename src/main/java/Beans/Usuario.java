@@ -18,16 +18,15 @@ public class Usuario {
     private String categoriaPUCP;
 
     //constructor para el
-    public Usuario(String codigo, String nombre, String apellido, String dni, String password, boolean valida, String nickname, String celular, long fotoPerfil, String rol, String categoriaPUCP) {
+    public Usuario(String codigo, String nombre, String apellido, String dni, String password, String nickname, String celular, String rol, String categoriaPUCP) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.password = password;
-        this.valida = valida;
+
         this.nickname = nickname;
         this.celular = celular;
-        this.fotoPerfil = fotoPerfil;
         this.rol = rol;
         this.categoriaPUCP = categoriaPUCP;
     }

@@ -57,7 +57,7 @@
             </li>
             <li>
               <!--<a href="registrar_usuario_admin.html"> -->
-              <a href="<%=request.getContextPath()%>/AdminServlet?accion=regitrar_usuario">
+              <a href="<%=request.getContextPath()%>/AdminServlet?accion=registrar_usuario">
                 <div class="div-barra-lateral">
                   <i class="bi bi-person-plus xaea12 iconos-barra-lateral"></i>
                   <span class="nav-label">Registrar Usuario</span>
@@ -106,17 +106,17 @@
                 <div class="ibox-title">Datos de usuario</div>
               </div>
               <div class="ibox-body">
-                <form>
+                <form method="post" action="<%=request.getContextPath()%>/AdminServlet?action=guardar">
                   <div class="row g-2">
                     <div class="col-md">
                       <div class="form-floating" style="margin-bottom: 5px;">
-                        <input type="text" class="form-control" id="floatingInputGrid1" placeholder="Nombre">
+                        <input type="text" class="form-control" id="floatingInputGrid1" placeholder="Nombre" name="nombre">
                         <label for="floatingInputGrid1">Nombre</label>
                       </div>
                     </div>
                     <div class="col-md">
                       <div class="form-floating" style="margin-bottom: 5px;">
-                        <input type="text" class="form-control" id="floatingInputGrid2" placeholder="Apellido">
+                        <input type="text" class="form-control" id="floatingInputGrid2" placeholder="Apellido" name="apellido" >
                         <label for="floatingInputGrid2">Apellido</label>
                       </div>
                     </div>
@@ -124,13 +124,13 @@
                   <div class="row g-2">
                     <div class="col-md">
                       <div class="form-floating" style="margin-bottom: 5px;">
-                        <input type="text" class="form-control" id="floatingInputGrid3" placeholder="Código PUCP">
+                        <input type="text" class="form-control" id="floatingInputGrid3" placeholder="Código PUCP" name="codigoPUCP">
                         <label for="floatingInputGrid3">Código PUCP</label>
                       </div>
                     </div>
                     <div class="col-md">
                       <div class="form-floating" style="margin-bottom: 5px;">
-                        <input type="text" class="form-control" id="floatingInputGrid4" placeholder="Correo PUCP">
+                        <input type="text" class="form-control" id="floatingInputGrid4" placeholder="Correo PUCP" name="correoPUCP">
                         <label for="floatingInputGrid4">Correo PUCP</label>
                       </div>
                     </div>
@@ -138,13 +138,13 @@
                   <div class="row g-2">
                     <div class="col-md">
                       <div class="form-floating" style="margin-bottom: 5px;">
-                        <input type="text" class="form-control" id="floatingInputGrid5" placeholder="DNI">
+                        <input type="text" class="form-control" id="floatingInputGrid5" placeholder="DNI" name="dni">
                         <label for="floatingInputGrid4">DNI</label>
                       </div>
                     </div>
                     <div class="col-md">
                       <div class="form-floating" style="margin-bottom: 5px;">
-                        <input type="text" class="form-control" id="floatingInputGrid6" placeholder="Celular">
+                        <input type="text" class="form-control" id="floatingInputGrid6" placeholder="Celular" name="celular">
                         <label for="floatingInputGrid6">Celular</label>
                       </div>
                     </div>
@@ -176,8 +176,8 @@
                     <div style="color:#FF0000;"><p text-align="center;" style="margin-top: 10px;" class="font-weight-bold">Todos los campos son obligatorios.</p></div>
                   </div>
                   <div class="form-group">
-                    <button class="btn btn-primary" type="submit">Registrar</button>
-                    <button class="btn btn-secondary" type="submit">Cancelar</button>
+                    <button class="btn btn-primary" type="submit" >Registrar</button>
+                    <button class="btn btn-secondary">Cancelar</button>
                   </div>
                 </form>
               </div>
