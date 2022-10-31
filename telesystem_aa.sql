@@ -27,5 +27,7 @@ insert into Incidencia (fecha,nombreIncidencia,zonaPUCP, latitud, longitud, vali
                          values (now(),"Explosion en KILO", "Pabellon A",-12.073157,-77.081164,true,"Fuga de gas ocurrido en la mañana, previo al abrir al local",
                          0,1,3,1,20201696),
                          (now(),"Accidente de semana de Ingenieria","Cancha de minas",-12.072249,-77.081994,true,"Lesion de alumno en evento",0,1,2,1,19905060),
-                         (now(),"Laptop perdida en Charlotte","McGregor",-12.072249,-77.081994,true,"Mi Macbook M1, que no sirve para jugar Valorant, se extravio ayer",0,4,3,1,20113456);
-insert into incidenciasdestacadas (contadorDestacado,idIncidencia) values (0,1),(0,2),(1,3);
+                         (now(),"Laptop perdida en Charlotte","McGregor",-12.072249,-77.081994,true,"Mi Macbook M1, que no sirve para jugar Valorant, se extravio ayer",0,4,3,1,20113456),
+			 (now(),"Accidente en CIA","Sotano 2",-12.072249,-77.081994,true,"Lesion de alumno en evento",0,1,2,1,19905060),
+                         (now(),"Laptop perdida en el V","McGregor",-12.072249,-77.081994,true,"Mi Macbook M1, que no sirve para jugar Valorant, se extravio ayer",0,4,3,1,20113456);
+insert into incidenciasdestacadas (contadorDestacado,idIncidencia) values (0,1),(0,2),(1,3),(0,4),(1,5);
