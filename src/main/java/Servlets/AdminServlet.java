@@ -50,8 +50,6 @@ public class AdminServlet extends HttpServlet {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-
-
                 request.setAttribute("listaIncidencias",listaIncidencias);
                 view = request.getRequestDispatcher("/Administrador/incidencia_admin.jsp");
                 view.forward(request,response);
