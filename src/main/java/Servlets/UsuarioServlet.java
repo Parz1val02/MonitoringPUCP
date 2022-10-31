@@ -68,7 +68,7 @@ public class UsuarioServlet extends HttpServlet {
                 request.setAttribute("listaDestacados",listaDestacados);
                 view = request.getRequestDispatcher("/Usuario/inicio.jsp");
                 view.forward(request,response);
-                break;*/
+                break;*/ /*prueba*/
                 try {
                     listaIncidencias = inDao.obtenerIncidencias();
                 } catch (SQLException e) {
