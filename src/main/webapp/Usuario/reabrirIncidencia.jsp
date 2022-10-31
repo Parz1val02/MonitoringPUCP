@@ -93,22 +93,32 @@
 <div class="col-md-10" style="margin: 0 auto">
     <div class="content-wrapper">
         <div class="page-heading" style="text-align: center;margin-top: 15px;margin-bottom: 20px;">
-            <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Tabla de Incidencias</b></h1>
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 40px; font-weight: bold" >
+                        Tabla de Incidencias
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" style="font-size: 15px" href="#">Mis incidencias</a></li>
+                        <li><a class="dropdown-item" style="font-size: 15px" href="#">Incidencias destacadas</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="page-content fade-in-up">
             <div class="ibox">
                 <div class="ibox-body">
                     <table class="table table-striped table-bordered table-hover" id="example-table">
                         <thead>
-                        <tr>
-                            <th>Nombre de la incidencia</th>
-                            <th>Nombre del usuario</th>
-                            <th>Estado</th>
-                            <th>N° reabierta</th>
-                            <!--<th>N° destacados</th>-->
-                            <th>¿Reabrir incidencia?</th>
+                            <tr>
+                                <th>Nombre de la incidencia</th>
+                                <th>Nombre del usuario</th>
+                                <th>Estado</th>
+                                <th>N° reabierta</th>
+                                <!--<th>N° destacados</th>-->
+                                <th>¿Reabrir incidencia?</th>
 
-                        </tr>
+                            </tr>
                         </thead>
 
                         <tbody>
@@ -124,7 +134,6 @@
                             </tr>
                             <% }%>
                         </tbody>
-
                     </table>
                 </div>
             </div>
