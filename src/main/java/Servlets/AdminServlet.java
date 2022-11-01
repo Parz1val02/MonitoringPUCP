@@ -4,14 +4,12 @@ import Beans.Incidencia;
 import Beans.Usuario;
 import Daos.IncidenciaDao;
 import Daos.UsuarioDao;
-import Daos.UsuarioReInciDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 

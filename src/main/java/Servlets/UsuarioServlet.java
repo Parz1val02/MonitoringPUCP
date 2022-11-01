@@ -2,7 +2,6 @@ package Servlets;
 
 import Beans.Incidencia;
 import Daos.IncidenciaDao;
-import Daos.UsuarioReInciDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -18,23 +17,26 @@ public class UsuarioServlet extends HttpServlet {
 
         String accion = request.getParameter("accion")==null?"inicio":request.getParameter("accion");
         RequestDispatcher view;
-        UsuarioReInciDao uriDao = new UsuarioReInciDao();
+
         IncidenciaDao inDao = new IncidenciaDao();
         ArrayList<Incidencia> listaIncidencias = null;
         switch (accion){
             case ("listar") :
                 try {
-                    listaIncidencias = uriDao.obtenerIncidencias();
+                    listaIncidencias = inDao.obtenerIncidencias();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+
+
+
                 request.setAttribute("listaIncidencias",listaIncidencias);
                 view = request.getRequestDispatcher("/Usuario/reabrirIncidencia.jsp");
                 view.forward(request,response);
                 break;
             case ("verDetalle"):
                 String idIncidencia = request.getParameter("id");
-                Incidencia incidencia = uriDao.obtenerIncidencia(idIncidencia);
+                Incidencia incidencia = inDao.obtenerIncidencia(idIncidencia);
 
                 request.setAttribute("Incidencia",incidencia);
 
@@ -55,6 +57,9 @@ public class UsuarioServlet extends HttpServlet {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+
+
+
                 request.setAttribute("listaIncidencias",listaIncidencias);
                 view = request.getRequestDispatcher("/Usuario/BuscarIncidencia.jsp");
                 view.forward(request, response);
