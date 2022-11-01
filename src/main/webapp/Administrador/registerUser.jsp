@@ -85,7 +85,7 @@
                   <div class="row">
                     <div class="col-md">
                       <div class="form-floating">
-                        <select class="form-select" id="floatingSelectGrid1">
+                        <select class="form-select" id="floatingSelectGrid1" name="categoriaPUCP">
                           <option selected>Categoría PUCP</option>
                           <option value="1">Alumno</option>
                           <option value="2">Administrativo</option>
@@ -98,7 +98,7 @@
                     </div>
                     <div class="col-md">
                       <div class="form-floating">
-                        <select class="form-select" id="floatingSelectGrid2">
+                        <select class="form-select" id="floatingSelectGrid2" name="rol">
                           <option selected>Rol de Usuario</option>
                           <option value="1">Usuario PUCP</option>
                           <option value="2">Seguridad</option>

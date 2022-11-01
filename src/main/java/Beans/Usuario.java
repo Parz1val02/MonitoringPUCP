@@ -1,5 +1,8 @@
 package Beans;
 
+import java.io.File;
+import java.io.InputStream;
+
 public class Usuario {
 
     private String codigo;
@@ -13,21 +16,21 @@ public class Usuario {
     private String celular;
     private Integer idRoles;
     private Integer idCategoriaPUCP;
-    private long fotoPerfil;
+    private File fotoPerfil;
 
     private String rol;
     private String categoriaPUCP;
 
     //constructor para el
-    public Usuario(String codigo, String nombre, String apellido, String dni, String password, String nickname, String celular, String rol, String categoriaPUCP) {
+    public Usuario(String codigo, String nombre, String apellido, String dni, String password, String nickname, String celular, File fotoPerfil, String rol, String categoriaPUCP) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.password = password;
-
         this.nickname = nickname;
         this.celular = celular;
+        this.fotoPerfil = fotoPerfil;
         this.rol = rol;
         this.categoriaPUCP = categoriaPUCP;
     }
@@ -35,16 +38,18 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String codigo, String nombre, String apellido, String correo, String dni, String celular, String rol, String categoriaPUCP) {
+    public Usuario(String codigo, String nombre, String apellido, String correo, String dni, String celular, File fotoPerfil, String rol, String categoriaPUCP) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
         this.dni = dni;
         this.celular = celular;
+        this.fotoPerfil = fotoPerfil;
         this.rol = rol;
         this.categoriaPUCP = categoriaPUCP;
     }
+
 
     public String getRol() {
         return rol;
@@ -143,11 +148,11 @@ public class Usuario {
         this.idCategoriaPUCP = idCategoriaPUCP;
     }
 
-    public long getFotoPerfil() {
+    public File getFotoPerfil() {
         return fotoPerfil;
     }
 
-    public void setFotoPerfil(long fotoPerfil) {
+    public void setFotoPerfil(File fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
     }
 

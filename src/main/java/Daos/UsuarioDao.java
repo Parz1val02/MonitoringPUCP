@@ -1,11 +1,8 @@
 package Daos;
 import Beans.Usuario;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -54,7 +51,7 @@ public class UsuarioDao {
     }
 
     //crear usuario y guardar en DB
-    public void crearUsuario(Usuario usuario, File file){
+    public void crearUsuario(Usuario usuario){
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -77,8 +74,8 @@ public class UsuarioDao {
             pstmt.setString(7, "unclash");
             pstmt.setString(8, "unfall");
             pstmt.setString(9, usuario.getCelular()); //nulos
-            try(FileInputStream fin = new FileInputStream(file)){
-                pstmt.setBinaryStream(10, fin, (int) file.length());
+            try(FileInputStream fin = new FileInputStream(usuario.getFotoPerfil())){
+                pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -90,19 +87,19 @@ public class UsuarioDao {
                     pstmt.setInt(11, 2);
                     break;
                 case "Jefe de práctica":
-                    pstmt.setInt(12, 3);
+                    pstmt.setInt(11, 3);
                     break;
                 case "Profesor":
-                    pstmt.setInt(12, 4);
+                    pstmt.setInt(11, 4);
                     break;
                 case "Egresado":
-                    pstmt.setInt(12, 5);
+                    pstmt.setInt(11, 5);
                     break;
             }
             if(usuario.getRol().equalsIgnoreCase("Usuario PUCP")){
-                pstmt.setInt(13,1);
+                pstmt.setInt(12,1);
             }else{
-                pstmt.setInt(13,2);
+                pstmt.setInt(12,2);
             }
             pstmt.executeUpdate();
 
