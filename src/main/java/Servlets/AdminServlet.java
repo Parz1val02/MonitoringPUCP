@@ -9,7 +9,9 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -97,9 +99,14 @@ public class AdminServlet extends HttpServlet {
 
         switch (action) {
             case "guardar":
+                String relativeWebPath = "./images/usuario.png";
+                String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
+                System.out.println("Ruta: " + absoluteDiskPath);
+                File file = new File(absoluteDiskPath);
                 String codigo = request.getParameter("codigo");
                 String nombre = request.getParameter("nombre");
                 String apellido = request.getParameter("apellido");
+                String correo = request.getParameter("correo");
                 String dni = request.getParameter("dni");
                 //boolean valida = Boolean.parseBoolean(request.getParameter("valida"));
                 //String password = request.getParameter("password");
@@ -109,9 +116,9 @@ public class AdminServlet extends HttpServlet {
                 String rol = request.getParameter("rol"); //string nulo
                 String categoriaPUCP = request.getParameter("categoriaPUCP"); //string nulo
 
-                Usuario usuario = new Usuario(codigo,nombre,apellido,dni,celular,rol,categoriaPUCP);
+                Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,rol,categoriaPUCP);
 
-                usuarioDao.crearUsuario(usuario);
+                usuarioDao.crearUsuario(usuario, file);
 
                 response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
                 break;

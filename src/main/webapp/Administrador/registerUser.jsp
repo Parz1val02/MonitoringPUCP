@@ -63,7 +63,7 @@
                     </div>
                     <div class="col-md">
                       <div class="form-floating" style="margin-bottom: 5px;">
-                        <input type="text" class="form-control" id="floatingInputGrid4" placeholder="Correo PUCP" name="correoPUCP">
+                        <input type="text" class="form-control" id="floatingInputGrid4" placeholder="Correo PUCP" name="correo">
                         <label for="floatingInputGrid4">Correo PUCP</label>
                       </div>
                     </div>

@@ -5,6 +5,7 @@ public class Usuario {
     private String codigo;
     private String nombre;
     private String apellido;
+    private String correo;
     private String dni;
     private String password;
     private boolean valida;
@@ -34,10 +35,11 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String codigo, String nombre, String apellido, String dni, String celular, String rol, String categoriaPUCP) {
+    public Usuario(String codigo, String nombre, String apellido, String correo, String dni, String celular, String rol, String categoriaPUCP) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.correo = correo;
         this.dni = dni;
         this.celular = celular;
         this.rol = rol;
@@ -147,5 +149,13 @@ public class Usuario {
 
     public void setFotoPerfil(long fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 }

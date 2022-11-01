@@ -16,10 +16,10 @@ insert into Roles (nombreRol) values ("Usuario PUCP"),("Seguridad");
 
 insert into CategoriaPUCP(nombreCategoria) values ("Alumno"),("Administrativo"),("Jefe de practica"),("Profesor"),("Egresado");
 
-insert into Usuarios (codigo, nombre, apellido, DNI, validaUsuario, password, nickname, idRoles, idCategoriaPUCP)
-					values (20201696, "Leonardo", "Abanto", 12345678, true, "clashroyale123","Ubuntu",1,1),
-                    (19905060,"Jorge","Gonzales",87654321, true,"tele1000", "master",1,4),
-                    (20113456,"Goku","kakaroto",56546767, true,"milk4355", "pipipi",2,null);
+insert into Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, nickname, idRoles, idCategoriaPUCP)
+					values (20201696, "Leonardo", "Abanto", "a20201692@pucp.edu.pe", 12345678, true, "clashroyale123","Ubuntu",1,1),
+                    (19905060,"Jorge","Gonzales", "jorege.g@pucp.edu.pe",87654321, true,"tele1000", "master",1,4),
+                    (20113456,"Goku","kakaroto", "goku.kakaroto@pucp.edu.pe", 56546767, true,"milk4355", "pipipi",2,null);
                     
 insert into Incidencia (fecha,nombreIncidencia,zonaPUCP, latitud, longitud, validaIncidencia, descripcion,
 						 contadorReabierto, idTipoIncidencia, idNivelUrgencia, idEstadoIncidencia,
@@ -28,6 +28,6 @@ insert into Incidencia (fecha,nombreIncidencia,zonaPUCP, latitud, longitud, vali
                          0,1,3,1,20201696),
                          (now(),"Accidente de semana de Ingenieria","Cancha de minas",-12.072249,-77.081994,true,"Lesion de alumno en evento",0,1,2,1,19905060),
                          (now(),"Laptop perdida en Charlotte","McGregor",-12.072249,-77.081994,true,"Mi Macbook M1, que no sirve para jugar Valorant, se extravio ayer",0,4,3,1,20113456),
-			 (now(),"Accidente en CIA","Sotano 2",-12.072249,-77.081994,true,"Lesion de alumno en evento",0,1,2,1,19905060),
+                         (now(),"Accidente en CIA","Sotano 2",-12.072249,-77.081994,true,"Lesion de alumno en evento",0,1,2,1,19905060),
                          (now(),"Laptop perdida en el V","McGregor",-12.072249,-77.081994,true,"Mi Macbook M1, que no sirve para jugar Valorant, se extravio ayer",0,4,3,1,20113456);
-insert into incidenciasdestacadas (contadorDestacado,idIncidencia) values (0,1),(0,2),(1,3),(0,4),(1,5);
+insert into IncidenciasDestacadas (contadorDestacado,idIncidencia) values (0,1),(0,2),(1,3),(0,4),(1,5);
