@@ -114,9 +114,9 @@ public class AdminServlet extends HttpServlet {
                 String rol = request.getParameter("rol"); //string nulo
                 String categoriaPUCP = request.getParameter("categoriaPUCP"); //string nulo
 
-                Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,rol,categoriaPUCP);
+                Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,file,rol,categoriaPUCP);
 
-                usuarioDao.crearUsuario(usuario, file);
+                usuarioDao.crearUsuario(usuario);
 
                 response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
                 break;
