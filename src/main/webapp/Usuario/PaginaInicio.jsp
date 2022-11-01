@@ -396,7 +396,7 @@
                 <div class="inner container">
                     <div class="row">
                         <div class="col-md-6 d-flex align-items-center justify-content-md-start justify-content-center">
-                            <p class="mb-0">&copy; 2022 TeleSystem. Todos los derechos reservados.</p>
+                            <p class="mb-0">&copy; 2022 TeleSystem. Todos los derechos reservados. salchipapa fall guys un clash</p>
                         </div>
                     </div>
                 </div>

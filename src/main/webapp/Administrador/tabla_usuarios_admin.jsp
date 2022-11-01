@@ -150,7 +150,7 @@
                                         <td>
                                             <a type="button" class="btn btn-danger"
                                                onclick="return confirm('¿Estas seguro(a) que deseas borrar?')"
-                                               >
+                                               href="<%=request.getContextPath()%>/AdminServlet?accion=borrar&codigo=<%=usuario.getCodigo()%>">
                                                 <i class="bi bi-trash"></i>
                                             </a>
                                         </td>

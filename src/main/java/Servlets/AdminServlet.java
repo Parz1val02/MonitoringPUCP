@@ -82,7 +82,6 @@ public class AdminServlet extends HttpServlet {
             case "borrar":  // AdminServlet?action=borrar&id=
                 String codigo = request.getParameter("codigo");
                 usuarioDao.borrar(codigo);
-
                 response.sendRedirect(request.getContextPath() + "/AdminServlet");
                 break;
         }
@@ -90,6 +89,8 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+
         String action = request.getParameter("action");
 
         UsuarioDao usuarioDao = new UsuarioDao();
@@ -101,14 +102,14 @@ public class AdminServlet extends HttpServlet {
                 String apellido = request.getParameter("apellido");
                 String dni = request.getParameter("dni");
                 //boolean valida = Boolean.parseBoolean(request.getParameter("valida"));
-                String password = request.getParameter("password");
-                String nickname = request.getParameter("nickname");
+                //String password = request.getParameter("password");
+                //String nickname = request.getParameter("nickname");
                 String celular = request.getParameter("celular"); //string nulo
                 //Long foto_perfil = Long.parseLong(request.getParameter("fotoPerfil")); //long nulo
                 String rol = request.getParameter("rol"); //string nulo
                 String categoriaPUCP = request.getParameter("categoriaPUCP"); //string nulo
 
-                Usuario usuario = new Usuario(codigo,nombre,apellido,dni,password,nickname,celular,rol,categoriaPUCP);
+                Usuario usuario = new Usuario(codigo,nombre,apellido,dni,celular,rol,categoriaPUCP);
 
                 usuarioDao.crearUsuario(usuario);
 
