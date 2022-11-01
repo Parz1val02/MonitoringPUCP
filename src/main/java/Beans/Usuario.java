@@ -34,6 +34,16 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(String codigo, String nombre, String apellido, String dni, String celular, String rol, String categoriaPUCP) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.celular = celular;
+        this.rol = rol;
+        this.categoriaPUCP = categoriaPUCP;
+    }
+
     public String getRol() {
         return rol;
     }

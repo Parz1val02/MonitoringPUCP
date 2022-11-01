@@ -1,6 +1,10 @@
 package Daos;
 import Beans.Usuario;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -57,8 +61,9 @@ public class UsuarioDao {
             throw new RuntimeException(e);
         }
 
+        File imagen = new File("usuario.png");
         String url = "jdbc:mysql://localhost:3306/telesystem_aa";
-        String sql = "INSERT INTO usuarios (codigo, nombre, apellido, DNI, password, nickname, celular) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO usuarios (codigo, nombre, apellido, DNI, validaUsuario, password, nickname, celular, foto_perfil, idRoles, idCategoriaPUCP) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root");
@@ -68,19 +73,42 @@ public class UsuarioDao {
             pstmt.setString(2, usuario.getNombre());
             pstmt.setString(3, usuario.getApellido());
             pstmt.setString(4, usuario.getDni());
-            //pstmt.setBoolean(5, usuario.isValida());
-            pstmt.setString(5, usuario.getPassword());
-            pstmt.setString(6, usuario.getNickname());
-            pstmt.setString(7, usuario.getCelular()); //nulos
-            //pstmt.setLong(8, usuario.getFotoPerfil()); //nulos
-
+            pstmt.setBoolean(5, true);
+            pstmt.setString(6, "unclash");
+            pstmt.setString(7, "unfall");
+            pstmt.setString(8, usuario.getCelular()); //nulos
+            try(FileInputStream fin = new FileInputStream(imagen)){
+                pstmt.setBinaryStream(9, fin, (int) imagen.length());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            switch(usuario.getCategoriaPUCP()){
+                case "Alumno":
+                    pstmt.setInt(10, 1);
+                    break;
+                case "Administrativo":
+                    pstmt.setInt(10, 2);
+                    break;
+                case "Jefe de práctica":
+                    pstmt.setInt(10, 3);
+                    break;
+                case "Profesor":
+                    pstmt.setInt(10, 4);
+                    break;
+                case "Egresado":
+                    pstmt.setInt(10, 5);
+                    break;
+            }
+            if(usuario.getRol().equalsIgnoreCase("Usuario PUCP")){
+                pstmt.setInt(11,1);
+            }else{
+                pstmt.setInt(11,2);
+            }
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     //eliminar(delete) usuario---por ahora que aparezca modal
@@ -92,7 +120,7 @@ public class UsuarioDao {
         }
 
         String url = "jdbc:mysql://localhost:3306/telesystem_aa";
-        String sql = "DELETE FROM usuarios WHERE codigo = ?";
+        String sql = "DELETE FROM Usuarios WHERE codigo = ?";
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root");
              PreparedStatement pstmt = connection.prepareStatement(sql)) {

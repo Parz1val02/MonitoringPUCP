@@ -122,7 +122,8 @@
                                         <th>Código PUCP</th>
                                         <th>Rol</th>
                                         <th>Categoría PUCP</th>
-                                        <th>Detalles</th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 
@@ -140,11 +141,22 @@
                                         <%} else  { %>
                                         <td><%= usuario.getCategoriaPUCP()%></td>
                                         <% }%>
-										 <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
-
+                                        <td>
+                                            <a type="button" class="btn btn-primary"
+                                               >
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a type="button" class="btn btn-danger"
+                                               onclick="return confirm('¿Estas seguro(a) que deseas borrar?')"
+                                               href="<%=request.getContextPath()%>/AdminServlet?accion=borrar&codigo=<%=usuario.getCodigo()%>">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </td>
 									</tr>
 									<% }%>
-                                    <tr>
+                                    <!--tr>
                                         <td>Rodrigo</td>
                                         <td>Barrios</td>
                                         <td>20202073</td>
@@ -328,7 +340,7 @@
                                         <td>Alumno</td>
                                         <td><u><button name="submit" class="btn btn-primary" type="submit" value="Save" onclick="myFunction()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar Usuario</button></u> </td>
 
-                                    </tr>
+                                    </tr-->
                                 </tbody>
                            
 						   </table>

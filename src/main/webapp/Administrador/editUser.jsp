@@ -30,7 +30,7 @@
     <div class="page-wrapper">
         <!-- START PAGE CONTENT-->
         <div class="page-heading" style="  margin-top: 30px; text-align: center">
-          <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Registro de usuario</b></h1>
+          <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Editar usuario</b></h1>
         </div>
         <div class="page-content fade-in-up">
           <div class="col-md-6" style="margin: 0 auto">
@@ -110,7 +110,7 @@
                   </div>
                   <div class="form-group">
                     <button class="btn btn-primary" type="submit" >Registrar</button>
-                    <a href="<%=request.getContextPath()%>/AdminServlet?accion=tabla_usuarios" class="btn btn-secondary">Cancelar</a>
+                    <button class="btn btn-secondary">Cancelar</button>
                   </div>
                 </form>
               </div>
