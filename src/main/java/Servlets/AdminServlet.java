@@ -31,6 +31,9 @@ public class AdminServlet extends HttpServlet {
         RequestDispatcher view;
         UsuarioDao usuarioDao = new UsuarioDao();
         IncidenciaDao incidenciaDao = new IncidenciaDao();
+        
+        String usuarioCodigo;
+        Usuario usuario;
 
         switch (accion){
             case ("tabla_usuarios") :
@@ -58,6 +61,19 @@ public class AdminServlet extends HttpServlet {
 
                 view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
                 view.forward(request, response);
+                break;
+            case ("editar_usuario"): //editar usuario
+
+                usuarioCodigo = request.getParameter("codigo");
+                usuario = usuarioDao.buscarPorId(usuarioCodigo);
+
+                if (usuario != null) { //abro el form para editar
+                    request.setAttribute("usuario", usuario);
+                    view = request.getRequestDispatcher("/Administrador/editUser.jsp");
+                    view.forward(request, response);
+                } else { //id no encontrado
+                    response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                }
                 break;
             case ("cambiar_contrasenia"):
 
@@ -119,6 +135,52 @@ public class AdminServlet extends HttpServlet {
                 usuarioDao.crearUsuario(usuario);
 
                 response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
+                break;
+            case "actualizar":
+                String nombreUpdate = request.getParameter("nombre");
+                String apellidoUpdate = request.getParameter("apellido");
+                String codigoUpdate = request.getParameter("codigoPUCP");
+                String correoUpdate = request.getParameter("correoPUCP");
+                String dniUpdate = request.getParameter("dni");
+                String celularUpdate = request.getParameter("celular");
+                String categoriaUpdateStr = request.getParameter("categoriaPUCP");
+                String rolUpdateStr = request.getParameter("rol");
+
+                int categoriaUpdateInt = 0;
+                /*Usuario usuarioUpdate = new Usuario();
+                usuarioUpdate.setNombre(nombreUpdate);
+                usuarioUpdate.setApellido(apellidoUpdate);
+                usuarioUpdate.setCodigo(codigoUpdate);
+                usuarioUpdate.setCorreo(correoUpdate);
+                usuarioUpdate.setDni(dniUpdate);
+                usuarioUpdate.setCelular(celularUpdate);*/
+                if (categoriaUpdateStr.equalsIgnoreCase("alumno")) {
+                    categoriaUpdateInt = 1;
+                } else if (categoriaUpdateStr.equalsIgnoreCase("administrativo")) {
+                    categoriaUpdateInt = 2;
+                } else if (categoriaUpdateStr.equalsIgnoreCase("jefe de práctica")) {
+                    categoriaUpdateInt = 3;
+                } else if (categoriaUpdateStr.equalsIgnoreCase("profesor")) {
+                    categoriaUpdateInt = 4;
+                } else if (categoriaUpdateStr.equalsIgnoreCase("egresado")) {
+                    categoriaUpdateInt = 5;
+                } else if (categoriaUpdateStr.equalsIgnoreCase("no tiene categoria")) {
+                   categoriaUpdateInt = 0;
+                }
+
+
+                try {
+
+                    int rolUpdateInt = Integer.parseInt(rolUpdateStr);
+                    //usuarioUpdate.setIdCategoriaPUCP(categoriaUpdateInt);
+                    //usuarioUpdate.setIdRoles(rolUpdateInt);
+
+                    usuarioDao.actualizarUsuario(nombreUpdate,apellidoUpdate,codigoUpdate,correoUpdate,dniUpdate,celularUpdate,categoriaUpdateInt,rolUpdateInt);
+
+                    response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                } catch (NumberFormatException e) {
+                    response.sendRedirect(request.getContextPath() + "/AdminServlet?action=editar_usuario&id=" + codigoUpdate);
+                }
                 break;
 
         }
