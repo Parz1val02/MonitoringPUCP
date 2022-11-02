@@ -159,8 +159,8 @@ public class UsuarioDao {
                 usuario.setPassword(rs.getString(7));
                 usuario.setNickname(rs.getString(8));
                 usuario.setCelular(rs.getString(9));
-                File file = new File("./images/" + usuario.getCodigo() + "_fotoPerfil.png");
-                FileOutputStream output = new FileOutputStream(file);
+                File file = new File("images/" + usuario.getCodigo() + "_fotoPerfil.png");
+                FileOutputStream output = new FileOutputStream(file.getAbsoluteFile());
                 System.out.println("Writing to file " + file.getAbsolutePath());
                 InputStream input = rs.getBinaryStream(10);
                 byte[] buffer = new byte[1024];

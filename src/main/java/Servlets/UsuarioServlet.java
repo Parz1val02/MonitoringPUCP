@@ -37,7 +37,7 @@ public class UsuarioServlet extends HttpServlet {
                 break;
             case ("listarDestacados") :
                 try {
-                    listaIncidencias = uriDao.obtenerIncidencias();
+                    listaIncidencias = inDao.obtenerIncidencias();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
