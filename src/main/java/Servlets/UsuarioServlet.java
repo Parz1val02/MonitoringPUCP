@@ -1,10 +1,7 @@
 package Servlets;
 
 import Beans.Incidencia;
-import Beans.Usuario;
 import Daos.IncidenciaDao;
-import Daos.UsuarioDao;
-import Daos.UsuarioReInciDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -20,25 +17,26 @@ public class UsuarioServlet extends HttpServlet {
 
         String accion = request.getParameter("accion")==null?"inicio":request.getParameter("accion");
         RequestDispatcher view;
-        UsuarioReInciDao uriDao = new UsuarioReInciDao();
+
         IncidenciaDao inDao = new IncidenciaDao();
-        UsuarioDao udao =  new UsuarioDao();
         ArrayList<Incidencia> listaIncidencias = null;
-        Usuario usuario = null;
         switch (accion){
             case ("listar") :
                 try {
-                    listaIncidencias = uriDao.obtenerIncidencias();
+                    listaIncidencias = inDao.obtenerIncidencias();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+
+
+
                 request.setAttribute("listaIncidencias",listaIncidencias);
                 view = request.getRequestDispatcher("/Usuario/reabrirIncidencia.jsp");
                 view.forward(request,response);
                 break;
             case ("verDetalle"):
                 String idIncidencia = request.getParameter("id");
-                Incidencia incidencia = uriDao.obtenerIncidencia(idIncidencia);
+                Incidencia incidencia = inDao.obtenerIncidencia(idIncidencia);
 
                 request.setAttribute("Incidencia",incidencia);
 
@@ -46,8 +44,6 @@ public class UsuarioServlet extends HttpServlet {
                 view.forward(request, response);
                 break;
             case("perfil"):
-                usuario = udao.obtenerUsuario();
-                request.setAttribute("usuario",usuario);
                 view = request.getRequestDispatcher("/Usuario/UsuarioPerfil.jsp");
                 view.forward(request, response);
                 break;
@@ -61,6 +57,9 @@ public class UsuarioServlet extends HttpServlet {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+
+
+
                 request.setAttribute("listaIncidencias",listaIncidencias);
                 view = request.getRequestDispatcher("/Usuario/BuscarIncidencia.jsp");
                 view.forward(request, response);
