@@ -55,7 +55,7 @@ public class UsuarioServlet extends HttpServlet {
                 break;
             case("verImagen"):
                 usuario = udao.obtenerUsuario();
-                response.setContentType("image/png");
+                response.setContentType("image/jpg");
                 try (OutputStream out = response.getOutputStream()) {
                     out.write(usuario.getFotobyte());
                 }
