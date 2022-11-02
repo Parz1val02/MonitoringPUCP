@@ -83,7 +83,7 @@
                     <div class="imagen">
                         <div class="img">
                             <a target="blank" href="../images/usuario.png">
-                                <img src="<%=usuario.getFotoPerfil()%>" alt="Trolltunga Norway">
+                                <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verImagen" alt="Trolltunga Norway">
                             </a>
                         </div>
                     </div>

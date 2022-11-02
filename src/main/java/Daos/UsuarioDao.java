@@ -159,26 +159,33 @@ public class UsuarioDao {
                 usuario.setPassword(rs.getString(7));
                 usuario.setNickname(rs.getString(8));
                 usuario.setCelular(rs.getString(9));
-                File file = new File("images/" + usuario.getCodigo() + "_fotoPerfil.png");
-                FileOutputStream output = new FileOutputStream(file.getAbsoluteFile());
+                /*File file = new File(usuario.getCodigo() + "_fotoPerfil.png");
+                if (file.createNewFile()){
+                    System.out.println("File is created!");
+                }else{
+                    System.out.println("File already exists.");
+                }
+                FileOutputStream output = new FileOutputStream(file.getPath());
                 System.out.println("Writing to file " + file.getAbsolutePath());
                 InputStream input = rs.getBinaryStream(10);
                 byte[] buffer = new byte[1024];
                 while (input.read(buffer) > 0) {
                     output.write(buffer);
                 }
-                usuario.setRol(rs.getString(11));
-                usuario.setCategoriaPUCP(rs.getString(12));
                 //close the OutputStream
                 output.close();
                 //close the InputStream
                 input.close();
+                usuario.setFotoPerfil(file);*/
+                usuario.setFotobyte(rs.getBytes(10));
+                usuario.setRol(rs.getString(11));
+                usuario.setCategoriaPUCP(rs.getString(12));
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } /*catch (IOException e) {
             throw new RuntimeException(e);
-        }
+        }*/
         return usuario;
     }
 
