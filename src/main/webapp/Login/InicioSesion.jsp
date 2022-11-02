@@ -60,21 +60,16 @@
         </div>
         <div style="height: 20px; display: block;"></div>
         <div align="center">
-          <button type="button" class="btn btn-outline-dark" style="border-radius: 5px">Aceptar</button>
+          <button type="button" class="btn btn-primary btn-lg float-right" style="font-size: 12px; border-color: #042354; background-color: #163297; border-radius: 5px">Aceptar</button>
         </div>
         <div style="height: 5px; display: block;"></div>
         <div align="center">
-          <a style="color: #9f191f; font-size: 13px; font-family: 'Arial';"href="olvido_contrasena.html">He olvidado mi contraseña</a>
+          <a style="color: #9f191f; font-size: 13px; font-family: 'Arial';"href="<%=request.getContextPath()%>/Login?accion=olvidar">He olvidado mi contraseña</a>
         </div>
         <div style="height: 60px; display: block;"></div>
       </div>
       <div class="col-sm"></div>
     </div>
   </div>
-
-
 </body>
-
 </html>
-
-
