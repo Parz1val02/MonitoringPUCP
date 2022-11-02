@@ -56,12 +56,7 @@
                     </div>
                   </div>
                   <div class="row g-2">
-                    <div class="col-md">
-                      <div class="form-floating" style="margin-bottom: 5px;">
-                        <input type="hidden" class="form-control" id="floatingInputGrid3" placeholder="Código PUCP" name="codigoPUCP" value="<%=usuario.getCodigo()%>">
-                        <!--<label for="floatingInputGrid3">Código PUCP</label>-->
-                      </div>
-                    </div>
+
                     <div class="col-md">
                       <div class="form-floating" style="margin-bottom: 5px;">
                         <input type="text" class="form-control" id="floatingInputGrid4" placeholder="Correo PUCP" name="correoPUCP" value="<%=usuario.getCorreo()%>">
@@ -119,7 +114,15 @@
 
                       </div>
                     </div>
+
+
                     <div style="color:#FF0000;"><p text-align="center;" style="margin-top: 10px;" class="font-weight-bold">Todos los campos son obligatorios.</p></div>
+                  </div>
+                  <div class="col-md">
+                    <div class="form-floating" style="margin-bottom: 5px;">
+                      <input type="hidden" class="form-control" id="floatingInputGrid3" placeholder="Código PUCP" name="codigoPUCP" value="<%=usuario.getCodigo()%>">
+                      <!--<label for="floatingInputGrid3">Código PUCP</label>-->
+                    </div>
                   </div>
                   <div class="form-group">
                     <button class="btn btn-primary" type="submit" >Actualizar datos</button>
