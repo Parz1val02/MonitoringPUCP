@@ -148,13 +148,13 @@
                                         <%} else  { %>
                                         <td><%= usuario.getCategoriaPUCP()%></td>
                                         <% }%>
-                                        <td>
+                                        <td class="text-center">
                                             <a type="button" class="btn btn-primary"
-                                               >
+                                               href="<%=request.getContextPath()%>/AdminServlet?accion=editar_usuario&codigo=<%=usuario.getCodigo()%>">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             <a type="button" class="btn btn-danger"
                                                onclick="return confirm('¿Estas seguro(a) que deseas borrar?')"
                                                href="<%=request.getContextPath()%>/AdminServlet?accion=borrar&codigo=<%=usuario.getCodigo()%>">
@@ -404,6 +404,7 @@
         </script>
 
         <!-- Modal -->
+	<!--
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -496,7 +497,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </body>
 </html>
