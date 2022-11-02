@@ -4,8 +4,13 @@ import Beans.Incidencia;
 import com.mysql.cj.x.protobuf.MysqlxExpr;
 //import sun.nio.ch.WindowsAsynchronousFileChannelImpl;
 
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.*;
 import java.util.ArrayList;
+
+import static java.nio.file.Files.newOutputStream;
 
 public class IncidenciaDao {
 
@@ -101,6 +106,8 @@ public class IncidenciaDao {
 
         return incidencia;
     }
+
+
     /*public ArrayList<Incidencia> obtenerDestacadas() throws SQLException {
 
         try{

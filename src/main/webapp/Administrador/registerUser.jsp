@@ -57,7 +57,7 @@
                   <div class="row g-2">
                     <div class="col-md">
                       <div class="form-floating" style="margin-bottom: 5px;">
-                        <input type="text" class="form-control" id="floatingInputGrid3" placeholder="Código PUCP" name="codigoPUCP">
+                        <input type="text" class="form-control" id="floatingInputGrid3" placeholder="Código PUCP" name="codigo">
                         <label for="floatingInputGrid3">Código PUCP</label>
                       </div>
                     </div>

@@ -14,12 +14,11 @@ public class Usuario {
     private boolean valida;
     private String nickname;
     private String celular;
-    private Integer idRoles;
-    private Integer idCategoriaPUCP;
     private File fotoPerfil;
-
     private String rol;
     private String categoriaPUCP;
+    private Integer idCategoriaPUCP;
+    private Integer idRoles;
 
     //constructor para el
     public Usuario(String codigo, String nombre, String apellido, String dni, String password, String nickname, String celular, File fotoPerfil, String rol, String categoriaPUCP) {
@@ -132,22 +131,6 @@ public class Usuario {
         this.celular = celular;
     }
 
-    public Integer getIdRoles() {
-        return idRoles;
-    }
-
-    public void setIdRoles(Integer idRoles) {
-        this.idRoles = idRoles;
-    }
-
-    public Integer getIdCategoriaPUCP() {
-        return idCategoriaPUCP;
-    }
-
-    public void setIdCategoriaPUCP(Integer idCategoriaPUCP) {
-        this.idCategoriaPUCP = idCategoriaPUCP;
-    }
-
     public File getFotoPerfil() {
         return fotoPerfil;
     }
@@ -162,5 +145,21 @@ public class Usuario {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public Integer getIdCategoriaPUCP() {
+        return idCategoriaPUCP;
+    }
+
+    public void setIdCategoriaPUCP(Integer idCategoriaPUCP) {
+        this.idCategoriaPUCP = idCategoriaPUCP;
+    }
+
+    public Integer getIdRoles() {
+        return idRoles;
+    }
+
+    public void setIdRoles(Integer idRoles) {
+        this.idRoles = idRoles;
     }
 }

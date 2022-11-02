@@ -1,7 +1,9 @@
 package Servlets;
 
 import Beans.Incidencia;
+import Beans.Usuario;
 import Daos.IncidenciaDao;
+import Daos.UsuarioDao;
 import Daos.UsuarioReInciDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -20,7 +22,9 @@ public class UsuarioServlet extends HttpServlet {
         RequestDispatcher view;
         UsuarioReInciDao uriDao = new UsuarioReInciDao();
         IncidenciaDao inDao = new IncidenciaDao();
+        UsuarioDao udao =  new UsuarioDao();
         ArrayList<Incidencia> listaIncidencias = null;
+        Usuario usuario = null;
         switch (accion){
             case ("listar") :
                 try {
@@ -42,6 +46,8 @@ public class UsuarioServlet extends HttpServlet {
                 view.forward(request, response);
                 break;
             case("perfil"):
+                usuario = udao.obtenerUsuario();
+                request.setAttribute("usuario",usuario);
                 view = request.getRequestDispatcher("/Usuario/UsuarioPerfil.jsp");
                 view.forward(request, response);
                 break;
