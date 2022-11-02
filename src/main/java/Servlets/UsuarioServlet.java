@@ -1,7 +1,9 @@
 package Servlets;
 
 import Beans.Incidencia;
+import Beans.Usuario;
 import Daos.IncidenciaDao;
+import Daos.UsuarioDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -17,9 +19,11 @@ public class UsuarioServlet extends HttpServlet {
 
         String accion = request.getParameter("accion")==null?"inicio":request.getParameter("accion");
         RequestDispatcher view;
-
         IncidenciaDao inDao = new IncidenciaDao();
         ArrayList<Incidencia> listaIncidencias = null;
+        UsuarioDao udao = new UsuarioDao();
+        Usuario usuario = null;
+        Incidencia incidencia = null;
         switch (accion){
             case ("listar") :
                 try {
@@ -27,23 +31,20 @@ public class UsuarioServlet extends HttpServlet {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-
-
-
                 request.setAttribute("listaIncidencias",listaIncidencias);
                 view = request.getRequestDispatcher("/Usuario/reabrirIncidencia.jsp");
                 view.forward(request,response);
                 break;
             case ("verDetalle"):
                 String idIncidencia = request.getParameter("id");
-                Incidencia incidencia = inDao.obtenerIncidencia(idIncidencia);
-
+                incidencia = inDao.obtenerIncidencia(idIncidencia);
                 request.setAttribute("Incidencia",incidencia);
-
                 view = request.getRequestDispatcher("/Usuario/DetalleReabierto.jsp");
                 view.forward(request, response);
                 break;
             case("perfil"):
+                usuario = udao.obtenerUsuario();
+                request.setAttribute("usuario",usuario);
                 view = request.getRequestDispatcher("/Usuario/UsuarioPerfil.jsp");
                 view.forward(request, response);
                 break;
@@ -57,8 +58,6 @@ public class UsuarioServlet extends HttpServlet {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-
-
 
                 request.setAttribute("listaIncidencias",listaIncidencias);
                 view = request.getRequestDispatcher("/Usuario/BuscarIncidencia.jsp");
