@@ -8,7 +8,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%
-    ArrayList<Usuario> listaUsuarios = (ArrayList<Usuario>) request.getAttribute("listaUsuarios");
+    Usuario usuario = (Usuario) request.getAttribute("usuario");
 %>
 <html lang="en">
     <head>
@@ -83,7 +83,7 @@
                     <div class="imagen">
                         <div class="img">
                             <a target="blank" href="../images/usuario.png">
-                                <img src="../images/usuario.png" alt="Trolltunga Norway">
+                                <img src="<%=usuario.getFotoPerfil()%>" alt="Trolltunga Norway">
                             </a>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                                 </div>
                                 <div class="col-md">
                                     <label>
-                                        <input style="margin-left: 10px" class="form-control" type="text" value="Unfall" readonly>
+                                        <input style="margin-left: 10px" class="form-control" type="text" value="<%=usuario.getNickname()%>" readonly>
                                     </label>
                                 </div>
                             </div>
@@ -140,7 +140,7 @@
                                             <label>Nombre: </label>
                                             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                                                 <input class="form-control" type="text" id="LeoFall1" placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall1">Leonardo</label>
+                                                <label for="LeoFall1"><%=usuario.getNombre()%></label>
                                             </div>
                                         </div>
                                     </div>
@@ -149,7 +149,7 @@
                                             <label>Apellido: </label>
                                             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                                                 <input class="form-control" type="text" id="LeoFall2" placeholder="Apellido" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall2">Abanto</label>
+                                                <label for="LeoFall2"><%=usuario.getApellido()%></label>
                                             </div>
                                         </div>
                                     </div>
@@ -160,7 +160,7 @@
                                             <label>Código PUCP </label>
                                             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                                                 <input class="form-control" type="text" id="LeoFall3" placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall3">20201696</label>
+                                                <label for="LeoFall3"><%=usuario.getCodigo()%></label>
                                             </div>
                                         </div>
                                     </div>
@@ -169,7 +169,7 @@
                                             <label>Correo PUCP: </label>
                                             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                                                 <input class="form-control" type="text" id="LeoFall4" placeholder="Apellido" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall4">a20202016@pucp.edu.pe</label>
+                                                <label for="LeoFall4"><%=usuario.getCorreo()%></label>
                                             </div>
                                         </div>
                                     </div>
@@ -180,7 +180,7 @@
                                             <label>DNI:</label>
                                             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                                                 <input class="form-control" type="text" id="LeoFall5" placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall5">unclash</label>
+                                                <label for="LeoFall5"><%=usuario.getDni()%></label>
                                             </div>
                                         </div>
                                     </div>
@@ -189,7 +189,7 @@
                                             <label>Celular:</label>
                                             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                                                 <input class="form-control" type="text" id="LeoFall6" placeholder="Apellido" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall6">uncall</label>
+                                                <label for="LeoFall6"><%=usuario.getCelular()%></label>
                                             </div>
                                         </div>
                                     </div>
@@ -200,7 +200,7 @@
                                             <label>Categoría PUCP:</label>
                                             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                                                 <input class="form-control" type="text" id="LeoFall7" placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall7">Categoría PUCP</label>
+                                                <label for="LeoFall7"><%=usuario.getCategoriaPUCP()%></label>
                                             </div>
                                         </div>
                                     </div>
@@ -209,7 +209,7 @@
                                             <label>Rol de Usuario:</label>
                                             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                                                 <input class="form-control" type="text" id="LeoFall8" placeholder="Apellido" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall8">Rol de Usuario</label>
+                                                <label for="LeoFall8"><%=usuario.getRol()%></label>
                                             </div>
                                         </div>
                                     </div>

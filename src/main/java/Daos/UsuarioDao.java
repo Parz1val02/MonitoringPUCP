@@ -1,10 +1,12 @@
 package Daos;
 import Beans.Usuario;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.sql.*;
 import java.util.ArrayList;
+
+import static java.nio.file.Files.newOutputStream;
 
 public class UsuarioDao {
 
@@ -59,7 +61,7 @@ public class UsuarioDao {
             throw new RuntimeException(e);
         }
         String url = "jdbc:mysql://localhost:3306/telesystem_aa";
-        String sql = "INSERT INTO usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, nickname, celular, foto_perfil, idRoles, idCategoriaPUCP) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, nickname, celular, foto_perfil, idRoles, idCategoriaPUCP) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root");
@@ -74,12 +76,10 @@ public class UsuarioDao {
             pstmt.setString(7, "unclash");
             pstmt.setString(8, "unfall");
             pstmt.setString(9, usuario.getCelular()); //nulos
-            try(FileInputStream fin = new FileInputStream(usuario.getFotoPerfil())){
-                pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            switch(usuario.getCategoriaPUCP()){
+            FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
+            pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());
+            pstmt.setInt(11, 1);
+            /*switch(usuario.getCategoriaPUCP()){
                 case "Alumno":
                     pstmt.setInt(11, 1);
                     break;
@@ -95,15 +95,17 @@ public class UsuarioDao {
                 case "Egresado":
                     pstmt.setInt(11, 5);
                     break;
-            }
+            }*/
+            /*
             if(usuario.getRol().equalsIgnoreCase("Usuario PUCP")){
                 pstmt.setInt(12,1);
             }else{
                 pstmt.setInt(12,2);
-            }
+            }*/
+            pstmt.setInt(12,1);
             pstmt.executeUpdate();
 
-        } catch (SQLException e) {
+        } catch (SQLException | FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -130,7 +132,55 @@ public class UsuarioDao {
         }
     }
 
+    public Usuario obtenerUsuario() {
 
+        Usuario usuario = new Usuario();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String user = "root";
+        String pass = "root";
+        String url = "jdbc:mysql://localhost:3306/telesystem_aa?serverTimezone=America/Lima";
+        String sql = "SELECT u.codigo, u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, u.foto_perfil, r.nombreRol, catpucp.nombreCategoria FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP where u.codigo=\"20172322\"";
+
+        try(Connection conn = DriverManager.getConnection(url, user, pass);
+            Statement stmt = conn.createStatement();){
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                usuario.setCodigo(rs.getString(1));
+                usuario.setNombre(rs.getString(2));
+                usuario.setApellido(rs.getString(3));
+                usuario.setCorreo(rs.getString(4));
+                usuario.setDni(rs.getString(5));
+                usuario.setValida(rs.getBoolean(6));
+                usuario.setPassword(rs.getString(7));
+                usuario.setNickname(rs.getString(8));
+                usuario.setCelular(rs.getString(9));
+                File file = new File("./images/" + usuario.getCodigo() + "_fotoPerfil.png");
+                FileOutputStream output = new FileOutputStream(file);
+                System.out.println("Writing to file " + file.getAbsolutePath());
+                InputStream input = rs.getBinaryStream(10);
+                byte[] buffer = new byte[1024];
+                while (input.read(buffer) > 0) {
+                    output.write(buffer);
+                }
+                usuario.setRol(rs.getString(11));
+                usuario.setCategoriaPUCP(rs.getString(12));
+                //close the OutputStream
+                output.close();
+                //close the InputStream
+                input.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return usuario;
+    }
 
 
 }
