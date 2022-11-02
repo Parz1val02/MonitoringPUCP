@@ -32,6 +32,16 @@ public class UsuarioServlet extends HttpServlet {
                 view = request.getRequestDispatcher("/Usuario/reabrirIncidencia.jsp");
                 view.forward(request,response);
                 break;
+            case ("listarDestacados") :
+                try {
+                    listaIncidencias = uriDao.obtenerIncidencias();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                request.setAttribute("listaIncidencias",listaIncidencias);
+                view = request.getRequestDispatcher("/Usuario/IncidenciasDestacadas.jsp");
+                view.forward(request,response);
+                break;
             case ("verDetalle"):
                 String idIncidencia = request.getParameter("id");
                 Incidencia incidencia = uriDao.obtenerIncidencia(idIncidencia);
@@ -59,6 +69,7 @@ public class UsuarioServlet extends HttpServlet {
                 view = request.getRequestDispatcher("/Usuario/BuscarIncidencia.jsp");
                 view.forward(request, response);
                 break;
+
             case("inicio"):
                 /*try {
                     listaDestacados = inDao.obtenerDestacadas();

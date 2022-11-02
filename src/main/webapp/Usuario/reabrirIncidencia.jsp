@@ -93,17 +93,8 @@
 <div class="col-md-10" style="margin: 0 auto">
     <div class="content-wrapper">
         <div class="page-heading" style="text-align: center;margin-top: 15px;margin-bottom: 20px;">
-            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-outline" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 40px; font-weight: bold" >
-                        Tabla de Incidencias
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" style="font-size: 15px" href="#">Mis incidencias</a></li>
-                        <li><a class="dropdown-item" style="font-size: 15px" href="#">Incidencias destacadas</a></li>
-                    </ul>
-                </div>
-            </div>
+            <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Mis Incidencias</b></h1>
+            <button onclick="document.location='<%=request.getContextPath()%>/UsuarioServlet?accion=listarDestacados'" style="margin-left: -1150px;" class="btn btn-primary btn-lg">Incidencias Destacadas</button>
         </div>
         <div class="page-content fade-in-up">
             <div class="ibox">
@@ -127,8 +118,8 @@
                                 <td><%= incidencia.getNombreIncidencia()%> </td>
                                 <td><%= incidencia.getUsuarios_nombre_completo()%></td>
                                 <td><%= incidencia.getNombreEstado()%> </td
+                                <td></td>
                                 <td><%= incidencia.getContador_reabierto()%> </td>
-                                <td><%= incidencia.getContadorDestacado()%> </td>
                                 <td><a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle&id=<%=incidencia.getIdIncidencia()%>">¿Reabrir incidencia?</a></td>
 
                             </tr>
