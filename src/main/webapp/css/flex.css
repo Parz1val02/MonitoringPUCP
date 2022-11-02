@@ -25,14 +25,11 @@ main#carousel {
   pointer-events: none;
 }
 
-i.robo{
-  background-image: url(../images/robo.png);
-}
 
 div.itemm {
   position: absolute;
   width: 30vh;
-  height: 40vh;
+  height: 50vh;
   background-color: coral;
   --r: calc(var(--position) - var(--offset));
   --abs: max(calc(var(--r) * -1), var(--r));
