@@ -79,9 +79,9 @@
                 </a>
 
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">PDF</a></li>
-                    <li><a class="dropdown-item" href="#">XML</a></li>
-                    <li><a class="dropdown-item" href="#">TXT</a></li>
+                    <li><a class="dropdown-item" href="/assets/hello.pdf" download="my_file.pdf">PDF</a></li>
+                    <li><a class="dropdown-item" href="/assets/hello.xls" download="my_file.xls">XML</a></li>
+                    <li><a class="dropdown-item" href="/assets/hello.txt" download="my_file.txt">TXT</a></li>
                 </ul>
             </div>
 

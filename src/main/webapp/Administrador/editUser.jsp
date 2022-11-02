@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="usuario" type="Beans.Usuario" scope="request"/>
 
 <html lang="en">
 
@@ -39,17 +40,17 @@
                 <div class="ibox-title">Datos de usuario</div>
               </div>
               <div class="ibox-body">
-                <form method="post" action="<%=request.getContextPath()%>/AdminServlet?action=guardar">
+                <form method="post" action="<%=request.getContextPath()%>/AdminServlet?action=actualizar">
                   <div class="row g-2">
                     <div class="col-md">
                       <div class="form-floating" style="margin-bottom: 5px;">
-                        <input type="text" class="form-control" id="floatingInputGrid1" placeholder="Nombre" name="nombre">
+                        <input type="text" class="form-control" id="floatingInputGrid1" placeholder="Nombre" name="nombre" value="<%=usuario.getNombre()%>">
                         <label for="floatingInputGrid1">Nombre</label>
                       </div>
                     </div>
                     <div class="col-md">
                       <div class="form-floating" style="margin-bottom: 5px;">
-                        <input type="text" class="form-control" id="floatingInputGrid2" placeholder="Apellido" name="apellido" >
+                        <input type="text" class="form-control" id="floatingInputGrid2" placeholder="Apellido" name="apellido" value="<%=usuario.getApellido()%>">
                         <label for="floatingInputGrid2">Apellido</label>
                       </div>
                     </div>
@@ -57,13 +58,13 @@
                   <div class="row g-2">
                     <div class="col-md">
                       <div class="form-floating" style="margin-bottom: 5px;">
-                        <input type="text" class="form-control" id="floatingInputGrid3" placeholder="Código PUCP" name="codigoPUCP">
-                        <label for="floatingInputGrid3">Código PUCP</label>
+                        <input type="hidden" class="form-control" id="floatingInputGrid3" placeholder="Código PUCP" name="codigoPUCP" value="<%=usuario.getCodigo()%>">
+                        <!--<label for="floatingInputGrid3">Código PUCP</label>-->
                       </div>
                     </div>
                     <div class="col-md">
                       <div class="form-floating" style="margin-bottom: 5px;">
-                        <input type="text" class="form-control" id="floatingInputGrid4" placeholder="Correo PUCP" name="correoPUCP">
+                        <input type="text" class="form-control" id="floatingInputGrid4" placeholder="Correo PUCP" name="correoPUCP" value="<%=usuario.getCorreo()%>">
                         <label for="floatingInputGrid4">Correo PUCP</label>
                       </div>
                     </div>
@@ -71,13 +72,13 @@
                   <div class="row g-2">
                     <div class="col-md">
                       <div class="form-floating" style="margin-bottom: 5px;">
-                        <input type="text" class="form-control" id="floatingInputGrid5" placeholder="DNI" name="dni">
+                        <input type="text" class="form-control" id="floatingInputGrid5" placeholder="DNI" name="dni" value="<%=usuario.getDni()%>">
                         <label for="floatingInputGrid4">DNI</label>
                       </div>
                     </div>
                     <div class="col-md">
                       <div class="form-floating" style="margin-bottom: 5px;">
-                        <input type="text" class="form-control" id="floatingInputGrid6" placeholder="Celular" name="celular">
+                        <input type="text" class="form-control" id="floatingInputGrid6" placeholder="Celular" name="celular" value="<%=usuario.getCelular()%>">
                         <label for="floatingInputGrid6">Celular</label>
                       </div>
                     </div>
@@ -85,32 +86,44 @@
                   <div class="row">
                     <div class="col-md">
                       <div class="form-floating">
-                        <select class="form-select" id="floatingSelectGrid1">
-                          <option selected>Categoría PUCP</option>
-                          <option value="1">Alumno</option>
-                          <option value="2">Administrativo</option>
-                          <option value="3">Jefe de Práctica</option>
-                          <option value="4">Profesor</option>
-                          <option value="5">Egresado</option>
+
+                        <select class="form-select" id="floatingSelectGrid1" name="rol">
+                          <option selected value="<%=usuario.getIdRoles()%>"><%=usuario.getRol()%></option>
+                          <%  if (usuario.getIdRoles()== 1) { %>
+                            <option value="2">Seguridad</option>
+                          <% } else if (usuario.getIdRoles()== 2) { %>
+                            <option value="1">Usuario PUCP</option>
+                          <% } %>
                         </select>
-                        <label for="floatingSelectGrid1">Categoría</label>
+                        <label for="floatingSelectGrid1">Rol</label>
+
+
                       </div>
                     </div>
                     <div class="col-md">
                       <div class="form-floating">
-                        <select class="form-select" id="floatingSelectGrid2">
-                          <option selected>Rol de Usuario</option>
-                          <option value="1">Usuario PUCP</option>
-                          <option value="2">Seguridad</option>
+
+                        <select class="form-select" id="floatingSelectGrid2" name="categoriaPUCP">
+                          <option selected value="<%=usuario.getCategoriaPUCP()%>"><%=usuario.getCategoriaPUCP()==null?"No tiene categoria":usuario.getCategoriaPUCP()%></option>
+
+                          <!--<option value="1">Alumno</option>
+                          <option value="2">Administrativo</option>
+                          <option value="3">Jefe de Práctica</option>
+                          <option value="4">Profesor</option>
+                          <option value="5">Egresado</option>-->
+
                         </select>
-                        <label for="floatingSelectGrid2">Rol</label>
+                        <label for="floatingSelectGrid2">Categoría</label>
+
+
+
                       </div>
                     </div>
                     <div style="color:#FF0000;"><p text-align="center;" style="margin-top: 10px;" class="font-weight-bold">Todos los campos son obligatorios.</p></div>
                   </div>
                   <div class="form-group">
-                    <button class="btn btn-primary" type="submit" >Registrar</button>
-                    <button class="btn btn-secondary">Cancelar</button>
+                    <button class="btn btn-primary" type="submit" >Actualizar datos</button>
+                    <a href="<%=request.getContextPath()%>/AdminServlet" class="btn btn-danger">Cancelar</a>
                   </div>
                 </form>
               </div>
@@ -120,6 +133,7 @@
         <!-- END PAGE CONTENT-->
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script src="scripts/dynamicSelect.js" type="text/javascript"></script>
     <!--div class="container-fluid sticky-footer">
       <footer class="mastfoot mb-3 py-4 ">
         <div class="inner container">

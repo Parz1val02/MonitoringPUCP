@@ -188,6 +188,91 @@ public class UsuarioDao {
         }*/
         return usuario;
     }
+    
+    public void actualizarUsuario(String nombreUpdate, String apellidoUpdate, String codigoUpdate, String correoUpdate, String dniUpdate, String celularUpdate, int categoriaUpdateInt, int rolUpdateInt) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
+        String url = "jdbc:mysql://localhost:3306/telesystem_aa?serverTimezone=America/Lima";
+        String sql = "UPDATE usuarios SET nombre = ?, apellido = ?, correo = ?, DNI = ?, celular = ?, idRoles = ?, idCategoriaPUCP = ? WHERE codigo = ?";
+
+        try (Connection connection = DriverManager.getConnection(url, "root", "root");
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+
+            pstmt.setString(1, nombreUpdate);
+            pstmt.setString(2, apellidoUpdate);
+            pstmt.setString(3, correoUpdate);
+            pstmt.setString(4, dniUpdate);
+            pstmt.setString(5, celularUpdate);
+
+            if (rolUpdateInt==2) {
+                pstmt.setNull(7, Types.INTEGER);
+            } else {
+                pstmt.setInt(7, categoriaUpdateInt);
+            }
+
+
+            pstmt.setInt(6, rolUpdateInt);
+            pstmt.setString(8, codigoUpdate);
+
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Usuario buscarPorId(String usuarioCodigo) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String url = "jdbc:mysql://localhost:3306/telesystem_aa?serverTimezone=America/Lima";
+
+        Usuario usuario = null;
+
+        String sql = "select * from usuarios WHERE codigo = ?";
+        String sql1 = "SELECT u.codigo, u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, r.nombreRol, catpucp.nombreCategoria, u.idRoles, u.idCategoriaPUCP FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP WHERE u.codigo = ?";
+
+
+        try (Connection connection = DriverManager.getConnection(url, "root", "root");
+             PreparedStatement pstmt = connection.prepareStatement(sql1);) {
+
+            pstmt.setString(1, usuarioCodigo);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+
+
+                    usuario = new Usuario();
+                    usuario.setCodigo(rs.getString(1));
+                    usuario.setNombre(rs.getString(2));
+                    usuario.setApellido(rs.getString(3));
+                    usuario.setCorreo(rs.getString(4));
+                    usuario.setDni(rs.getString(5));
+                    usuario.setValida(rs.getBoolean(6));
+                    usuario.setPassword(rs.getString(7));
+                    usuario.setNickname(rs.getString(8));
+                    usuario.setCelular(rs.getString(9));
+                    usuario.setRol(rs.getString(10));
+                    usuario.setCategoriaPUCP(rs.getString(11));
+                    usuario.setIdRoles(rs.getInt(12));
+                    usuario.setIdCategoriaPUCP(rs.getInt(13));
+
+
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return usuario;
+    }
 
 }

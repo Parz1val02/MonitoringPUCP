@@ -109,11 +109,11 @@
                 <!-- START PAGE CONTENT-->
                 <div class="page-heading" style="  margin-top: 30px;">
                     <div class="row g-2">
-                        <div class="col-10" style="align-content: ">
+                        <div class="col-10" style="">
                             <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Tabla de usuarios</b></h1>
                         </div>
                         <div class="col-2" style="">
-                            <a href="<%=request.getContextPath()%>/AdminServlet?accion=registrar_usuario" class="btn btn-success">Crear trabajo</a>
+                            <a href="<%=request.getContextPath()%>/AdminServlet?accion=registrar_usuario" class="btn btn-primary">Registrar usuario</a>
                         </div>
                     </div>
                 </div>
@@ -148,13 +148,13 @@
                                         <%} else  { %>
                                         <td><%= usuario.getCategoriaPUCP()%></td>
                                         <% }%>
-                                        <td>
+                                        <td class="text-center">
                                             <a type="button" class="btn btn-primary"
-                                               >
+                                               href="<%=request.getContextPath()%>/AdminServlet?accion=editar_usuario&codigo=<%=usuario.getCodigo()%>">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             <a type="button" class="btn btn-danger"
                                                onclick="return confirm('¿Estas seguro(a) que deseas borrar?')"
                                                href="<%=request.getContextPath()%>/AdminServlet?accion=borrar&codigo=<%=usuario.getCodigo()%>">
@@ -404,6 +404,7 @@
         </script>
 
         <!-- Modal -->
+	<!--
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -496,7 +497,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </body>
 </html>
