@@ -197,7 +197,7 @@ public class UsuarioDao {
         }
 
         String url = "jdbc:mysql://localhost:3306/telesystem_aa?serverTimezone=America/Lima";
-        String sql = "UPDATE usuarios SET nombre = ?, apellido = ?, correo = ?, DNI = ?, celular = ?, idRoles = ?, idCategoriaPUCP = ? WHERE codigo = ?";
+        String sql = "UPDATE Usuarios SET nombre = ?, apellido = ?, correo = ?, DNI = ?, celular = ?, idRoles = ?, idCategoriaPUCP = ? WHERE codigo = ?";
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root");
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
