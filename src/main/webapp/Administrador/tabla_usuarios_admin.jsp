@@ -109,11 +109,11 @@
                 <!-- START PAGE CONTENT-->
                 <div class="page-heading" style="  margin-top: 30px;">
                     <div class="row g-2">
-                        <div class="col-10" style="align-content: ">
+                        <div class="col-10" style="">
                             <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Tabla de usuarios</b></h1>
                         </div>
                         <div class="col-2" style="">
-                            <a href="<%=request.getContextPath()%>/AdminServlet?accion=registrar_usuario" class="btn btn-success">Crear trabajo</a>
+                            <a href="<%=request.getContextPath()%>/AdminServlet?accion=registrar_usuario" class="btn btn-primary">Registrar usuario</a>
                         </div>
                     </div>
                 </div>
