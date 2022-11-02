@@ -103,14 +103,6 @@
                 </p>
             </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Registrar Cambios
-                </button>
-                <form action="<%=request.getContextPath()%>/SeguridadServlet?accion=listar">
-                <button type="submit" class="btn btn-secondary" data-bs-toggle="modal">Cancelar</button>
-                </form>
-            </div>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
