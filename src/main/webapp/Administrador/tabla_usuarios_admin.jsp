@@ -1,5 +1,3 @@
-
-
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="Beans.Usuario" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,13 +11,10 @@
 <!-- Requiere listar tabla usuarios de la base de datos. -->
 <!-- revisar las rutas de los href para css y los scripts al momento de añadirlos al proyecto web para su correcto funcionamiento. -->
 
-
-
-
-
 <html lang="en">
 
     <head>
+
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width initial-scale=1.0">
@@ -110,9 +105,9 @@
                 <div class="page-heading" style="  margin-top: 30px;">
                     <div class="row g-2">
                         <div class="col-10" style="">
-                            <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Tabla de usuarios</b></h1>
+                            <h1 class="page-title" style="font-size: 40px; font-weight: bold;"><b>Tabla de usuarios</b></h1>
                         </div>
-                        <div class="col-2" style="">
+                        <div class="col-2" style="position: relative; margin: auto 0;text-align: center">
                             <a href="<%=request.getContextPath()%>/AdminServlet?accion=registrar_usuario" class="btn btn-primary">Registrar usuario</a>
                         </div>
                     </div>

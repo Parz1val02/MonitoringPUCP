@@ -113,7 +113,7 @@ public class AdminServlet extends HttpServlet {
 
         switch (action) {
             case "guardar":
-                String relativeWebPath = "./images/usuario.png";
+                String relativeWebPath = "./images/clash-royale.jpg";
                 String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
                 System.out.println("Ruta: " + absoluteDiskPath);
                 File file = new File(absoluteDiskPath);

@@ -15,6 +15,7 @@ public class Usuario {
     private String nickname;
     private String celular;
     private File fotoPerfil;
+    private byte[] fotobyte;
     private String rol;
     private String categoriaPUCP;
     private Integer idCategoriaPUCP;
@@ -161,5 +162,13 @@ public class Usuario {
 
     public void setIdRoles(Integer idRoles) {
         this.idRoles = idRoles;
+    }
+
+    public byte[] getFotobyte() {
+        return fotobyte;
+    }
+
+    public void setFotobyte(byte[] fotobyte) {
+        this.fotobyte = fotobyte;
     }
 }

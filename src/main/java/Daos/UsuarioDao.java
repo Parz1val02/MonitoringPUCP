@@ -144,7 +144,7 @@ public class UsuarioDao {
         String user = "root";
         String pass = "root";
         String url = "jdbc:mysql://localhost:3306/telesystem_aa?serverTimezone=America/Lima";
-        String sql = "SELECT u.codigo, u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, u.foto_perfil, r.nombreRol, catpucp.nombreCategoria FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP where u.codigo=\"20172322\"";
+        String sql = "SELECT u.codigo, u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, u.foto_perfil, r.nombreRol, catpucp.nombreCategoria FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP where u.codigo=\"20220001\"";
 
         try(Connection conn = DriverManager.getConnection(url, user, pass);
             Statement stmt = conn.createStatement();){
@@ -159,26 +159,33 @@ public class UsuarioDao {
                 usuario.setPassword(rs.getString(7));
                 usuario.setNickname(rs.getString(8));
                 usuario.setCelular(rs.getString(9));
-                File file = new File("images/" + usuario.getCodigo() + "_fotoPerfil.png");
-                FileOutputStream output = new FileOutputStream(file.getAbsoluteFile());
+                /*File file = new File(usuario.getCodigo() + "_fotoPerfil.png");
+                if (file.createNewFile()){
+                    System.out.println("File is created!");
+                }else{
+                    System.out.println("File already exists.");
+                }
+                FileOutputStream output = new FileOutputStream(file.getPath());
                 System.out.println("Writing to file " + file.getAbsolutePath());
                 InputStream input = rs.getBinaryStream(10);
                 byte[] buffer = new byte[1024];
                 while (input.read(buffer) > 0) {
                     output.write(buffer);
                 }
-                usuario.setRol(rs.getString(11));
-                usuario.setCategoriaPUCP(rs.getString(12));
                 //close the OutputStream
                 output.close();
                 //close the InputStream
                 input.close();
+                usuario.setFotoPerfil(file);*/
+                usuario.setFotobyte(rs.getBytes(10));
+                usuario.setRol(rs.getString(11));
+                usuario.setCategoriaPUCP(rs.getString(12));
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } /*catch (IOException e) {
             throw new RuntimeException(e);
-        }
+        }*/
         return usuario;
     }
     
@@ -190,7 +197,7 @@ public class UsuarioDao {
         }
 
         String url = "jdbc:mysql://localhost:3306/telesystem_aa?serverTimezone=America/Lima";
-        String sql = "UPDATE usuarios SET nombre = ?, apellido = ?, correo = ?, DNI = ?, celular = ?, idRoles = ?, idCategoriaPUCP = ? WHERE codigo = ?";
+        String sql = "UPDATE Usuarios SET nombre = ?, apellido = ?, correo = ?, DNI = ?, celular = ?, idRoles = ?, idCategoriaPUCP = ? WHERE codigo = ?";
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root");
              PreparedStatement pstmt = connection.prepareStatement(sql)) {

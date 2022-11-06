@@ -9,6 +9,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -52,9 +53,16 @@ public class UsuarioServlet extends HttpServlet {
                 view = request.getRequestDispatcher("/Usuario/DetalleReabierto.jsp");
                 view.forward(request, response);
                 break;
+            case("verImagen"):
+                usuario = udao.obtenerUsuario();
+                response.setContentType("image/jpg");
+                try (OutputStream out = response.getOutputStream()) {
+                    out.write(usuario.getFotobyte());
+                }
+
             case("perfil"):
                 usuario = udao.obtenerUsuario();
-                request.setAttribute("usuario",usuario);
+                request.setAttribute("usuario", usuario);
                 view = request.getRequestDispatcher("/Usuario/UsuarioPerfil.jsp");
                 view.forward(request, response);
                 break;
