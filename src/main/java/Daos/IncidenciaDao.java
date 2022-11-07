@@ -35,7 +35,7 @@ public class IncidenciaDao extends DaoBase{
                      "                     inner join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
                      "                     inner join EstadoIncidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
                      "\t\t\t\t\t inner join IncidenciasDestacadas d on i.idIncidencia = d.idIncidencia\n" +
-                     "                     inner join Usuarios u on i.codigousuario = u.codigo")) {
+                     "                     inner join Usuarios u on i.codigousuario = u.codigo where validaIncidencia = 1")) {
 
             //Usuario usuario = new Usuario();
             while (rs.next()) {
@@ -65,7 +65,7 @@ public class IncidenciaDao extends DaoBase{
         return listaIncidencia;
     }
 
-    public Incidencia obtenerIncidencia (String id){
+    public Incidencia obtenerIncidencia (String id) {
         /*try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -76,28 +76,25 @@ public class IncidenciaDao extends DaoBase{
         String pass = "root";
         String url = "jdbc:mysql://localhost:3306/telesystem_aa?serverTimeZone=America/Lima";*/
 
-        String sql = "select i.fecha,i.zonaPUCP, e.estado,\n" +
-                "                nu.nivel, i.descripcion,\n" +
-                "                 i.nombreIncidencia,concat(u.nombre,\" \",u.apellido) as Usuario, \n" +
-                "                e.estado, i.contadorreabierto, d.contadorDestacado, ti.tipo \n" +
-                "                inner join NivelUrgencia nu on nu.IdNivelUrgencia = i.IdNivelUrgencia\n" +
-                "                inner join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
-                "                from Incidencia i \n" +
-                "                inner join Usuarios u on i.codigousuario = u.codigo\n" +
-                "                inner join EstadoIncidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
-                "                inner join IncidenciasDestacadas d on i.idIncidencia = d.idIncidencia\n" +
-                "                WHERE i.idIncidencia = ?";
+        String sql = "select i.fecha,i.zonaPUCP, e.estado, nu.nivel, i.descripcion, i.nombreIncidencia,concat(u.nombre,\" \",u.apellido) as Usuario, e.estado, i.contadorreabierto, d.contadorDestacado, ti.tipo\n" +
+                "from Incidencia i\n" +
+                "inner join NivelUrgencia nu on nu.IdNivelUrgencia = i.IdNivelUrgencia\n" +
+                "inner join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
+                "inner join Usuarios u on i.codigousuario = u.codigo\n" +
+                "inner join EstadoIncidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
+                "inner join IncidenciasDestacadas d on i.idIncidencia = d.idIncidencia\n" +
+                "WHERE i.idIncidencia = ?";
 
-        Incidencia incidencia = null;
-        try(Connection conn = this.getConnection();
-            PreparedStatement pstm = conn.prepareStatement(sql)) {
+
+        Incidencia incidencia = new Incidencia();
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstm = conn.prepareStatement(sql)) {
 
             pstm.setString(1, id);
 
             ResultSet rs = pstm.executeQuery();
             //Usuario usuario = new Usuario();
-            if(rs.next()){
-                incidencia = new Incidencia();
+            if (rs.next()) {
                 incidencia.setIdIncidencia(Integer.valueOf(id));
                 incidencia.setNombreIncidencia(rs.getString(6));
                 incidencia.setTipoIncidencia(rs.getString("tipo"));
@@ -179,6 +176,7 @@ public class IncidenciaDao extends DaoBase{
 
     public void actualizarIncidencia(String estadoIncidenciaUpdate) {
 
+        //puede editar mas campos
         String sql = "UPDATE Incidencias set estadoincidencia = ?";
 
         try (Connection connection = this.getConnection();
@@ -194,16 +192,30 @@ public class IncidenciaDao extends DaoBase{
 
     }
 
-
-    public void borrarIncidencia(String codigo) {
+    public void confirmar(int codigo) {
 
         //con borrado logico
-        String sql = "UPDATE Incidencias SET validaIncidencia=0";
+        String sql = "UPDATE Incidencia SET idEstadoIncidencia=4 where idIncidencia  = ?" ;
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
-            pstmt.setString(1, codigo);
+            pstmt.setInt(1, codigo);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void borrarIncidencia(int codigo) {
+
+        //con borrado logico
+        String sql = "UPDATE Incidencia SET validaIncidencia=0 where idIncidencia  = ?" ;
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setInt(1, codigo);
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -220,14 +232,17 @@ public class IncidenciaDao extends DaoBase{
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
+            //falta latitud y longitud
             pstmt.setString(1, incidencia.getNombreIncidencia());
             pstmt.setString(2, incidencia.getZonaPUCP());
             pstmt.setDouble(3, incidencia.getLatitud());
             pstmt.setDouble(4, incidencia.getLongitud());
             pstmt.setBoolean(5, true);
             pstmt.setString(6, incidencia.getDescripcion());
-            pstmt.setInt(7, 2);
-            pstmt.setInt(8, 3);
+            pstmt.setInt(7, 2);  //tipo incidencia
+            pstmt.setInt(8, 3);  //nivel urgencia
+            pstmt.setInt(9,1); //estado incidencia
+
 
             pstmt.executeUpdate();
 
