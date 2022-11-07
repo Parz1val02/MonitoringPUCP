@@ -30,7 +30,7 @@ public class SeguridadServlet extends HttpServlet {
                 request.setAttribute("listaIncidencias",listaIncidencias);
                 view = request.getRequestDispatcher("/Seguridad/listarIncidencias.jsp");
                 view.forward(request,response);
-            break;
+                break;
             case ("verDetalle"):
                 String idIncidencia = request.getParameter("id");
                 Incidencia incidencia = idao.obtenerIncidencia(idIncidencia);
@@ -55,10 +55,11 @@ public class SeguridadServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        /*String accion = request.getParameter("accion")==null?"listar":request.getParameter("accion");
+        String accion = request.getParameter("accion")==null?"listar":request.getParameter("accion");
         IncidenciaDao idao = new IncidenciaDao();
+        //Incidencia incidencia;
 
-        if(accion.equals("verDetalle")){
+        /*if(accion.equals("verDetalle")){
             String Fecha = request.getParameter("fecha");
             String nombreIncidencia = request.getParameter("nombreIncidencia");
             String idTipoIncidencia = request.getParameter("idTipoIncidencia");
@@ -68,6 +69,28 @@ public class SeguridadServlet extends HttpServlet {
 
             idao.obtenerIncidencia()
         }*/
+
+        switch (accion){
+
+            case "guardar":  //guardar el registro de la incidencia creada y que se muestre en la tabla
+                String fecha = request.getParameter("fecha");
+                String nombreIncidencia = request.getParameter("nombreIncidencia");
+                String idTipoIncidencia = request.getParameter("idTipoIncidencia");
+                String zonaPUCP = request.getParameter("zonaPUCP");
+                String nivelUrgencia = request.getParameter("nivel_urgencia");
+                String descripcion = request.getParameter("Descripcion");
+
+                Incidencia incidencia  =new Incidencia();
+                incidencia.setNombreIncidencia(nombreIncidencia);
+                incidencia.setFecha(fecha);
+                incidencia.setZonaPUCP(zonaPUCP);
+                incidencia.setNivelUrgencia(nivelUrgencia);
+                incidencia.setDescripcion(descripcion);
+
+
+                //idao.Incidencia(incidencia);
+
+        }
 
     }
 }

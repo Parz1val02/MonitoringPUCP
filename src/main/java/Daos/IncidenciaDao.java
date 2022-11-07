@@ -12,11 +12,11 @@ import java.util.ArrayList;
 
 import static java.nio.file.Files.newOutputStream;
 
-public class IncidenciaDao {
+public class IncidenciaDao extends DaoBase{
 
     public ArrayList<Incidencia> obtenerIncidencias() throws SQLException {
 
-        try {
+        /*try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -24,10 +24,10 @@ public class IncidenciaDao {
 
         String user = "root";
         String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/telesystem_aa";
+        String url = "jdbc:mysql://localhost:3306/telesystem_aa";*/
 
         ArrayList<Incidencia> listaIncidencia = new ArrayList<>();
-        try (Connection conn = DriverManager.getConnection(url, user, pass);
+        try (Connection conn = this.getConnection();
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("select *, concat(u.nombre,\" \",u.apellido) as `Usuario`\n" +
                      "                     from Incidencia i \n" +
@@ -66,7 +66,7 @@ public class IncidenciaDao {
     }
 
     public Incidencia obtenerIncidencia (String id){
-        try {
+        /*try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -74,22 +74,22 @@ public class IncidenciaDao {
 
         String user = "root";
         String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/telesystem_aa?serverTimeZone=America/Lima";
+        String url = "jdbc:mysql://localhost:3306/telesystem_aa?serverTimeZone=America/Lima";*/
 
         String sql = "select i.fecha,i.zonaPUCP, e.estado,\n" +
                 "                nu.nivel, i.descripcion,\n" +
                 "                 i.nombreIncidencia,concat(u.nombre,\" \",u.apellido) as Usuario, \n" +
                 "                e.estado, i.contadorreabierto, d.contadorDestacado, ti.tipo \n" +
+                "                inner join NivelUrgencia nu on nu.IdNivelUrgencia = i.IdNivelUrgencia\n" +
+                "                inner join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
                 "                from Incidencia i \n" +
                 "                inner join Usuarios u on i.codigousuario = u.codigo\n" +
                 "                inner join EstadoIncidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
                 "                inner join IncidenciasDestacadas d on i.idIncidencia = d.idIncidencia\n" +
-                "                inner join NivelUrgencia nu on nu.IdNivelUrgencia = i.IdNivelUrgencia\n" +
-                "                inner join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
                 "                WHERE i.idIncidencia = ?";
 
         Incidencia incidencia = null;
-        try(Connection conn = DriverManager.getConnection(url, user, pass);
+        try(Connection conn = this.getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql)) {
 
             pstm.setString(1, id);
@@ -176,4 +176,65 @@ public class IncidenciaDao {
         }
         return listaDestacadas;
     }*/
+
+    public void actualizarIncidencia(String estadoIncidenciaUpdate) {
+
+        String sql = "UPDATE Incidencias set estadoincidencia = ?";
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setString(1, estadoIncidenciaUpdate);
+
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+    public void borrarIncidencia(String codigo) {
+
+        //con borrado logico
+        String sql = "UPDATE Incidencias SET validaIncidencia=0";
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setString(1, codigo);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void crearIncidencia(Incidencia incidencia) {
+
+        String sql = "INSERT INTO Incidencia (nombre, zonaPUCP, latitud,longitud, validaIncidencia, descripcion, id_tipo_incidencia, idNivelUrgencia, idEstadoIncidencia) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        //Incidencia incidencia ;
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setString(1, incidencia.getNombreIncidencia());
+            pstmt.setString(2, incidencia.getZonaPUCP());
+            pstmt.setDouble(3, incidencia.getLatitud());
+            pstmt.setDouble(4, incidencia.getLongitud());
+            pstmt.setBoolean(5, true);
+            pstmt.setString(6, incidencia.getDescripcion());
+            pstmt.setInt(7, 2);
+            pstmt.setInt(8, 3);
+
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
+

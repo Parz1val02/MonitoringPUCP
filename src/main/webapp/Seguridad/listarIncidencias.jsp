@@ -116,7 +116,12 @@
 
         <!-- START PAGE CONTENT-->
         <div class="page-heading" style="  margin-top: 30px;">
-            <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Incidencias PUCP</b></h1>
+            <div class="row g-2">
+                <div class="col-10" style="">
+                    <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Incidencias PUCP</b></h1>
+                </div>
+
+            </div>
         </div>
 
         <div class="page-content fade-in-up">
@@ -127,8 +132,8 @@
                         <thead>
                             <tr>
                                 <th>IdIncidencia</th>
-                                <th>nombreIncidencia</th>
-                                <th>NivelUrgencia</th>
+                                <th>Nombre de Incidencia</th>
+                                <th>Nivel de Urgencia</th>
                                 <th>Descripcion</th>
                                 <th>Detalle</th>
                             </tr>
@@ -141,6 +146,22 @@
                             <td><%= incidencia.getNivelUrgencia()%></td>
                             <td><%= incidencia.getDescripcion()%> </td>
                             <td><a href="<%=request.getContextPath()%>/SeguridadServlet?accion=verDetalle&id=<%=incidencia.getIdIncidencia()%>">ver detalle</a></td>
+
+                            <td>
+                                <a type="button" class="btn btn-primary"
+                                   href="<%=request.getContextPath()%>/SeguridadServlet?accion=editar_incidencia&id=<%=incidencia.getIdIncidencia()%>">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                            </td>
+
+                            <td>
+                                <a type="button" class="btn btn-danger"
+                                   onclick="return confirm('¿Estas seguro(a) que deseas borrar?')"
+                                   href="<%=request.getContextPath()%>/SeguridadServlet?accion=borrar&id=<%=incidencia.getIdIncidencia()%>">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+
 
                         </tr>
                         <% }%>

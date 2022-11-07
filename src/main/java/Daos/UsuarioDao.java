@@ -1,4 +1,5 @@
 package Daos;
+import Beans.Incidencia;
 import Beans.Usuario;
 
 import java.io.*;
@@ -8,19 +9,15 @@ import java.util.ArrayList;
 
 import static java.nio.file.Files.newOutputStream;
 
-public class UsuarioDao {
+public class UsuarioDao extends DaoBase{
 
     public ArrayList<Usuario> obtenerListaUsuarios() {
 
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
 
         try {
-            String user = "root";
-            String pass = "root";
-            String url = "jdbc:mysql://localhost:3306/telesystem_aa?serverTimezone=America/Lima";
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(url, user, pass);
+            Connection conn = this.getConnection();
             Statement stmt = conn.createStatement();
 
             //ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios");
@@ -44,7 +41,7 @@ public class UsuarioDao {
                 listaUsuarios.add(usuario);
             }
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -55,16 +52,11 @@ public class UsuarioDao {
     //crear usuario y guardar en DB
     public void crearUsuario(Usuario usuario){
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        String url = "jdbc:mysql://localhost:3306/telesystem_aa";
+
         String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, nickname, celular, foto_perfil, idRoles, idCategoriaPUCP) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
 
-        try (Connection connection = DriverManager.getConnection(url, "root", "root");
+        try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
             pstmt.setString(1, usuario.getCodigo());
@@ -112,16 +104,10 @@ public class UsuarioDao {
 
     //eliminar(delete) usuario---por ahora que aparezca modal
     public void borrar(String codigo) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
-        String url = "jdbc:mysql://localhost:3306/telesystem_aa";
         String sql = "DELETE FROM Usuarios WHERE codigo = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, "root", "root");
+        try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
             pstmt.setString(1, codigo);
@@ -135,18 +121,10 @@ public class UsuarioDao {
     public Usuario obtenerUsuario() {
 
         Usuario usuario = new Usuario();
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/telesystem_aa?serverTimezone=America/Lima";
         String sql = "SELECT u.codigo, u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, u.foto_perfil, r.nombreRol, catpucp.nombreCategoria FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP where u.codigo=\"20220001\"";
 
-        try(Connection conn = DriverManager.getConnection(url, user, pass);
+        try(Connection conn = this.getConnection();
             Statement stmt = conn.createStatement();){
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
@@ -190,16 +168,10 @@ public class UsuarioDao {
     }
     
     public void actualizarUsuario(String nombreUpdate, String apellidoUpdate, String codigoUpdate, String correoUpdate, String dniUpdate, String celularUpdate, int categoriaUpdateInt, int rolUpdateInt) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
-        String url = "jdbc:mysql://localhost:3306/telesystem_aa?serverTimezone=America/Lima";
         String sql = "UPDATE Usuarios SET nombre = ?, apellido = ?, correo = ?, DNI = ?, celular = ?, idRoles = ?, idCategoriaPUCP = ? WHERE codigo = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, "root", "root");
+        try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
 
@@ -227,13 +199,6 @@ public class UsuarioDao {
     }
 
     public Usuario buscarPorId(String usuarioCodigo) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        String url = "jdbc:mysql://localhost:3306/telesystem_aa?serverTimezone=America/Lima";
 
         Usuario usuario = null;
 
@@ -241,7 +206,7 @@ public class UsuarioDao {
         String sql1 = "SELECT u.codigo, u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, r.nombreRol, catpucp.nombreCategoria, u.idRoles, u.idCategoriaPUCP FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP WHERE u.codigo = ?";
 
 
-        try (Connection connection = DriverManager.getConnection(url, "root", "root");
+        try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql1);) {
 
             pstmt.setString(1, usuarioCodigo);
@@ -274,5 +239,32 @@ public class UsuarioDao {
 
         return usuario;
     }
+
+    /*public void crearIncidencia(Incidencia incidencia){
+
+        String sql = "INSERT INTO Incidencia (nombre, zonaPUCP, latitud,longitud, validaIncidencia, descripcion, id_tipo_incidencia, idNivelUrgencia, idEstadoIncidencia) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        //Incidencia incidencia ;
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setString(1, incidencia.getNombreIncidencia());
+            pstmt.setString(2, incidencia.getZonaPUCP());
+            pstmt.setDouble(3, incidencia.getLatitud());
+            pstmt.setDouble(4, incidencia.getLongitud());
+            pstmt.setBoolean(5, true);
+            pstmt.setString(6, incidencia.getDescripcion());
+            pstmt.setInt(7,2);
+            pstmt.setInt(8,3);
+
+            pstmt.executeUpdate();
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }*/
 
 }

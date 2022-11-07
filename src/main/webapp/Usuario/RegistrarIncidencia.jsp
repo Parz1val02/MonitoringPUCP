@@ -85,7 +85,7 @@
                         </div>
                     </div-->
                     <div class="ibox-body" >
-                        <form>
+                        <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">
                             <!-- 1era fila -->
                             <div class="row g-2">
                                 <div class="col-md-4"  style="display: flex; justify-content: center;  flex-direction: column">
@@ -93,7 +93,7 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px">
-                                        <input type="text" class="form-control" id="floatingInputGrid2" placeholder="Nombre Incidencia">
+                                        <input type="text" class="form-control" id="floatingInputGrid2" placeholder="Nombre Incidencia" name="nombre_incidencia">
                                         <label for="floatingInputGrid2" class="label-form-flujousuario">Nombre Incidencia</label>
                                     </div>
                                 </div>
@@ -101,12 +101,12 @@
                             <!-- 2da fila -->
                             <div class="row g-2">
                                 <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Código PUCP:</p>
+                                    <p class="campos-registrar-usuario">Zona PUCP:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
-                                        <input type="text" class="form-control" id="floatingInputGrid4" placeholder="Codigo PUCP">
-                                        <label for="floatingInputGrid4" class="label-form-flujousuario">Código PUCP</label>
+                                        <input type="text" class="form-control" id="floatingInputGrid4" placeholder="Zona PUCP" name="zonaPUCP">
+                                        <label for="floatingInputGrid4" class="label-form-flujousuario">Zona PUCP</label>
                                     </div>
                                 </div>
                             </div>
