@@ -34,9 +34,8 @@ public class SeguridadServlet extends HttpServlet {
             case ("verDetalle"):
                 String idIncidencia = request.getParameter("id");
                 Incidencia incidencia = idao.obtenerIncidencia(idIncidencia);
-
+                //System.out.println(incidencia.getNombreIncidencia());
                 request.setAttribute("Incidencia",incidencia);
-
                 view = request.getRequestDispatcher("/Seguridad/VerDetalle.jsp");
                 view.forward(request, response);
                 break;
