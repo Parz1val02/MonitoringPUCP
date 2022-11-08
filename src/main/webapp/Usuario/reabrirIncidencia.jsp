@@ -108,10 +108,10 @@
                                 <th>N° reabierta</th>
                                 <!--<th>N° destacados</th>-->
                                 <th>¿Reabrir incidencia?</th>
-
+                                <th>Borrar</th>
+                                <th>Confirmar</th>
                             </tr>
                         </thead>
-
                         <tbody>
                             <% for(Incidencia incidencia : listaIncidencias) {%>
                             <tr>
@@ -120,8 +120,19 @@
                                 <td><%= incidencia.getNombreEstado()%> </td
                                 <td></td>
                                 <td><%= incidencia.getContador_reabierto()%> </td>
-                                <td><a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle&id=<%=incidencia.getIdIncidencia()%>">¿Reabrir incidencia?</a></td>
-
+                                <td>
+                                    <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle&id=<%=incidencia.getIdIncidencia()%>">¿Reabrir incidencia?</a>
+                                </td>
+                                <td class="text-center">
+                                    <a type="button" class="btn btn-danger"
+                                       onclick="return confirm('¿Estas seguro(a) que deseas borrar?')"
+                                       href="<%=request.getContextPath()%>/UsuarioServlet?accion=borrar&id=<%=incidencia.getIdIncidencia()%>">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=confirmar&id=<%=incidencia.getIdIncidencia()%>">Confirmar atención</a>
+                                </td>
                             </tr>
                             <% }%>
                         </tbody>
