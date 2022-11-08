@@ -26,6 +26,18 @@ public class UsuarioServlet extends HttpServlet {
         Usuario usuario = null;
         Incidencia incidencia = null;
         switch (accion){
+            case ("confirmar"):
+                String idIncidencia = request.getParameter("id");
+                int idd1 = Integer.parseInt(idIncidencia);
+                inDao.confirmar(idd1);
+                response.sendRedirect(request.getContextPath()+ "/UsuarioServlet");
+                break;
+            case ("borrar"):
+                String idIncidencia1 = request.getParameter("id");
+                int idd = Integer.parseInt(idIncidencia1);
+                inDao.borrarIncidencia(idd);
+                response.sendRedirect(request.getContextPath()+ "/UsuarioServlet");
+                break;
             case ("listar") :
                 try {
                     listaIncidencias = inDao.obtenerIncidencias();
@@ -47,8 +59,8 @@ public class UsuarioServlet extends HttpServlet {
                 view.forward(request,response);
                 break;
             case ("verDetalle"):
-                String idIncidencia = request.getParameter("id");
-                incidencia = inDao.obtenerIncidencia(idIncidencia);
+                String idIncidencia3 = request.getParameter("id");
+                incidencia = inDao.obtenerIncidencia(idIncidencia3);
                 request.setAttribute("Incidencia",incidencia);
                 view = request.getRequestDispatcher("/Usuario/DetalleReabierto.jsp");
                 view.forward(request, response);
@@ -115,19 +127,30 @@ public class UsuarioServlet extends HttpServlet {
 
         switch (accion){
 
-            case "crear": //guardar incidencia
+            case "guardar": //guardar incidencia
                 Incidencia incidencia = new Incidencia();
                 String nombreIncidencia = request.getParameter("nombre_incidencia");
+                String descripcion = request.getParameter("descripcion");
+
                 String zonaPUCP = request.getParameter("zonaPUCP");
+                String tipoIncidencia = request.getParameter("tipoIncidencia");
+                String nivelUrgencia = request.getParameter("nivelIncidencia");
 
 
                 incidencia.setNombreIncidencia(nombreIncidencia);
                 incidencia.setZonaPUCP(zonaPUCP);
+                incidencia.setTipoIncidencia(tipoIncidencia);
+                incidencia.setNivelUrgencia(nivelUrgencia);
+                incidencia.setDescripcion(descripcion);
+                incidencia.setNombreEstado("Registrado");
+
+                //incidencia.setZonaPUCP(zonaPUCP);
 
 
                 idao.crearIncidencia(incidencia);
 
-                response.sendRedirect("/UsuarioServlet");
+                response.sendRedirect("/SeguridadServlet");
+                break;
 
 
         }
