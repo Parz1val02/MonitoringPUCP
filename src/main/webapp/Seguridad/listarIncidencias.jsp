@@ -147,20 +147,6 @@
                             <td><%= incidencia.getDescripcion()%> </td>
                             <td><a href="<%=request.getContextPath()%>/SeguridadServlet?accion=verDetalle&id=<%=incidencia.getIdIncidencia()%>">ver detalle</a></td>
 
-                            <td>
-                                <a type="button" class="btn btn-primary"
-                                   href="<%=request.getContextPath()%>/SeguridadServlet?accion=editar_incidencia&id=<%=incidencia.getIdIncidencia()%>">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                            </td>
-
-                            <td>
-                                <a type="button" class="btn btn-danger"
-                                   onclick="return confirm('¿Estas seguro(a) que deseas borrar?')"
-                                   href="<%=request.getContextPath()%>/SeguridadServlet?accion=borrar&id=<%=incidencia.getIdIncidencia()%>">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                            </td>
 
 
                         </tr>

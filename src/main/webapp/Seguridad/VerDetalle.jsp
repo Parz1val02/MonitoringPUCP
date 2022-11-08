@@ -89,10 +89,10 @@
             <p style="margin-top: 20px;margin-left: 10px">Estado de la incidencia </p>
 
             <div style =  "margin-left: 10px" class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                <label class="form-check-label" for="flexRadioDefault2">
-                    Atendido
-                </label>
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Estado</option>
+                    <option value="3">Atendido</option>
+                </select>
             </div>
 
             <br><br>

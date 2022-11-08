@@ -85,7 +85,7 @@
                         </div>
                     </div-->
                     <div class="ibox-body" >
-                        <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">
+                        <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=guardar">
                             <!-- 1era fila -->
                             <div class="row g-2">
                                 <div class="col-md-4"  style="display: flex; justify-content: center;  flex-direction: column">
@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating " style="margin-bottom: 15px;">
-                                        <select class="form-select" id="floatingSelectGrid2">
+                                        <select class="form-select" id="floatingSelectGrid2" name="tipoIncidencia">
                                             <option selected></option>
                                             <option value="1">Reporte de robos</option>
                                             <option value="2">Objetos perdidos</option>
@@ -126,6 +126,9 @@
                                             <option value="5">Accidente</option>
                                             <option value="6">Otros</option>
                                         </select>
+                                        <!--<% if(value==6){%>-->
+                                        <label> Ingrese el otro</label>
+                                        <!--<%}%> -->
                                         <label for="floatingSelectGrid2" class="label-form-flujousuario">Tipo de Incidencia</label>
                                     </div>
                                 </div>
@@ -133,16 +136,17 @@
                             <!-- 4ta fila -->
                             <div class="row g-2">
                                 <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Nivel de Incidencia:</p>
+                                    <p class="campos-registrar-usuario">Nivel de Urgencia:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
-                                        <select class="form-select" id="floatingSelectGrid1">
-                                            <option selected>Leve</option>
-                                            <option value="1">Moderado</option>
-                                            <option value="2">Crítico</option>
+                                        <select class="form-select" id="floatingSelectGrid1" name="nivelIncidencia">
+                                            <option selected></option>
+                                            <option value="1">Leve</option>
+                                            <option value="2">Moderado</option>
+                                            <option value="3">Crítico</option>
                                         </select>
-                                        <label for="floatingSelectGrid1" class="label-form-flujousuario">Nivel de Incidencia</label>
+                                        <label for="floatingSelectGrid1" class="label-form-flujousuario">Nivel de Urgencia</label>
                                     </div>
                                 </div>
                             </div>
@@ -154,7 +158,7 @@
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
                                         <div class="form-floating" style="margin-bottom: 15px;">
-                                            <input type="text" class="form-control" id="floatingInputGrid12" placeholder="Ubicacion">
+                                            <input type="text" class="form-control" id="floatingInputGrid12" placeholder="Ubicacion" name="ubicacion">
                                             <label for="floatingInputGrid12" class="label-form-flujousuario">Ubicación</label>
                                         </div>
                                     </div>
@@ -179,14 +183,14 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
-                                        <textarea class="form-control" id="floatingInputGrid7" cols="40" rows="5" placeholder="Descripcion" style="height: 133px; width: 100%;overflow: auto;resize: none"></textarea>
+                                        <textarea class="form-control" id="floatingInputGrid7" cols="40" rows="5" placeholder="Descripcion" style="height: 133px; width: 100%;overflow: auto;resize: none" name="descripcion"></textarea>
                                         <label for="floatingInputGrid7" class="label-form-flujousuario">Descripción</label>
                                     </div>
                                 </div>
                                 <div style="color:#FF0000;"><p text-align="center;" style="margin-top: 1px;" class="font-weight-bold">Todos los campos son obligatorios.</p></div>
                             </div>
                             <div class="form-group" style="text-align: right">
-                                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Registrar incidencia</button>
+                                <button class="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal" href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">Registrar incidencia</button>
                                 <!-- type="submit" debe usarse para enviar datos de un form tener cuidado y revisar-->
                             </div>
                         </form>

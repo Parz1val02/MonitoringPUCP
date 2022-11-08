@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import static java.nio.file.Files.newOutputStream;
@@ -225,23 +228,29 @@ public class IncidenciaDao extends DaoBase{
 
     public void crearIncidencia(Incidencia incidencia) {
 
-        String sql = "INSERT INTO Incidencia (nombre, zonaPUCP, latitud,longitud, validaIncidencia, descripcion, id_tipo_incidencia, idNivelUrgencia, idEstadoIncidencia) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Incidencia (fecha, nombreIncidencia, zonaPUCP, latitud,longitud, validaIncidencia, descripcion, idTipoIncidencia, idNivelUrgencia, idEstadoIncidencia, codigoUsuario) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
 
         //Incidencia incidencia ;
+        /*LocalDate localDate = LocalDate.now();//For reference
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        String formattedString = localDate.format(formatter);*/
+
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
             //falta latitud y longitud
-            pstmt.setString(1, incidencia.getNombreIncidencia());
-            pstmt.setString(2, incidencia.getZonaPUCP());
-            pstmt.setDouble(3, incidencia.getLatitud());
-            pstmt.setDouble(4, incidencia.getLongitud());
-            pstmt.setBoolean(5, true);
-            pstmt.setString(6, incidencia.getDescripcion());
-            pstmt.setInt(7, 2);  //tipo incidencia
-            pstmt.setInt(8, 3);  //nivel urgencia
-            pstmt.setInt(9,1); //estado incidencia
+            pstmt.setString(1, "2022-11-07 15:34:26");
+            pstmt.setString(2, incidencia.getNombreIncidencia());
+            pstmt.setString(3, incidencia.getZonaPUCP());
+            pstmt.setDouble(4, -12.072249);
+            pstmt.setDouble(5, -77.081994);
+            pstmt.setBoolean(6, true);
+            pstmt.setString(7, incidencia.getDescripcion());
+            pstmt.setInt(8, 2);  //tipo incidencia
+            pstmt.setInt(9, 3);  //nivel urgencia
+            pstmt.setInt(10,1); //estado incidencia
+            pstmt.setString(11, "20201253");
 
 
             pstmt.executeUpdate();

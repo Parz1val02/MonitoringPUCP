@@ -1,5 +1,7 @@
 package Beans;
 
+import java.time.LocalDateTime;
+
 public class Incidencia {
 
     private Integer idIncidencia;
@@ -14,7 +16,7 @@ public class Incidencia {
     private String TipoIncidencia;// mostratr tipo
     private String NivelUrgencia;// mostratr tipo
 
-
+    private LocalDateTime fechaIncidencia;
     private String Usuarios_nombre_completo;
 
     private String nombreEstado;

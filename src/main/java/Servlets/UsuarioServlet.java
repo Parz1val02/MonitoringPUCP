@@ -114,6 +114,9 @@ public class UsuarioServlet extends HttpServlet {
                 view.forward(request, response);
                 break;
 
+            default:
+                response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
+
 
         }
 
@@ -135,6 +138,7 @@ public class UsuarioServlet extends HttpServlet {
                 String zonaPUCP = request.getParameter("zonaPUCP");
                 String tipoIncidencia = request.getParameter("tipoIncidencia");
                 String nivelUrgencia = request.getParameter("nivelIncidencia");
+                //String estado= request.getParameter("estado");
 
 
                 incidencia.setNombreIncidencia(nombreIncidencia);
@@ -149,7 +153,7 @@ public class UsuarioServlet extends HttpServlet {
 
                 idao.crearIncidencia(incidencia);
 
-                response.sendRedirect("/SeguridadServlet");
+                response.sendRedirect("/UsuarioServlet");
                 break;
 
 

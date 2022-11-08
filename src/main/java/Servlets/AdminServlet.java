@@ -100,6 +100,9 @@ public class AdminServlet extends HttpServlet {
                 usuarioDao.borrar(codigo);
                 response.sendRedirect(request.getContextPath() + "/AdminServlet");
                 break;
+
+            default:
+                response.sendRedirect(request.getContextPath() + "/AdminServlet");
         }
     }
 
