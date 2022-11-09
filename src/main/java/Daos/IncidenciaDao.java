@@ -34,16 +34,16 @@ public class IncidenciaDao extends DaoBase{
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("select *, concat(u.nombre,\" \",u.apellido) as `Usuario`\n" +
                      "                     from Incidencia i \n" +
-                     "                     inner join NivelUrgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
-                     "                     inner join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
-                     "                     inner join EstadoIncidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
-                     "\t\t\t\t\t inner join IncidenciasDestacadas d on i.idIncidencia = d.idIncidencia\n" +
-                     "                     inner join Usuarios u on i.codigousuario = u.codigo where validaIncidencia = 1")) {
+                     "                     left join NivelUrgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
+                     "                     left join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
+                     "                     left join EstadoIncidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
+                     "                       left join IncidenciasDestacadas d on i.idIncidencia = d.idIncidencia\n" +
+                     "                     left join Usuarios u on i.codigousuario = u.codigo where validaIncidencia = 1")) {
 
             //Usuario usuario = new Usuario();
             while (rs.next()) {
                 Incidencia incidencia = new Incidencia();
-                incidencia.setIdIncidencia(rs.getInt(1));
+                incidencia.setIdIncidencia(rs.getInt("i.IdIncidencia"));
                 incidencia.setFecha(rs.getString(2));
                 incidencia.setNombreIncidencia(rs.getString(3));
                 incidencia.setZonaPUCP(rs.getString(4));
@@ -250,7 +250,7 @@ public class IncidenciaDao extends DaoBase{
             pstmt.setInt(8, 2);  //tipo incidencia
             pstmt.setInt(9, 3);  //nivel urgencia
             pstmt.setInt(10,1); //estado incidencia
-            pstmt.setString(11, "20201253");
+            pstmt.setString(11, "20201696"); //por ahora se setea, porque a esto le falta la parte de sesiones
 
 
             pstmt.executeUpdate();
