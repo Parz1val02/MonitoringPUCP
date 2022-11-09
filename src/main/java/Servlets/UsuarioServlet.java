@@ -28,8 +28,11 @@ public class UsuarioServlet extends HttpServlet {
         switch (accion){
             case ("confirmar"):
                 String idIncidencia = request.getParameter("id");
-                int idd1 = Integer.parseInt(idIncidencia);
-                inDao.confirmar(idd1);
+                incidencia = inDao.obtenerIncidencia(idIncidencia);
+                request.setAttribute("Incidencia",incidencia);
+                inDao.confirmar(Integer.parseInt(idIncidencia));
+                //view = request.getRequestDispatcher("/Usuario/confirmarIncidencia.jsp");
+                //view.forward(request, response);
                 response.sendRedirect(request.getContextPath()+ "/UsuarioServlet");
                 break;
             case ("borrar"):
