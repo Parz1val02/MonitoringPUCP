@@ -126,9 +126,9 @@
                                             <option value="5">Accidente</option>
                                             <option value="6">Otros</option>
                                         </select>
-                                        <!--<% if(value==6){%>-->
-                                        <label> Ingrese el otro</label>
-                                        <!--<%}%> -->
+                                       <!--<% //if(value==6){%>-->
+                                        <!--<label> Ingrese el otro</label> -->
+                                        <!--<%//}%> -->
                                         <label for="floatingSelectGrid2" class="label-form-flujousuario">Tipo de Incidencia</label>
                                     </div>
                                 </div>
