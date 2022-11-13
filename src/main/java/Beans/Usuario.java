@@ -16,29 +16,16 @@ public class Usuario {
     private String celular;
     private File fotoPerfil;
     private byte[] fotobyte;
-    private String rol;
-    private String categoriaPUCP;
+    private Rol rol;
+    private CategoriaPUCP categoriaPUCP;
     private Integer idCategoriaPUCP;
     private Integer idRoles;
 
-    //constructor para el
-    public Usuario(String codigo, String nombre, String apellido, String dni, String password, String nickname, String celular, File fotoPerfil, String rol, String categoriaPUCP) {
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
-        this.password = password;
-        this.nickname = nickname;
-        this.celular = celular;
-        this.fotoPerfil = fotoPerfil;
-        this.rol = rol;
-        this.categoriaPUCP = categoriaPUCP;
-    }
 
     public Usuario() {
     }
 
-    public Usuario(String codigo, String nombre, String apellido, String correo, String dni, String celular, File fotoPerfil, String rol, String categoriaPUCP) {
+    public Usuario(String codigo, String nombre, String apellido, String correo, String dni, String celular, File fotoPerfil, Rol rol, CategoriaPUCP categoriaPUCP) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -51,22 +38,21 @@ public class Usuario {
     }
 
 
-    public String getRol() {
+    public Rol getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(Rol rol) {
         this.rol = rol;
     }
 
-    public String getCategoriaPUCP() {
+    public CategoriaPUCP getCategoriaPUCP() {
         return categoriaPUCP;
     }
 
-    public void setCategoriaPUCP(String categoriaPUCP) {
+    public void setCategoriaPUCP(CategoriaPUCP categoriaPUCP) {
         this.categoriaPUCP = categoriaPUCP;
     }
-    
 
     public String getCodigo() {
         return codigo;

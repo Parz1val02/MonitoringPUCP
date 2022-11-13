@@ -1,6 +1,7 @@
 package Servlets;
 
 import Beans.Incidencia;
+import Beans.NivelUrgencia;
 import Daos.IncidenciaDao;
 
 import jakarta.servlet.*;
@@ -83,7 +84,10 @@ public class SeguridadServlet extends HttpServlet {
                 incidencia.setNombreIncidencia(nombreIncidencia);
                 incidencia.setFecha(fecha);
                 incidencia.setZonaPUCP(zonaPUCP);
-                incidencia.setNivelUrgencia(nivelUrgencia);
+
+                NivelUrgencia nivel = new NivelUrgencia();
+                nivel.setNivel(nivelUrgencia);
+                incidencia.setNivelUrgencia(nivel);
                 incidencia.setDescripcion(descripcion);
 
 

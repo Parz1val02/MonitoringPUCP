@@ -30,7 +30,7 @@
 
         <div class="mb-3">
             <label class="form-label">Tipo Incidencia:</label>
-            <input type="text" class="form-control" name="tipoIncidencia" value="<%=incidencia.getTipoIncidencia()%>">
+            <input type="text" class="form-control" name="tipoIncidencia" value="<%=incidencia.getTipoIncidencia().getTipo()%>">
         </div>
 
         <div class="mb-3">
@@ -40,7 +40,7 @@
 
         <div class="mb-3">
             <label class="form-label">Nivel de urgencia:</label>
-            <input type="text" class="form-control" name="nivelDeUrgencia" value="<%=incidencia.getNivelUrgencia()%>">
+            <input type="text" class="form-control" name="nivelDeUrgencia" value="<%=incidencia.getNivelUrgencia().getNivel()%>">
         </div>
 
         <div class="mb-3">
@@ -59,13 +59,13 @@
         <div style =  "margin-left: 10px" class="form-floating">
             <p>
                 Justificacion de la incidencia: <br>
-                <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px"></textarea>
+                <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea" style="height: 100px"></textarea>
             </p>
         </div>
 
         <div style =  "margin-left: 10px" class="form-floating">
 
-            <p align="right">N° veces reabierta: 1/5</p>
+            <p align="right">N° veces reabierta: <%=incidencia.getContador_reabierto()%>/5</p>
             <p>
                 ¿Por qué desea reabrir esta incidencia?: <br>
                 <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px"></textarea>

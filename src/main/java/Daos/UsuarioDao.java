@@ -1,5 +1,7 @@
 package Daos;
+import Beans.CategoriaPUCP;
 import Beans.Incidencia;
+import Beans.Rol;
 import Beans.Usuario;
 
 import java.io.*;
@@ -35,8 +37,13 @@ public class UsuarioDao extends DaoBase{
                 usuario.setCelular(rs.getString(8));
                 //usuario.setIdRoles(rs.getInt(10));
                 //usuario.setIdCategoriaPUCP(rs.getInt(11));
-                usuario.setRol(rs.getString(10));
-                usuario.setCategoriaPUCP(rs.getString(11));
+                Rol rol = new Rol();
+                rol.setNombreRol(rs.getString(10));
+                usuario.setRol(rol);
+
+                CategoriaPUCP categoriaPUCP = new CategoriaPUCP();
+                categoriaPUCP.setNombreCategoria(rs.getString(11));
+                usuario.setCategoriaPUCP(categoriaPUCP);
 
                 listaUsuarios.add(usuario);
             }
@@ -156,8 +163,15 @@ public class UsuarioDao extends DaoBase{
                 input.close();
                 usuario.setFotoPerfil(file);*/
                 usuario.setFotobyte(rs.getBytes(10));
-                usuario.setRol(rs.getString(11));
-                usuario.setCategoriaPUCP(rs.getString(12));
+
+                Rol rol = new Rol();
+                rol.setNombreRol(rs.getString(11));
+                usuario.setRol(rol);
+
+                CategoriaPUCP categoriaPUCP = new CategoriaPUCP();
+                categoriaPUCP.setNombreCategoria(rs.getString(12));
+                usuario.setCategoriaPUCP(categoriaPUCP);
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -225,8 +239,15 @@ public class UsuarioDao extends DaoBase{
                     usuario.setPassword(rs.getString(7));
                     usuario.setNickname(rs.getString(8));
                     usuario.setCelular(rs.getString(9));
-                    usuario.setRol(rs.getString(10));
-                    usuario.setCategoriaPUCP(rs.getString(11));
+
+                    Rol rol = new Rol();
+                    rol.setNombreRol(rs.getString(10));
+                    usuario.setRol(rol);
+
+                    CategoriaPUCP categoriaPUCP = new CategoriaPUCP();
+                    categoriaPUCP.setNombreCategoria(rs.getString(11));
+                    usuario.setCategoriaPUCP(categoriaPUCP);
+
                     usuario.setIdRoles(rs.getInt(12));
                     usuario.setIdCategoriaPUCP(rs.getInt(13));
 
@@ -240,31 +261,6 @@ public class UsuarioDao extends DaoBase{
         return usuario;
     }
 
-    /*public void crearIncidencia(Incidencia incidencia){
 
-        String sql = "INSERT INTO Incidencia (nombre, zonaPUCP, latitud,longitud, validaIncidencia, descripcion, id_tipo_incidencia, idNivelUrgencia, idEstadoIncidencia) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        //Incidencia incidencia ;
-        try (Connection connection = this.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
-
-            pstmt.setString(1, incidencia.getNombreIncidencia());
-            pstmt.setString(2, incidencia.getZonaPUCP());
-            pstmt.setDouble(3, incidencia.getLatitud());
-            pstmt.setDouble(4, incidencia.getLongitud());
-            pstmt.setBoolean(5, true);
-            pstmt.setString(6, incidencia.getDescripcion());
-            pstmt.setInt(7,2);
-            pstmt.setInt(8,3);
-
-            pstmt.executeUpdate();
-
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }*/
 
 }

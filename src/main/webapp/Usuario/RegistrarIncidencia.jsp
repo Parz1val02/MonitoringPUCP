@@ -1,5 +1,15 @@
-
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="Beans.TipoIncidencia" %>
+<%@ page import="Beans.NivelUrgencia" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    ArrayList<TipoIncidencia> tipos = (ArrayList<TipoIncidencia>) request.getAttribute("tipos");
+%>
+
+<%
+    ArrayList<NivelUrgencia> niveles = (ArrayList<NivelUrgencia>) request.getAttribute("niveles");
+%>
+
 <html lang="en"  style="min-height: 100vh">
 <head>
     <meta charset="utf-8">
@@ -118,17 +128,12 @@
                                 <div class="col-md">
                                     <div class="form-floating " style="margin-bottom: 15px;">
                                         <select class="form-select" id="floatingSelectGrid2" name="tipoIncidencia">
-                                            <option selected></option>
-                                            <option value="1">Reporte de robos</option>
-                                            <option value="2">Objetos perdidos</option>
-                                            <option value="3">Infraestructura en mal estado</option>
-                                            <option value="4">Ambulancia PUCP</option>
-                                            <option value="5">Accidente</option>
-                                            <option value="6">Otros</option>
+                                            <% for (TipoIncidencia tipo : tipos) {%>
+                                            <option value="<%=tipo.getIdTipo()%>"><%= tipo.getTipo()%></option>
+
+                                            <% }%>
                                         </select>
-                                       <!--<% //if(value==6){%>-->
-                                        <!--<label> Ingrese el otro</label> -->
-                                        <!--<%//}%> -->
+
                                         <label for="floatingSelectGrid2" class="label-form-flujousuario">Tipo de Incidencia</label>
                                     </div>
                                 </div>
@@ -141,10 +146,9 @@
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
                                         <select class="form-select" id="floatingSelectGrid1" name="nivelIncidencia">
-                                            <option selected></option>
-                                            <option value="1">Leve</option>
-                                            <option value="2">Moderado</option>
-                                            <option value="3">Crítico</option>
+                                            <% for (NivelUrgencia nivel : niveles) {%>
+                                            <option value="<%=nivel.getIdNivelUrgencia()%>"><%= nivel.getNivel()%></option>
+                                            <% }%>
                                         </select>
                                         <label for="floatingSelectGrid1" class="label-form-flujousuario">Nivel de Urgencia</label>
                                     </div>

@@ -1,4 +1,6 @@
-<%--
+<%@ page import="Beans.CategoriaPUCP" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="Beans.Rol" %><%--
   Created by IntelliJ IDEA.
   User: rodro
   Date: 10/25/22
@@ -6,6 +8,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+  ArrayList<CategoriaPUCP> listaCategorias = (ArrayList<CategoriaPUCP>) request.getAttribute("listaCategorias");
+%>
+<%
+  ArrayList<Rol> roles = (ArrayList<Rol>) request.getAttribute("roles");
+%>
+
 
 <html lang="en">
 
@@ -86,12 +95,11 @@
                     <div class="col-md">
                       <div class="form-floating">
                         <select class="form-select" id="floatingSelectGrid1" name="categoriaPUCP">
-                          <option selected>Categoría PUCP</option>
-                          <option value="1">Alumno</option>
-                          <option value="2">Administrativo</option>
-                          <option value="3">Jefe de Práctica</option>
-                          <option value="4">Profesor</option>
-                          <option value="5">Egresado</option>
+                          <% for (CategoriaPUCP categoriaPUCP: listaCategorias){%>
+
+                            <option value="<%=categoriaPUCP.getIdCategoria()%>"><%= categoriaPUCP.getNombreCategoria()%></option>
+
+                          <% } %>
                         </select>
                         <label for="floatingSelectGrid1">Categoría</label>
                       </div>
@@ -99,9 +107,11 @@
                     <div class="col-md">
                       <div class="form-floating">
                         <select class="form-select" id="floatingSelectGrid2" name="rol">
-                          <option selected>Rol de Usuario</option>
-                          <option value="1">Usuario PUCP</option>
-                          <option value="2">Seguridad</option>
+                          <% for (Rol r: roles){%>
+
+                          <option value="<%=r.getIdRol()%>"><%= r.getNombreRol()%></option>
+
+                          <% } %>
                         </select>
                         <label for="floatingSelectGrid2">Rol</label>
                       </div>

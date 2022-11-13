@@ -1,8 +1,12 @@
 package Servlets;
 
+import Beans.CategoriaPUCP;
 import Beans.Incidencia;
+import Beans.Rol;
 import Beans.Usuario;
+import Daos.CategoriaDao;
 import Daos.IncidenciaDao;
+import Daos.RolDao;
 import Daos.UsuarioDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -31,7 +35,8 @@ public class AdminServlet extends HttpServlet {
         RequestDispatcher view;
         UsuarioDao usuarioDao = new UsuarioDao();
         IncidenciaDao incidenciaDao = new IncidenciaDao();
-        
+        CategoriaDao categoriaDao = new CategoriaDao();
+        RolDao rolDao = new RolDao();
         String usuarioCodigo;
         Usuario usuario;
 
@@ -59,6 +64,8 @@ public class AdminServlet extends HttpServlet {
                 break;
             case ("registrar_usuario"): //crear usuario
 
+                request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                request.setAttribute("roles", rolDao.obtenerRoles());
                 view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
                 view.forward(request, response);
                 break;
@@ -131,9 +138,14 @@ public class AdminServlet extends HttpServlet {
                 String celular = request.getParameter("celular"); //string nulo
                 //Long foto_perfil = Long.parseLong(request.getParameter("fotoPerfil")); //long nulo
                 String rol = request.getParameter("rol"); //string nulo
-                String categoriaPUCP = request.getParameter("categoriaPUCP"); //string nulo
+                Rol rol1 = new Rol();
+                rol1.setNombreRol(rol);
 
-                Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,file,rol,categoriaPUCP);
+                String categoriaPUCP = request.getParameter("categoriaPUCP"); //string nulo
+                CategoriaPUCP categoriaPUCP1 = new CategoriaPUCP();
+                categoriaPUCP1.setNombreCategoria(categoriaPUCP);
+
+                Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,file,rol1,categoriaPUCP1);
 
                 usuarioDao.crearUsuario(usuario);
 

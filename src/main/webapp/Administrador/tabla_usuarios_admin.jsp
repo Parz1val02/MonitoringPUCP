@@ -137,11 +137,11 @@
                                         <td><%= usuario.getNombre()%> </td>
 										<td><%= usuario.getApellido()%> </td>
 										<td><%= usuario.getCodigo()%> </td>
-										<td><%= usuario.getRol()%> </td>
-                                        <% if(usuario.getCategoriaPUCP()==null){%>
+										<td><%= usuario.getRol().getNombreRol()%> </td>
+                                        <% if(usuario.getCategoriaPUCP().getNombreCategoria()==null){%>
                                             <td>No tiene categoría</td>
                                         <%} else  { %>
-                                        <td><%= usuario.getCategoriaPUCP()%></td>
+                                        <td><%= usuario.getCategoriaPUCP().getNombreCategoria()%></td>
                                         <% }%>
                                         <td class="text-center">
                                             <a type="button" class="btn btn-primary"

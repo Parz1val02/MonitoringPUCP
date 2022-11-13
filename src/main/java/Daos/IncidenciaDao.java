@@ -1,6 +1,9 @@
 package Daos;
 
+import Beans.EstadoIncidencia;
 import Beans.Incidencia;
+import Beans.NivelUrgencia;
+import Beans.TipoIncidencia;
 import com.mysql.cj.x.protobuf.MysqlxExpr;
 //import sun.nio.ch.WindowsAsynchronousFileChannelImpl;
 
@@ -18,16 +21,6 @@ import static java.nio.file.Files.newOutputStream;
 public class IncidenciaDao extends DaoBase{
 
     public ArrayList<Incidencia> obtenerIncidencias() throws SQLException {
-
-        /*try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/telesystem_aa";*/
 
         ArrayList<Incidencia> listaIncidencia = new ArrayList<>();
         try (Connection conn = this.getConnection();
@@ -53,9 +46,17 @@ public class IncidenciaDao extends DaoBase{
                 incidencia.setDescripcion(rs.getString(8));
                 incidencia.setContador_reabierto(rs.getInt(9));
                 incidencia.setContadorDestacado(rs.getInt("contadorDestacado"));
-                incidencia.setTipoIncidencia(rs.getString("tipo"));
-                incidencia.setNivelUrgencia(rs.getString("nivel"));
-                incidencia.setNombreEstado(rs.getString("estado"));
+                TipoIncidencia tipoIncidencia = new TipoIncidencia();
+                tipoIncidencia.setTipo(rs.getString("tipo"));
+                incidencia.setTipoIncidencia(tipoIncidencia);
+
+                NivelUrgencia nivel = new NivelUrgencia();
+                nivel.setNivel(rs.getString("nivel"));
+                incidencia.setNivelUrgencia(nivel);
+
+                EstadoIncidencia estado = new EstadoIncidencia();
+                estado.setEstado(rs.getString("estado"));
+                incidencia.setEstadoIncidencia(estado);
                 incidencia.setUsuarios_nombre_completo(rs.getString("Usuario"));
                 //incidencia.setUsuario(usuario);
                 listaIncidencia.add(incidencia);
@@ -69,15 +70,7 @@ public class IncidenciaDao extends DaoBase{
     }
 
     public Incidencia obtenerIncidencia (String id) {
-        /*try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/telesystem_aa?serverTimeZone=America/Lima";*/
 
         String sql = "select i.fecha,i.zonaPUCP, e.estado, nu.nivel, i.descripcion, i.nombreIncidencia,concat(u.nombre,\" \",u.apellido) as Usuario, e.estado, i.contadorreabierto, d.contadorDestacado, ti.tipo\n" +
                 "from Incidencia i\n" +
@@ -100,14 +93,28 @@ public class IncidenciaDao extends DaoBase{
             if (rs.next()) {
                 incidencia.setIdIncidencia(Integer.valueOf(id));
                 incidencia.setNombreIncidencia(rs.getString(6));
-                incidencia.setTipoIncidencia(rs.getString("tipo"));
+
+                TipoIncidencia tipoIncidencia = new TipoIncidencia();
+                tipoIncidencia.setTipo(rs.getString("tipo"));
+                incidencia.setTipoIncidencia(tipoIncidencia);
+
                 incidencia.setZonaPUCP(rs.getString(2));
-                incidencia.setNivelUrgencia(rs.getString(4));
+
+                NivelUrgencia nivel = new NivelUrgencia();
+                nivel.setNivel(rs.getString(4));
+                incidencia.setNivelUrgencia(nivel);
+
                 incidencia.setDescripcion(rs.getString(5));
                 incidencia.setFecha(rs.getString(1));
                 incidencia.setContador_reabierto(rs.getInt(9));
                 incidencia.setContadorDestacado(rs.getInt(10));
-                incidencia.setNombreEstado(rs.getString(3));
+
+                EstadoIncidencia estado = new EstadoIncidencia();
+                estado.setEstado(rs.getString(3));
+                incidencia.setEstadoIncidencia(estado);
+
+
+                //incidencia.setNombreEstado(rs.getString(3));
                 //incidencia.setUsuario(usuario);
             }
 

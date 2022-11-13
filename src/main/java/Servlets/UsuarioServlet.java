@@ -1,8 +1,9 @@
 package Servlets;
 
-import Beans.Incidencia;
-import Beans.Usuario;
+import Beans.*;
 import Daos.IncidenciaDao;
+import Daos.NivelUrgenciaDao;
+import Daos.TipoIncidenciaDao;
 import Daos.UsuarioDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -23,6 +24,8 @@ public class UsuarioServlet extends HttpServlet {
         IncidenciaDao inDao = new IncidenciaDao();
         ArrayList<Incidencia> listaIncidencias = null;
         UsuarioDao udao = new UsuarioDao();
+        TipoIncidenciaDao tipoIncidenciaDao = new TipoIncidenciaDao();
+        NivelUrgenciaDao nivelDao = new NivelUrgenciaDao();
         Usuario usuario = null;
         Incidencia incidencia = null;
         switch (accion){
@@ -31,9 +34,9 @@ public class UsuarioServlet extends HttpServlet {
                 incidencia = inDao.obtenerIncidencia(idIncidencia);
                 request.setAttribute("Incidencia",incidencia);
                 inDao.confirmar(Integer.parseInt(idIncidencia));
-                //view = request.getRequestDispatcher("/Usuario/confirmarIncidencia.jsp");
-                //view.forward(request, response);
-                response.sendRedirect(request.getContextPath()+ "/UsuarioServlet");
+                view = request.getRequestDispatcher("/Usuario/confirmarIncidencia.jsp");
+                view.forward(request, response);
+                //response.sendRedirect(request.getContextPath()+ "/UsuarioServlet");
                 break;
             case ("borrar"):
                 String idIncidencia1 = request.getParameter("id");
@@ -82,6 +85,9 @@ public class UsuarioServlet extends HttpServlet {
                 view.forward(request, response);
                 break;
             case("registrarIncidencia"):
+
+                request.setAttribute("tipos", tipoIncidenciaDao.obtenerTipos() );
+                request.setAttribute("niveles", nivelDao.obtenerNiveles());
                 view = request.getRequestDispatcher("/Usuario/RegistrarIncidencia.jsp");
                 view.forward(request, response);
                 break;
@@ -146,10 +152,21 @@ public class UsuarioServlet extends HttpServlet {
 
                 incidencia.setNombreIncidencia(nombreIncidencia);
                 incidencia.setZonaPUCP(zonaPUCP);
-                incidencia.setTipoIncidencia(tipoIncidencia);
-                incidencia.setNivelUrgencia(nivelUrgencia);
+
+                TipoIncidencia tipoIncidencia1 = new TipoIncidencia();
+                tipoIncidencia1.setTipo(tipoIncidencia);
+                incidencia.setTipoIncidencia(tipoIncidencia1);
+
+                NivelUrgencia nivelUrgencia1 = new NivelUrgencia();
+                nivelUrgencia1.setNivel(nivelUrgencia);
+                incidencia.setNivelUrgencia(nivelUrgencia1);
+
                 incidencia.setDescripcion(descripcion);
-                incidencia.setNombreEstado("Registrado");
+
+                EstadoIncidencia estado1 = new EstadoIncidencia();
+                estado1.setEstado("Registrado");
+                incidencia.setEstadoIncidencia(estado1);
+
 
                 //incidencia.setZonaPUCP(zonaPUCP);
 

@@ -126,7 +126,7 @@
                                     <tr>
                                         <td> <%= incidencia.getIdIncidencia()%>  </td>
                                         <td><%= incidencia.getNombreIncidencia()%> </td>
-                                        <td><%= incidencia.getNivelUrgencia()%></td>
+                                        <td><%= incidencia.getNivelUrgencia().getNivel()%></td>
                                         <td><%= incidencia.getDescripcion()%> </td>
                                         <td><a href="<%=request.getContextPath()%>/AdminServlet?accion=verDetalle&id=<%=incidencia.getIdIncidencia()%>">ver detalle</a></td>
 

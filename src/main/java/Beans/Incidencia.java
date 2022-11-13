@@ -13,22 +13,38 @@ public class Incidencia {
     private Boolean validaIncidencia;
     private String Descripcion;
     private Integer contador_reabierto;
-    private String TipoIncidencia;// mostratr tipo
-    private String NivelUrgencia;// mostratr tipo
+    private TipoIncidencia tipoIncidencia;// mostratr tipo
+    private NivelUrgencia nivelUrgencia;// mostratr nivel
 
     private LocalDateTime fechaIncidencia;
     private String Usuarios_nombre_completo;
 
-    private String nombreEstado;
+    private EstadoIncidencia estadoIncidencia; //estado incidencia
 
     private Integer contadorDestacado;
 
-    public String getNombreEstado() {
-        return nombreEstado;
+    public EstadoIncidencia getEstadoIncidencia() {
+        return estadoIncidencia;
     }
 
-    public void setNombreEstado(String nombreEstado) {
-        this.nombreEstado = nombreEstado;
+    public void setEstadoIncidencia(EstadoIncidencia estadoIncidencia) {
+        this.estadoIncidencia = estadoIncidencia;
+    }
+
+    public TipoIncidencia getTipoIncidencia() {
+        return tipoIncidencia;
+    }
+
+    public void setTipoIncidencia(TipoIncidencia tipoIncidencia) {
+        this.tipoIncidencia = tipoIncidencia;
+    }
+
+    public NivelUrgencia getNivelUrgencia() {
+        return nivelUrgencia;
+    }
+
+    public void setNivelUrgencia(NivelUrgencia nivelUrgencia) {
+        this.nivelUrgencia = nivelUrgencia;
     }
 
     public Integer getContadorDestacado() {
@@ -119,21 +135,7 @@ public class Incidencia {
         this.contador_reabierto = contador_reabierto;
     }
 
-    public String getTipoIncidencia() {
-        return TipoIncidencia;
-    }
 
-    public void setTipoIncidencia(String tipoIncidencia) {
-        TipoIncidencia = tipoIncidencia;
-    }
-
-    public String getNivelUrgencia() {
-        return NivelUrgencia;
-    }
-
-    public void setNivelUrgencia(String nivelUrgencia) {
-        NivelUrgencia = nivelUrgencia;
-    }
 
 
 

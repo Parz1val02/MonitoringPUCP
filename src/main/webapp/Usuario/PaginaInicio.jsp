@@ -124,12 +124,12 @@
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <i class="fa fa-ambulance">Tipo</i>
-                                                                <h8><%=listaIncidencias.get(0).getTipoIncidencia()%></h8>
+                                                                <h8><%=listaIncidencias.get(0).getTipoIncidencia().getTipo()%></h8>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <i class="material-icons">traffic</i>
                                                                 <i>Urgencia</i>
-                                                                <h8><%= listaIncidencias.get(0).getNivelUrgencia()%></h8>
+                                                                <h8><%= listaIncidencias.get(0).getNivelUrgencia().getNivel()%></h8>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -181,12 +181,12 @@
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <i class="fa fa-ambulance">Tipo</i>
-                                                                <h8><%=listaIncidencias.get(1).getTipoIncidencia()%></h8>
+                                                                <h8><%=listaIncidencias.get(1).getTipoIncidencia().getTipo()%></h8>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <i class="material-icons">traffic</i>
                                                                 <i>Urgencia</i>
-                                                                <h8><%= listaIncidencias.get(1).getNivelUrgencia()%></h8>
+                                                                <h8><%= listaIncidencias.get(1).getNivelUrgencia().getNivel()%></h8>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -237,12 +237,12 @@
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <i class="fa fa-ambulance">Tipo</i>
-                                                                <h8><%=listaIncidencias.get(2).getTipoIncidencia()%></h8>
+                                                                <h8><%=listaIncidencias.get(2).getTipoIncidencia().getTipo()%></h8>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <i class="material-icons">traffic</i>
                                                                 <i>Urgencia</i>
-                                                                <h8><%= listaIncidencias.get(2).getNivelUrgencia()%></h8>
+                                                                <h8><%= listaIncidencias.get(2).getNivelUrgencia().getNivel()%></h8>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -293,12 +293,12 @@
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <i class="fa fa-ambulance">Tipo</i>
-                                                                <h8><%=listaIncidencias.get(3).getTipoIncidencia()%></h8>
+                                                                <h8><%=listaIncidencias.get(3).getTipoIncidencia().getTipo()%></h8>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <i class="material-icons">traffic</i>
                                                                 <i>Urgencia</i>
-                                                                <h8><%= listaIncidencias.get(3).getNivelUrgencia()%></h8>
+                                                                <h8><%= listaIncidencias.get(3).getNivelUrgencia().getNivel()%></h8>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -349,12 +349,12 @@
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <i class="fa fa-ambulance">Tipo</i>
-                                                                <h8><%=listaIncidencias.get(4).getTipoIncidencia()%></h8>
+                                                                <h8><%=listaIncidencias.get(4).getTipoIncidencia().getTipo()%></h8>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <i class="material-icons">traffic</i>
                                                                 <i>Urgencia</i>
-                                                                <h8><%= listaIncidencias.get(4).getNivelUrgencia()%></h8>
+                                                                <h8><%= listaIncidencias.get(4).getNivelUrgencia().getNivel()%></h8>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -407,12 +407,12 @@
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <i class="fa fa-ambulance">Tipo</i>
-                                                                <h8><%=incidencia.getTipoIncidencia()%></h8>
+                                                                <h8><%=incidencia.getTipoIncidencia().getTipo()%></h8>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <i class="material-icons">traffic</i>
                                                                 <i>Urgencia</i>
-                                                                <h8><%= incidencia.getNivelUrgencia()%></h8>
+                                                                <h8><%= incidencia.getNivelUrgencia().getNivel()%></h8>
                                                             </div>
                                                         </div>
                                                     </div>

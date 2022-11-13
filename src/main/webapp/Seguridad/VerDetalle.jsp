@@ -38,7 +38,7 @@
             <label class="form-label">Tipo Incidencia:</label>
             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                 <input class="form-control" type="text"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
-                <label ><%=incidencia.getTipoIncidencia()%></label>
+                <label ><%=incidencia.getTipoIncidencia().getTipo()%></label>
             </div>
 
             <label class="form-label">Zona PUCP:</label>
@@ -51,7 +51,7 @@
             <label class="form-label">Nivel de urgencia:</label>
             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                 <input class="form-control" type="text"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
-                <label ><%=incidencia.getNivelUrgencia()%></label>
+                <label ><%=incidencia.getNivelUrgencia().getNivel()%></label>
             </div>
 
             <label class="form-label">Descripcion de la incidencia:</label>
@@ -92,6 +92,7 @@
                 <select class="form-select" aria-label="Default select example">
                     <option selected>Estado</option>
                     <option value="3">Atendido</option>
+                    <option value="3"><% incidencia.getEstadoIncidencia().setEstado("Atendido");%></option>
                 </select>
             </div>
 
