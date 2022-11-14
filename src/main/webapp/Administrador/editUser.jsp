@@ -83,10 +83,10 @@
                       <div class="form-floating">
 
                         <select class="form-select" id="floatingSelectGrid1" name="rol">
-                          <option selected value="<%=usuario.getIdRoles()%>"><%=usuario.getRol()%></option>
-                          <%  if (usuario.getIdRoles()== 1) { %>
+                          <option selected value="<%=usuario.getRol().getIdRol()%>"><%=usuario.getRol().getNombreRol()%></option>
+                          <%  if (usuario.getRol().getIdRol()== 1) { %>
                             <option value="2">Seguridad</option>
-                          <% } else if (usuario.getIdRoles()== 2) { %>
+                          <% } else if (usuario.getRol().getIdRol()== 2) { %>
                             <option value="1">Usuario PUCP</option>
                           <% } %>
                         </select>
@@ -99,7 +99,7 @@
                       <div class="form-floating">
 
                         <select class="form-select" id="floatingSelectGrid2" name="categoriaPUCP">
-                          <option selected value="<%=usuario.getCategoriaPUCP()%>"><%=usuario.getCategoriaPUCP()==null?"No tiene categoria":usuario.getCategoriaPUCP()%></option>
+                          <option selected value="<%=usuario.getCategoriaPUCP()%>"><%=usuario.getCategoriaPUCP().getNombreCategoria()==null?"No tiene categoria":usuario.getCategoriaPUCP().getNombreCategoria()%></option>
 
                           <!--<option value="1">Alumno</option>
                           <option value="2">Administrativo</option>

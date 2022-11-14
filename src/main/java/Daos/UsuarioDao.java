@@ -180,7 +180,54 @@ public class UsuarioDao extends DaoBase{
         }*/
         return usuario;
     }
-    
+
+    public Usuario obtenerUsuario(String codigo) {
+
+        Usuario usuario = new Usuario();
+        //corregir query
+        String sql = "SELECT u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, u.foto_perfil, r.nombreRol, catpucp.nombreCategoria FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP where u.codigo=?";
+
+        try(Connection conn = this.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setString(1,codigo); //codigo = ?
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+
+                if (rs.next()) {
+                    usuario.setCodigo(codigo);
+                    usuario.setNombre(rs.getString(1));
+                    usuario.setApellido(rs.getString(2));
+                    usuario.setCorreo(rs.getString(3));
+                    usuario.setDni(rs.getString(4));
+                    usuario.setValida(rs.getBoolean(5));
+                    usuario.setPassword(rs.getString(6));
+                    usuario.setNickname(rs.getString(7));
+                    usuario.setCelular(rs.getString(8));
+
+                    usuario.setFotobyte(rs.getBytes(9));
+
+                    Rol rol = new Rol();
+                    rol.setNombreRol(rs.getString(10));
+                    usuario.setRol(rol);
+                    System.out.println(usuario.getRol().getNombreRol());
+
+                    CategoriaPUCP categoriaPUCP = new CategoriaPUCP();
+                    categoriaPUCP.setNombreCategoria(rs.getString(11));
+                    usuario.setCategoriaPUCP(categoriaPUCP);
+                }
+
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } /*catch (IOException e) {
+            throw new RuntimeException(e);
+        }*/
+        return usuario;
+    }
+
     public void actualizarUsuario(String nombreUpdate, String apellidoUpdate, String codigoUpdate, String correoUpdate, String dniUpdate, String celularUpdate, int categoriaUpdateInt, int rolUpdateInt) {
 
         String sql = "UPDATE Usuarios SET nombre = ?, apellido = ?, correo = ?, DNI = ?, celular = ?, idRoles = ?, idCategoriaPUCP = ? WHERE codigo = ?";
@@ -261,6 +308,34 @@ public class UsuarioDao extends DaoBase{
         return usuario;
     }
 
+    //para el logueo*
+    public Usuario ingresarLogin(String username, String password){
 
+        Usuario usuario = null;
+
+        //antes del sql se debe hashear el password para comparar los hashes
+        String sql = "select * from usuarios where correo=? and password=?";
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+
+                    String codigo = rs.getString(1);
+                    usuario=obtenerUsuario(codigo);
+
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return usuario;
+
+    }
 
 }

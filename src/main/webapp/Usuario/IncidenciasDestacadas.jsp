@@ -124,7 +124,7 @@
                   <tr>
                     <td><%= incidencia.getNombreIncidencia()%> </td>
                     <td><%= incidencia.getUsuarios_nombre_completo()%></td>
-                    <td><%= incidencia.getNombreEstado()%> </td
+                    <td><%= incidencia.getEstadoIncidencia().getEstado()%> </td
                     <td></td>
                     <td><%= incidencia.getContadorDestacado()%> </td>
 

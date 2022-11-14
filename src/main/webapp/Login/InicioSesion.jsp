@@ -44,24 +44,29 @@
         <div style="height: 30px; display: block;"></div>
         <h2 class="create-account" style="font-family: 'Arial Black'; font-size: 20px; " align="center">Iniciar Sesión</h2>
         <div style="height: 20px; display: block;"></div>
-        <div>
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label" style="font-size: 15px; margin: 0px 5px 2px 8px">Correo</label>
-            <div class="col-sm-9" style="margin: 2px 2px 2px 2px">
-              <input type="correo" class="form-control" id="inputPassword2" placeholder="Ingrese su Correo PUCP">
+
+          <form method="post" action="<%= request.getContextPath()%>/Login">
+            <div>
+              <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" style="font-size: 15px; margin: 0px 5px 2px 8px">Correo</label>
+                <div class="col-sm-9" style="margin: 2px 2px 2px 2px">
+                  <input type="correo" class="form-control" id="inputPassword2" placeholder="Ingrese su Correo PUCP" name="email">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label" style="font-size: 15px; margin: 0px 0px 2px 8px">Password</label>
+                <div class="col-sm-9" style="margin: 2px 2px 2px 7px">
+                  <input type="password" class="form-control" id="inputPassword" placeholder="Ingrese su Contraseña" name="password">
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="mb-3 row">
-            <label for="inputPassword" class="col-sm-2 col-form-label" style="font-size: 15px; margin: 0px 0px 2px 8px">Password</label>
-            <div class="col-sm-9" style="margin: 2px 2px 2px 7px">
-              <input type="password" class="form-control" id="inputPassword" placeholder="Ingrese su Contraseña">
+            <div style="height: 20px; display: block;"></div>
+            <div align="center">
+              <button type="submit" class="btn btn-primary btn-lg float-right" style="font-size: 12px; border-color: #042354; background-color: #163297; border-radius: 5px">Aceptar</button>
             </div>
-          </div>
-        </div>
-        <div style="height: 20px; display: block;"></div>
-        <div align="center">
-          <button type="button" class="btn btn-primary btn-lg float-right" style="font-size: 12px; border-color: #042354; background-color: #163297; border-radius: 5px">Aceptar</button>
-        </div>
+          </form>
+
+
         <div style="height: 5px; display: block;"></div>
         <div align="center">
           <a style="color: #9f191f; font-size: 13px; font-family: 'Arial';"href="<%=request.getContextPath()%>/Login?accion=olvidar">He olvidado mi contraseña</a>

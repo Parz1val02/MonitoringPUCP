@@ -149,8 +149,8 @@
                                             <div class="row">
                                                 <div class="col-md"><p class="card-text"><%= i.getFecha()%></div>
                                                 <div class="col-md"><p class="card-text"><%= i.getZonaPUCP()%></p></div>
-                                                <div class="col-md"><p class="card-text"><%= i.getTipoIncidencia()%></p></div>
-                                                <div class="col-md"><p class="card-text"><%= i.getNivelUrgencia()%></p></div>
+                                                <div class="col-md"><p class="card-text"><%= i.getTipoIncidencia().getTipo()%></p></div>
+                                                <div class="col-md"><p class="card-text"><%= i.getNivelUrgencia().getNivel()%></p></div>
                                             </div>
                                         </div>
                                     </div>
