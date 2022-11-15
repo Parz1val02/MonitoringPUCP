@@ -1,6 +1,5 @@
 package Beans;
 
-//para la ubicacion(que se escoja la zona PUCP con un select y se obtenga su latitud y longitud), todavia falta crear una tabla en la base de datos
 public class ZonaPUCP {
 
     private int idZonaPUCP;

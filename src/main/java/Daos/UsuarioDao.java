@@ -1,49 +1,50 @@
 package Daos;
-import Beans.CategoriaPUCP;
-import Beans.Incidencia;
-import Beans.Rol;
-import Beans.Usuario;
+import Beans.*;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.sql.*;
 import java.util.ArrayList;
-
-import static java.nio.file.Files.newOutputStream;
 
 public class UsuarioDao extends DaoBase{
 
     public ArrayList<Usuario> obtenerListaUsuarios() {
 
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
-
-        try {
-
-            Connection conn = this.getConnection();
-            Statement stmt = conn.createStatement();
-
-            //ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios");
-            ResultSet rs = stmt.executeQuery( "SELECT u.codigo, u.nombre, u.apellido, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, u.foto_perfil, r.nombreRol, catpucp.nombreCategoria FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP");
+        String sql = "SELECT u.codigo, u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, r.idRoles, r.nombreRol, catpucp.idCategoriaPUCP, catpucp.nombreCategoria,\n" +
+                "fp.idFotoPerfil, fp.nombreFoto, fp.fotoPerfil\n" +
+                "FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP \n" +
+                "left join FotoPerfil fp on u.idFotoPerfil = fp.idFotoPerfil;";
+        try (Connection conn = this.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery( sql);){
 
             while (rs.next()) {
                 Usuario usuario = new Usuario();
                 usuario.setCodigo(rs.getString(1));
                 usuario.setNombre(rs.getString(2));
                 usuario.setApellido(rs.getString(3));
-                usuario.setDni(rs.getString(4));
-                usuario.setValida(rs.getBoolean(5));
-                usuario.setPassword(rs.getString(6));
-                usuario.setNickname(rs.getString(7));
-                usuario.setCelular(rs.getString(8));
-                //usuario.setIdRoles(rs.getInt(10));
-                //usuario.setIdCategoriaPUCP(rs.getInt(11));
+                usuario.setCorreo(rs.getString(4));
+                usuario.setDni(rs.getString(5));
+                usuario.setValida(rs.getBoolean(6));
+                usuario.setPassword(rs.getString(7));
+                usuario.setNickname(rs.getString(8));
+                usuario.setCelular(rs.getString(9));
+
                 Rol rol = new Rol();
-                rol.setNombreRol(rs.getString(10));
+                rol.setIdRol(rs.getInt(10));
+                rol.setNombreRol(rs.getString(11));
                 usuario.setRol(rol);
 
                 CategoriaPUCP categoriaPUCP = new CategoriaPUCP();
-                categoriaPUCP.setNombreCategoria(rs.getString(11));
+                categoriaPUCP.setIdCategoria(rs.getInt(12));
+                categoriaPUCP.setNombreCategoria(rs.getString(13));
                 usuario.setCategoriaPUCP(categoriaPUCP);
+
+                FotoPerfil fotoPerfil = new FotoPerfil();
+                fotoPerfil.setIdFoto(rs.getInt(14));
+                fotoPerfil.setNombreFoto(rs.getString(15));
+                fotoPerfil.setFotobyte(rs.getBytes(16));
+                usuario.setFotoPerfil(fotoPerfil);
 
                 listaUsuarios.add(usuario);
             }
@@ -60,7 +61,7 @@ public class UsuarioDao extends DaoBase{
     public void crearUsuario(Usuario usuario){
 
 
-        String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, nickname, celular, foto_perfil, idRoles, idCategoriaPUCP) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, nickname, celular, idRoles, idCategoriaPUCP, idFotoPerfil) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?,?)";
 
 
         try (Connection connection = this.getConnection();
@@ -73,38 +74,17 @@ public class UsuarioDao extends DaoBase{
             pstmt.setString(5, usuario.getDni());
             pstmt.setBoolean(6, true);
             pstmt.setString(7, "unclash");
-            pstmt.setString(8, "unfall");
+            pstmt.setString(8, "111111");
             pstmt.setString(9, usuario.getCelular()); //nulos
-            FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
-            pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());
-            pstmt.setInt(11, 1);
-            /*switch(usuario.getCategoriaPUCP()){
-                case "Alumno":
-                    pstmt.setInt(11, 1);
-                    break;
-                case "Administrativo":
-                    pstmt.setInt(11, 2);
-                    break;
-                case "Jefe de práctica":
-                    pstmt.setInt(11, 3);
-                    break;
-                case "Profesor":
-                    pstmt.setInt(11, 4);
-                    break;
-                case "Egresado":
-                    pstmt.setInt(11, 5);
-                    break;
-            }*/
-            /*
-            if(usuario.getRol().equalsIgnoreCase("Usuario PUCP")){
-                pstmt.setInt(12,1);
-            }else{
-                pstmt.setInt(12,2);
-            }*/
-            pstmt.setInt(12,1);
+            /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
+            pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
+            pstmt.setInt(10, usuario.getRol().getIdRol());
+            pstmt.setInt(11, usuario.getCategoriaPUCP().getIdCategoria());
+            pstmt.setBytes(12, usuario.getFotoPerfil().getFotobyte());
+            pstmt.setNull(12, Types.INTEGER);
             pstmt.executeUpdate();
 
-        } catch (SQLException | FileNotFoundException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -125,109 +105,56 @@ public class UsuarioDao extends DaoBase{
         }
     }
 
-    public Usuario obtenerUsuario() {
+    public Usuario buscarPorId(String codigoUsuario) {
 
         Usuario usuario = new Usuario();
 
-        String sql = "SELECT u.codigo, u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, u.foto_perfil, r.nombreRol, catpucp.nombreCategoria FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP where u.codigo=\"20220001\"";
+        String sql = "SELECT u.codigo, u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, r.idRoles, r.nombreRol, catpucp.idCategoriaPUCP, catpucp.nombreCategoria,\n" +
+                "fp.idFotoPerfil, fp.nombreFoto, fp.fotoPerfil \n" +
+                "FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP \n" +
+                "left join FotoPerfil fp on u.idFotoPerfil = fp.idFotoPerfil where u.codigo=?;";
 
-        try(Connection conn = this.getConnection();
-            Statement stmt = conn.createStatement();){
-            ResultSet rs = stmt.executeQuery(sql);
-            if (rs.next()) {
-                usuario.setCodigo(rs.getString(1));
-                usuario.setNombre(rs.getString(2));
-                usuario.setApellido(rs.getString(3));
-                usuario.setCorreo(rs.getString(4));
-                usuario.setDni(rs.getString(5));
-                usuario.setValida(rs.getBoolean(6));
-                usuario.setPassword(rs.getString(7));
-                usuario.setNickname(rs.getString(8));
-                usuario.setCelular(rs.getString(9));
-                /*File file = new File(usuario.getCodigo() + "_fotoPerfil.png");
-                if (file.createNewFile()){
-                    System.out.println("File is created!");
-                }else{
-                    System.out.println("File already exists.");
-                }
-                FileOutputStream output = new FileOutputStream(file.getPath());
-                System.out.println("Writing to file " + file.getAbsolutePath());
-                InputStream input = rs.getBinaryStream(10);
-                byte[] buffer = new byte[1024];
-                while (input.read(buffer) > 0) {
-                    output.write(buffer);
-                }
-                //close the OutputStream
-                output.close();
-                //close the InputStream
-                input.close();
-                usuario.setFotoPerfil(file);*/
-                usuario.setFotobyte(rs.getBytes(10));
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
 
-                Rol rol = new Rol();
-                rol.setNombreRol(rs.getString(11));
-                usuario.setRol(rol);
-
-                CategoriaPUCP categoriaPUCP = new CategoriaPUCP();
-                categoriaPUCP.setNombreCategoria(rs.getString(12));
-                usuario.setCategoriaPUCP(categoriaPUCP);
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } /*catch (IOException e) {
-            throw new RuntimeException(e);
-        }*/
-        return usuario;
-    }
-
-    public Usuario obtenerUsuario(String codigo) {
-
-        Usuario usuario = new Usuario();
-        //corregir query
-        String sql = "SELECT u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, u.foto_perfil, r.nombreRol, catpucp.nombreCategoria FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP where u.codigo=?";
-
-        try(Connection conn = this.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql)){
-
-            pstmt.setString(1,codigo); //codigo = ?
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-
+            pstmt.setString(1, codigoUsuario);
+            try(ResultSet rs = pstmt.executeQuery(sql);){
                 if (rs.next()) {
-                    usuario.setCodigo(codigo);
-                    usuario.setNombre(rs.getString(1));
-                    usuario.setApellido(rs.getString(2));
-                    usuario.setCorreo(rs.getString(3));
-                    usuario.setDni(rs.getString(4));
-                    usuario.setValida(rs.getBoolean(5));
-                    usuario.setPassword(rs.getString(6));
-                    usuario.setNickname(rs.getString(7));
-                    usuario.setCelular(rs.getString(8));
-
-                    usuario.setFotobyte(rs.getBytes(9));
+                    usuario.setCodigo(rs.getString(1));
+                    usuario.setNombre(rs.getString(2));
+                    usuario.setApellido(rs.getString(3));
+                    usuario.setCorreo(rs.getString(4));
+                    usuario.setDni(rs.getString(5));
+                    usuario.setValida(rs.getBoolean(6));
+                    usuario.setPassword(rs.getString(7));
+                    usuario.setNickname(rs.getString(8));
+                    usuario.setCelular(rs.getString(9));
 
                     Rol rol = new Rol();
-                    rol.setNombreRol(rs.getString(10));
+                    rol.setIdRol(rs.getInt(10));
+                    rol.setNombreRol(rs.getString(11));
                     usuario.setRol(rol);
-                    System.out.println(usuario.getRol().getNombreRol());
 
                     CategoriaPUCP categoriaPUCP = new CategoriaPUCP();
-                    categoriaPUCP.setNombreCategoria(rs.getString(11));
+                    categoriaPUCP.setIdCategoria(rs.getInt(12));
+                    categoriaPUCP.setNombreCategoria(rs.getString(13));
                     usuario.setCategoriaPUCP(categoriaPUCP);
+
+                    FotoPerfil fotoPerfil = new FotoPerfil();
+                    fotoPerfil.setIdFoto(rs.getInt(14));
+                    fotoPerfil.setNombreFoto(rs.getString(15));
+                    fotoPerfil.setFotobyte(rs.getBytes(16));
+                    usuario.setFotoPerfil(fotoPerfil);
+
                 }
-
-
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
-        } /*catch (IOException e) {
-            throw new RuntimeException(e);
-        }*/
+        }
         return usuario;
     }
 
+    //Falta metodo para actuallizar foto de perfil
     public void actualizarUsuario(String nombreUpdate, String apellidoUpdate, String codigoUpdate, String correoUpdate, String dniUpdate, String celularUpdate, int categoriaUpdateInt, int rolUpdateInt) {
 
         String sql = "UPDATE Usuarios SET nombre = ?, apellido = ?, correo = ?, DNI = ?, celular = ?, idRoles = ?, idCategoriaPUCP = ? WHERE codigo = ?";
@@ -259,62 +186,13 @@ public class UsuarioDao extends DaoBase{
         }
     }
 
-    public Usuario buscarPorId(String usuarioCodigo) {
-
-        Usuario usuario = null;
-
-        String sql = "select * from usuarios WHERE codigo = ?";
-        String sql1 = "SELECT u.codigo, u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, r.nombreRol, catpucp.nombreCategoria, u.idRoles, u.idCategoriaPUCP FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP WHERE u.codigo = ?";
-
-
-        try (Connection connection = this.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sql1);) {
-
-            pstmt.setString(1, usuarioCodigo);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-
-
-                    usuario = new Usuario();
-                    usuario.setCodigo(rs.getString(1));
-                    usuario.setNombre(rs.getString(2));
-                    usuario.setApellido(rs.getString(3));
-                    usuario.setCorreo(rs.getString(4));
-                    usuario.setDni(rs.getString(5));
-                    usuario.setValida(rs.getBoolean(6));
-                    usuario.setPassword(rs.getString(7));
-                    usuario.setNickname(rs.getString(8));
-                    usuario.setCelular(rs.getString(9));
-
-                    Rol rol = new Rol();
-                    rol.setNombreRol(rs.getString(10));
-                    usuario.setRol(rol);
-
-                    CategoriaPUCP categoriaPUCP = new CategoriaPUCP();
-                    categoriaPUCP.setNombreCategoria(rs.getString(11));
-                    usuario.setCategoriaPUCP(categoriaPUCP);
-
-                    usuario.setIdRoles(rs.getInt(12));
-                    usuario.setIdCategoriaPUCP(rs.getInt(13));
-
-
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return usuario;
-    }
-
     //para el logueo*
     public Usuario ingresarLogin(String username, String password){
 
         Usuario usuario = null;
 
         //antes del sql se debe hashear el password para comparar los hashes
-        String sql = "select * from usuarios where correo=? and password=?";
+        String sql = "select * from Usuarios where correo=? and password=sha2(?,256)";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
@@ -324,16 +202,14 @@ public class UsuarioDao extends DaoBase{
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-
                     String codigo = rs.getString(1);
-                    usuario=obtenerUsuario(codigo);
+                    usuario=buscarPorId(codigo);
 
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return usuario;
 
     }

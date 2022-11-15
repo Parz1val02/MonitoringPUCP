@@ -1,9 +1,6 @@
 package Daos;
 
-import Beans.EstadoIncidencia;
-import Beans.Incidencia;
-import Beans.NivelUrgencia;
-import Beans.TipoIncidencia;
+import Beans.*;
 import com.mysql.cj.x.protobuf.MysqlxExpr;
 //import sun.nio.ch.WindowsAsynchronousFileChannelImpl;
 
@@ -25,44 +22,54 @@ public class IncidenciaDao extends DaoBase{
         ArrayList<Incidencia> listaIncidencia = new ArrayList<>();
         try (Connection conn = this.getConnection();
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("select *, concat(u.nombre,\" \",u.apellido) as `Usuario`\n" +
-                     "                     from Incidencia i \n" +
-                     "                     left join NivelUrgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
-                     "                     left join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
-                     "                     left join EstadoIncidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
-                     "                       left join IncidenciasDestacadas d on i.idIncidencia = d.idIncidencia\n" +
-                     "                     left join Usuarios u on i.codigousuario = u.codigo where validaIncidencia = 1")) {
+             ResultSet rs = stm.executeQuery("select i.idIncidencia, i.fecha, i.nombreIncidencia, i.validaIncidencia, i.descripcion, i.contadorReabierto, i.otroTipo, \n" +
+                     "ti.idTipoIncidencia, ti.tipo, ti.iconoFoto, ti.nombreIcono, nu.idNivelUrgencia, nu.nivel, e.idEstadoIncidencia, e.estado,\n" +
+                     "u.codigo, z.idZonaPUCP, z.nombreZona, z.latitud, z.longitud\n" +
+                     "from Incidencias i \n" +
+                     "inner join NivelUrgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
+                     "left join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
+                     "inner join EstadoIncidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
+                     "left join IncidenciasDestacadas d on i.idIncidencia = d.idIncidencia\n" +
+                     "left join Usuarios u on i.codigousuario = u.codigo \n" +
+                     "left join ZonaPUCP z on i.idZonaPUCP=z.idZonaPUCP where validaIncidencia = 1 order by i.idIncidencia;")) {
 
-            //Usuario usuario = new Usuario();
             while (rs.next()) {
                 Incidencia incidencia = new Incidencia();
                 incidencia.setIdIncidencia(rs.getInt("i.IdIncidencia"));
                 incidencia.setFecha(rs.getString(2));
                 incidencia.setNombreIncidencia(rs.getString(3));
-                incidencia.setZonaPUCP(rs.getString(4));
-                incidencia.setLatitud(rs.getDouble(5));
-                incidencia.setLongitud(rs.getDouble(6));
                 incidencia.setValidaIncidencia(rs.getBoolean("validaIncidencia"));
-                incidencia.setDescripcion(rs.getString(8));
-                incidencia.setContador_reabierto(rs.getInt(9));
-                incidencia.setContadorDestacado(rs.getInt("contadorDestacado"));
+                incidencia.setDescripcion(rs.getString(5));
+                incidencia.setContadorReabierto(rs.getInt(6));
+                incidencia.setOtroTipo(rs.getString(7));
                 TipoIncidencia tipoIncidencia = new TipoIncidencia();
+                tipoIncidencia.setIdTipo(rs.getInt(8));
                 tipoIncidencia.setTipo(rs.getString("tipo"));
+                tipoIncidencia.setIconobyte(rs.getBytes(10));
+                tipoIncidencia.setNombreIcono(rs.getString(11));
                 incidencia.setTipoIncidencia(tipoIncidencia);
 
                 NivelUrgencia nivel = new NivelUrgencia();
+                nivel.setIdNivelUrgencia(rs.getInt(12));
                 nivel.setNivel(rs.getString("nivel"));
                 incidencia.setNivelUrgencia(nivel);
 
                 EstadoIncidencia estado = new EstadoIncidencia();
+                estado.setIdEstado(rs.getInt(14));
                 estado.setEstado(rs.getString("estado"));
                 incidencia.setEstadoIncidencia(estado);
-                incidencia.setUsuarios_nombre_completo(rs.getString("Usuario"));
-                //incidencia.setUsuario(usuario);
+
+                UsuarioDao uDao = new UsuarioDao();
+                incidencia.setUsuario(uDao.buscarPorId(rs.getString("codigo")));
+
+                ZonaPUCP zonaPUCP = new ZonaPUCP();
+                zonaPUCP.setIdZonaPUCP(rs.getInt(17));
+                zonaPUCP.setNombreZona(rs.getString(18));
+                zonaPUCP.setLatitud(rs.getDouble(19));
+                zonaPUCP.setLongitud(rs.getDouble(20));
+
                 listaIncidencia.add(incidencia);
             }
-
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -72,53 +79,63 @@ public class IncidenciaDao extends DaoBase{
     public Incidencia obtenerIncidencia (String id) {
 
 
-        String sql = "select i.fecha,i.zonaPUCP, e.estado, nu.nivel, i.descripcion, i.nombreIncidencia,concat(u.nombre,\" \",u.apellido) as Usuario, e.estado, i.contadorreabierto, d.contadorDestacado, ti.tipo\n" +
-                "from Incidencia i\n" +
-                "inner join NivelUrgencia nu on nu.IdNivelUrgencia = i.IdNivelUrgencia\n" +
-                "inner join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
-                "inner join Usuarios u on i.codigousuario = u.codigo\n" +
+        String sql = "select i.idIncidencia, i.fecha, i.nombreIncidencia, i.validaIncidencia, i.descripcion, i.contadorReabierto, i.otroTipo, \n" +
+                "ti.idTipoIncidencia, ti.tipo, ti.iconoFoto, ti.nombreIcono, nu.idNivelUrgencia, nu.nivel, e.idEstadoIncidencia, e.estado,\n" +
+                "u.codigo, z.idZonaPUCP, z.nombreZona, z.latitud, z.longitud\n" +
+                "from Incidencias i \n" +
+                "inner join NivelUrgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
+                "left join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
                 "inner join EstadoIncidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
-                "inner join IncidenciasDestacadas d on i.idIncidencia = d.idIncidencia\n" +
-                "WHERE i.idIncidencia = ?";
+                "left join IncidenciasDestacadas d on i.idIncidencia = d.idIncidencia\n" +
+                "left join Usuarios u on i.codigousuario = u.codigo \n" +
+                "left join ZonaPUCP z on i.idZonaPUCP=z.idZonaPUCP where validaIncidencia = 1 and i.idIncidencia = ?;";
 
 
         Incidencia incidencia = new Incidencia();
         try (Connection conn = this.getConnection();
-             PreparedStatement pstm = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstm.setString(1, id);
+            pstmt.setString(1, id);
 
-            ResultSet rs = pstm.executeQuery();
-            //Usuario usuario = new Usuario();
-            if (rs.next()) {
-                incidencia.setIdIncidencia(Integer.valueOf(id));
-                incidencia.setNombreIncidencia(rs.getString(6));
+            try(ResultSet rs = pstmt.executeQuery();){
 
-                TipoIncidencia tipoIncidencia = new TipoIncidencia();
-                tipoIncidencia.setTipo(rs.getString("tipo"));
-                incidencia.setTipoIncidencia(tipoIncidencia);
+                if (rs.next()) {
+                    incidencia.setIdIncidencia(rs.getInt("i.IdIncidencia"));
+                    incidencia.setFecha(rs.getString(2));
+                    incidencia.setNombreIncidencia(rs.getString(3));
+                    incidencia.setValidaIncidencia(rs.getBoolean("validaIncidencia"));
+                    incidencia.setDescripcion(rs.getString(5));
+                    incidencia.setContadorReabierto(rs.getInt(6));
+                    incidencia.setOtroTipo(rs.getString(7));
+                    TipoIncidencia tipoIncidencia = new TipoIncidencia();
+                    tipoIncidencia.setIdTipo(rs.getInt(8));
+                    tipoIncidencia.setTipo(rs.getString("tipo"));
+                    tipoIncidencia.setIconobyte(rs.getBytes(10));
+                    tipoIncidencia.setNombreIcono(rs.getString(11));
+                    incidencia.setTipoIncidencia(tipoIncidencia);
 
-                incidencia.setZonaPUCP(rs.getString(2));
+                    NivelUrgencia nivel = new NivelUrgencia();
+                    nivel.setIdNivelUrgencia(rs.getInt(12));
+                    nivel.setNivel(rs.getString("nivel"));
+                    incidencia.setNivelUrgencia(nivel);
 
-                NivelUrgencia nivel = new NivelUrgencia();
-                nivel.setNivel(rs.getString(4));
-                incidencia.setNivelUrgencia(nivel);
+                    EstadoIncidencia estado = new EstadoIncidencia();
+                    estado.setIdEstado(rs.getInt(14));
+                    estado.setEstado(rs.getString("estado"));
+                    incidencia.setEstadoIncidencia(estado);
 
-                incidencia.setDescripcion(rs.getString(5));
-                incidencia.setFecha(rs.getString(1));
-                incidencia.setContador_reabierto(rs.getInt(9));
-                incidencia.setContadorDestacado(rs.getInt(10));
+                    UsuarioDao uDao = new UsuarioDao();
+                    incidencia.setUsuario(uDao.buscarPorId(rs.getString("codigo")));
 
-                EstadoIncidencia estado = new EstadoIncidencia();
-                estado.setEstado(rs.getString(3));
-                incidencia.setEstadoIncidencia(estado);
+                    ZonaPUCP zonaPUCP = new ZonaPUCP();
+                    zonaPUCP.setIdZonaPUCP(rs.getInt(17));
+                    zonaPUCP.setNombreZona(rs.getString(18));
+                    zonaPUCP.setLatitud(rs.getDouble(19));
+                    zonaPUCP.setLongitud(rs.getDouble(20));
 
 
-                //incidencia.setNombreEstado(rs.getString(3));
-                //incidencia.setUsuario(usuario);
+                }
             }
-
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -202,7 +219,7 @@ public class IncidenciaDao extends DaoBase{
 
     }
 
-    public void confirmar(int codigo) {
+    public void confirmar(int id) {
 
         //con borrado logico
         String sql = "UPDATE Incidencia SET idEstadoIncidencia=4 where idIncidencia  = ?" ;
@@ -210,14 +227,14 @@ public class IncidenciaDao extends DaoBase{
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
-            pstmt.setInt(1, codigo);
+            pstmt.setInt(1, id);
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public void borrarIncidencia(int codigo) {
+    public void borrarIncidencia(int id) {
 
         //con borrado logico
         String sql = "UPDATE Incidencia SET validaIncidencia=0 where idIncidencia  = ?" ;
@@ -225,7 +242,7 @@ public class IncidenciaDao extends DaoBase{
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
-            pstmt.setInt(1, codigo);
+            pstmt.setInt(1, id);
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -233,15 +250,15 @@ public class IncidenciaDao extends DaoBase{
         }
     }
 
-    public void crearIncidencia(Incidencia incidencia) {
+    /*public void crearIncidencia(Incidencia incidencia) {
 
-        String sql = "INSERT INTO Incidencia (fecha, nombreIncidencia, zonaPUCP, latitud,longitud, validaIncidencia, descripcion, idTipoIncidencia, idNivelUrgencia, idEstadoIncidencia, codigoUsuario) " +
+        String sql = "INSERT INTO Incidencia (fecha, nombreIncidencia, validaIncidencia, descripcion, idTipoIncidencia, idNivelUrgencia, idEstadoIncidencia, codigoUsuario) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
 
-        //Incidencia incidencia ;
-        /*LocalDate localDate = LocalDate.now();//For reference
+        Incidencia incidencia ;
+        LocalDate localDate = LocalDate.now();//For reference
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
-        String formattedString = localDate.format(formatter);*/
+        String formattedString = localDate.format(formatter);
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -265,7 +282,7 @@ public class IncidenciaDao extends DaoBase{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
 }
 

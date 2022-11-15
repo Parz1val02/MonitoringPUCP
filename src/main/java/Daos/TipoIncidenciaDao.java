@@ -14,18 +14,16 @@ public class TipoIncidenciaDao extends DaoBase {
 
         ArrayList<TipoIncidencia> tipos = new ArrayList<>();
 
-        try {
-
-            Connection conn = this.getConnection();
-            Statement stmt = conn.createStatement();
-
-            ResultSet rs = stmt.executeQuery( "SELECT * FROM tipoincidencia");
+        try (Connection conn = this.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery( "SELECT * FROM TipoIncidencia");){
 
             while (rs.next()) {
                 TipoIncidencia tipo = new TipoIncidencia();
                 tipo.setIdTipo(rs.getInt(1));
                 tipo.setTipo(rs.getString(2));
-
+                tipo.setIconobyte(rs.getBytes(3));
+                tipo.setNombreIcono(rs.getString(4));
                 tipos.add(tipo);
             }
 

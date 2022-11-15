@@ -15,12 +15,9 @@ public class RolDao extends DaoBase{
 
         ArrayList<Rol> roles = new ArrayList<>();
 
-        try {
-
-            Connection conn = this.getConnection();
-            Statement stmt = conn.createStatement();
-
-            ResultSet rs = stmt.executeQuery( "SELECT * FROM roles");
+        try (Connection conn = this.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery( "SELECT * FROM Roles");){
 
             while (rs.next()) {
 

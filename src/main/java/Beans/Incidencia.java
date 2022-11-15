@@ -1,27 +1,23 @@
 package Beans;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Incidencia {
 
     private Integer idIncidencia;
     private String fecha;
     private String nombreIncidencia;
-    private String zonaPUCP;
-    private Double latitud;
-    private Double longitud;
+    private ZonaPUCP zonaPUCP;
     private Boolean validaIncidencia;
     private String Descripcion;
-    private Integer contador_reabierto;
+    private Integer contadorReabierto;
     private TipoIncidencia tipoIncidencia;// mostratr tipo
     private NivelUrgencia nivelUrgencia;// mostratr nivel
-
-    private LocalDateTime fechaIncidencia;
-    private String Usuarios_nombre_completo;
+    private Usuario usuario;
+    private String otroTipo;//Otro tipo de incidencia, si es que tipo de incidencia es otro
 
     private EstadoIncidencia estadoIncidencia; //estado incidencia
-
-    private Integer contadorDestacado;
 
     public EstadoIncidencia getEstadoIncidencia() {
         return estadoIncidencia;
@@ -45,22 +41,6 @@ public class Incidencia {
 
     public void setNivelUrgencia(NivelUrgencia nivelUrgencia) {
         this.nivelUrgencia = nivelUrgencia;
-    }
-
-    public Integer getContadorDestacado() {
-        return contadorDestacado;
-    }
-
-    public void setContadorDestacado(Integer contadorDestacado) {
-        this.contadorDestacado = contadorDestacado;
-    }
-
-    public String getUsuarios_nombre_completo() {
-        return Usuarios_nombre_completo;
-    }
-
-    public void setUsuarios_nombre_completo(String usuarios_nombre_completo) {
-        Usuarios_nombre_completo = usuarios_nombre_completo;
     }
 
     public Integer getIdIncidencia() {
@@ -87,30 +67,6 @@ public class Incidencia {
         this.nombreIncidencia = nombreIncidencia;
     }
 
-    public String getZonaPUCP() {
-        return zonaPUCP;
-    }
-
-    public void setZonaPUCP(String zonaPUCP) {
-        this.zonaPUCP = zonaPUCP;
-    }
-
-    public Double getLatitud() {
-        return latitud;
-    }
-
-    public void setLatitud(Double latitud) {
-        this.latitud = latitud;
-    }
-
-    public Double getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(Double longitud) {
-        this.longitud = longitud;
-    }
-
     public Boolean getValidaIncidencia() {
         return validaIncidencia;
     }
@@ -127,17 +83,36 @@ public class Incidencia {
         Descripcion = descripcion;
     }
 
-    public Integer getContador_reabierto() {
-        return contador_reabierto;
+    public Integer getContadorReabierto() {
+        return contadorReabierto;
     }
 
-    public void setContador_reabierto(Integer contador_reabierto) {
-        this.contador_reabierto = contador_reabierto;
+    public void setContadorReabierto(Integer contador_reabierto) {
+        this.contadorReabierto = contador_reabierto;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 
+    public ZonaPUCP getZonaPUCP() {
+        return zonaPUCP;
+    }
 
+    public void setZonaPUCP(ZonaPUCP zonaPUCP) {
+        this.zonaPUCP = zonaPUCP;
+    }
 
+    public String getOtroTipo() {
+        return otroTipo;
+    }
 
-
+    public void setOtroTipo(String otroTipo) {
+        this.otroTipo = otroTipo;
+    }
 }

@@ -15,12 +15,9 @@ public class NivelUrgenciaDao extends DaoBase{
 
         ArrayList<NivelUrgencia> niveles = new ArrayList<>();
 
-        try {
-
-            Connection conn = this.getConnection();
-            Statement stmt = conn.createStatement();
-
-            ResultSet rs = stmt.executeQuery( "SELECT * FROM nivelurgencia");
+        try (Connection conn = this.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery( "SELECT * FROM NivelUrgencia");){
 
             while (rs.next()) {
                 NivelUrgencia nivel = new NivelUrgencia();

@@ -1,7 +1,6 @@
 package Beans;
 
 import java.io.File;
-import java.io.InputStream;
 
 public class Usuario {
 
@@ -14,25 +13,21 @@ public class Usuario {
     private boolean valida;
     private String nickname;
     private String celular;
-    private File fotoPerfil;
-    private byte[] fotobyte;
     private Rol rol;
     private CategoriaPUCP categoriaPUCP;
-    private Integer idCategoriaPUCP;
-    private Integer idRoles;
-
+    private FotoPerfil fotoPerfil;
 
     public Usuario() {
     }
 
-    public Usuario(String codigo, String nombre, String apellido, String correo, String dni, String celular, File fotoPerfil, Rol rol, CategoriaPUCP categoriaPUCP) {
+    public Usuario(String codigo, String nombre, String apellido, String correo, String dni, String celular, FotoPerfil fotoPerfil, Rol rol, CategoriaPUCP categoriaPUCP) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
         this.dni = dni;
         this.celular = celular;
-        this.fotoPerfil = fotoPerfil;
+        this.setFotoPerfil(fotoPerfil);
         this.rol = rol;
         this.categoriaPUCP = categoriaPUCP;
     }
@@ -118,14 +113,6 @@ public class Usuario {
         this.celular = celular;
     }
 
-    public File getFotoPerfil() {
-        return fotoPerfil;
-    }
-
-    public void setFotoPerfil(File fotoPerfil) {
-        this.fotoPerfil = fotoPerfil;
-    }
-
     public String getCorreo() {
         return correo;
     }
@@ -134,27 +121,12 @@ public class Usuario {
         this.correo = correo;
     }
 
-    public Integer getIdCategoriaPUCP() {
-        return idCategoriaPUCP;
+
+    public FotoPerfil getFotoPerfil() {
+        return fotoPerfil;
     }
 
-    public void setIdCategoriaPUCP(Integer idCategoriaPUCP) {
-        this.idCategoriaPUCP = idCategoriaPUCP;
-    }
-
-    public Integer getIdRoles() {
-        return idRoles;
-    }
-
-    public void setIdRoles(Integer idRoles) {
-        this.idRoles = idRoles;
-    }
-
-    public byte[] getFotobyte() {
-        return fotobyte;
-    }
-
-    public void setFotobyte(byte[] fotobyte) {
-        this.fotobyte = fotobyte;
+    public void setFotoPerfil(FotoPerfil fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
     }
 }

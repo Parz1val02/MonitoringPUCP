@@ -1,9 +1,6 @@
 package Servlets;
 
-import Beans.CategoriaPUCP;
-import Beans.Incidencia;
-import Beans.Rol;
-import Beans.Usuario;
+import Beans.*;
 import Daos.CategoriaDao;
 import Daos.IncidenciaDao;
 import Daos.RolDao;
@@ -14,6 +11,7 @@ import jakarta.servlet.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -123,10 +121,6 @@ public class AdminServlet extends HttpServlet {
 
         switch (action) {
             case "guardar":
-                String relativeWebPath = "./images/clash-royale.jpg";
-                String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
-                System.out.println("Ruta: " + absoluteDiskPath);
-                File file = new File(absoluteDiskPath);
                 String codigo = request.getParameter("codigo");
                 String nombre = request.getParameter("nombre");
                 String apellido = request.getParameter("apellido");
@@ -136,7 +130,6 @@ public class AdminServlet extends HttpServlet {
                 //String password = request.getParameter("password");
                 //String nickname = request.getParameter("nickname");
                 String celular = request.getParameter("celular"); //string nulo
-                //Long foto_perfil = Long.parseLong(request.getParameter("fotoPerfil")); //long nulo
                 String rol = request.getParameter("rol"); //string nulo
                 Rol rol1 = new Rol();
                 rol1.setNombreRol(rol);
@@ -145,7 +138,18 @@ public class AdminServlet extends HttpServlet {
                 CategoriaPUCP categoriaPUCP1 = new CategoriaPUCP();
                 categoriaPUCP1.setNombreCategoria(categoriaPUCP);
 
-                Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,file,rol1,categoriaPUCP1);
+                //Foto
+                String relativeWebPath = "./images/usuario.png";
+                String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
+                System.out.println("Ruta: " + absoluteDiskPath);
+                File file = new File(absoluteDiskPath);
+                byte[] fileContent = Files.readAllBytes(file.toPath());
+
+                FotoPerfil fp = new FotoPerfil();
+                fp.setFotobyte(fileContent);
+                fp.setNombreFoto("usuario.png");
+
+                Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1);
 
                 usuarioDao.crearUsuario(usuario);
 

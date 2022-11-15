@@ -1,15 +1,14 @@
 package Beans;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class TipoIncidencia {
 
     private int idTipo;
     private String tipo;
-    private File icono; //para los iconos dependiendo del tipo de incidencia
-
-    private byte[] fotobyte;
-    private String descripcionOtros; //descripcion cuando se escoge el tipo de incidencia es "OTROS"
+    private String nombreIcono;
+    private byte[] iconobyte; //para los iconos dependiendo del tipo de incidencia
 
     public int getIdTipo() {
         return idTipo;
@@ -27,27 +26,19 @@ public class TipoIncidencia {
         this.tipo = tipo;
     }
 
-    public File getIcono() {
-        return icono;
+    public void setNombreIcono(String nombreIcono) {
+        this.nombreIcono = nombreIcono;
     }
 
-    public void setIcono(File icono) {
-        this.icono = icono;
+    public byte[] getIconobyte() {
+        return iconobyte;
     }
 
-    public String getDescripcionOtros() {
-        return descripcionOtros;
+    public void setIconobyte(byte[] iconobyte) {
+        this.iconobyte = iconobyte;
     }
 
-    public void setDescripcionOtros(String descripcionOtros) {
-        this.descripcionOtros = descripcionOtros;
-    }
-
-    public byte[] getFotobyte() {
-        return fotobyte;
-    }
-
-    public void setFotobyte(byte[] fotobyte) {
-        this.fotobyte = fotobyte;
+    public String getNombreIcono() {
+        return nombreIcono;
     }
 }

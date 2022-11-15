@@ -16,12 +16,9 @@ public class CategoriaDao extends DaoBase {
 
         ArrayList<CategoriaPUCP> listaCategorias = new ArrayList<>();
 
-        try {
-
-            Connection conn = this.getConnection();
-            Statement stmt = conn.createStatement();
-
-            ResultSet rs = stmt.executeQuery( "SELECT * FROM categoriapucp");
+        try (Connection conn = this.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery( "SELECT * FROM CategoriaPUCP");){
 
             while (rs.next()) {
                 CategoriaPUCP categoria = new CategoriaPUCP();
