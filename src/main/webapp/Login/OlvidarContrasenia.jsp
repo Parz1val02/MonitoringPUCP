@@ -27,61 +27,127 @@
         </nav>
     </div>
     <!-- END HEADER-->
-    <div class="content-wrapper">
-        <!-- START PAGE CONTENT-->
-        <div class="page-content fade-in-up" style="margin-top: 25px !important;">
-            <div class="col-md-6" style="margin: 0 auto">
-                <div class="ibox">
-                    <div class="ibox-head">
-                        <h1 class="page-title" style="font-size: 35px; font-weight: bold"><b>Olvidé Contraseña</b></h1>
+
+    <div style="height: 170px; display: block;"></div>
+
+    <!-- START PAGE CONTENT-->
+    <div class="container-fluid">
+        <div class="message">
+            <h1 align="center" style="font-family: 'Arial Black'; font-size: 40px">¿Olvidaste tu contraseña?</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div align="center" style="margin: 50px 0px 10px 0px; background: #FFFFFF; border-radius: 10px; border: 1px solid grey">
+                <div style="height: 30px; display: block;"></div>
+                <form method="post" action="<%= request.getContextPath()%>/Login">
+                    <label style="font-size: 18px; margin: 0px 5px 2px 8px">Ingrese su correo electrónico: </label>
+                    <div style="margin: 20px 40px 10px 40px">
+                        <input type="correo" class="form-control" id="inputPassword2" placeholder="Correo PUCP" name="email">
                     </div>
-                    <div class="ibox-body">
-                        <p style="font-size: 15px" >Ingresa tu correo electrónico</p>
-                        <div class="col-md-6 offset-md-1" style="margin-left: 0px !important;">
-                            <div >
-                                <div class="card-body">
-                                    <form class="form" role="form" autocomplete="off">
-                                        <div class="form-group">
-                                            <input type="email" required="" class="form-control" id="correo"  style="margin-top: 7px">
-                                        </div>
-                                        <div class="form-group text-center" style="margin-top: 20px">
-                                            <button type="button" class="btn btn-primary btn-lg float-right" style="font-size: 18px; border-color: #042354; background-color: #163297;" data-bs-toggle="modal" data-bs-target="#exampleModal">Ingresar</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <!-- /form card change password -->
-                        </div>
+                    <div style="height: 20px; display: block;"></div>
+                    <div align="center">
+                        <button type="submit" class="btn btn-primary btn-lg float-right" style="font-size: 15px; border-color: #042354; background-color: #163297; border-radius: 5px">Enviar</button>
                     </div>
-                </div>
+                </form>
+
+                <div style="height: 40px; display: block;"></div>
             </div>
         </div>
-        <!-- END PAGE CONTENT-->
+        <div class="col-md-3"></div>
     </div>
+    <!-- END PAGE CONTENT-->
 
 </div>
+<div style="height: 170px; display: block;"></div>
+<div class="container-fluid" style="background: #042354">
+    <!-- Footer -->
+    <footer
+            class="text-center text-lg-start text-white"
+            style="background-color: #042354"
+    >
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+            <!-- Section: Links -->
+            <section class="">
+                <!--Grid row-->
+                <div class="row">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                        <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">
+                            UBICACIÓN
+                        </h6>
+                        <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px">
+                            Campus principal
+                            <div style="height: 1px; display: block;"></div>
+                            Av. Universitaria 1801, San Miguel, 15088
+                            <div style="height: 1px; display: block;"></div>
+                            Lima, Perú
+                        </div>
 
-<div class="page-footer" style="color: rgb(255, 255, 255); margin-top: 241px !important; margin-bottom: 0px !important; background-color: rgb(4, 35, 84) !important; height: 310px !important; padding-top: 0px !important;">
-    <div class="container" style="margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; border-top-style: solid !important; border-top-width: 0px !important; padding-top: 20px !important; margin-top: 0px !important;">
-        <div class="row" style="height: 234px; width: 1120px !important; margin-right: 0px; margin-left: 30px !important; margin-top: 0px !important;"><div class="column w-col w-col-3" style="width: 438px !important; height: 234px !important;"><h3 class="footer-heading">Ubicación</h3><p class="paragraph">Campus principal<br>Av. Universitaria 1801, San Miguel, 15088<br>Lima, Perú</p><ul role="list" class="list w-list-unstyled"></ul></div><div class="w-col w-col-4" style="width: 438px !important;"><h3 class="footer-heading">CONTACTO</h3><p class="paragraph">Central telefónica 626-2000<br>Desde provincias 0800-1-7827 (servicio gratuito)</p><div class="w-layout-grid grid-4" style="height: 172px !important;"><a href="https://www.pucp.edu.pe/contacto/?tema=otros" class="footer-linkl w-inline-block" style="margin-left: 0px !important; margin-bottom: 0px !important; margin-top: 0px !important; color: #33ffd4 !important;"><img src="../images/enviarmensaje.png" style="width: 80px !important; height: 50px !important; margin-top: -75px !important; margin-left: 480px !important;"><div class="text-block-5" style="width: 200px !important; margin-left: 460px !important; margin-top: -20px !important;"><h4>Enviar mensaje</h4></div></a><a href="http://www.pucp.edu.pe/libro-reclamaciones/" target="_blank" class="footer-linkl _2 w-inline-block" style="margin-top: 0px !important; color: #33ffd4 !important;"><img src="../images/libroabierto.png" style="width: 80px !important; height: 50px !important; margin-top: -83px !important; margin-left: 650px !important;"><div class="text-block-5" style="width: 120px !important; margin-top: -28px !important; margin-left: 640px !important;"><h4>Libro de Reclamaciones</h4></div></a></div></div></div></div>
+                    </div>
+                    <!-- Grid column -->
 
-    <div class="div-block-6" style="margin-left: 35px !important; margin-bottom: 0px !important; height: 130px !important; bottom: 0px !important; margin-top: -75px !important;"><div class="container-bootstrap footer2 w-container" style="margin-bottom: 80px !important;"><div class="text-block-6" style="margin-bottom: 10px !important; margin-top: -20px !important; height: 18px !important; border-bottom-style: solid !important; border-bottom-width: 0px !important;"><h4> © Pontificia Universidad Católica del Perú - Todos los derechos reservados</h4></div><div class="text-block-7" style="margin-top: 0px !important;"><h4>Síguenos en:</h4></div><div class="div-block-8" style="margin-top: 15px !important;"><a href="https://twitter.com/pucp/"><img src="../images/twitter.png" style="width: 35px !important; margin-right: 10px !important;"></a><a href="https://facebook.com/pucp/"><img src="../images/facebook.png" style="width: 35px !important; border-right-width: 10px !important; margin-right: 10px !important;"></a><a href="https://youtube.com/pucp/"><img src="../images/youtube.png" style="width: 35px !important; border-right-width: 10px !important; height: 35px !important; margin-right: 10px !important;"></a><a href="https://www.instagram.com/pucp/?hl=es-la"><img src="../images/instagram.png" style="width: 35px !important; margin-right: 10px !important;"></a><a href="https://www.tiktok.com/@pucp?lang=es"><img src="../images/tiktok.png" style="width: 35px !important; margin-right: 10px !important;"></a></div></div></div></div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Aviso de confirmación</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Se ha enviado un enlace al correo electronico para el cambio de contraseña
-            </div>
-            <div class="modal-footer">
-                <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                    <hr class="w-100 clearfix d-md-none" />
 
-            </div>
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                        <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">CONTACTO</h6>
+                        <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px">
+                            Central telefónica 626-2000
+                            <div style="height: 1px; display: block;"></div>
+                            Desde provincias 0800-1-7827 (servicio gratuito)
+                        </div>
+
+
+                    </div>
+                    <!-- Grid column -->
+
+                    <hr class="w-100 clearfix d-md-none" />
+
+                    <!-- Grid column -->
+                    <hr class="w-100 clearfix d-md-none" />
+
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                        <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">MAYOR INFORMACIÓN</h6>
+                        <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px">
+                            Si necesitas ayuda escribe a:
+                            <div style="height: 1px; display: block;"></div>
+                            <u>asistencia-dti@pucp.edu.pe</u>
+                        </div>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!--Grid row-->
+            </section>
+            <!-- Section: Links -->
+
+            <hr class="my-3">
+
+            <!-- Section: Copyright -->
+            <section class="p-3 pt-0" style="background: #042354">
+                <div class="row d-flex align-items-center">
+                    <!-- Grid column -->
+                    <div class="col-md-7 col-lg-8 text-center text-md-start">
+                        <!-- Copyright -->
+                        <div style="height: 5px; display: block;"></div>
+                        <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px">
+                            © Pontificia Universidad Católica del Perú - Todos los derechos reservados
+                        </div>
+                        <div style="height: 10px; display: block;"></div>
+                        <!-- Copyright -->
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+            </section>
+            <!-- Section: Copyright -->
         </div>
-    </div>
+        <!-- Grid container -->
+    </footer>
+    <!-- Footer -->
 </div>
 <!-- CORE SCRIPTS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
