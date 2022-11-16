@@ -34,13 +34,13 @@
         <div class="container-fluid" style="min-height: 60vh; align-content: center;">
             <div class="row" style="min-height: 60vh">
                 <div class="page-content fade-in-up col-md-6" style="align-content: center">
-                    <div class="imagen">
+                    <!--div class="imagen">
                         <div class="img">
                             <a target="blank" href="../images/usuario.png">
                                 <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verImagen" alt="">
                             </a>
                         </div>
-                    </div>
+                    </div!-->
                     <br>
                     <form onsubmit="return false">
                         <div class="col-md">
