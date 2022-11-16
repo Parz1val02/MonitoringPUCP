@@ -34,9 +34,20 @@ public class Login extends HttpServlet {
                 if(session.getAttribute("usuario")==null){
                     view = request.getRequestDispatcher("/Login/InicioSesion.jsp");
                     view.forward(request, response);
-                }else{
-                    response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
+                } else {
+                    if (session.getAttribute("usuario")!= null) {
+                        Usuario usuario = (Usuario) session.getAttribute("usuario");
+                        if(usuario.getRol().getNombreRol().equals("Usuario PUCP")){
+                            response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
+
+                        } else if (usuario.getRol().getNombreRol().equals("Seguridad")) {
+                            response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
+                        }
+
+                    } else {
+                    }
                 }
+
                 break;
             case ("olvidar"):
                 session = request.getSession();
@@ -63,9 +74,10 @@ public class Login extends HttpServlet {
         System.out.println(username);
         System.out.println(password);
 
+
         UsuarioDao uDao = new UsuarioDao();
         Usuario user = uDao.ingresarLogin(username,password); //recibo usuario y password
-
+        System.out.println(user.getRol().getNombreRol());
         if (user != null){
             session.setAttribute("usuario",user);
             session.setMaxInactiveInterval(10*60);//10 minutos de inactividad

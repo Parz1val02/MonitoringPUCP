@@ -19,7 +19,10 @@ public class SeguridadServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Usuario usuario1 = (Usuario) session.getAttribute("usuario");
         //if(usuario1!=null) {
-            if (usuario1.getRol().equals("Usuario PUCP")) {
+        System.out.println("aqui estoy: " + usuario1.getRol().getNombreRol());
+            if (usuario1!=null) {
+
+                System.out.println("ya entre: " + usuario1.getRol().getNombreRol());
                 String accion = request.getParameter("accion")==null?"listar":request.getParameter("accion");
                 RequestDispatcher view;
                 IncidenciaDao idao = new IncidenciaDao();
@@ -54,9 +57,11 @@ public class SeguridadServlet extends HttpServlet {
                         view = request.getRequestDispatcher("/Seguridad/doblefactorS.jsp");
                         view.forward(request, response);
                         break;
+                    default:
+                        response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
                 }
             }else{
-                response.sendRedirect(request.getContextPath()+"/UsuarioServlet");
+                response.sendRedirect(request.getContextPath()+"/Login/InicioSesion.jsp");
             }
         /*}else{
             RequestDispatcher view = request.getRequestDispatcher("/Login/InicioSesion.jsp");
