@@ -69,19 +69,18 @@ public class UsuarioServlet extends HttpServlet {
                 view = request.getRequestDispatcher("/Usuario/DetalleReabierto.jsp");
                 view.forward(request, response);
                 break;
-            /*case("verImagen"):
-                usuario = udao.buscarPorId();
+            case("verImagen"):
+                Usuario user1 = (Usuario) request.getSession().getAttribute("usuario");
+                usuario = udao.buscarPorId(user1.getCodigo());
                 response.setContentType("image/jpg");
                 try (OutputStream out = response.getOutputStream()) {
-                    out.write(usuario.getFotobyte());
+                    out.write(usuario.getFotoPerfil().getFotobyte());
                 }
 
             case("perfil"):
-                usuario = udao.buscarPorId();
-                request.setAttribute("usuario", usuario);
                 view = request.getRequestDispatcher("/Usuario/UsuarioPerfil.jsp");
                 view.forward(request, response);
-                break;*/
+                break;
             case("registrarIncidencia"):
 
                 request.setAttribute("tipos", tipoIncidenciaDao.obtenerTipos() );

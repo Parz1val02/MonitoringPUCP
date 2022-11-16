@@ -7,9 +7,7 @@
   Time: 22:38
   To change this template use File | Settings | File Templates.
 --%>
-<%
-    Usuario usuario = (Usuario) request.getAttribute("usuario");
-%>
+<jsp:useBean id="usuario" type="Beans.Usuario" scope="session"/>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -83,7 +81,7 @@
                     <div class="imagen">
                         <div class="img">
                             <a target="blank" href="../images/usuario.png">
-                                <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verImagen" alt="Trolltunga Norway">
+                                <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verImagen" alt="">
                             </a>
                         </div>
                     </div>
@@ -200,7 +198,7 @@
                                             <label>Categoría PUCP:</label>
                                             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                                                 <input class="form-control" type="text" id="LeoFall7" placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall7"><%=usuario.getCategoriaPUCP()%></label>
+                                                <label for="LeoFall7"><%=usuario.getCategoriaPUCP().getNombreCategoria()%></label>
                                             </div>
                                         </div>
                                     </div>
@@ -209,7 +207,7 @@
                                             <label>Rol de Usuario:</label>
                                             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                                                 <input class="form-control" type="text" id="LeoFall8" placeholder="Apellido" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall8"><%=usuario.getRol()%></label>
+                                                <label for="LeoFall8"><%=usuario.getRol().getNombreRol()%></label>
                                             </div>
                                         </div>
                                     </div>

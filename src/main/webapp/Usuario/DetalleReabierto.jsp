@@ -65,7 +65,7 @@
 
         <div style =  "margin-left: 10px" class="form-floating">
 
-            <p align="right">N° veces reabierta: <%=incidencia.getContador_reabierto()%>/5</p>
+            <p align="right">N° veces reabierta: <%=incidencia.getContadorReabierto()%>/5</p>
             <p>
                 ¿Por qué desea reabrir esta incidencia?: <br>
                 <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px"></textarea>

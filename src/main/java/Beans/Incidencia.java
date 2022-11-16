@@ -19,6 +19,7 @@ public class Incidencia {
 
     private EstadoIncidencia estadoIncidencia; //estado incidencia
 
+    private IncidenciasDestacadas incidenciasDestacadas;
     public EstadoIncidencia getEstadoIncidencia() {
         return estadoIncidencia;
     }
@@ -114,5 +115,13 @@ public class Incidencia {
 
     public void setOtroTipo(String otroTipo) {
         this.otroTipo = otroTipo;
+    }
+
+    public IncidenciasDestacadas getIncidenciasDestacadas() {
+        return incidenciasDestacadas;
+    }
+
+    public void setIncidenciasDestacadas(IncidenciasDestacadas incidenciasDestacadas) {
+        this.incidenciasDestacadas = incidenciasDestacadas;
     }
 }

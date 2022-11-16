@@ -80,10 +80,9 @@ public class UsuarioDao extends DaoBase{
             pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
             pstmt.setInt(10, usuario.getRol().getIdRol());
             pstmt.setInt(11, usuario.getCategoriaPUCP().getIdCategoria());
-            pstmt.setBytes(12, usuario.getFotoPerfil().getFotobyte());
             pstmt.setNull(12, Types.INTEGER);
             pstmt.executeUpdate();
-
+            //pstmt.setBytes(12, usuario.getFotoPerfil().getFotobyte());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -112,12 +111,12 @@ public class UsuarioDao extends DaoBase{
         String sql = "SELECT u.codigo, u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, r.idRoles, r.nombreRol, catpucp.idCategoriaPUCP, catpucp.nombreCategoria,\n" +
                 "fp.idFotoPerfil, fp.nombreFoto, fp.fotoPerfil \n" +
                 "FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP \n" +
-                "left join FotoPerfil fp on u.idFotoPerfil = fp.idFotoPerfil where u.codigo= ?";
+                "left join FotoPerfil fp on u.idFotoPerfil = fp.idFotoPerfil where u.codigo = ?";
 
         try(Connection connection = this.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql)){
             pstmt.setString(1, codigoUsuario);
-            try(ResultSet rs = pstmt.executeQuery(sql);){
+            try(ResultSet rs = pstmt.executeQuery();){
                 if (rs.next()) {
                     usuario.setCodigo(rs.getString(1));
                     usuario.setNombre(rs.getString(2));
@@ -144,7 +143,6 @@ public class UsuarioDao extends DaoBase{
                     fotoPerfil.setNombreFoto(rs.getString(15));
                     fotoPerfil.setFotobyte(rs.getBytes(16));
                     usuario.setFotoPerfil(fotoPerfil);
-
                 }
             }
         } catch (SQLException e) {

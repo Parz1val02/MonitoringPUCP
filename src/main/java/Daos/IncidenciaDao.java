@@ -24,7 +24,7 @@ public class IncidenciaDao extends DaoBase{
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("select i.idIncidencia, i.fecha, i.nombreIncidencia, i.validaIncidencia, i.descripcion, i.contadorReabierto, i.otroTipo, \n" +
                      "ti.idTipoIncidencia, ti.tipo, ti.iconoFoto, ti.nombreIcono, nu.idNivelUrgencia, nu.nivel, e.idEstadoIncidencia, e.estado,\n" +
-                     "u.codigo, z.idZonaPUCP, z.nombreZona, z.latitud, z.longitud\n" +
+                     "u.codigo, z.idZonaPUCP, z.nombreZona, z.latitud, z.longitud, d.contadorDestacado\n" +
                      "from Incidencias i \n" +
                      "inner join NivelUrgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
                      "left join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
@@ -68,6 +68,9 @@ public class IncidenciaDao extends DaoBase{
                 zonaPUCP.setLatitud(rs.getDouble(19));
                 zonaPUCP.setLongitud(rs.getDouble(20));
 
+                IncidenciasDestacadas a = new IncidenciasDestacadas();
+                a.setContadorDestacado(rs.getInt(21));
+                incidencia.setIncidenciasDestacadas(a);
                 listaIncidencia.add(incidencia);
             }
         } catch (SQLException throwables) {

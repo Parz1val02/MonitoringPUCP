@@ -101,16 +101,6 @@
                     <div class="ibox-body" >
                         <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=guardar">
 
-                            <div class="row g-2">
-                                <div class="col-md-4"  style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Nombre:</p>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-floating" style="margin-bottom: 15px">
-                                        <label class="sangria-filter">Fecha: <input type="date" name="fecha" id="date" class="sangria-filter" placeholder="dd-mm-yyyy" value="" min="1997-01-01" max="2030-12-31" style="margin-top: 5px;margin-bottom: 5px"></label>
-                                    </div>
-                                </div>
-                            </div>
                             <!-- 1era fila -->
                             <div class="row g-2">
                                 <div class="col-md-4"  style="display: flex; justify-content: center;  flex-direction: column">
@@ -120,6 +110,16 @@
                                     <div class="form-floating" style="margin-bottom: 15px">
                                         <input type="text" class="form-control" id="floatingInputGrid2" placeholder="Nombre Incidencia" name="nombre_incidencia">
                                         <label for="floatingInputGrid2" class="label-form-flujousuario">Nombre Incidencia</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-2">
+                                <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
+                                    <p class="campos-registrar-usuario">Fecha:</p>
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-floating" style="margin-bottom: 15px">
+                                        <input type="date" name="fecha" id="date" class="sangria-filter" placeholder="dd-mm-yyyy" min="1997-01-01" max="2030-12-31" style="margin-top: 5px;margin-bottom: 5px">
                                     </div>
                                 </div>
                             </div>

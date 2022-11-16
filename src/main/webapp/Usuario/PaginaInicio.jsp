@@ -113,7 +113,7 @@
                                                                     <i class="material-icons">favorite</i>
                                                                     <i>Destacadas</i>
                                                                     <h8>
-                                                                        <%=listaIncidencias.get(0).getContadorDestacado()%>
+                                                                        <%=listaIncidencias.get(0).getIncidenciasDestacadas().getContadorDestacado()%>
                                                                     </h8>
                                                                 </div>
                                                             </div>
@@ -170,7 +170,7 @@
                                                                     <i class="material-icons">favorite</i>
                                                                     <i>Destacadas</i>
                                                                     <h8>
-                                                                        <%=listaIncidencias.get(1).getContadorDestacado()%>
+                                                                        <%=listaIncidencias.get(1).getIncidenciasDestacadas().getContadorDestacado()%>
                                                                     </h8>
                                                                 </div>
                                                             </div>
@@ -226,7 +226,7 @@
                                                                     <i class="material-icons">favorite</i>
                                                                     <i>Destacadas</i>
                                                                     <h8>
-                                                                        <%=listaIncidencias.get(2).getContadorDestacado()%>
+                                                                        <%=listaIncidencias.get(2).getIncidenciasDestacadas().getContadorDestacado()%>
                                                                     </h8>
                                                                 </div>
                                                             </div>
@@ -282,7 +282,7 @@
                                                                     <i class="material-icons">favorite</i>
                                                                     <i>Destacadas</i>
                                                                     <h8>
-                                                                        <%=listaIncidencias.get(3).getContadorDestacado()%>
+                                                                        <%=listaIncidencias.get(3).getIncidenciasDestacadas().getContadorDestacado()%>
                                                                     </h8>
                                                                 </div>
                                                             </div>
@@ -338,7 +338,7 @@
                                                                     <i class="material-icons">favorite</i>
                                                                     <i>Destacadas</i>
                                                                     <h8>
-                                                                        <%=listaIncidencias.get(4).getContadorDestacado()%>
+                                                                        <%=listaIncidencias.get(4).getIncidenciasDestacadas().getContadorDestacado()%>
                                                                     </h8>
                                                                 </div>
                                                             </div>
@@ -396,7 +396,7 @@
                                                                     <i class="material-icons">favorite</i>
                                                                     <i>Destacadas</i>
                                                                     <h8>
-                                                                        <%=incidencia.getContadorDestacado()%>
+                                                                        <%=incidencia.getIncidenciasDestacadas().getContadorDestacado()%>
                                                                     </h8>
                                                                 </div>
                                                             </div>

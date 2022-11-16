@@ -116,10 +116,10 @@
                             <% for(Incidencia incidencia : listaIncidencias) {%>
                             <tr>
                                 <td><%= incidencia.getNombreIncidencia()%> </td>
-                                <td><%= incidencia.getUsuarios_nombre_completo()%></td>
+                                <td><%= incidencia.getUsuario().getNombre()%></td>
                                 <td><%= incidencia.getEstadoIncidencia().getEstado()%> </td
                                 <td></td>
-                                <td><%= incidencia.getContador_reabierto()%> </td>
+                                <td><%= incidencia.getIncidenciasDestacadas().getContadorDestacado()%> </td>
                                 <td>
                                     <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle&id=<%=incidencia.getIdIncidencia()%>">¿Reabrir incidencia?</a>
                                 </td>

@@ -130,13 +130,11 @@ public class AdminServlet extends HttpServlet {
                 //String password = request.getParameter("password");
                 //String nickname = request.getParameter("nickname");
                 String celular = request.getParameter("celular"); //string nulo
-                String rol = request.getParameter("rol"); //string nulo
                 Rol rol1 = new Rol();
-                rol1.setNombreRol(rol);
+                rol1.setIdRol(Integer.parseInt(request.getParameter("rol")));
 
-                String categoriaPUCP = request.getParameter("categoriaPUCP"); //string nulo
                 CategoriaPUCP categoriaPUCP1 = new CategoriaPUCP();
-                categoriaPUCP1.setNombreCategoria(categoriaPUCP);
+                categoriaPUCP1.setIdCategoria(Integer.parseInt(request.getParameter("categoriaPUCP")));
 
                 //Foto
                 String relativeWebPath = "./images/usuario.png";
