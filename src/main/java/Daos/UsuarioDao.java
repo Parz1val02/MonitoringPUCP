@@ -112,11 +112,10 @@ public class UsuarioDao extends DaoBase{
         String sql = "SELECT u.codigo, u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, r.idRoles, r.nombreRol, catpucp.idCategoriaPUCP, catpucp.nombreCategoria,\n" +
                 "fp.idFotoPerfil, fp.nombreFoto, fp.fotoPerfil \n" +
                 "FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP \n" +
-                "left join FotoPerfil fp on u.idFotoPerfil = fp.idFotoPerfil where u.codigo=?;";
+                "left join FotoPerfil fp on u.idFotoPerfil = fp.idFotoPerfil where u.codigo= ?";
 
         try(Connection connection = this.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql)){
-
             pstmt.setString(1, codigoUsuario);
             try(ResultSet rs = pstmt.executeQuery(sql);){
                 if (rs.next()) {
@@ -189,7 +188,7 @@ public class UsuarioDao extends DaoBase{
     //para el logueo*
     public Usuario ingresarLogin(String username, String password){
 
-        Usuario usuario = null;
+        Usuario usuario = new Usuario();
 
         //antes del sql se debe hashear el password para comparar los hashes
         String sql = "select * from Usuarios where correo=? and password=sha2(?,256)";
@@ -203,8 +202,9 @@ public class UsuarioDao extends DaoBase{
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     String codigo = rs.getString(1);
+                    System.out.println(codigo);
                     usuario=buscarPorId(codigo);
-
+                    System.out.println(usuario);
                 }
             }
         } catch (SQLException e) {

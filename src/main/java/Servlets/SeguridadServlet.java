@@ -83,7 +83,7 @@ public class SeguridadServlet extends HttpServlet {
                 Incidencia incidencia  =new Incidencia();
                 incidencia.setNombreIncidencia(nombreIncidencia);
                 incidencia.setFecha(fecha);
-                incidencia.setZonaPUCP(zonaPUCP);
+                //incidencia.setZonaPUCP(zonaPUCP);
 
                 NivelUrgencia nivel = new NivelUrgencia();
                 nivel.setNivel(nivelUrgencia);

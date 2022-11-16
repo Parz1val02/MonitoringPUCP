@@ -1,10 +1,7 @@
 package Servlets;
 
 import Beans.*;
-import Daos.IncidenciaDao;
-import Daos.NivelUrgenciaDao;
-import Daos.TipoIncidenciaDao;
-import Daos.UsuarioDao;
+import Daos.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -26,6 +23,7 @@ public class UsuarioServlet extends HttpServlet {
         UsuarioDao udao = new UsuarioDao();
         TipoIncidenciaDao tipoIncidenciaDao = new TipoIncidenciaDao();
         NivelUrgenciaDao nivelDao = new NivelUrgenciaDao();
+        ZonaDao zonaDao = new ZonaDao();
         Usuario usuario = null;
         Incidencia incidencia = null;
         switch (accion){
@@ -71,23 +69,24 @@ public class UsuarioServlet extends HttpServlet {
                 view = request.getRequestDispatcher("/Usuario/DetalleReabierto.jsp");
                 view.forward(request, response);
                 break;
-            case("verImagen"):
-                usuario = udao.obtenerUsuario();
+            /*case("verImagen"):
+                usuario = udao.buscarPorId();
                 response.setContentType("image/jpg");
                 try (OutputStream out = response.getOutputStream()) {
                     out.write(usuario.getFotobyte());
                 }
 
             case("perfil"):
-                usuario = udao.obtenerUsuario();
+                usuario = udao.buscarPorId();
                 request.setAttribute("usuario", usuario);
                 view = request.getRequestDispatcher("/Usuario/UsuarioPerfil.jsp");
                 view.forward(request, response);
-                break;
+                break;*/
             case("registrarIncidencia"):
 
                 request.setAttribute("tipos", tipoIncidenciaDao.obtenerTipos() );
                 request.setAttribute("niveles", nivelDao.obtenerNiveles());
+                request.setAttribute("zonas", zonaDao.obtenerlistaZonas());
                 view = request.getRequestDispatcher("/Usuario/RegistrarIncidencia.jsp");
                 view.forward(request, response);
                 break;
@@ -144,21 +143,23 @@ public class UsuarioServlet extends HttpServlet {
                 String nombreIncidencia = request.getParameter("nombre_incidencia");
                 String descripcion = request.getParameter("descripcion");
 
-                String zonaPUCP = request.getParameter("zonaPUCP");
-                String tipoIncidencia = request.getParameter("tipoIncidencia");
-                String nivelUrgencia = request.getParameter("nivelIncidencia");
+                int IDzonaPUCP = Integer.parseInt(request.getParameter("zonaPUCP"));
+                int IDtipoIncidencia = Integer.parseInt(request.getParameter("tipoIncidencia"));
+                int IDnivelUrgencia = Integer.parseInt(request.getParameter("nivelIncidencia"));
+                String fecha = request.getParameter("fecha");
                 //String estado= request.getParameter("estado");
 
 
                 incidencia.setNombreIncidencia(nombreIncidencia);
-                incidencia.setZonaPUCP(zonaPUCP);
-
+                incidencia.setFecha(fecha);
+                incidencia.setValidaIncidencia(true);
+                incidencia.setContadorReabierto(0);
                 TipoIncidencia tipoIncidencia1 = new TipoIncidencia();
-                tipoIncidencia1.setTipo(tipoIncidencia);
+                tipoIncidencia1.setIdTipo(IDtipoIncidencia);
                 incidencia.setTipoIncidencia(tipoIncidencia1);
 
                 NivelUrgencia nivelUrgencia1 = new NivelUrgencia();
-                nivelUrgencia1.setNivel(nivelUrgencia);
+                nivelUrgencia1.setIdNivelUrgencia(IDnivelUrgencia);
                 incidencia.setNivelUrgencia(nivelUrgencia1);
 
                 incidencia.setDescripcion(descripcion);
@@ -167,8 +168,9 @@ public class UsuarioServlet extends HttpServlet {
                 estado1.setEstado("Registrado");
                 incidencia.setEstadoIncidencia(estado1);
 
-
-                //incidencia.setZonaPUCP(zonaPUCP);
+                ZonaPUCP zonaPUCP = new ZonaPUCP();
+                zonaPUCP.setIdZonaPUCP(IDzonaPUCP);
+                incidencia.setZonaPUCP(zonaPUCP);
 
 
                 idao.crearIncidencia(incidencia);

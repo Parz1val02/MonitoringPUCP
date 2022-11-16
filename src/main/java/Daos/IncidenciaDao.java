@@ -250,39 +250,37 @@ public class IncidenciaDao extends DaoBase{
         }
     }
 
-    /*public void crearIncidencia(Incidencia incidencia) {
+    public void crearIncidencia(Incidencia incidencia) {
 
-        String sql = "INSERT INTO Incidencia (fecha, nombreIncidencia, validaIncidencia, descripcion, idTipoIncidencia, idNivelUrgencia, idEstadoIncidencia, codigoUsuario) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+        String sql = "INSERT INTO Incidencia (fecha, nombreIncidencia, validaIncidencia, descripcion, contadorReabierto, otroTipo, idTipoIncidencia, idNivelUrgencia, idEstadoIncidencia, codigoUsuario, idZonaPUCP) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        Incidencia incidencia ;
-        LocalDate localDate = LocalDate.now();//For reference
+        /*LocalDate localDate = LocalDate.now();//For reference
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
-        String formattedString = localDate.format(formatter);
+        String formattedString = localDate.format(formatter);*/
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
             //falta latitud y longitud
-            pstmt.setString(1, "2022-11-07 15:34:26");
+            pstmt.setString(1, incidencia.getFecha());
             pstmt.setString(2, incidencia.getNombreIncidencia());
-            pstmt.setString(3, incidencia.getZonaPUCP());
-            pstmt.setDouble(4, -12.072249);
-            pstmt.setDouble(5, -77.081994);
-            pstmt.setBoolean(6, true);
-            pstmt.setString(7, incidencia.getDescripcion());
-            pstmt.setInt(8, 2);  //tipo incidencia
-            pstmt.setInt(9, 3);  //nivel urgencia
-            pstmt.setInt(10,1); //estado incidencia
-            pstmt.setString(11, "20201696"); //por ahora se setea, porque a esto le falta la parte de sesiones
-
+            pstmt.setBoolean(3, incidencia.getValidaIncidencia());
+            pstmt.setString(4, incidencia.getDescripcion());
+            pstmt.setInt(5, incidencia.getContadorReabierto());
+            pstmt.setNull(6, Types.VARCHAR);
+            pstmt.setInt(7, incidencia.getTipoIncidencia().getIdTipo());  //tipo incidencia
+            pstmt.setInt(8, incidencia.getNivelUrgencia().getIdNivelUrgencia());  //nivel urgencia
+            pstmt.setInt(9,incidencia.getEstadoIncidencia().getIdEstado()); //estado incidencia
+            pstmt.setString(10, "20201696"); //por ahora se setea, porque a esto le falta la parte de sesiones
+            pstmt.setInt(11,incidencia.getZonaPUCP().getIdZonaPUCP());
 
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }*/
+    }
 
 }
 

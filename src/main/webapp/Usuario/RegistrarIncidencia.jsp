@@ -1,6 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="Beans.TipoIncidencia" %>
 <%@ page import="Beans.NivelUrgencia" %>
+<%@ page import="Beans.ZonaPUCP" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     ArrayList<TipoIncidencia> tipos = (ArrayList<TipoIncidencia>) request.getAttribute("tipos");
@@ -8,6 +9,9 @@
 
 <%
     ArrayList<NivelUrgencia> niveles = (ArrayList<NivelUrgencia>) request.getAttribute("niveles");
+%>
+<%
+    ArrayList<ZonaPUCP> zonas = (ArrayList<ZonaPUCP>) request.getAttribute("zonas");
 %>
 
 <html lang="en"  style="min-height: 100vh">
@@ -96,6 +100,17 @@
                     </div-->
                     <div class="ibox-body" >
                         <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=guardar">
+
+                            <div class="row g-2">
+                                <div class="col-md-4"  style="display: flex; justify-content: center;  flex-direction: column">
+                                    <p class="campos-registrar-usuario">Nombre:</p>
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-floating" style="margin-bottom: 15px">
+                                        <label class="sangria-filter">Fecha: <input type="date" name="fecha" id="date" class="sangria-filter" placeholder="dd-mm-yyyy" value="" min="1997-01-01" max="2030-12-31" style="margin-top: 5px;margin-bottom: 5px"></label>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- 1era fila -->
                             <div class="row g-2">
                                 <div class="col-md-4"  style="display: flex; justify-content: center;  flex-direction: column">
@@ -115,8 +130,13 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
-                                        <input type="text" class="form-control" id="floatingInputGrid4" placeholder="Zona PUCP" name="zonaPUCP">
-                                        <label for="floatingInputGrid4" class="label-form-flujousuario">Zona PUCP</label>
+                                        <select class="form-select" id="floatingSelectGrid6" name="zonaPUCP">
+                                            <% for (ZonaPUCP zona : zonas) {%>
+                                            <option value="<%=zona.getIdZonaPUCP()%>"><%= zona.getNombreZona()%></option>
+                                            <% }%>
+                                        </select>
+
+                                        <label for="floatingSelectGrid2" class="label-form-flujousuario">Zona PUCP</label>
                                     </div>
                                 </div>
                             </div>
