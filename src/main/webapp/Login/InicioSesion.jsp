@@ -30,7 +30,7 @@
       <img src="../images/logoTelesystem.png" alt="logo" style="border-radius: 10px; border-top-style: solid;border-bottom-width: 0;border-bottom-style: solid;border-right-width: 0;border-right-style: solid;border-left-width: 0;border-left-style: solid;margin-top: 0px;margin-right: 25px;height: 67px;width: 220px;border-top-width: 0px; ">
     </nav>
   </div>
-  <div style="height: 250px; display: block;"></div>
+  <div style="height: 200px; display: block;"></div>
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-5" style="margin: 70px 0px 10px 60px">
@@ -81,12 +81,12 @@
       <div class="col-sm"></div>
     </div>
   </div>
+  <div style="height: 170px; display: block;"></div>
   <div class="container-fluid" style="background: #042354">
     <!-- Footer -->
     <footer
             class="text-center text-lg-start text-white"
-            style="background-color: #042354"
-    >
+            style="background-color: #042354">
       <!-- Grid container -->
       <div class="container p-4 pb-0">
         <!-- Section: Links -->
@@ -95,10 +95,10 @@
           <div class="row">
             <!-- Grid column -->
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-              <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 20px">
+              <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">
                 UBICACIÓN
               </h6>
-              <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 16px">
+              <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px; color: #a9b9d4">
                 Campus principal
                 <div style="height: 1px; display: block;"></div>
                 Av. Universitaria 1801, San Miguel, 15088
@@ -113,8 +113,8 @@
 
             <!-- Grid column -->
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-              <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 20px">CONTACTO</h6>
-              <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 16px">
+              <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">CONTACTO</h6>
+              <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px; color: #a9b9d4">
                 Central telefónica 626-2000
                 <div style="height: 1px; display: block;"></div>
                 Desde provincias 0800-1-7827 (servicio gratuito)
@@ -131,8 +131,8 @@
 
             <!-- Grid column -->
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-              <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 20px">MAYOR INFORMACIÓN</h6>
-              <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 16px">
+              <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">MAYOR INFORMACIÓN</h6>
+              <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px; color: #a9b9d4">
                 Si necesitas ayuda escribe a:
                 <div style="height: 1px; display: block;"></div>
                 <u>asistencia-dti@pucp.edu.pe</u>
@@ -152,8 +152,8 @@
             <!-- Grid column -->
             <div class="col-md-7 col-lg-8 text-center text-md-start">
               <!-- Copyright -->
-              <div style="height: 10px; display: block;"></div>
-              <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 16px">
+              <div style="height: 5px; display: block;"></div>
+              <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px">
                 © Pontificia Universidad Católica del Perú - Todos los derechos reservados
               </div>
               <div style="height: 10px; display: block;"></div>
@@ -168,5 +168,6 @@
       <!-- Grid container -->
     </footer>
     <!-- Footer -->
-  </div></body>
+  </div>
+</body>
 </html>
