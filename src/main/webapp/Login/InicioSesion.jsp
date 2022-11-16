@@ -60,7 +60,12 @@
                 </div>
               </div>
             </div>
-            <div style="height: 20px; display: block;"></div>
+            <%if(session.getAttribute("msg")!=null){%>
+            <div id="validation" class="invalid-feedback" style="display: block; margin-bottom: 10px">
+              <%=session.getAttribute("msg")%>
+            </div>
+            <%session.removeAttribute("msg");%>
+            <%}%>
             <div align="center">
               <button type="submit" class="btn btn-primary btn-lg float-right" style="font-size: 12px; border-color: #042354; background-color: #163297; border-radius: 5px">Aceptar</button>
             </div>

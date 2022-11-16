@@ -186,7 +186,7 @@ public class UsuarioDao extends DaoBase{
     //para el logueo*
     public Usuario ingresarLogin(String username, String password){
 
-        Usuario usuario = new Usuario();
+        Usuario usuario = null;
 
         //antes del sql se debe hashear el password para comparar los hashes
         String sql = "select * from Usuarios where correo=? and password=sha2(?,256)";

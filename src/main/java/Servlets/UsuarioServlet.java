@@ -49,7 +49,7 @@ public class UsuarioServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
                 request.setAttribute("listaIncidencias",listaIncidencias);
-                view = request.getRequestDispatcher("/Usuario/reabrirIncidencia.jsp");
+                view = request.getRequestDispatcher("/Usuario/MisIncidencias.jsp");
                 view.forward(request,response);
                 break;
             case ("listarDestacados") :

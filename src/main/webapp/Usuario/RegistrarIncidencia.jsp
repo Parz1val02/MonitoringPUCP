@@ -32,57 +32,13 @@
         <img src="../images/logoTelesystem.png" alt="logo" style="border-top-style: solid;border-bottom-width: 0;border-bottom-style: solid;border-right-width: 0;border-right-style: solid;border-left-width: 0;border-left-style: solid;margin-top: 0px;margin-right: 25px;height: 67px;width: 220px;border-top-width: 0px; ">
     </nav>
 </div>
-<div class="boxed-page">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/UsuarioServlet?accion=inicio">
-                <!-- this anchor text for link your home to another page -->
-                <div class="icon">
-                    <i class="fa fa-home" aria-hidden="true"></i><!-- this is home icon link get form fornt-awesome icon for home button -->
-                    <i class="fa fa-home" aria-hidden="true"></i><!-- copy and paste the home icon link here for hover effect -->
-                </div>
-                <div class="name"><span data-text="Inicio">Inicio</span></div>
-                <!-- we are create first menu item name home -->
-            </a>
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/UsuarioServlet?accion=buscarIncidencia">
-                <!-- this anchor text for link your home to another page -->
-                <div class="icon">
-                    <i class="fa fa-search" aria-hidden="true"></i><!-- this is home icon link get form fornt-awesome icon for home button -->
-                    <i class="fa fa-search" aria-hidden="true"></i><!-- copy and paste the home icon link here for hover effect -->
-                </div>
-                <div class="name"><span data-text="Buscar Incidencias">Buscar Incidencias</span></div>
-                <!-- we are create first menu item name home -->
-            </a>
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/UsuarioServlet?accion=registrarIncidencia">
-                <!-- this anchor text for link your home to another page -->
-                <div class="icon">
-                    <i class="fa fa-pencil-square-o " aria-hidden="true"></i><!-- this is home icon link get form fornt-awesome icon for home button -->
-                    <i class="fa fa-pencil-square-o " aria-hidden="true"></i><!-- copy and paste the home icon link here for hover effect -->
-                </div>
-                <div class="name"><span data-text="Registrar Incidencias">Registrar Incidencias</span></div>
-                <!-- we are create first menu item name home -->
-            </a>
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">
-                <!-- this anchor text for link your home to another page -->
-                <div class="icon">
-                    <i class="fa fa-star " aria-hidden="true"></i><!-- this is home icon link get form fornt-awesome icon for home button -->
-                    <i class="fa fa-star " aria-hidden="true"></i><!-- copy and paste the home icon link here for hover effect -->
-                </div>
-                <div class="name"><span data-text="Mis Incidencias">Mis Incidencias</span></div>
-                <!-- we are create first menu item name home -->
-            </a>
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/UsuarioServlet?accion=perfil">
-                <!-- this anchor text for link your home to another page -->
-                <div class="icon">
-                    <i class="fa fa-user" aria-hidden="true"></i><!-- this is home icon link get form fornt-awesome icon for home button -->
-                    <i class="fa fa-user-circle-o" aria-hidden="true"></i><!-- copy and paste the home icon link here for hover effect -->
-                </div>
-                <div class="name"><span data-text="Perfil">Perfil</span></div>
-                <!-- we are create first menu item name home -->
-            </a>
+    <div class="boxed-page">
+        <div class="container" >
+            <jsp:include page="../includes/navbar.jsp">
+                <jsp:param name="page" value="RegistrarIncidencia"/>
+            </jsp:include>
         </div>
-    </nav>
-</div>
+    </div>
 <!-- PRINCIPAL -->
 <div class="container-fluid" style="min-height: 60vh; align-content: center;">
     <div class="row" style="min-height: 60vh">

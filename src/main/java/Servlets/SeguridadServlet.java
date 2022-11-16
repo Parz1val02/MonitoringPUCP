@@ -2,6 +2,7 @@ package Servlets;
 
 import Beans.Incidencia;
 import Beans.NivelUrgencia;
+import Beans.Usuario;
 import Daos.IncidenciaDao;
 
 import jakarta.servlet.*;
@@ -15,42 +16,52 @@ import java.util.ArrayList;
 public class SeguridadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Usuario usuario1 = (Usuario) session.getAttribute("usuario");
+        //if(usuario1!=null) {
+            if (usuario1.getRol().equals("Usuario PUCP")) {
+                String accion = request.getParameter("accion")==null?"listar":request.getParameter("accion");
+                RequestDispatcher view;
+                IncidenciaDao idao = new IncidenciaDao();
 
-        String accion = request.getParameter("accion")==null?"listar":request.getParameter("accion");
-        RequestDispatcher view;
-        IncidenciaDao idao = new IncidenciaDao();
+                switch (accion){
+                    case ("listar") :
+                        ArrayList<Incidencia> listaIncidencias = null;
+                        try {
+                            listaIncidencias = idao.obtenerIncidencias();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                        request.setAttribute("listaIncidencias",listaIncidencias);
+                        view = request.getRequestDispatcher("/Seguridad/listarIncidencias.jsp");
+                        view.forward(request,response);
+                        break;
+                    case ("verDetalle"):
+                        String idIncidencia = request.getParameter("id");
+                        Incidencia incidencia = idao.obtenerIncidencia(idIncidencia);
+                        //System.out.println(incidencia.getNombreIncidencia());
+                        request.setAttribute("Incidencia",incidencia);
+                        view = request.getRequestDispatcher("/Seguridad/VerDetalle.jsp");
+                        view.forward(request, response);
+                        break;
 
-        switch (accion){
-            case ("listar") :
-                ArrayList<Incidencia> listaIncidencias = null;
-                try {
-                    listaIncidencias = idao.obtenerIncidencias();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    case ("restablece"):
+
+                        view = request.getRequestDispatcher("/Seguridad/restablecer_contrasena_seguridad.jsp");
+                        view.forward(request, response);
+                        break;
+                    case("doblefactor"):
+                        view = request.getRequestDispatcher("/Seguridad/doblefactorS.jsp");
+                        view.forward(request, response);
+                        break;
                 }
-                request.setAttribute("listaIncidencias",listaIncidencias);
-                view = request.getRequestDispatcher("/Seguridad/listarIncidencias.jsp");
-                view.forward(request,response);
-                break;
-            case ("verDetalle"):
-                String idIncidencia = request.getParameter("id");
-                Incidencia incidencia = idao.obtenerIncidencia(idIncidencia);
-                //System.out.println(incidencia.getNombreIncidencia());
-                request.setAttribute("Incidencia",incidencia);
-                view = request.getRequestDispatcher("/Seguridad/VerDetalle.jsp");
-                view.forward(request, response);
-                break;
-
-            case ("restablece"):
-
-                view = request.getRequestDispatcher("/Seguridad/restablecer_contrasena_seguridad.jsp");
-                view.forward(request, response);
-                break;
-            case("doblefactor"):
-                view = request.getRequestDispatcher("/Seguridad/doblefactorS.jsp");
-                view.forward(request, response);
-                break;
-        }
+            }else{
+                response.sendRedirect(request.getContextPath()+"/UsuarioServlet");
+            }
+        /*}else{
+            RequestDispatcher view = request.getRequestDispatcher("/Login/InicioSesion.jsp");
+            view.forward(request, response);
+        }*/
     }
 
     @Override

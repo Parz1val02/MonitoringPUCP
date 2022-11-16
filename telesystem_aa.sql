@@ -15,7 +15,7 @@ insert into Roles (nombreRol) values ("Usuario PUCP"),("Seguridad");
 
 insert into CategoriaPUCP(nombreCategoria) values ("Alumno"),("Administrativo"),("Jefe de practica"),("Profesor"),("Egresado");
 
-insert into ZonaPUCP(nombreZona,latitud,longitud) values("Entrada Princiapl",-12.068956336898212, -77.07804319110836),
+insert into ZonaPUCP(nombreZona,latitud,longitud) values("Entrada Principal",-12.068956336898212, -77.07804319110836),
 														("Pabellon V",-12.07310658364993, -77.08194620101752),
                                                         ("EE.GG.CC",-12.070705979576289, -77.07939072636044),
                                                         ("EE.GG.LL",-12.06747847412385, -77.07994862590206),
