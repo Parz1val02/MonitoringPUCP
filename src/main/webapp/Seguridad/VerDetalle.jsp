@@ -44,7 +44,7 @@
             <label class="form-label">Zona PUCP:</label>
             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                 <input class="form-control" type="text"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
-                <label ><%=incidencia.getZonaPUCP()%></label>
+                <label ><%=incidencia.getZonaPUCP().getNombreZona()%></label>
             </div>
 
 

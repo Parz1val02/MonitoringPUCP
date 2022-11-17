@@ -21,8 +21,8 @@ public class AdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Usuario usuario1 = (Usuario) session.getAttribute("usuario");
-        //if(usuario1!=null){
-            if(usuario1.getRol().equals("Usuario PUCP")){
+        if(usuario1!=null){
+            if(usuario1.getRol().getNombreRol().equals("Usuario PUCP")){
                 /*RequestDispatcher view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
                 view.forward(request,response);*/
 
@@ -115,11 +115,10 @@ public class AdminServlet extends HttpServlet {
             }else{
                 response.sendRedirect(request.getContextPath()+"/UsuarioServlet");
             }
-        /*}else{
+        }else{
             RequestDispatcher view = request.getRequestDispatcher("/Login/InicioSesion.jsp");
             view.forward(request, response);
-        }*/
-
+        }
     }
 
     @Override

@@ -16,52 +16,47 @@ import java.util.ArrayList;
 public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String accion = request.getParameter("accion")==null?"registrar":request.getParameter("accion");
-        RequestDispatcher view;
         HttpSession session = request.getSession();
-        switch (accion){
-            case ("registrar") :
+        String accion = request.getParameter("accion") == null ? "iniciar" : request.getParameter("accion");
+        RequestDispatcher view;
+        switch (accion) {
+            case ("registrar"):
                 session = request.getSession();
-                if(session.getAttribute("usuario")==null){
+                if (session.getAttribute("usuario") == null) {
                     view = request.getRequestDispatcher("/Login/Registrarse.jsp");
-                    view.forward(request,response);
-                }else{
+                    view.forward(request, response);
+                } else {
                     response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
                 }
                 break;
             case ("iniciar"):
                 session = request.getSession();
-                if(session.getAttribute("usuario")==null){
+                if (session.getAttribute("usuario") == null) {
                     view = request.getRequestDispatcher("/Login/InicioSesion.jsp");
                     view.forward(request, response);
                 } else {
-                    if (session.getAttribute("usuario")!= null) {
                         Usuario usuario = (Usuario) session.getAttribute("usuario");
-                        if(usuario.getRol().getNombreRol().equals("Usuario PUCP")){
+                        if (usuario.getRol().getNombreRol().equals("Usuario PUCP")) {
                             response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
 
                         } else if (usuario.getRol().getNombreRol().equals("Seguridad")) {
                             response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
                         }
-
-                    } else {
-                    }
                 }
-
                 break;
             case ("olvidar"):
                 session = request.getSession();
-                if(session.getAttribute("usuario")==null){
+                if (session.getAttribute("usuario") == null) {
                     view = request.getRequestDispatcher("/Login/OlvidarContrasenia.jsp");
                     view.forward(request, response);
-                }else{
+                } else {
                     response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
                 }
                 break;
             case ("logout"):
                 session.removeAttribute("usuario");
                 session.invalidate();
-                response.sendRedirect(request.getContextPath()+"/Login");
+                response.sendRedirect(request.getContextPath() + "/Login");
                 break;
         }
     }
@@ -78,7 +73,7 @@ public class Login extends HttpServlet {
         UsuarioDao uDao = new UsuarioDao();
         Usuario user = uDao.ingresarLogin(username,password); //recibo usuario y password
         System.out.println(user.getRol().getNombreRol());
-        if (user != null){
+        if (user.getRol()!=null){
             session.setAttribute("usuario",user);
             session.setMaxInactiveInterval(10*60);//10 minutos de inactividad
             //ingresa

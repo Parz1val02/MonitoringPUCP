@@ -186,11 +186,11 @@ public class UsuarioDao extends DaoBase{
     //para el logueo*
     public Usuario ingresarLogin(String username, String password){
 
-        Usuario usuario = null;
+        Usuario usuario = new Usuario();
 
         //antes del sql se debe hashear el password para comparar los hashes
         String sql = "select * from Usuarios where correo=? and password=sha2(?,256)";
-
+        System.out.println(sql);
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
 

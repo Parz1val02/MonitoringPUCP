@@ -30,7 +30,7 @@ insert into ZonaPUCP(nombreZona,latitud,longitud) values("Entrada Principal",-12
 insert into Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, nickname, celular, idRoles, idCategoriaPUCP, idFotoPerfil)
 					values (20201696, "Leonardo", "Abanto", "a20201696@pucp.edu.pe", 12345678, true, sha2("clashroyale123",256),"123456","987654321",1,1,null),
                     (19905060,"Jorge","Gonzales", "jorege.g@pucp.edu.pe",87654321, true,sha2("tele1000",256), "654321",null,1,4,null),
-                    (20113456,"Goku","kakaroto", "goku.kakaroto@pucp.edu.pe", 56546767, true,sha2("milk4355",256), "123321","976976976", 2,null,null);
+                    (20113456,"Goku","kakaroto", "4", 56546767, true,sha2("milk4355",256), "123321","976976976", 2,null,null);
                     
 insert into Incidencias (fecha,nombreIncidencia, validaIncidencia, descripcion,
 						 contadorReabierto, idTipoIncidencia, idNivelUrgencia, idEstadoIncidencia,
