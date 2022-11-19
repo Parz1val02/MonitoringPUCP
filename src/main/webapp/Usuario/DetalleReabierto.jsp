@@ -35,7 +35,7 @@
 
         <div class="mb-3">
             <label class="form-label">Zona PUCP:</label>
-            <input type="text" class="form-control" name="zonaPUCP" value="<%=incidencia.getZonaPUCP()%>">
+            <input type="text" class="form-control" name="zonaPUCP" value="<%=incidencia.getZonaPUCP().getNombreZona()%>">
         </div>
 
         <div class="mb-3">

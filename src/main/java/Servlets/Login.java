@@ -30,12 +30,12 @@ public class Login extends HttpServlet {
                 }
                 break;
             case ("iniciar"):
-                session = request.getSession();
-                if (session.getAttribute("usuario") == null) {
+                HttpSession session1 = request.getSession();
+                if (session1.getAttribute("usuario") == null) {
                     view = request.getRequestDispatcher("/Login/InicioSesion.jsp");
                     view.forward(request, response);
                 } else {
-                        Usuario usuario = (Usuario) session.getAttribute("usuario");
+                        Usuario usuario = (Usuario) session1.getAttribute("usuario");
                         if (usuario.getRol().getNombreRol().equals("Usuario PUCP")) {
                             response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
 
@@ -54,8 +54,9 @@ public class Login extends HttpServlet {
                 }
                 break;
             case ("logout"):
-                session.removeAttribute("usuario");
-                session.invalidate();
+                HttpSession session2 = request.getSession();
+                session2.removeAttribute("usuario");
+                session2.invalidate();
                 response.sendRedirect(request.getContextPath() + "/Login");
                 break;
         }
@@ -69,11 +70,11 @@ public class Login extends HttpServlet {
         System.out.println(username);
         System.out.println(password);
 
-
         UsuarioDao uDao = new UsuarioDao();
         Usuario user = uDao.ingresarLogin(username,password); //recibo usuario y password
         System.out.println(user.getRol().getNombreRol());
-        if (user.getRol()!=null){
+
+        if (user != null){
             session.setAttribute("usuario",user);
             session.setMaxInactiveInterval(10*60);//10 minutos de inactividad
             //ingresa
@@ -93,6 +94,7 @@ public class Login extends HttpServlet {
             session.setAttribute("msg", "Correo o contraseña incorrectos");
             RequestDispatcher view = request.getRequestDispatcher("/Login/InicioSesion.jsp");
             view.forward(request, response);
+            System.out.println(user);
         }
 
 

@@ -3,6 +3,7 @@ package Servlets;
 import Beans.Incidencia;
 import Beans.NivelUrgencia;
 import Beans.Usuario;
+import Beans.ZonaPUCP;
 import Daos.IncidenciaDao;
 
 import jakarta.servlet.*;
@@ -92,14 +93,16 @@ public class SeguridadServlet extends HttpServlet {
                 String fecha = request.getParameter("fecha");
                 String nombreIncidencia = request.getParameter("nombreIncidencia");
                 String idTipoIncidencia = request.getParameter("idTipoIncidencia");
-                String zonaPUCP = request.getParameter("zonaPUCP");
+                int idZonaPUCP = Integer.parseInt(request.getParameter("zonaPUCP"));
                 String nivelUrgencia = request.getParameter("nivel_urgencia");
                 String descripcion = request.getParameter("Descripcion");
 
                 Incidencia incidencia  =new Incidencia();
                 incidencia.setNombreIncidencia(nombreIncidencia);
                 incidencia.setFecha(fecha);
-                //incidencia.setZonaPUCP(zonaPUCP);
+                ZonaPUCP zonaPUCP = new ZonaPUCP();
+                zonaPUCP.setIdZonaPUCP(idZonaPUCP);
+                incidencia.setZonaPUCP(zonaPUCP);
 
                 NivelUrgencia nivel = new NivelUrgencia();
                 nivel.setNivel(nivelUrgencia);

@@ -225,7 +225,7 @@ public class IncidenciaDao extends DaoBase{
     public void confirmar(int id) {
 
         //con borrado logico
-        String sql = "UPDATE Incidencia SET idEstadoIncidencia=4 where idIncidencia  = ?" ;
+        String sql = "UPDATE Incidencias SET idEstadoIncidencia=4 where idIncidencia  = ?" ;
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -255,7 +255,7 @@ public class IncidenciaDao extends DaoBase{
 
     public void crearIncidencia(Incidencia incidencia) {
 
-        String sql = "INSERT INTO Incidencia (fecha, nombreIncidencia, validaIncidencia, descripcion, contadorReabierto, otroTipo, idTipoIncidencia, idNivelUrgencia, idEstadoIncidencia, codigoUsuario, idZonaPUCP) " +
+        String sql = "INSERT INTO Incidencias (fecha, nombreIncidencia, validaIncidencia, descripcion, contadorReabierto, otroTipo, idTipoIncidencia, idNivelUrgencia, idEstadoIncidencia, codigoUsuario, idZonaPUCP) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         /*LocalDate localDate = LocalDate.now();//For reference
