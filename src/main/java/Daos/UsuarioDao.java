@@ -193,28 +193,23 @@ public class UsuarioDao extends DaoBase{
         //Comparar primero con la tabla de usuarios
         //antes del sql se debe hashear el password para comparar los hashes
         String sql = "select * from Usuarios where correo=? and password=sha2(?,256)";
-        //System.out.println(sql);
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
-
             pstmt.setString(1, username);
             pstmt.setString(2, password);
-
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     String codigo = rs.getString(1);
-                    System.out.println(codigo);
                     usuario=buscarPorId(codigo);
-                    System.out.println(usuario);
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        if(usuario.getRol().getNombreRol()==null){
+        if(usuario.getRol()==null){
             //Comparar con la tabla de admins
-            sql = "select * from RegistroAdmin where nombreAdmin=? and password=sha2(?,256)";
+            sql = "select * from RegistroAdmin where nombreAdmin=? and passwordAdmin=sha2(?,256)";
             try (Connection connection = this.getConnection();
                  PreparedStatement pstmt = connection.prepareStatement(sql);) {
 

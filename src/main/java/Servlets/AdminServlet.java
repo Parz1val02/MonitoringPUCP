@@ -22,16 +22,15 @@ public class AdminServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Usuario usuario1 = (Usuario) session.getAttribute("usuario");
         if(usuario1!=null){
-            if(usuario1.getRol().getNombreRol().equals("Usuario PUCP")){
+            if(usuario1.getRol().getNombreRol().equals("Administrador")){
                 /*RequestDispatcher view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
-                view.forward(request,response);*/
-
-                /*
+                view.forward(request,response);
                 UsuarioDao daoUsuario = new UsuarioDao();
                 ArrayList<Usuario> listaUsuarios = daoUsuario.obtenerListaUsuarios();
                 request.setAttribute("listaUsuarios",listaUsuarios);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Administrador/tabla_usuarios_admin.jsp");
                 requestDispatcher.forward(request,response); */
+
                 String accion = request.getParameter("accion")==null?"tabla_usuarios":request.getParameter("accion");
                 RequestDispatcher view;
                 UsuarioDao usuarioDao = new UsuarioDao();
@@ -112,12 +111,13 @@ public class AdminServlet extends HttpServlet {
                     default:
                         response.sendRedirect(request.getContextPath() + "/AdminServlet");
                 }
-            }else{
+            }else if(usuario1.getRol().getNombreRol().equalsIgnoreCase("Seguridad")){
+                response.sendRedirect(request.getContextPath()+"/SeguridadServlet");
+            }else if(usuario1.getRol().getNombreRol().equalsIgnoreCase("Usuario PUCP")){
                 response.sendRedirect(request.getContextPath()+"/UsuarioServlet");
             }
         }else{
-            RequestDispatcher view = request.getRequestDispatcher("/Login/InicioSesion.jsp");
-            view.forward(request, response);
+            response.sendRedirect(request.getContextPath()+"/Login");
         }
     }
 

@@ -38,9 +38,10 @@ public class Login extends HttpServlet {
                         Usuario usuario = (Usuario) session1.getAttribute("usuario");
                         if (usuario.getRol().getNombreRol().equals("Usuario PUCP")) {
                             response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
-
                         } else if (usuario.getRol().getNombreRol().equals("Seguridad")) {
                             response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
+                        } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
+                            response.sendRedirect(request.getContextPath() + "/AdminServlet");
                         }
                 }
                 break;
@@ -67,18 +68,13 @@ public class Login extends HttpServlet {
         String username = request.getParameter("email");
         String password = request.getParameter("password");
 
-        System.out.println(username);
-        System.out.println(password);
-
         UsuarioDao uDao = new UsuarioDao();
         Usuario user = uDao.ingresarLogin(username,password); //recibo usuario y password
-        System.out.println(user.getRol().getNombreRol());
 
-        if (user.getRol().getNombreRol()!=null){
+        if (user.getRol()!=null){
             session.setAttribute("usuario",user);
             session.setMaxInactiveInterval(10*60);//10 minutos de inactividad
             //ingresa
-
             if (user.getRol().getNombreRol().equals("Usuario PUCP")){ //compara mayu y minu
                 response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
             } else if (user.getRol().getNombreRol().equals("Seguridad")) {
@@ -88,13 +84,11 @@ public class Login extends HttpServlet {
             } else {
                 response.sendRedirect(request.getContextPath() + "/Login");
             }
-
         } else {
             //rechaza
             session.setAttribute("msg", "Correo o contraseña incorrectos");
             RequestDispatcher view = request.getRequestDispatcher("/Login/InicioSesion.jsp");
             view.forward(request, response);
-            System.out.println(user);
         }
     }
 }

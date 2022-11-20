@@ -129,6 +129,8 @@ public class UsuarioServlet extends HttpServlet {
                 }
             }else if(usuario1.getRol().getNombreRol().equalsIgnoreCase("Seguridad")){
                 response.sendRedirect(request.getContextPath()+"/SeguridadServlet");
+            }else if(usuario1.getRol().getNombreRol().equalsIgnoreCase("Administrador")){
+                response.sendRedirect(request.getContextPath()+"/AdminServlet");
             }
         }else{
             response.sendRedirect(request.getContextPath()+"/Login");

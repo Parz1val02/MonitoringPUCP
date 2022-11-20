@@ -78,7 +78,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="<%=request.getContextPath()%>/Login?accion=logout">
                                 <div class="div-barra-lateral">
                                     <i class="bi bi-door-open xaea12 iconos-barra-lateral"></i>
                                     <span class="nav-label">Cerrar sesión</span>
