@@ -44,3 +44,4 @@ insert into Incidencias (fecha,nombreIncidencia, validaIncidencia, descripcion,
 insert into IncidenciasDestacadas (contadorDestacado,idIncidencia) values (0,1),(0,2),(1,3),(0,4),(1,5);
 
 insert into RegistroAdmin (nombreAdmin, passwordAdmin, nombreRol) values("EternalBlue", sha2("DoublePulsar",256), "Administrador");
+insert into FotoPerfil(fotoPerfil, nombreFoto) values(load_file(""));

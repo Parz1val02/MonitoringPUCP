@@ -1,13 +1,16 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
+<%--
+  Created by IntelliJ IDEA.
+  User: rodro
+  Date: 11/20/22
+  Time: 2:22 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
-        <title>JSP - Hello World</title>
+      <meta http-equiv="refresh" content="0; URL=http://localhost:8080/Login">
+      <title></title>
     </head>
     <body>
-        <h1><%= "Hello World!" %>
-        </h1>
-        <br/>
-        <a href="hello-servlet">Hello Servlet</a>
     </body>
 </html>

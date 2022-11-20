@@ -20,7 +20,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String codigo, String nombre, String apellido, String correo, String dni, String celular, FotoPerfil fotoPerfil, Rol rol, CategoriaPUCP categoriaPUCP) {
+    public Usuario(String codigo, String nombre, String apellido, String correo, String dni, String celular, FotoPerfil fotoPerfil, Rol rol, CategoriaPUCP categoriaPUCP, String password, String nickname) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -30,6 +30,8 @@ public class Usuario {
         this.setFotoPerfil(fotoPerfil);
         this.rol = rol;
         this.categoriaPUCP = categoriaPUCP;
+        this.password=password;
+        this.nickname=nickname;
     }
 
 

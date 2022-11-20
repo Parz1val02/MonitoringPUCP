@@ -67,16 +67,28 @@
             <%session.removeAttribute("msg");%>
             <%}%>
             <div align="center">
-              <button type="submit" class="btn btn-primary btn-lg float-right" style="font-size: 12px; border-color: #042354; background-color: #163297; border-radius: 5px">Aceptar</button>
+              <button type="submit" class="btn btn-outline-dark" style="border-radius: 5px">Aceptar y Continuar</button>
             </div>
           </form>
-
-
         <div style="height: 5px; display: block;"></div>
         <div align="center">
           <a style="color: #9f191f; font-size: 13px; font-family: 'Arial';"href="<%=request.getContextPath()%>/Login?accion=olvidar">He olvidado mi contraseña</a>
         </div>
-        <div style="height: 60px; display: block;"></div>
+        <div style="height: 5px; display: block;"></div>
+        <div align="center">
+          <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-3">
+              <p style="font-family: Arial; font-size: 13px; margin: 5px 0px 0px 0px">¿Aún no está registrado?</p>
+            </div>
+            <div class="col-sm-2">
+              <a style="color: #3c6eb7; margin: 0px 0px 0px 0px; font-size: 13px; font-family: 'Arial';" href="<%=request.getContextPath()%>/Login?accion=registrar">Registrarse</a>
+            </div>
+            <div style="height: 15px; display: block;"></div>
+            <div class="col-sm-4"></div>
+          </div>
+        </div>
       </div>
       <div class="col-sm"></div>
     </div>

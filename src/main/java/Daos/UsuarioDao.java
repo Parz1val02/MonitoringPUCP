@@ -59,11 +59,8 @@ public class UsuarioDao extends DaoBase{
 
     //crear usuario y guardar en DB
     public void crearUsuario(Usuario usuario){
-
-
         String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, nickname, celular, idRoles, idCategoriaPUCP, idFotoPerfil) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?,?)";
-
-
+        int idFoto = 0;
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
@@ -73,20 +70,39 @@ public class UsuarioDao extends DaoBase{
             pstmt.setString(4, usuario.getCorreo());
             pstmt.setString(5, usuario.getDni());
             pstmt.setBoolean(6, true);
-            pstmt.setString(7, "unclash");
-            pstmt.setString(8, "111111");
-            pstmt.setString(9, usuario.getCelular()); //nulos
+            pstmt.setString(7, usuario.getPassword());
+            pstmt.setString(8, usuario.getNickname());
+            pstmt.setString(9, usuario.getCelular());
             /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
             pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
             pstmt.setInt(10, usuario.getRol().getIdRol());
             pstmt.setInt(11, usuario.getCategoriaPUCP().getIdCategoria());
-            pstmt.setBytes(12, usuario.getFotoPerfil().getFotobyte());
-            pstmt.setNull(12, Types.INTEGER);
+            idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
+            pstmt.setInt(12, idFoto);
             pstmt.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public int guardarFoto(byte[] fotobyte, String nombreFoto) {
+        String sql = "INSERT INTO FotoPerfil (fotoPerfil, nombreFoto) values (?,?)";
+        int idFoto = 0;
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+
+            pstmt.setBytes(1,fotobyte);
+            pstmt.setString(2,nombreFoto);
+            pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if(rs.next()){
+                idFoto = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+        return idFoto;
     }
 
     //eliminar(delete) usuario---por ahora que aparezca modal

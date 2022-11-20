@@ -19,6 +19,9 @@ public class UsuarioServlet extends HttpServlet {
         Usuario usuario1 = (Usuario) session.getAttribute("usuario");
         if(usuario1!=null){
             if(usuario1.getRol().getNombreRol().equals("Usuario PUCP")){
+                response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                response.setHeader("Pragma", "no-cache");
+                response.setDateHeader("Expires", 0);
                 String accion = request.getParameter("accion")==null?"inicio":request.getParameter("accion");
                 RequestDispatcher view;
                 IncidenciaDao inDao = new IncidenciaDao();
@@ -79,7 +82,6 @@ public class UsuarioServlet extends HttpServlet {
                         try (OutputStream out = response.getOutputStream()) {
                             out.write(usuario.getFotoPerfil().getFotobyte());
                         }
-
                     case("perfil"):
                         view = request.getRequestDispatcher("/Usuario/UsuarioPerfil.jsp");
                         view.forward(request, response);

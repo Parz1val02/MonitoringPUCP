@@ -137,9 +137,9 @@ public class AdminServlet extends HttpServlet {
                 String correo = request.getParameter("correo");
                 String dni = request.getParameter("dni");
                 //boolean valida = Boolean.parseBoolean(request.getParameter("valida"));
-                //String password = request.getParameter("password");
-                //String nickname = request.getParameter("nickname");
-                String celular = request.getParameter("celular"); //string nulo
+                String password = "password";
+                String nickname = "111111";
+                String celular = request.getParameter("celular");
                 Rol rol1 = new Rol();
                 rol1.setIdRol(Integer.parseInt(request.getParameter("rol")));
 
@@ -149,7 +149,6 @@ public class AdminServlet extends HttpServlet {
                 //Foto
                 String relativeWebPath = "./images/usuario.png";
                 String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
-                System.out.println("Ruta: " + absoluteDiskPath);
                 File file = new File(absoluteDiskPath);
                 byte[] fileContent = Files.readAllBytes(file.toPath());
 
@@ -157,7 +156,7 @@ public class AdminServlet extends HttpServlet {
                 fp.setFotobyte(fileContent);
                 fp.setNombreFoto("usuario.png");
 
-                Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1);
+                Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password,nickname);
 
                 usuarioDao.crearUsuario(usuario);
 
