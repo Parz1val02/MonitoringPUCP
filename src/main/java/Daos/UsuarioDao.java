@@ -188,8 +188,9 @@ public class UsuarioDao extends DaoBase{
     //para el logueo*
     public Usuario ingresarLogin(String username, String password){
 
-        Usuario usuario = null;
+        Usuario usuario = new Usuario();
 
+        //Comparar primero con la tabla de usuarios
         //antes del sql se debe hashear el password para comparar los hashes
         String sql = "select * from Usuarios where correo=? and password=sha2(?,256)";
         //System.out.println(sql);
@@ -210,8 +211,30 @@ public class UsuarioDao extends DaoBase{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        if(usuario.getRol().getNombreRol()==null){
+            //Comparar con la tabla de admins
+            sql = "select * from RegistroAdmin where nombreAdmin=? and password=sha2(?,256)";
+            try (Connection connection = this.getConnection();
+                 PreparedStatement pstmt = connection.prepareStatement(sql);) {
+
+                pstmt.setString(1, username);
+                pstmt.setString(2, password);
+
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        usuario.setNombre(rs.getString(2));
+                        usuario.setPassword(rs.getString(3));
+                        Rol rol = new Rol();
+                        rol.setNombreRol(rs.getString(4));
+                        usuario.setRol(rol);
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
         return usuario;
-
     }
-
 }

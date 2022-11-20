@@ -74,7 +74,7 @@ public class Login extends HttpServlet {
         Usuario user = uDao.ingresarLogin(username,password); //recibo usuario y password
         System.out.println(user.getRol().getNombreRol());
 
-        if (user != null){
+        if (user.getRol().getNombreRol()!=null){
             session.setAttribute("usuario",user);
             session.setMaxInactiveInterval(10*60);//10 minutos de inactividad
             //ingresa
@@ -96,8 +96,5 @@ public class Login extends HttpServlet {
             view.forward(request, response);
             System.out.println(user);
         }
-
-
-
     }
 }
