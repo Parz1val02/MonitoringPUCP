@@ -69,21 +69,7 @@
                 </p>
             </div>
 
-            <!-- formato-->
 
-
-
-            <div style =  "margin-left: 10px" class="dropdown">
-                <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Descargar como
-                </a>
-
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/assets/hello.pdf" download="my_file.pdf">PDF</a></li>
-                    <li><a class="dropdown-item" href="/assets/hello.xls" download="my_file.xls">XML</a></li>
-                    <li><a class="dropdown-item" href="/assets/hello.txt" download="my_file.txt">TXT</a></li>
-                </ul>
-            </div>
 
             <br>
             <p style="margin-top: 20px;margin-left: 10px">Estado de la incidencia </p>

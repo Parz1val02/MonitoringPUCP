@@ -120,7 +120,19 @@
                 <div class="col-10" style="">
                     <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Incidencias PUCP</b></h1>
                 </div>
+                <div class="col-2">
+                    <div style =  "margin-left: 10px" class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Descargar como
+                        </a>
 
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/assets/hello.pdf" download="my_file.pdf">PDF</a></li>
+                            <li><a class="dropdown-item" href="/assets/hello.xls" download="my_file.xls">XML</a></li>
+                            <li><a class="dropdown-item" href="/assets/hello.txt" download="my_file.txt">TXT</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -197,146 +209,8 @@
 </script>
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Detalle Incidencia</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form onsubmit="return false">
-                    <div class="row g-2">
-                        <div class="col-md">
-                            <div style =  "margin-left: 10px" class="input-group mb-3">
-                                <label>Fecha: </label>
-                                <label>
-                                    <input style =  "margin-left: 10px" class="form-control" type="text" placeholder="Fecha">
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md">
-                            <div style =  "margin-left: 10px" class="input-group mb-3">
-                                <label>Nombre incidencia: </label>
-                                <label>
-                                    <input style =  "margin-left: 10px" class="form-control" type="text" placeholder="Nombre incidencia">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-2">
-                        <div class="col-md">
-                            <div style =  "margin-left: 10px" class="input-group mb-3">
-                                <label>Tipo de incidencia: </label>
-                                <label>
-                                    <input style =  "margin-left: 10px" class="form-control" type="text" placeholder="Tipo de Incidencia">
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md">
-                            <div style =  "margin-left: 10px" class="input-group mb-3">
-                                <label>Zona PUCP </label>
-                                <label>
-                                    <input style =  "margin-left: 10px" class="form-control" type="text" placeholder="Zona PUCP">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-2">
-                        <div class="col-md">
-                            <div style =  "margin-left: 10px" class="input-group mb-3">
-                                <label>Nivel de urgencia: </label>
-                                <label>
-                                    <input style =  "margin-left: 10px" class="form-control" type="text" placeholder="Nivel de urgencia">
-                                </label>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row g-2">
-                        <div class="col-md">
-                            <div style =  "margin-left: 10px" class="input-group mb-3">
-                                <label>Descripcion incidencia: </label>
-                                <label>
-                                    <input style = "margin-left: 10px; width:300px;height:100px" class="form-control" type="text" placeholder="Descripcion">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
-
-                <div class="google-maps" style="text-align: center">  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d9080.838408815116!2d-77.0851327328001!3d-12.069237033787196!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd7a0bfb797e5862e!2sPontificia%20Universidad%20Cat%C3%B3lica%20del%20Per%C3%BA!5e0!3m2!1ses!2spe!4v1665201780059!5m2!1ses!2spe" width="600" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> </div>
-
-                <div style =  "margin-left: 10px">
-                    <p> Foto:
-                        <a href="#" class="link-primary">Click para ver foto</a>
-                    </p>
-                </div>
 
 
-
-                <div style =  "margin-left: 10px" class="dropdown">
-                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Descargar como
-                    </a>
-
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">PDF</a></li>
-                        <li><a class="dropdown-item" href="#">XML</a></li>
-                        <li><a class="dropdown-item" href="#">TXT</a></li>
-                    </ul>
-                </div>
-
-                <br>
-                <p style="margin-top: 20px;margin-left: 10px">Estado de la incidencia </p>
-
-                <div style =  "margin-left: 10px" class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Atendido
-                    </label>
-                </div>
-
-                <br><br>
-                <div style =  "margin-left: 10px" class="form-floating">
-                    <p>
-                        Justificacion de la incidencia: <br>
-                        <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px"></textarea>
-                    </p>
-                </div>
-
-
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" >Registrar cambios</button>
-
-
-
-                <button type="submit" class="btn btn-secondary" data-bs-toggle="modal">Cancelar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalToggleLabel2">Registrar cambios</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Se actualizó correctamente el estado de la incidencia
-            </div>
-            <div class="modal-footer">
-
-
-                <button type="submit" class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Regresar a la ventana principal</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 </body>

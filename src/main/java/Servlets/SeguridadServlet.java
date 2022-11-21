@@ -9,6 +9,9 @@ import Daos.IncidenciaDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -109,6 +112,7 @@ public class SeguridadServlet extends HttpServlet {
 
 
                 //idao.Incidencia(incidencia);
+
 
         }
 

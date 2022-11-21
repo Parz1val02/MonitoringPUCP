@@ -68,6 +68,9 @@ public class IncidenciaDao extends DaoBase{
                 zonaPUCP.setLatitud(rs.getDouble(19));
                 zonaPUCP.setLongitud(rs.getDouble(20));
 
+                incidencia.setZonaPUCP(zonaPUCP);
+
+
                 IncidenciasDestacadas a = new IncidenciasDestacadas();
                 a.setContadorDestacado(rs.getInt(21));
                 incidencia.setIncidenciasDestacadas(a);
@@ -135,6 +138,8 @@ public class IncidenciaDao extends DaoBase{
                     zonaPUCP.setNombreZona(rs.getString(18));
                     zonaPUCP.setLatitud(rs.getDouble(19));
                     zonaPUCP.setLongitud(rs.getDouble(20));
+
+                    incidencia.setZonaPUCP(zonaPUCP);
 
 
                 }
