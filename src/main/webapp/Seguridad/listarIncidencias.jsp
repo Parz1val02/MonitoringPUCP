@@ -1,5 +1,6 @@
 <%@ page import="Beans.Incidencia" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="Funcion.EscribirExcel" %><%--
   Created by IntelliJ IDEA.
   User: Labtel
   Date: 19/10/2022
@@ -128,7 +129,7 @@
 
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/assets/hello.pdf" download="my_file.pdf">PDF</a></li>
-                            <li><a class="dropdown-item" href="/assets/hello.xls" download="my_file.xls">XML</a></li>
+                            <li><a class="dropdown-item" href="<%new EscribirExcel();%>" download="reporteincidencias.xlsx">XLS</a></li>
                             <li><a class="dropdown-item" href="/assets/hello.txt" download="my_file.txt">TXT</a></li>
                         </ul>
                     </div>

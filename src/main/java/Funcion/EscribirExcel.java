@@ -21,7 +21,7 @@ public class EscribirExcel {
         try {
             listaIncidencias = iDao.obtenerIncidencias();
             Workbook libro = new XSSFWorkbook();
-            final String nombreArchivo = "incidencias.xlsx";
+            final String nombreArchivo = "reporteincidencias.xlsx";
             Sheet hoja = libro.createSheet("Hoja 1");
 
             String[] encabezados = {"Nombre incidencia", "nivel de urgencia", "descripcion"};
@@ -39,7 +39,7 @@ public class EscribirExcel {
                 fila = hoja.createRow(indiceFila);
                 Incidencia incidencia = listaIncidencias.get(i);
                 fila.createCell(0).setCellValue(incidencia.getNombreIncidencia());
-                fila.createCell(1).setCellValue((RichTextString) incidencia.getNivelUrgencia());
+                fila.createCell(1).setCellValue(incidencia.getNivelUrgencia().getNivel());
                 fila.createCell(2).setCellValue(incidencia.getDescripcion());
                 indiceFila++;
             }

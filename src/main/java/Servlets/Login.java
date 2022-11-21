@@ -4,6 +4,8 @@ import Beans.Incidencia;
 import Beans.Usuario;
 import Daos.IncidenciaDao;
 import Daos.UsuarioDao;
+import Funcion.EnviarCorreo;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -54,12 +56,19 @@ public class Login extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
                 }
                 break;
+            case ("restablecer"):
+                view = request.getRequestDispatcher("/Login/RestablecerContrasenia.jsp");
+                view.forward(request, response);
+                break;
+
             case ("logout"):
                 HttpSession session2 = request.getSession();
                 session2.removeAttribute("usuario");
                 session2.invalidate();
                 response.sendRedirect(request.getContextPath() + "/Login");
                 break;
+            default:
+                response.sendRedirect(request.getContextPath() + "/Login");
         }
     }
     @Override
@@ -70,6 +79,12 @@ public class Login extends HttpServlet {
 
         UsuarioDao uDao = new UsuarioDao();
         Usuario user = uDao.ingresarLogin(username,password); //recibo usuario y password
+
+        try {
+            EnviarCorreo.main(username);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
 
         if (user.getRol()!=null){
             session.setAttribute("usuario",user);
