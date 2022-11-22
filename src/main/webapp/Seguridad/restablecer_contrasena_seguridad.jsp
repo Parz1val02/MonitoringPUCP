@@ -1,6 +1,6 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
+
 <html lang="en">
 
   <head>
@@ -40,6 +40,15 @@
   <nav class="page-sidebar" id="sidebar" style="background-color: #042354">
     <div id="sidebar-collapse" style="margin-top: 20px;">
       <ul class="side-menu metismenu">
+        <li>
+          <a href="">
+            <div class="div-barra-lateral">
+              <i class="bi bi-people xaea12 iconos-barra-lateral"></i>
+              <span class="nav-label">evitar el fixed page-wrapper</span>
+            </div>
+          </a>
+        </li>
+        
         <li>
           <a href="<%=request.getContextPath()%>/SeguridadServlet?accion=listar">
 
