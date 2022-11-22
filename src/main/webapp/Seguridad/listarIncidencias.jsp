@@ -1,6 +1,5 @@
 <%@ page import="Beans.Incidencia" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="Funcion.EscribirExcel" %><%--
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: Labtel
   Date: 19/10/2022
@@ -80,16 +79,15 @@
     <nav class="page-sidebar" id="sidebar" style="background-color: #042354">
         <div id="sidebar-collapse" style="margin-top: 20px;">
             <ul class="side-menu metismenu">
-                  <li>
-                  <a href="">
-                    <div class="div-barra-lateral">
-                      <i class="bi bi-people xaea12 iconos-barra-lateral"></i>
-                      <span class="nav-label">evitar el fixed page-wrapper</span>
-                    </div>
-                  </a>
-                </li>  
-              
-              
+                <li>
+                    <a href="">
+                        <div class="div-barra-lateral">
+                            <i class="bi bi-people xaea12 iconos-barra-lateral"></i>
+                            <span class="nav-label">evitar el fixed page-wrapper</span>
+                        </div>
+                    </a>
+                </li>
+
                 <li>
                     <a href="<%=request.getContextPath()%>/SeguridadServlet?accion=listar">
 
@@ -139,7 +137,7 @@
 
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/assets/hello.pdf" download="my_file.pdf">PDF</a></li>
-                            <li><a class="dropdown-item" href="<%new EscribirExcel();%>" download="reporteincidencias.xlsx">XLS</a></li>
+                            <li><a class="dropdown-item" href="/assets/hello.xls" download="my_file.xls">XML</a></li>
                             <li><a class="dropdown-item" href="/assets/hello.txt" download="my_file.txt">TXT</a></li>
                         </ul>
                     </div>
