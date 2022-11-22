@@ -49,8 +49,9 @@ public class UsuarioServlet extends HttpServlet {
                         response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?accion=listar");
                         break;
                     case ("listar") :
+                        String codigoUsuarioPorSesion = usuario1.getCodigo();
                         try {
-                            listaIncidencias = inDao.obtenerIncidencias();
+                            listaIncidencias = inDao.obtenerIncidenciasPorUsuario(codigoUsuarioPorSesion);
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }
