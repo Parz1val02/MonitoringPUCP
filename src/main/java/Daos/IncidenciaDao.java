@@ -212,7 +212,7 @@ public class IncidenciaDao extends DaoBase{
     public void actualizarIncidencia(String estadoIncidenciaUpdate) {
 
         //puede editar mas campos
-        String sql = "UPDATE Incidencias set estadoincidencia = ?";
+        String sql = "UPDATE incidencias set estadoincidencia = ?";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -230,7 +230,7 @@ public class IncidenciaDao extends DaoBase{
     public void confirmar(int id) {
 
         //con borrado logico
-        String sql = "UPDATE Incidencias SET idEstadoIncidencia=4 where idIncidencia  = ?" ;
+        String sql = "UPDATE incidencias SET idEstadoIncidencia=4 where idIncidencia  = ?" ;
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -245,7 +245,7 @@ public class IncidenciaDao extends DaoBase{
     public void borrarIncidencia(int id) {
 
         //con borrado logico
-        String sql = "UPDATE Incidencias SET validaIncidencia=0 where idIncidencia  = ?" ;
+        String sql = "UPDATE incidencias SET validaIncidencia=0 where idIncidencia  = ?" ;
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
