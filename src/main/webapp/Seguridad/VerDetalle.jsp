@@ -129,6 +129,12 @@
                 <label ><%=incidencia.getZonaPUCP().getNombreZona()%></label>
             </div>
 
+            <!-- para la ubicacion obtener la latitud y longitud -->
+            <input class="form-control" type="hidden"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly value="<%=incidencia.getZonaPUCP().getLatitud()%>">
+
+            <input class="form-control" type="hidden"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly value="<%=incidencia.getZonaPUCP().getLatitud()%>">
+
+
 
             <label class="form-label">Nivel de urgencia:</label>
             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
