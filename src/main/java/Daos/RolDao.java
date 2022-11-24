@@ -3,10 +3,7 @@ package Daos;
 import Beans.CategoriaPUCP;
 import Beans.Rol;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class RolDao extends DaoBase{
@@ -32,5 +29,23 @@ public class RolDao extends DaoBase{
         }
 
         return roles;
+    }
+
+    public Rol obtenerRol(int idRol){
+        Rol rol = new Rol();
+        String sql = "SELECT * FROM Roles where idRoles = ?";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setInt(1, idRol);
+            try(ResultSet rs = pstmt.executeQuery();) {
+                if (rs.next()) {
+                    rol.setIdRol(rs.getInt(1));
+                    rol.setNombreRol(rs.getString(2));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rol;
     }
 }

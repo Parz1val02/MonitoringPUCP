@@ -11,7 +11,8 @@ public class Usuario {
     private String dni;
     private String password;
     private boolean valida;
-    private String nickname;
+
+    private boolean dobleFactor;
     private String celular;
     private Rol rol;
     private CategoriaPUCP categoriaPUCP;
@@ -20,7 +21,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String codigo, String nombre, String apellido, String correo, String dni, String celular, FotoPerfil fotoPerfil, Rol rol, CategoriaPUCP categoriaPUCP, String password, String nickname) {
+    public Usuario(String codigo, String nombre, String apellido, String correo, String dni, String celular, FotoPerfil fotoPerfil, Rol rol, CategoriaPUCP categoriaPUCP, String password, boolean dobleFactor) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -31,7 +32,7 @@ public class Usuario {
         this.rol = rol;
         this.categoriaPUCP = categoriaPUCP;
         this.password=password;
-        this.nickname=nickname;
+        this.dobleFactor=dobleFactor;
     }
 
 
@@ -99,14 +100,6 @@ public class Usuario {
         this.valida = valida;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public String getCelular() {
         return celular;
     }
@@ -130,5 +123,12 @@ public class Usuario {
 
     public void setFotoPerfil(FotoPerfil fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
+    }
+    public boolean getDobleFactor() {
+        return dobleFactor;
+    }
+
+    public void setDobleFactor(boolean dobleFactor) {
+        this.dobleFactor = dobleFactor;
     }
 }

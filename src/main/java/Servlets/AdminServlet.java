@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebServlet(name = "AdminServlet", value = "/AdminServlet")
+@MultipartConfig
 public class AdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -93,7 +94,7 @@ public class AdminServlet extends HttpServlet {
                         view.forward(request, response);
                         break;
                     case ("verDetalle"):
-                        String idIncidencia = request.getParameter("id");
+                        int idIncidencia = Integer.parseInt(request.getParameter("id"));
                         Incidencia incidencia = incidenciaDao.obtenerIncidencia(idIncidencia);
 
                         request.setAttribute("Incidencia",incidencia);
@@ -136,13 +137,17 @@ public class AdminServlet extends HttpServlet {
                 String apellido = request.getParameter("apellido");
                 String correo = request.getParameter("correo");
                 String dni = request.getParameter("dni");
+                boolean dobleFactor=false;
                 //boolean valida = Boolean.parseBoolean(request.getParameter("valida"));
                 String password = "password";
-                String nickname = "111111";
                 String celular = request.getParameter("celular");
                 Rol rol1 = new Rol();
                 rol1.setIdRol(Integer.parseInt(request.getParameter("rol")));
-
+                RolDao rDao = new RolDao();
+                rol1 = rDao.obtenerRol(rol1.getIdRol());
+                if(rol1.getNombreRol().equals("Seguridad")){
+                    dobleFactor=true;
+                }
                 CategoriaPUCP categoriaPUCP1 = new CategoriaPUCP();
                 categoriaPUCP1.setIdCategoria(Integer.parseInt(request.getParameter("categoriaPUCP")));
 
@@ -156,7 +161,7 @@ public class AdminServlet extends HttpServlet {
                 fp.setFotobyte(fileContent);
                 fp.setNombreFoto("usuario.png");
 
-                Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password,nickname);
+                Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password,dobleFactor);
 
                 usuarioDao.crearUsuario(usuario);
 

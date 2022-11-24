@@ -1,9 +1,6 @@
 package Daos;
 
 import Beans.*;
-import com.mysql.cj.x.protobuf.MysqlxExpr;
-//import sun.nio.ch.WindowsAsynchronousFileChannelImpl;
-
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -161,7 +158,7 @@ public class IncidenciaDao extends DaoBase{
     }
     
 
-    public Incidencia obtenerIncidencia (String id) {
+    public Incidencia obtenerIncidencia (int id) {
 
 
         String sql = "select i.idIncidencia, i.fecha, i.nombreIncidencia, i.validaIncidencia, i.descripcion, i.contadorReabierto, i.otroTipo, \n" +
@@ -180,7 +177,7 @@ public class IncidenciaDao extends DaoBase{
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, id);
+            pstmt.setInt(1, id);
 
             try(ResultSet rs = pstmt.executeQuery();){
 
@@ -367,6 +364,45 @@ public class IncidenciaDao extends DaoBase{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void guardarFotos(ArrayList<FotosIncidencias> fotosIncidencias){
+        String sql = "INSERT into FotosIncidencias(fotoIncidencia,nombreFoto,idIncidencia) values (?,?,?)";
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+
+            for(FotosIncidencias i : fotosIncidencias){
+                pstmt.setBytes(1,i.getFotobyte());
+                pstmt.setString(2,i.getNombreFoto());
+                pstmt.setInt(3,i.getIncidencia().getIdIncidencia());
+                pstmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<FotosIncidencias> obtenerFotos(int idIncidencia){
+        ArrayList<FotosIncidencias> fis = new ArrayList<>();
+        FotosIncidencias fi = new FotosIncidencias();
+        String sql = "select * from FotosIncidencias where idIncidencia=?";
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idIncidencia);
+            try(ResultSet rs = pstmt.executeQuery();) {
+                while(rs.next()){
+                    fi.setIdFotos(rs.getInt(1));
+                    fi.setFotobyte(rs.getBytes(2));
+                    fi.setNombreFoto(rs.getString(3));
+                    fi.setIncidencia(obtenerIncidencia(rs.getInt(4)));
+                    fis.add(fi);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return fis;
     }
 
 }

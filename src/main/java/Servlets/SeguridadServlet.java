@@ -41,7 +41,7 @@ public class SeguridadServlet extends HttpServlet {
                         view.forward(request, response);
                         break;
                     case ("verDetalle"):
-                        String idIncidencia = request.getParameter("id");
+                        int idIncidencia = Integer.parseInt(request.getParameter("id"));
                         Incidencia incidencia = idao.obtenerIncidencia(idIncidencia);
                         //System.out.println(incidencia.getNombreIncidencia());
                         request.setAttribute("Incidencia", incidencia);

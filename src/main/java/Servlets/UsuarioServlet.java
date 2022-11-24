@@ -7,11 +7,16 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @WebServlet(name = "UsuarioServlet", value = "/UsuarioServlet")
+@MultipartConfig
 public class UsuarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,10 +39,10 @@ public class UsuarioServlet extends HttpServlet {
                 Incidencia incidencia = null;
                 switch (accion){
                     case ("confirmar"):
-                        String idIncidencia = request.getParameter("id");
+                        int idIncidencia = Integer.parseInt(request.getParameter("id"));
                         incidencia = inDao.obtenerIncidencia(idIncidencia);
                         request.setAttribute("Incidencia",incidencia);
-                        inDao.confirmar(Integer.parseInt(idIncidencia));
+                        inDao.confirmar(idIncidencia);
                         view = request.getRequestDispatcher("/Usuario/confirmarIncidencia.jsp");
                         view.forward(request, response);
                         //response.sendRedirect(request.getContextPath()+ "/UsuarioServlet");
@@ -70,16 +75,17 @@ public class UsuarioServlet extends HttpServlet {
                         view.forward(request,response);
                         break;
                     case ("verDetalle"):
-                        String idIncidencia3 = request.getParameter("id");
+                        int idIncidencia3 = Integer.parseInt(request.getParameter("id"));
                         incidencia = inDao.obtenerIncidencia(idIncidencia3);
                         request.setAttribute("Incidencia",incidencia);
                         view = request.getRequestDispatcher("/Usuario/DetalleReabierto.jsp");
                         view.forward(request, response);
                         break;
-                    case("verImagen"):
+                    case("verPerfil"):
                         Usuario user1 = (Usuario) request.getSession().getAttribute("usuario");
                         usuario = udao.buscarPorId(user1.getCodigo());
-                        response.setContentType("image/jpg");
+                        String[] split = usuario.getFotoPerfil().getNombreFoto().split("[.]");
+                        response.setContentType("image/"+split[1]);
                         try (OutputStream out = response.getOutputStream()) {
                             out.write(usuario.getFotoPerfil().getFotobyte());
                         }
@@ -126,7 +132,10 @@ public class UsuarioServlet extends HttpServlet {
                         view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
                         view.forward(request, response);
                         break;
-
+                    case ("restablecer"):
+                        view = request.getRequestDispatcher("/Usuario/CambiarContrasenia.jsp");
+                        view.forward(request, response);
+                        break;
                     default:
                         response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
                 }
@@ -142,10 +151,11 @@ public class UsuarioServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        HttpSession session = request.getSession();
+        Usuario usuario1 = (Usuario) session.getAttribute("usuario");
         String accion = request.getParameter("accion")==null?"inicio":request.getParameter("accion");
         IncidenciaDao idao = new IncidenciaDao();
-
+        UsuarioDao uDao = new UsuarioDao();
         switch (accion){
 
             case "guardar": //guardar incidencia
@@ -184,11 +194,33 @@ public class UsuarioServlet extends HttpServlet {
 
 
                 idao.crearIncidencia(incidencia);
-
-                response.sendRedirect("/UsuarioServlet");
+                ArrayList<FotosIncidencias> fotosIncidencias = new ArrayList<>();
+                ArrayList<Part> fileParts = (ArrayList<Part>) request.getParts().stream().filter(part -> "fotoIncidencia".equals(part.getName()) && part.getSize() > 0).collect(Collectors.toList()); // Retrieves <input type="file" name="files" multiple="true">
+                for (Part filePart : fileParts) {
+                    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+                    InputStream fileContent = filePart.getInputStream();
+                    byte[] fileBytes = fileContent.readAllBytes();
+                    FotosIncidencias fi = new FotosIncidencias();
+                    fi.setFotobyte(fileBytes);
+                    fi.setNombreFoto(fileName);
+                    fi.setIncidencia(incidencia);
+                    fotosIncidencias.add(fi);
+                }
+                idao.guardarFotos(fotosIncidencias);
+                response.sendRedirect(request.getContextPath()+"/UsuarioServlet");
                 break;
 
-
+            case "actualizarFoto":
+                Part filePart = request.getPart("fotoPerfil"); // Retrieves <input type="file" name="file">
+                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+                InputStream fileContent = filePart.getInputStream();
+                byte[] fileBytes = fileContent.readAllBytes();
+                FotoPerfil fp = new FotoPerfil();
+                fp.setFotobyte(fileBytes);
+                fp.setNombreFoto(fileName);
+                uDao.actualizarFoto(fp, usuario1.getFotoPerfil().getIdFoto());
+                response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=perfil");
+                break;
         }
 
 

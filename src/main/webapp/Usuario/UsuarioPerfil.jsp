@@ -36,13 +36,13 @@
                 <div class="page-content fade-in-up col-md-6" style="align-content: center">
                     <div class="imagen">
                         <div class="img">
-                            <a target="blank" href="../images/usuario.png">
-                                <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verImagen" alt="">
+                            <a target="blank" href="">
+                                <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verPerfil" alt="">
                             </a>
                         </div>
                     </div>
                     <br>
-                    <form onsubmit="return false">
+                    <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=actualizarFoto" enctype="multipart/form-data">
                         <div class="col-md">
                             <div class="row g-2">
                                 <div class="col-md" style="display: flex; justify-content: center;margin-left: 10px">
@@ -50,19 +50,8 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
-                                        <input type="file" name="file[]" id="file" accept="image/png, image/gif, image/jpeg"  multiple/>
-                                        <!--<label for="fileImage" class="labelinputimage">Escoge 3 imagenes</label> -->
+                                        <input type="file" name="fotoPerfil" id="file" accept="image/png, image/gif, image/jpeg"  multiple/>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row g-2">
-                                <div class="col-md" style="display: flex; justify-content: center;margin-left: 10px">
-                                    <p class="campos-registrar-usuario">Nickname</p>
-                                </div>
-                                <div class="col-md">
-                                    <label>
-                                        <input style="margin-left: 10px" class="form-control" type="text" value="<%=usuario.getNickname()%>" readonly>
-                                    </label>
                                 </div>
                             </div>
 
@@ -72,10 +61,13 @@
                                        href="<%=request.getContextPath()%>/Login?accion=logout">Cerrar sesión
                                     </a>
                                 </div>
-                                <div class="col-md">
-                                    <label style="justify-content: center; display: flex">
-                                        <input onclick="document.location='cambio_de_contraseña.html'" type="button" value="Cambiar contraseña" class="btn btn-primary">
-                                    </label>
+                                <div class="col-md" style="display: flex; justify-content: center">
+                                    <a type="button" class="btn btn-primary"
+                                       href="<%=request.getContextPath()%>/UsuarioServlet?accion=restablecer">Cambiar contraseña
+                                    </a>
+                                </div>
+                                <div class="col-md" style="display: flex; justify-content: center">
+                                    <button class="btn btn-primary" type="submit" >Cambiar foto</button>
                                 </div>
                             </div>
                         </div>

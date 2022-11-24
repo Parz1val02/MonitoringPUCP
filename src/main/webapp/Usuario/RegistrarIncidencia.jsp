@@ -55,7 +55,7 @@
                         </div>
                     </div-->
                     <div class="ibox-body" >
-                        <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=guardar">
+                        <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=guardar" enctype="multipart/form-data">
 
                             <!-- 1era fila -->
                             <div class="row g-2">
@@ -151,7 +151,7 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
-                                        <input type="file" name="file[]" id="file" accept="image/png, image/gif, image/jpeg"  multiple/>
+                                        <input type="file" name="fotoIncidencia" id="file" accept="image/png, image/gif, image/jpeg"  multiple/>
                                         <!--<label for="fileImage" class="labelinputimage">Escoge 3 imagenes</label> -->
                                     </div>
                                 </div>

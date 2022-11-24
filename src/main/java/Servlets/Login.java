@@ -57,7 +57,7 @@ public class Login extends HttpServlet {
                 }
                 break;
             case ("restablecer"):
-                view = request.getRequestDispatcher("/Login/RestablecerContrasenia.jsp");
+                view = request.getRequestDispatcher("/Usuario/CambiarContrasenia.jsp");
                 view.forward(request, response);
                 break;
 
