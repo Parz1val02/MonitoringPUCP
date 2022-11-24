@@ -1,3 +1,4 @@
+<%@ page import="Beans.Incidencia" %>
 <%--
   Created by IntelliJ IDEA.
   User: Labtel
@@ -6,6 +7,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    Incidencia incidencia = (Incidencia) request.getAttribute("Incidencia");
+%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -30,45 +34,85 @@
         </nav>
     </div>
     <!-- BARRA HORIZONTAL -->
-    <div class="boxed-page">
-        <div class="container" >
-            <jsp:include page="../includes/navbar.jsp">
-                <jsp:param name="page" value="PaginaInicio"/>
-            </jsp:include>
-        </div>
-    </div>
+
 
     <!-- CONTENT PRINCIPAL -->
-    <div class="row">
-        <div class="col-md-5" style="margin: 10px">
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="../images/fondo.jpg" class="d-block w-100" alt="...">
+    <div style="height: 100px; display: block;"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" style="margin: auto">
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="../images/accidente1.png" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../images/accidente2.png" class="d-block w-100" alt="...">
+                        </div>
                     </div>
-                    <div class="carousel-item">
-                        <img src="../images/foto.jpg" class="d-block w-100" alt="...">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6" align="center" style="margin: 10px 0px 10px 0px; background: #FFFFFF; border-radius: 2px; border: 1px solid grey">
+                <div style="margin: 12px">
+                    <div style="height: 10px; display: block;"></div>
+                    <p style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Nombre de la Incidencia</p>
+                    <input style="text-align: center" class="form-control" type="text" placeholder="<%=incidencia.getNombreIncidencia()%>" aria-label="Disabled input example" disabled>
+                    <div style="height: 25px; display: block;"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354"> Número de Destacados</p>
+                        </div>
+                        <div class="col-md-6">
+                            <%int valor;%>
+                            <%if (incidencia.getIncidenciasDestacadas()==null){%>
+                            <%valor=0;%>
+                            <%} else {
+                                valor=incidencia.getIncidenciasDestacadas().getContadorDestacado();
+                            }%>
+                            <input style="text-align: center" class="form-control" type="text" placeholder="<%=valor%>" aria-label="Disabled input example" disabled>
+                        </div>
                     </div>
-                    <div class="carousel-item">
-                        <img src="../images/foto.jpg" class="d-block w-100" alt="...">
+                    <div style="height: 25px; display: block;"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Fecha:</p>
+                            <input style="text-align: center" class="form-control" type="text" placeholder="<%=incidencia.getFecha()%>" aria-label="Disabled input example" disabled>
+                            <div style="height: 25px; display: block;"></div>
+                            <p style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Zona PUCP:</p>
+                            <input style="text-align: center" class="form-control" type="text" placeholder="<%=incidencia.getZonaPUCP().getNombreZona()%>" aria-label="Disabled input example" disabled>
+                            <div style="height: 25px; display: block;"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <p style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Tipo de Incidencia:</p>
+                            <input style="text-align: center" class="form-control" type="text" placeholder="<%=incidencia.getTipoIncidencia().getTipo()%>" aria-label="Disabled input example" disabled>
+                            <div style="height: 25px; display: block;"></div>
+                            <p style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Nivel de Urgencia:</p>
+                            <input style="text-align: center" class="form-control" type="text" placeholder="<%=incidencia.getNivelUrgencia().getNivel()%>" aria-label="Disabled input example" disabled>
+                        </div>
+                        <div style="height: 20px; display: block;"></div>
+                        <div style="">
+                            <p style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Descripción:</p>
+                            <input style="text-align: center" class="form-control" type="text" placeholder="<%=incidencia.getDescripcion()%>" aria-label="Disabled input example" disabled>
+                        </div>
+                    </div>
+                    <div style="height: 30px; display: block;"></div>
+                    <div align="right">
+                        <a style="font-size: 15px" href="<%=request.getContextPath()%>/UsuarioServlet"> Volver a la Vista Principal</a>
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
             </div>
-        </div>
-        <div class="col-md-5" align="center" style="margin: 10px 0px 10px 10px; background: #FFFFFF; border-radius: 10px; border: 1px solid grey">
-
         </div>
     </div>
 
-
+    <div style="height: 100px; display: block;"></div>
     <!-- FOOTER -->
     <footer
             class="text-center text-lg-start text-white"

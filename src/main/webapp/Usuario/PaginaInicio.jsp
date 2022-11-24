@@ -423,7 +423,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <a href=<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle2&id=<%=incidencia.getIdIncidencia()%>">Ver detalle</a>
+                                                    <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle2&id=<%=incidencia.getIdIncidencia()%>">Ver detalle</a>
                                                 </div>
                                             </div>
                                         </div>
