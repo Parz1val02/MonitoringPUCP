@@ -46,11 +46,12 @@ public class UsuarioServlet extends HttpServlet {
                         String idIncidencia1 = request.getParameter("id");
                         int idd = Integer.parseInt(idIncidencia1);
                         inDao.borrarIncidencia(idd);
-                        response.sendRedirect(request.getContextPath()+ "/UsuarioServlet");
+                        response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?accion=listar");
                         break;
                     case ("listar") :
+                        String codigoUsuarioPorSesion = usuario1.getCodigo();
                         try {
-                            listaIncidencias = inDao.obtenerIncidencias();
+                            listaIncidencias = inDao.obtenerIncidenciasPorUsuario(codigoUsuarioPorSesion);
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }

@@ -68,6 +68,9 @@ public class IncidenciaDao extends DaoBase{
                 zonaPUCP.setLatitud(rs.getDouble(19));
                 zonaPUCP.setLongitud(rs.getDouble(20));
 
+                incidencia.setZonaPUCP(zonaPUCP);
+
+
                 IncidenciasDestacadas a = new IncidenciasDestacadas();
                 a.setContadorDestacado(rs.getInt(21));
                 incidencia.setIncidenciasDestacadas(a);
@@ -78,6 +81,85 @@ public class IncidenciaDao extends DaoBase{
         }
         return listaIncidencia;
     }
+    
+    
+    public ArrayList<Incidencia> obtenerIncidenciasPorUsuario(String codigoUsuario) throws SQLException {
+
+        ArrayList<Incidencia> listaIncidencia = new ArrayList<>();
+
+        String sql = "select i.idIncidencia, i.fecha, i.nombreIncidencia, i.validaIncidencia, i.descripcion, i.contadorReabierto, i.otroTipo, \n" +
+                "ti.idTipoIncidencia, ti.tipo, ti.iconoFoto, ti.nombreIcono, nu.idNivelUrgencia, nu.nivel, e.idEstadoIncidencia, e.estado,\n" +
+                "u.codigo, z.idZonaPUCP, z.nombreZona, z.latitud, z.longitud, d.contadorDestacado\n" +
+                "from Incidencias i \n" +
+                "inner join NivelUrgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
+                "left join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
+                "inner join EstadoIncidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
+                "left join IncidenciasDestacadas d on i.idIncidencia = d.idIncidencia\n" +
+                "left join Usuarios u on i.codigousuario = u.codigo \n" +
+                "left join ZonaPUCP z on i.idZonaPUCP=z.idZonaPUCP where validaIncidencia = 1 and u.codigo = ? order by i.idIncidencia;";
+
+
+
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, codigoUsuario);
+
+            try(ResultSet rs = pstmt.executeQuery();){
+                while (rs.next()) {
+                    Incidencia incidencia = new Incidencia();
+                    incidencia.setIdIncidencia(rs.getInt("i.IdIncidencia"));
+                    incidencia.setFecha(rs.getString(2));
+                    incidencia.setNombreIncidencia(rs.getString(3));
+                    incidencia.setValidaIncidencia(rs.getBoolean("validaIncidencia"));
+                    incidencia.setDescripcion(rs.getString(5));
+                    incidencia.setContadorReabierto(rs.getInt(6));
+                    incidencia.setOtroTipo(rs.getString(7));
+                    TipoIncidencia tipoIncidencia = new TipoIncidencia();
+                    tipoIncidencia.setIdTipo(rs.getInt(8));
+                    tipoIncidencia.setTipo(rs.getString("tipo"));
+                    tipoIncidencia.setIconobyte(rs.getBytes(10));
+                    tipoIncidencia.setNombreIcono(rs.getString(11));
+                    incidencia.setTipoIncidencia(tipoIncidencia);
+
+                    NivelUrgencia nivel = new NivelUrgencia();
+                    nivel.setIdNivelUrgencia(rs.getInt(12));
+                    nivel.setNivel(rs.getString("nivel"));
+                    incidencia.setNivelUrgencia(nivel);
+
+                    EstadoIncidencia estado = new EstadoIncidencia();
+                    estado.setIdEstado(rs.getInt(14));
+                    estado.setEstado(rs.getString("estado"));
+                    incidencia.setEstadoIncidencia(estado);
+
+                    UsuarioDao uDao = new UsuarioDao();
+                    incidencia.setUsuario(uDao.buscarPorId(rs.getString("codigo")));
+
+                    ZonaPUCP zonaPUCP = new ZonaPUCP();
+                    zonaPUCP.setIdZonaPUCP(rs.getInt(17));
+                    zonaPUCP.setNombreZona(rs.getString(18));
+                    zonaPUCP.setLatitud(rs.getDouble(19));
+                    zonaPUCP.setLongitud(rs.getDouble(20));
+
+                    incidencia.setZonaPUCP(zonaPUCP);
+
+
+                    IncidenciasDestacadas a = new IncidenciasDestacadas();
+                    a.setContadorDestacado(rs.getInt(21));
+                    incidencia.setIncidenciasDestacadas(a);
+                    listaIncidencia.add(incidencia);
+                }
+
+            }
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return listaIncidencia;
+    }
+    
 
     public Incidencia obtenerIncidencia (String id) {
 
@@ -135,6 +217,8 @@ public class IncidenciaDao extends DaoBase{
                     zonaPUCP.setNombreZona(rs.getString(18));
                     zonaPUCP.setLatitud(rs.getDouble(19));
                     zonaPUCP.setLongitud(rs.getDouble(20));
+
+                    incidencia.setZonaPUCP(zonaPUCP);
 
 
                 }
@@ -207,7 +291,7 @@ public class IncidenciaDao extends DaoBase{
     public void actualizarIncidencia(String estadoIncidenciaUpdate) {
 
         //puede editar mas campos
-        String sql = "UPDATE Incidencias set estadoincidencia = ?";
+        String sql = "UPDATE incidencias set estadoincidencia = ?";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -225,7 +309,7 @@ public class IncidenciaDao extends DaoBase{
     public void confirmar(int id) {
 
         //con borrado logico
-        String sql = "UPDATE Incidencias SET idEstadoIncidencia=4 where idIncidencia  = ?" ;
+        String sql = "UPDATE incidencias SET idEstadoIncidencia=4 where idIncidencia  = ?" ;
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -240,7 +324,7 @@ public class IncidenciaDao extends DaoBase{
     public void borrarIncidencia(int id) {
 
         //con borrado logico
-        String sql = "UPDATE Incidencias SET validaIncidencia=0 where idIncidencia  = ?" ;
+        String sql = "UPDATE incidencias SET validaIncidencia=0 where idIncidencia  = ?" ;
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {

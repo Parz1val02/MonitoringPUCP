@@ -13,7 +13,7 @@ public class UsuarioDao extends DaoBase{
         String sql = "SELECT u.codigo, u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.nickname, u.celular, r.idRoles, r.nombreRol, catpucp.idCategoriaPUCP, catpucp.nombreCategoria,\n" +
                 "fp.idFotoPerfil, fp.nombreFoto, fp.fotoPerfil\n" +
                 "FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP \n" +
-                "left join FotoPerfil fp on u.idFotoPerfil = fp.idFotoPerfil;";
+                "left join FotoPerfil fp on u.idFotoPerfil = fp.idFotoPerfil where validaUsuario = 1 order by u.codigo;";
         try (Connection conn = this.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery( sql);){
@@ -108,7 +108,7 @@ public class UsuarioDao extends DaoBase{
     //eliminar(delete) usuario---por ahora que aparezca modal
     public void borrar(String codigo) {
 
-        String sql = "DELETE FROM Usuarios WHERE codigo = ?";
+        String sql = "UPDATE usuarios SET validaUsuario=0 where codigo  = ?";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
