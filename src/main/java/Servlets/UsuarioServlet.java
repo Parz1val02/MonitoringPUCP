@@ -75,6 +75,7 @@ public class UsuarioServlet extends HttpServlet {
                         view.forward(request, response);
                         break;
                     case ("verDetalle2"):
+                        // Ver detalle en la página de Inicio
                         String idIncidencia4 = request.getParameter("id");
                         incidencia = inDao.obtenerIncidencia(idIncidencia4);
                         listaIncidencias = inDao.obtenerIncidencias();
@@ -83,6 +84,9 @@ public class UsuarioServlet extends HttpServlet {
                         view = request.getRequestDispatcher("/Usuario/DetalleIncidencia.jsp");
                         view.forward(request, response);
                         break;
+                    case ("cambiarContraseña"):
+                        view = request.getRequestDispatcher("/Usuario/CambiarContraseña.jsp");
+                        view.forward(request, response);
                     case("verImagen"):
                         Usuario user1 = (Usuario) request.getSession().getAttribute("usuario");
                         usuario = udao.buscarPorId(user1.getCodigo());
@@ -113,18 +117,16 @@ public class UsuarioServlet extends HttpServlet {
                         break;
 
                     case("inicio"):
-                /*try {
-                    listaDestacados = inDao.obtenerDestacadas();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                request.setAttribute("listaDestacados",listaDestacados);
-                view = request.getRequestDispatcher("/Usuario/inicio.jsp");
-                view.forward(request,response);
-                break;*/ /*prueba*/
-
-                            listaIncidencias = inDao.obtenerIncidencias();
-
+                    /*try {
+                        listaDestacados = inDao.obtenerDestacadas();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    request.setAttribute("listaDestacados",listaDestacados);
+                    view = request.getRequestDispatcher("/Usuario/inicio.jsp");
+                    view.forward(request,response);
+                    break;*/ /*prueba*/
+                        listaIncidencias = inDao.obtenerIncidencias();
                         request.setAttribute("listaIncidencias",listaIncidencias);
                         view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
                         view.forward(request, response);

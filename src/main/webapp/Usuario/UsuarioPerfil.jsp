@@ -165,8 +165,8 @@
                                 </div>
                                 <div class="col-md-5">
                                     <label style="justify-content: left; display: flex">
-                                        <input onclick="document.location='cambio_de_contraseña.html'" type="button" value="Cambiar contraseña" class="btn btn-primary btn-sm float-right" style="font-size: 12px;
-                        border-color: #042354; background-color: #042354;">
+                                        <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=cambiarContraseña" type="button" value="Cambiar contraseña" class="btn btn-primary btn-sm float-right" style="font-size: 12px;
+                        border-color: #042354; background-color: #042354;">Cambiar Contraseña</a>
                                     </label>
                                 </div>
                             </div>
