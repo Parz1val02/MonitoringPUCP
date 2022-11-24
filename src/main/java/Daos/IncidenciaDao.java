@@ -229,6 +229,78 @@ public class IncidenciaDao extends DaoBase{
 
         return incidencia;
     }
+    public ArrayList<Incidencia> filtro (String id) {
+
+        ArrayList<Incidencia> listaIncidencias = new ArrayList<>();
+
+        String sql = "select i.idIncidencia, i.fecha, i.nombreIncidencia, i.validaIncidencia, i.descripcion, i.contadorReabierto, i.otroTipo, \n" +
+                "ti.idTipoIncidencia, ti.tipo, ti.iconoFoto, ti.nombreIcono, nu.idNivelUrgencia, nu.nivel, e.idEstadoIncidencia, e.estado,\n" +
+                "u.codigo, z.idZonaPUCP, z.nombreZona, z.latitud, z.longitud\n" +
+                "from Incidencias i \n" +
+                "inner join NivelUrgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
+                "left join TipoIncidencia ti on ti.idTipoIncidencia = i.idTipoIncidencia\n" +
+                "inner join EstadoIncidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
+                "left join IncidenciasDestacadas d on i.idIncidencia = d.idIncidencia\n" +
+                "left join Usuarios u on i.codigousuario = u.codigo \n" +
+                "left join ZonaPUCP z on i.idZonaPUCP=z.idZonaPUCP where validaIncidencia = 1 and (i.nombreIncidencia like ? or i.descripcion like = ? or i.idNivelUrgencia like ?);";
+
+
+
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, id);
+
+            try(ResultSet rs = pstmt.executeQuery();){
+
+                while (rs.next()) {
+                    Incidencia incidencia = new Incidencia();
+                    incidencia.setIdIncidencia(rs.getInt("i.IdIncidencia"));
+                    incidencia.setFecha(rs.getString(2));
+                    incidencia.setNombreIncidencia(rs.getString(3));
+                    incidencia.setValidaIncidencia(rs.getBoolean("validaIncidencia"));
+                    incidencia.setDescripcion(rs.getString(5));
+                    incidencia.setContadorReabierto(rs.getInt(6));
+                    incidencia.setOtroTipo(rs.getString(7));
+                    TipoIncidencia tipoIncidencia = new TipoIncidencia();
+                    tipoIncidencia.setIdTipo(rs.getInt(8));
+                    tipoIncidencia.setTipo(rs.getString("tipo"));
+                    tipoIncidencia.setIconobyte(rs.getBytes(10));
+                    tipoIncidencia.setNombreIcono(rs.getString(11));
+                    incidencia.setTipoIncidencia(tipoIncidencia);
+
+                    NivelUrgencia nivel = new NivelUrgencia();
+                    nivel.setIdNivelUrgencia(rs.getInt(12));
+                    nivel.setNivel(rs.getString("nivel"));
+                    incidencia.setNivelUrgencia(nivel);
+
+                    EstadoIncidencia estado = new EstadoIncidencia();
+                    estado.setIdEstado(rs.getInt(14));
+                    estado.setEstado(rs.getString("estado"));
+                    incidencia.setEstadoIncidencia(estado);
+
+                    UsuarioDao uDao = new UsuarioDao();
+                    incidencia.setUsuario(uDao.buscarPorId(rs.getString("codigo")));
+
+                    ZonaPUCP zonaPUCP = new ZonaPUCP();
+                    zonaPUCP.setIdZonaPUCP(rs.getInt(17));
+                    zonaPUCP.setNombreZona(rs.getString(18));
+                    zonaPUCP.setLatitud(rs.getDouble(19));
+                    zonaPUCP.setLongitud(rs.getDouble(20));
+
+                    incidencia.setZonaPUCP(zonaPUCP);
+
+                    listaIncidencias.add(incidencia);
+
+
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return listaIncidencias;
+    }
 
 
     /*public ArrayList<Incidencia> obtenerDestacadas() throws SQLException {
@@ -359,15 +431,14 @@ public class IncidenciaDao extends DaoBase{
             pstmt.setInt(7, incidencia.getTipoIncidencia().getIdTipo());  //tipo incidencia
             pstmt.setInt(8, incidencia.getNivelUrgencia().getIdNivelUrgencia());  //nivel urgencia
             pstmt.setInt(9,incidencia.getEstadoIncidencia().getIdEstado()); //estado incidencia
-            pstmt.setString(10, "20201696"); //por ahora se setea, porque a esto le falta la parte de sesiones
-            pstmt.setInt(11,incidencia.getZonaPUCP().getIdZonaPUCP());
-
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+
 
 }
 

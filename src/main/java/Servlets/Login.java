@@ -80,11 +80,11 @@ public class Login extends HttpServlet {
         UsuarioDao uDao = new UsuarioDao();
         Usuario user = uDao.ingresarLogin(username,password); //recibo usuario y password
 
-        try {
+        /*try {
             EnviarCorreo.main(username);
         } catch (MessagingException e) {
             e.printStackTrace();
-        }
+        }*/
 
         if (user.getRol()!=null){
             session.setAttribute("usuario",user);

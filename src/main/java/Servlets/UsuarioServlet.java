@@ -145,7 +145,8 @@ public class UsuarioServlet extends HttpServlet {
 
         String accion = request.getParameter("accion")==null?"inicio":request.getParameter("accion");
         IncidenciaDao idao = new IncidenciaDao();
-
+        HttpSession session = request.getSession();
+        Usuario usuario1 = (Usuario) session.getAttribute("usuario");
         switch (accion){
 
             case "guardar": //guardar incidencia
@@ -157,6 +158,7 @@ public class UsuarioServlet extends HttpServlet {
                 int IDtipoIncidencia = Integer.parseInt(request.getParameter("tipoIncidencia"));
                 int IDnivelUrgencia = Integer.parseInt(request.getParameter("nivelIncidencia"));
                 String fecha = request.getParameter("fecha");
+                int idEstadoIncidencia = 1;
                 //String estado= request.getParameter("estado");
 
 
@@ -175,13 +177,14 @@ public class UsuarioServlet extends HttpServlet {
                 incidencia.setDescripcion(descripcion);
 
                 EstadoIncidencia estado1 = new EstadoIncidencia();
-                estado1.setEstado("Registrado");
+                estado1.setIdEstado(idEstadoIncidencia);
                 incidencia.setEstadoIncidencia(estado1);
 
                 ZonaPUCP zonaPUCP = new ZonaPUCP();
                 zonaPUCP.setIdZonaPUCP(IDzonaPUCP);
                 incidencia.setZonaPUCP(zonaPUCP);
 
+                incidencia.setUsuario(usuario1);
 
                 idao.crearIncidencia(incidencia);
 
