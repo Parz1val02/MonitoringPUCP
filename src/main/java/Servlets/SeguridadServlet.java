@@ -31,11 +31,9 @@ public class SeguridadServlet extends HttpServlet {
                 switch (accion) {
                     case ("listar"):
                         ArrayList<Incidencia> listaIncidencias = null;
-                        try {
+                        
                             listaIncidencias = idao.obtenerIncidencias();
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
+
                         request.setAttribute("listaIncidencias", listaIncidencias);
                         view = request.getRequestDispatcher("/Seguridad/listarIncidencias.jsp");
                         view.forward(request, response);
