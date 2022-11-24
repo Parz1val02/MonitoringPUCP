@@ -60,11 +60,9 @@ public class UsuarioServlet extends HttpServlet {
                         view.forward(request,response);
                         break;
                     case ("listarDestacados") :
-                        try {
-                            listaIncidencias = inDao.obtenerIncidencias();
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
+
+                        listaIncidencias = inDao.obtenerIncidencias();
+
                         request.setAttribute("listaIncidencias",listaIncidencias);
                         view = request.getRequestDispatcher("/Usuario/IncidenciasDestacadas.jsp");
                         view.forward(request,response);
@@ -96,11 +94,9 @@ public class UsuarioServlet extends HttpServlet {
                         view.forward(request, response);
                         break;
                     case("buscarIncidencia"):
-                        try {
-                            listaIncidencias = inDao.obtenerIncidencias();
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
+
+                        listaIncidencias = inDao.obtenerIncidencias();
+
 
                         request.setAttribute("listaIncidencias",listaIncidencias);
                         view = request.getRequestDispatcher("/Usuario/BuscarIncidencia.jsp");
@@ -117,11 +113,9 @@ public class UsuarioServlet extends HttpServlet {
                 view = request.getRequestDispatcher("/Usuario/inicio.jsp");
                 view.forward(request,response);
                 break;*/ /*prueba*/
-                        try {
+
                             listaIncidencias = inDao.obtenerIncidencias();
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
+
                         request.setAttribute("listaIncidencias",listaIncidencias);
                         view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
                         view.forward(request, response);
@@ -145,18 +139,39 @@ public class UsuarioServlet extends HttpServlet {
 
         String accion = request.getParameter("accion")==null?"inicio":request.getParameter("accion");
         IncidenciaDao idao = new IncidenciaDao();
+        ArrayList<Incidencia> incidencias = idao.obtenerIncidencias();
+        TipoIncidenciaDao tipoIncidenciaDao = new TipoIncidenciaDao();
+        NivelUrgenciaDao nivelDao = new NivelUrgenciaDao();
+        ZonaDao zonaDao = new ZonaDao();
+        RequestDispatcher view ;
 
+        HttpSession session = request.getSession();
+        Usuario usuario1 = (Usuario) session.getAttribute("usuario");
         switch (accion){
 
             case "guardar": //guardar incidencia
                 Incidencia incidencia = new Incidencia();
                 String nombreIncidencia = request.getParameter("nombre_incidencia");
+
+                for (Incidencia i : incidencias){
+                    if(i.getNombreIncidencia().equalsIgnoreCase(nombreIncidencia)){
+                        request.setAttribute("tipos", tipoIncidenciaDao.obtenerTipos() );
+                        request.setAttribute("niveles", nivelDao.obtenerNiveles());
+                        request.setAttribute("zonas", zonaDao.obtenerlistaZonas());
+                        request.setAttribute("msg","el nombre de la incidencia no se puede repetir");
+                        view = request.getRequestDispatcher("/Usuario/RegistrarIncidencia.jsp");
+                        view.forward(request, response);
+                        break;
+                    }
+                }
+
                 String descripcion = request.getParameter("descripcion");
 
                 int IDzonaPUCP = Integer.parseInt(request.getParameter("zonaPUCP"));
                 int IDtipoIncidencia = Integer.parseInt(request.getParameter("tipoIncidencia"));
                 int IDnivelUrgencia = Integer.parseInt(request.getParameter("nivelIncidencia"));
                 String fecha = request.getParameter("fecha");
+                int idEstadoIncidencia = 1;
                 //String estado= request.getParameter("estado");
 
 
@@ -175,13 +190,14 @@ public class UsuarioServlet extends HttpServlet {
                 incidencia.setDescripcion(descripcion);
 
                 EstadoIncidencia estado1 = new EstadoIncidencia();
-                estado1.setEstado("Registrado");
+                estado1.setIdEstado(idEstadoIncidencia);
                 incidencia.setEstadoIncidencia(estado1);
 
                 ZonaPUCP zonaPUCP = new ZonaPUCP();
                 zonaPUCP.setIdZonaPUCP(IDzonaPUCP);
                 incidencia.setZonaPUCP(zonaPUCP);
 
+                incidencia.setUsuario(usuario1);
 
                 idao.crearIncidencia(incidencia);
 

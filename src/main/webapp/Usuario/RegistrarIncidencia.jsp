@@ -12,6 +12,7 @@
 %>
 <%
     ArrayList<ZonaPUCP> zonas = (ArrayList<ZonaPUCP>) request.getAttribute("zonas");
+    String error = (String) request.getAttribute("msg");
 %>
 
 <html lang="en"  style="min-height: 100vh">
@@ -130,20 +131,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- 5ta fila -->
-                            <div class="row g-2">
-                                <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Ubicación:</p>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-floating" style="margin-bottom: 15px;">
-                                        <div class="form-floating" style="margin-bottom: 15px;">
-                                            <input type="text" class="form-control" id="floatingInputGrid12" placeholder="Ubicacion" name="ubicacion">
-                                            <label for="floatingInputGrid12" class="label-form-flujousuario">Ubicación</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             <!-- 6ta fila -->
                             <div class="row g-2">
                                 <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
@@ -168,6 +156,13 @@
                                     </div>
                                 </div>
                                 <div style="color:#FF0000;"><p text-align="center;" style="margin-top: 1px;" class="font-weight-bold">Todos los campos son obligatorios.</p></div>
+                                <div style="color:#FF0000;">
+                                    <%if(error!=null){%>
+                                        <%=error%>
+                                    <%}%>
+
+                                </div>
+
                             </div>
                             <div class="form-group" style="text-align: right">
                                 <button class="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal" href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">Registrar incidencia</button>
