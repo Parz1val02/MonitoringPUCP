@@ -59,7 +59,7 @@ public class EscribirExcel {
                     System.out.println("Error de IOException");
                 }
 
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }

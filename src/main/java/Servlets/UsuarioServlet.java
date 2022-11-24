@@ -74,6 +74,13 @@ public class UsuarioServlet extends HttpServlet {
                         view = request.getRequestDispatcher("/Usuario/DetalleReabierto.jsp");
                         view.forward(request, response);
                         break;
+                    case ("verDetalle2"):
+                        String idIncidencia4 = request.getParameter("id");
+                        incidencia = inDao.obtenerIncidencia(idIncidencia4);
+                        request.setAttribute("Incidencia",incidencia);
+                        view = request.getRequestDispatcher("/Usuario/DetalleIncidencia.jsp");
+                        view.forward(request, response);
+                        break;
                     case("verImagen"):
                         Usuario user1 = (Usuario) request.getSession().getAttribute("usuario");
                         usuario = udao.buscarPorId(user1.getCodigo());
