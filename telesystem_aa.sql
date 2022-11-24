@@ -1,3 +1,4 @@
+use telesystem_aa;
 insert into TipoIncidencia(tipo) 
 		values ("Accidente"),
 			("Reporte de robos"),
