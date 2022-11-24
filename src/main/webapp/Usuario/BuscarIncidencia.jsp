@@ -36,178 +36,46 @@
         </div>
     </div>
 <!-- PRINCIPAL -->
-<div class="content-wrapper">
-    <div class="row">
-        <div class="col-md-3" style="margin: 0 auto;">
-            <div style="height: 20px; display: block;"></div>
-            <div class="container">
-                <p style="font-size: 25px; font-weight: 900"> Filtrar Incidencias</p>
-                <ul>
-                    <li><i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                        Horario del Suceso
-                        <br>
-                        <label class="sangria-filter">Fecha: <input type="date" name="date1" id="date1" class="sangria-filter" style="margin-top: 5px;margin-bottom: 5px"></label>
-                        <label class="sangria-filter">Hora: <input type="time" name="time1" id="time1" class="sangria-filter" style="margin-top: 5px;margin-bottom: 5px"></label>
-                    </li>
-                    <li><i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                        Estado de Incidencia
-                        <br>
-                        <label><input class="form-check-input me-1 sangria-filter" type="checkbox" value="" id="Checkbox10">Registrado</label>
-                        <br>
-                        <label><input class="form-check-input me-1 sangria-filter" type="checkbox" value="" id="Checkbox11">En proceso</label>
-                        <br>
-                        <label><input class="form-check-input me-1 sangria-filter" type="checkbox" value="" id="Checkbox12">Atendido</label>
-                        <br>
-                        <label><input class="form-check-input me-1 sangria-filter" type="checkbox" value="" id="Checkbox13">Resuelto</label>
-                        <br>
-                    </li>
-                    <li><i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                        Nivel de Urgencia
-                        <br>
-                        <label><input class="form-check-input me-1 sangria-filter" type="checkbox" value="" id="Checkbox1">Leve</label>
-                        <br>
-                        <label><input class="form-check-input me-1 sangria-filter" type="checkbox" value="" id="Checkbox2">Moderado</label>
-                        <br>
-                        <label><input class="form-check-input me-1 sangria-filter" type="checkbox" value="" id="Checkbox3">Crítico</label>
-                    </li>
-                    <li><i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                        Tipo de Incidencia
-                        <br>
-                        <label><input class="form-check-input me-1 sangria-filter" type="checkbox" value="" id="Checkbox4">Reporte de robos</label>
-                        <br>
-                        <label><input class="form-check-input me-1 sangria-filter" type="checkbox" value="" id="Checkbox5">Objetos perdidos</label>
-                        <br>
-                        <label><input class="form-check-input me-1 sangria-filter" type="checkbox" value="" id="Checkbox6">Infraestructura en estado</label>
-                        <br>
-                        <label><input class="form-check-input me-1 sangria-filter" type="checkbox" value="" id="Checkbox7">Ambulancia PUCP</label>
-                        <br>
-                        <label><input class="form-check-input me-1 sangria-filter" type="checkbox" value="" id="Checkbox8">Accidentes</label>
-                        <br>
-                        <label><input class="form-check-input me-1 sangria-filter" type="checkbox" value="" id="Checkbox9">Otros</label>
-                    </li>
-
-                </ul>
+    <div class="col-md-10" style="margin: 0 auto">
+        <div class="content-wrapper">
+            <div class="page-heading" style="text-align: center;margin-top: 15px;margin-bottom: 20px;">
+                <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Buscar Incidencias</b></h1>
             </div>
-        </div>
-        <div class="col-md-5" style="margin: 0 auto;">
-            <div class="content-wrapper">
-                <div class="page-heading" style="text-align: center;margin-top: 15px;margin-bottom: 20px;">
-                    <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Visualizador de Incidencias</b></h1>
-                </div>
-                <div class="page-content fade-in-up">
-                    <div class="ibox">
-                        <div class="ibox-body">
-                            <div class="flex-container" style="flex-direction: column">
-                                <div class="flex-items">
-                                    <%for(Incidencia i : listaIncidencias){%>
-                                    <div class="card border-black mb-3">
-                                        <div class="card-body">
-                                            <h4 class="card-title"><%= i.getNombreIncidencia()%></h4>
-                                            <div class="row">
-                                                <div class="col-md"><p class="card-text"><%= i.getFecha()%></div>
-                                                <div class="col-md"><p class="card-text"><%= i.getZonaPUCP().getNombreZona()%></p></div>
-                                                <div class="col-md"><p class="card-text"><%= i.getTipoIncidencia().getTipo()%></p></div>
-                                                <div class="col-md"><p class="card-text"><%= i.getNivelUrgencia().getNivel()%></p></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <%}%>
-                                    <div class="card border-black mb-3">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Alerta de Plaga en la Facultad de Química</h4>
-                                            <div class="row">
-                                                <div class="col-md"><p class="card-text">Fecha/Hora</div>
-                                                <div class="col-md"><p class="card-text">Zona Pucp</p></div>
-                                                <div class="col-md"><p class="card-text">Tipo</p></div>
-                                                <div class="col-md"><p class="card-text">Nivel</p></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card border-black mb-3">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Se cayó un proyector en EEGGCC</h4>
-                                            <div class="row">
-                                                <div class="col-md"><p class="card-text">Fecha/Hora</div>
-                                                <div class="col-md"><p class="card-text">Zona Pucp</p></div>
-                                                <div class="col-md"><p class="card-text">Tipo</p></div>
-                                                <div class="col-md"><p class="card-text">Nivel</p></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card border-black mb-3">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Me quitaron mi celular en la Entrada N°7</h4>
-                                            <p class="card-text">This is some text within a card body.</p>
-                                        </div>
-                                    </div>
-                                    <div class="card border-black mb-3">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Perdí mi laptop en CIA segundo piso</h4>
-                                            <p class="card-text">This is some text within a card body.</p>
-                                        </div>
-                                    </div>
-                                    <div class="card border-black mb-3">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Infraestructura rota en el Pabellón A - Aulario</h4>
-                                            <p class="card-text">This is some text within a card body.</p>
-                                        </div>
-                                    </div>
-                                    <div class="card border-black mb-3">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Accidente en Al Peso cerca a Cepre</h4>
-                                            <p class="card-text">This is some text within a card body.</p>
-                                        </div>
-                                    </div>
-                                    <div class="card border-black mb-3">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Mi amigó se cayó en las rejillas atrás de CIA</h4>
-                                            <p class="card-text">This is some text within a card body.</p>
-                                        </div>
-                                    </div>
-                                    <div class="card border-black mb-3">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Robo de almuerzo en Diodo</h4>
-                                            <p class="card-text">This is some text within a card body.</p>
-                                        </div>
-                                    </div>
-                                    <div class="card border-black mb-3">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Robo de almuerzo en Diodo</h4>
-                                            <p class="card-text">This is some text within a card body.</p>
-                                        </div>
-                                    </div>
+            <div class="page-content fade-in-up">
+                <div class="ibox">
+                    <div class="ibox-body">
+                        <table class="table table-striped table-bordered table-hover" id="example-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre de la incidencia</th>
+                                    <th>Nombre del usuario</th>
+                                    <th>Estado</th>
+                                    <!--<th>N° reabierta</th>-->
+                                    <th>N° destacados</th>
+                                    <!--<th>¿Reabrir incidencia?</th>-->
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- END PAGE CONTENT-->
-            </div>
-        </div>
-        <div class="col-md-3" style="margin: 0 auto">
-            <div style="height: 20px; display: block;"></div>
-            <div class="row">
-                <div class="col-sm-12 col-md-12">
-                    <form class="d-flex" role="search">
-                        <input class="form-control-lg me-3" type="search" placeholder="Ingrese Palabra Clave" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit" style="border-bottom-style: solid">Buscar</button>
-                    </form>
-                </div>
-                <div class="col-sm-12 col-md-12">
-                    <div style="height: 20px; display: block;"></div>
-                    <div>
-                        <p> ¡Bienvenido a Monitoring PUCP! Esta aplicación te ayudará a gestionar, registrar y conocer incidencias en nuestra comunidad PUCP.</p>
-                    </div>
-                    <div style="height: 20px; display: block;"></div>
-                    <div>
-                        <div class="google-maps" style="text-align: center">  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d9080.838408815116!2d-77.0851327328001!3d-12.069237033787196!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd7a0bfb797e5862e!2sPontificia%20Universidad%20Cat%C3%B3lica%20del%20Per%C3%BA!5e0!3m2!1ses!2spe!4v1665201780059!5m2!1ses!2spe" width="463.76" height="315" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> </div>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <% for(Incidencia incidencia : listaIncidencias) {%>
+                                <tr>
+                                    <td><%= incidencia.getNombreIncidencia()%> </td>
+                                    <td><%= incidencia.getUsuario().getNombre()%></td>
+                                    <td><%= incidencia.getEstadoIncidencia().getEstado()%> </td
+                                    <td></td>
+                                    <td><%= incidencia.getIncidenciasDestacadas().getContadorDestacado()%> </td>
+
+                                </tr>
+                                <% }%>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <br>
     <!-- Footer -->
     <footer
             class="text-center text-lg-start text-white"
@@ -293,6 +161,140 @@
         <!-- Grid container -->
     </footer>
     <!-- Footer -->
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Detalle Incidencia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="return false">
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div style =  "margin-left: 10px" class="input-group mb-3">
+                                    <label>Fecha: </label>
+                                    <label>
+                                        <input style =  "margin-left: 10px" class="form-control" type="text" placeholder="Fecha">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div style =  "margin-left: 10px" class="input-group mb-3">
+                                    <label>Nombre: </label>
+                                    <label>
+                                        <input style =  "margin-left: 10px" class="form-control" type="text" placeholder="Nombre">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div style =  "margin-left: 10px" class="input-group mb-3">
+                                    <label>Incidencia: </label>
+                                    <label>
+                                        <input style =  "margin-left: 10px" class="form-control" type="text" placeholder="Incidencia">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div style =  "margin-left: 10px" class="input-group mb-3">
+                                    <label>Tipo de incidencia: </label>
+                                    <label>
+                                        <input style =  "margin-left: 10px" class="form-control" type="text" placeholder="Tipo de Incidencia">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div style =  "margin-left: 10px">
+                            <p>  Zona PUCP: </p>
+                        </div>
+                    </form>
+
+                    <div  class="google-maps" style="text-align: center">  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d9080.838408815116!2d-77.0851327328001!3d-12.069237033787196!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd7a0bfb797e5862e!2sPontificia%20Universidad%20Cat%C3%B3lica%20del%20Per%C3%BA!5e0!3m2!1ses!2spe!4v1665201780059!5m2!1ses!2spe" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> </div>
+
+                    <br>
+                    <div style =  "margin-left: 10px">
+                        <p> Foto:
+                            <a href="#" class="link-primary">Click para ver foto</a>
+                        </p>
+                    </div>
+
+                    <br><br>
+                    <div style =  "margin-left: 10px" class="form-floating">
+                        <p>
+                            Descripción del problema: <br>
+                            <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Detalles de tu incidencia" id="floatingTextarea1" style="height: 100px"></textarea>
+                        </p>
+                    </div>
+                    <br><br>
+                    <div style =  "margin-left: 10px" class="form-floating">
+
+                        <p align="right">N° veces reabierta: 1/5</p>
+                        <p>
+                            ¿Por qué desea reabrir esta incidencia?: <br>
+                            <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px"></textarea>
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" >Registrar reapertura</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar reapertura</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel2">Registrar cambios</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Se actualizó correctamente el estado de la incidencia
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Regresar a la ventana principal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CORE PLUGINS-->
+    <script src="../scripts/jquery.min.js" type="text/javascript"></script>
+    <script src="../scripts/popper.min.js" type="text/javascript"></script>
+    <script src="../scripts/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../scripts/metisMenu.min.js" type="text/javascript"></script>
+    <script src="../scripts/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <!-- PAGE LEVEL PLUGINS-->
+    <script src="../scripts/datatables.min.js" type="text/javascript"></script>
+    <!-- CORE SCRIPTS-->
+    <script src="../scripts/app.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <!-- PAGE LEVEL SCRIPTS-->
+    <script type="text/javascript">
+        $(function() {
+            $('#example-table').DataTable({
+                lengthMenu: [5, 10, 15],
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json'
+                },
+                "ColumnDefs": [{"targets": 6, "orderable": false}],
+                pageLength: 10,
+                //"ajax": './assets/demo/data/table_data.json',
+                /*"columns": [
+                    { "data": "name" },
+                    { "data": "office" },
+                    { "data": "extn" },
+                    { "data": "start_date" },
+                    { "data": "salary" }
+                ]*/
+            });
+        })
+    </script>
 
 </body>
 </html>
