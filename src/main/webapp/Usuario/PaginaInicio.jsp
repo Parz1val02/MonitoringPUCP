@@ -39,6 +39,7 @@
                 <div class="col-md-8">
                     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
+                            <!--
                             <div class="carousel-item active">
                                 <div class="d-block w-100">
                                     <div class="container bg-grey d">
@@ -94,7 +95,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <!--
                             <div class="carousel-item">
                                 <div class="d-block w-100">
@@ -321,54 +322,98 @@
                                 </div>
                             </div>
                             -->
+                            <%int i=0;%>
                             <% for(Incidencia incidencia : listaIncidencias) {%>
-                            <div class="carousel-item">
+                            <%if(i==0){%>
+                            <div class="carousel-item active">
+                            <%}else {%>
+                                <div class="carousel-item">
+                                    <%}%>
                                 <div class="d-block w-100">
                                     <div class="container bg-grey d">
                                         <div class="row">
                                             <div class="col-lg-5">
                                                 <img src="../images/foto.jpg" alt="">
                                             </div>
-                                            <div class="col-lg-5">
-                                                <div class="container-fluid">
-                                                    <div class="col-md-12">
+                                            <div class="col-lg-7">
+                                                <div class="container-fluid" style="padding-top: 5vh;">
+                                                    <div class="col-md-12" style="height: 15vh;">
                                                         <div class="container-fluid">
                                                             <div class="row">
-                                                                <div class="col-md-7">
-                                                                    <h8><%= incidencia.getNombreIncidencia()%></h8>
+                                                                <div class="col-md-6">
+                                                                    <div class="col-md-12">
+                                                                        <h7>Nombre Incidencia</h7>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <h8><%= incidencia.getNombreIncidencia()%></h8>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-md-3">
-                                                                    <i class="material-icons">favorite</i>
-                                                                    <i>Destacadas</i>
-                                                                    <h8>
-                                                                        <%=incidencia.getIncidenciasDestacadas().getContadorDestacado()%>
-                                                                    </h8>
+                                                                <div class="col-md-6">
+                                                                    <div class="col-md-12">
+                                                                        <div class="row">
+                                                                            <div class="col-md-4">
+                                                                                <i class="material-icons">favorite</i>
+                                                                                <h7>Destacadas</h7>
+                                                                            </div>
+                                                                            <div class="col-md-3">
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <h8>
+                                                                            <%=incidencia.getIncidenciasDestacadas().getContadorDestacado()%>
+                                                                        </h8>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-calendar">Fecha</i>
-                                                                <h8><%=incidencia.getFecha()%></h8>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-location-arrow">Zona Pucp</i>
-                                                                <h8><%=incidencia.getZonaPUCP()%></h8>
+                                                    <div class="col-md-12" style="height: 15vh;">
+                                                        <div class="container-fluid">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="col-md-12">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                        <h8>Fecha</h8>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <h8><%=incidencia.getFecha()%></h8>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="col-md-12">
+                                                                        <i class="fa fa-location-arrow"></i>
+                                                                        <h8>Zona Pucp</h8>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <h8><%=incidencia.getZonaPUCP().getNombreZona()%></h8>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-ambulance">Tipo</i>
-                                                                <h8><%=incidencia.getTipoIncidencia().getTipo()%></h8>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <i class="material-icons">traffic</i>
-                                                                <i>Urgencia</i>
-                                                                <h8><%= incidencia.getNivelUrgencia().getNivel()%></h8>
+                                                    <div class="col-md-12" style="height: 15vh;">
+                                                        <div class="container-fluid">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="col-md-12">
+                                                                        <i class="fa fa-ambulance"></i>
+                                                                        <h8>Tipo</h8>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <h8><%=incidencia.getTipoIncidencia().getTipo()%></h8>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="col-md-12">
+                                                                        <i class="material-icons">traffic</i>
+                                                                        <h7>Urgencia</h7>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <h8><%= incidencia.getNivelUrgencia().getNivel()%></h8>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -378,6 +423,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <%i++;%>
                             <% }%>
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
