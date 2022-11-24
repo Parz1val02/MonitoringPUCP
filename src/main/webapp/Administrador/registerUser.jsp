@@ -13,6 +13,8 @@
 %>
 <%
   ArrayList<Rol> roles = (ArrayList<Rol>) request.getAttribute("roles");
+  String error = (String) request.getAttribute("error");
+
 %>
 
 
@@ -79,7 +81,7 @@
               </a>
             </li>
             <li>
-              <a href="<%=request.getContextPath()%>/AdminServlet?accion=regitrar_usuario">
+              <a href="<%=request.getContextPath()%>/AdminServlet?accion=registrar_usuario">
                 <div class="div-barra-lateral">
                   <i class="bi bi-person-plus xaea12 iconos-barra-lateral"></i>
                   <span class="nav-label">Registrar Usuario</span>
@@ -135,13 +137,13 @@
                     <div class="row g-2">
                       <div class="col-md">
                         <div class="form-floating" style="margin-bottom: 5px;">
-                          <input type="text" class="form-control" id="floatingInputGrid1" placeholder="Nombre" name="nombre">
+                          <input type="text" class="form-control" id="floatingInputGrid1" placeholder="Nombre" name="nombre" required>
                           <label for="floatingInputGrid1">Nombre</label>
                         </div>
                       </div>
                       <div class="col-md">
                         <div class="form-floating" style="margin-bottom: 5px;">
-                          <input type="text" class="form-control" id="floatingInputGrid2" placeholder="Apellido" name="apellido" >
+                          <input type="text" class="form-control" id="floatingInputGrid2" placeholder="Apellido" name="apellido" required>
                           <label for="floatingInputGrid2">Apellido</label>
                         </div>
                       </div>
@@ -149,13 +151,13 @@
                     <div class="row g-2">
                       <div class="col-md">
                         <div class="form-floating" style="margin-bottom: 5px;">
-                          <input type="text" class="form-control" id="floatingInputGrid3" placeholder="Código PUCP" name="codigo">
+                          <input type="text" class="form-control" id="floatingInputGrid3" placeholder="Código PUCP" name="codigo" required>
                           <label for="floatingInputGrid3">Código PUCP</label>
                         </div>
                       </div>
                       <div class="col-md">
                         <div class="form-floating" style="margin-bottom: 5px;">
-                          <input type="text" class="form-control" id="floatingInputGrid4" placeholder="Correo PUCP" name="correo">
+                          <input type="text" class="form-control" id="floatingInputGrid4" placeholder="Correo PUCP" name="correo" required>
                           <label for="floatingInputGrid4">Correo PUCP</label>
                         </div>
                       </div>
@@ -163,13 +165,13 @@
                     <div class="row g-2">
                       <div class="col-md">
                         <div class="form-floating" style="margin-bottom: 5px;">
-                          <input type="text" class="form-control" id="floatingInputGrid5" placeholder="DNI" name="dni">
+                          <input type="text" class="form-control" id="floatingInputGrid5" placeholder="DNI" name="dni" required>
                           <label for="floatingInputGrid4">DNI</label>
                         </div>
                       </div>
                       <div class="col-md">
                         <div class="form-floating" style="margin-bottom: 5px;">
-                          <input type="text" class="form-control" id="floatingInputGrid6" placeholder="Celular" name="celular">
+                          <input type="text" class="form-control" id="floatingInputGrid6" placeholder="Celular" name="celular" >
                           <label for="floatingInputGrid6">Celular</label>
                         </div>
                       </div>
@@ -200,6 +202,13 @@
                         </div>
                       </div>
                       <div style="color:#FF0000;"><p text-align="center;" style="margin-top: 10px;" class="font-weight-bold">Todos los campos son obligatorios.</p></div>
+                      <div>
+                        <%if(error!=null){%>
+                        <%=error%>
+                        <%}%>
+                      </div>
+
+
                     </div>
                     <div class="form-group">
                       <button class="btn btn-primary" type="submit" >Registrar</button>

@@ -4,6 +4,8 @@ import Beans.*;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UsuarioDao extends DaoBase{
 
@@ -133,7 +135,7 @@ public class UsuarioDao extends DaoBase{
         try(Connection connection = this.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql)){
             pstmt.setString(1, codigoUsuario);
-            try(ResultSet rs = pstmt.executeQuery();){
+            try(ResultSet rs = pstmt.executeQuery()){
                 if (rs.next()) {
                     usuario.setCodigo(rs.getString(1));
                     usuario.setNombre(rs.getString(2));
@@ -248,4 +250,43 @@ public class UsuarioDao extends DaoBase{
         }
         return usuario;
     }
+
+
+    //FUNCION PARA VALIDAR NOMBRE Y APELLIDOS
+    public boolean nombreyApellidoValid(String nombre) {
+        String regex = "^[\\w'\\-,.][^_!¡?÷?¿/\\\\+=@#$%ˆ&*(){}|~<>;:[\\]]]{1,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(nombre);
+        return matcher.find();
+    }
+
+    //FUNCION PARA VALIDAR DNI
+    public boolean dniValid(String dni) {
+        String regex = "^[0-9]{8,8}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(dni);
+        return matcher.find();
+    }
+
+    public boolean celularValid(String celular) {
+        String regex = "^[0-9]{9,9}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(celular);
+        return matcher.find();
+    }
+
+
+
+
+
+    public boolean emailisValid(String email) {
+        String regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "pucp.edu.pe";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.find();
+    }
+
+
+
+
 }

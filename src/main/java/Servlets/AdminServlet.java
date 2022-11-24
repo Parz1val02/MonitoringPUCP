@@ -53,11 +53,9 @@ public class AdminServlet extends HttpServlet {
                     case ("incidencias"):
                         ArrayList<Incidencia> listaIncidencias = null;
 
-                        try {
+
                             listaIncidencias = incidenciaDao.obtenerIncidencias();
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
+
                         request.setAttribute("listaIncidencias",listaIncidencias);
                         view = request.getRequestDispatcher("/Administrador/incidencia_admin.jsp");
                         view.forward(request,response);
@@ -128,18 +126,142 @@ public class AdminServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         UsuarioDao usuarioDao = new UsuarioDao();
+        RolDao rolDao = new RolDao();
+        CategoriaDao categoriaDao = new CategoriaDao();
 
+        ArrayList<Usuario> listaUsuarios = usuarioDao.obtenerListaUsuarios();
+
+        RequestDispatcher view;
+        aea:
         switch (action) {
             case "guardar":
                 String codigo = request.getParameter("codigo");
+                if(!usuarioDao.dniValid(codigo)){
+                    request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
+                    request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                    request.setAttribute("roles", rolDao.obtenerRoles());
+                    view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
+                    view.forward(request, response);
+
+                    break ;
+                }
+
+                for(Usuario u: listaUsuarios){
+                    if(u.getCodigo().equalsIgnoreCase(codigo)){
+                        request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                        request.setAttribute("roles", rolDao.obtenerRoles());
+                        request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
+                        view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
+                        view.forward(request, response);
+
+                        break aea;
+                    }
+                }
+
+
+
+
                 String nombre = request.getParameter("nombre");
+                if(!usuarioDao.nombreyApellidoValid(nombre)){
+                    request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                    request.setAttribute("roles", rolDao.obtenerRoles());
+                    request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
+                    view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
+                    view.forward(request, response);
+
+                    break ;
+                }
+
+
                 String apellido = request.getParameter("apellido");
+                if(!usuarioDao.nombreyApellidoValid(apellido)){
+                    request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                    request.setAttribute("roles", rolDao.obtenerRoles());
+                    request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
+                    view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
+                    view.forward(request, response);
+                    break ;
+                }
+
                 String correo = request.getParameter("correo");
+                if(!usuarioDao.emailisValid(correo)){
+                    request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                    request.setAttribute("roles", rolDao.obtenerRoles());
+                    request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
+                    view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
+                    view.forward(request, response);
+                    break ;
+                }
+
+
+
+
+                for(Usuario u: listaUsuarios){
+                    if(u.getCorreo().equalsIgnoreCase(correo)){
+                        request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                        request.setAttribute("roles", rolDao.obtenerRoles());
+                        request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
+                        view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
+                        view.forward(request, response);
+
+                        break aea;
+                    }
+                }
+
+
+
+
                 String dni = request.getParameter("dni");
+                if(!usuarioDao.dniValid(dni)){
+                    request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                    request.setAttribute("roles", rolDao.obtenerRoles());
+                    request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
+                    view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
+                    view.forward(request, response);
+                    break ;
+                }
+
+                for(Usuario u: listaUsuarios){
+                    if(u.getDni().equalsIgnoreCase(dni)){
+                        request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                        request.setAttribute("roles", rolDao.obtenerRoles());
+                        request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
+                        view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
+                        view.forward(request, response);
+
+                        break aea;
+                    }
+                }
+
+
                 //boolean valida = Boolean.parseBoolean(request.getParameter("valida"));
                 String password = "password";
                 String nickname = "111111";
                 String celular = request.getParameter("celular");
+                if(!usuarioDao.celularValid(celular)){
+                    request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                    request.setAttribute("roles", rolDao.obtenerRoles());
+                    request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
+                    view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
+                    view.forward(request, response);
+                    break ;
+                }
+
+                for(Usuario u: listaUsuarios){
+                    if(u.getCelular()!=null){
+                        if(u.getCelular().equalsIgnoreCase(celular)){
+                            request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                            request.setAttribute("roles", rolDao.obtenerRoles());
+                            request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
+                            view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
+                            view.forward(request, response);
+
+                            break aea;
+                        }
+                    }
+
+                }
+
                 Rol rol1 = new Rol();
                 rol1.setIdRol(Integer.parseInt(request.getParameter("rol")));
 
