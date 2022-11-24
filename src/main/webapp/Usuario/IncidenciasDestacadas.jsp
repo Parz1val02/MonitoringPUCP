@@ -57,7 +57,6 @@
       <div class="content-wrapper">
         <div class="page-heading" style="text-align: center;margin-top: 15px;margin-bottom: 20px;">
           <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Incidencias Destacadas</b></h1>
-          <button onclick="document.location='<%=request.getContextPath()%>/UsuarioServlet?accion=listar'" style="margin-left: -1210px;" class="btn btn-primary btn-lg">Mis Incidencias</button>
         </div>
         <div class="page-content fade-in-up">
           <div class="ibox">
@@ -93,6 +92,7 @@
         </div>
       </div>
     </div>
+    <br>
     <!-- Footer -->
     <footer
             class="text-center text-lg-start text-white"
