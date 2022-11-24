@@ -17,7 +17,7 @@ import static java.nio.file.Files.newOutputStream;
 
 public class IncidenciaDao extends DaoBase{
 
-    public ArrayList<Incidencia> obtenerIncidencias() throws SQLException {
+    public ArrayList<Incidencia> obtenerIncidencias()  {
 
         ArrayList<Incidencia> listaIncidencia = new ArrayList<>();
         try (Connection conn = this.getConnection();

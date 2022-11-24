@@ -12,6 +12,7 @@
 %>
 <%
     ArrayList<ZonaPUCP> zonas = (ArrayList<ZonaPUCP>) request.getAttribute("zonas");
+    String error = (String) request.getAttribute("msg");
 %>
 
 <html lang="en"  style="min-height: 100vh">
@@ -168,6 +169,13 @@
                                     </div>
                                 </div>
                                 <div style="color:#FF0000;"><p text-align="center;" style="margin-top: 1px;" class="font-weight-bold">Todos los campos son obligatorios.</p></div>
+                                <div style="color:#FF0000;">
+                                    <%if(error!=null){%>
+                                        <%=error%>
+                                    <%}%>
+
+                                </div>
+
                             </div>
                             <div class="form-group" style="text-align: right">
                                 <button class="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal" href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">Registrar incidencia</button>
