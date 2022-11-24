@@ -96,8 +96,6 @@ public class Login extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
             }  else if (user.getRol().getNombreRol().equals("Administrador")) {
                 response.sendRedirect(request.getContextPath() + "/AdminServlet");
-            } else {
-                response.sendRedirect(request.getContextPath() + "/Login");
             }
         } else {
             //rechaza
