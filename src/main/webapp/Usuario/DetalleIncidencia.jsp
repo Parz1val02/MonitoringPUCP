@@ -1,4 +1,6 @@
 <%@ page import="Beans.Incidencia" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Objects" %>
 <%--
   Created by IntelliJ IDEA.
   User: Labtel
@@ -9,6 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Incidencia incidencia = (Incidencia) request.getAttribute("Incidencia");
+    ArrayList<Incidencia> listaIncidencias = (ArrayList<Incidencia>) request.getAttribute("listaIncidencias");
 %>
 <html>
 <head>
@@ -71,11 +74,11 @@
                             <p style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354"> Número de Destacados</p>
                         </div>
                         <div class="col-md-6">
-                            <%int valor;%>
-                            <%if (incidencia.getIncidenciasDestacadas()==null){%>
-                            <%valor=0;%>
-                            <%} else {
-                                valor=incidencia.getIncidenciasDestacadas().getContadorDestacado();
+                            <%int valor=100;
+                            for (Incidencia incidencia1 : listaIncidencias){
+                                if(Objects.equals(incidencia1.getIdIncidencia(), incidencia.getIdIncidencia())){
+                                    valor = incidencia1.getIncidenciasDestacadas().getContadorDestacado();
+                                }
                             }%>
                             <input style="text-align: center" class="form-control" type="text" placeholder="<%=valor%>" aria-label="Disabled input example" disabled>
                         </div>

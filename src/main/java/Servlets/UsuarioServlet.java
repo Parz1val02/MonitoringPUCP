@@ -77,7 +77,9 @@ public class UsuarioServlet extends HttpServlet {
                     case ("verDetalle2"):
                         String idIncidencia4 = request.getParameter("id");
                         incidencia = inDao.obtenerIncidencia(idIncidencia4);
+                        listaIncidencias = inDao.obtenerIncidencias();
                         request.setAttribute("Incidencia",incidencia);
+                        request.setAttribute("listaIncidencias",listaIncidencias);
                         view = request.getRequestDispatcher("/Usuario/DetalleIncidencia.jsp");
                         view.forward(request, response);
                         break;

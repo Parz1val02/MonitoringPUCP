@@ -166,7 +166,6 @@ public class IncidenciaDao extends DaoBase{
 
     public Incidencia obtenerIncidencia (String id) {
 
-
         String sql = "select i.idIncidencia, i.fecha, i.nombreIncidencia, i.validaIncidencia, i.descripcion, i.contadorReabierto, i.otroTipo, \n" +
                 "ti.idTipoIncidencia, ti.tipo, ti.iconoFoto, ti.nombreIcono, nu.idNivelUrgencia, nu.nivel, e.idEstadoIncidencia, e.estado,\n" +
                 "u.codigo, z.idZonaPUCP, z.nombreZona, z.latitud, z.longitud\n" +
