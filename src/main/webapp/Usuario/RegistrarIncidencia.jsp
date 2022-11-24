@@ -130,20 +130,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- 5ta fila -->
-                            <div class="row g-2">
-                                <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Ubicación:</p>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-floating" style="margin-bottom: 15px;">
-                                        <div class="form-floating" style="margin-bottom: 15px;">
-                                            <input type="text" class="form-control" id="floatingInputGrid12" placeholder="Ubicacion" name="ubicacion">
-                                            <label for="floatingInputGrid12" class="label-form-flujousuario">Ubicación</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             <!-- 6ta fila -->
                             <div class="row g-2">
                                 <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
