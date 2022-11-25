@@ -24,9 +24,6 @@ public class UsuarioServlet extends HttpServlet {
         Usuario usuario1 = (Usuario) session.getAttribute("usuario");
         if(usuario1!=null){
             if(usuario1.getRol().getNombreRol().equals("Usuario PUCP")){
-                response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-                response.setHeader("Pragma", "no-cache");
-                response.setDateHeader("Expires", 0);
                 String accion = request.getParameter("accion")==null?"inicio":request.getParameter("accion");
                 RequestDispatcher view;
                 IncidenciaDao inDao = new IncidenciaDao();
@@ -81,12 +78,22 @@ public class UsuarioServlet extends HttpServlet {
                         break;
                     case("verPerfil"):
                         Usuario user1 = (Usuario) request.getSession().getAttribute("usuario");
-                        usuario = udao.buscarPorId(user1.getCodigo());
-                        String[] split = usuario.getFotoPerfil().getNombreFoto().split("[.]");
+                        user1 = udao.buscarPorId(user1.getCodigo());
+                        String[] split = user1.getFotoPerfil().getNombreFoto().split("[.]");
                         response.setContentType("image/"+split[1]);
                         try (OutputStream out = response.getOutputStream()) {
-                            out.write(usuario.getFotoPerfil().getFotobyte());
+                            out.write(user1.getFotoPerfil().getFotobyte());
                         }
+                    case ("verDetalle2"):
+                        // Ver detalle en la página de Inicio
+                        int idIncidencia4 = Integer.parseInt(request.getParameter("id"));
+                        incidencia = inDao.obtenerIncidencia(idIncidencia4);
+                        listaIncidencias = inDao.obtenerIncidencias();
+                        request.setAttribute("Incidencia",incidencia);
+                        request.setAttribute("listaIncidencias",listaIncidencias);
+                        view = request.getRequestDispatcher("/Usuario/DetalleIncidencia.jsp");
+                        view.forward(request, response);
+                        break;
                     case("perfil"):
                         view = request.getRequestDispatcher("/Usuario/UsuarioPerfil.jsp");
                         view.forward(request, response);
@@ -100,33 +107,28 @@ public class UsuarioServlet extends HttpServlet {
                         view.forward(request, response);
                         break;
                     case("buscarIncidencia"):
-
                         listaIncidencias = inDao.obtenerIncidencias();
-
-
                         request.setAttribute("listaIncidencias",listaIncidencias);
                         view = request.getRequestDispatcher("/Usuario/BuscarIncidencia.jsp");
                         view.forward(request, response);
                         break;
 
                     case("inicio"):
-                /*try {
-                    listaDestacados = inDao.obtenerDestacadas();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                request.setAttribute("listaDestacados",listaDestacados);
-                view = request.getRequestDispatcher("/Usuario/inicio.jsp");
-                view.forward(request,response);
-                break;*/ /*prueba*/
-
-                            listaIncidencias = inDao.obtenerIncidencias();
-
+                    /*try {
+                        listaDestacados = inDao.obtenerDestacadas();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    request.setAttribute("listaDestacados",listaDestacados);
+                    view = request.getRequestDispatcher("/Usuario/inicio.jsp");
+                    view.forward(request,response);
+                    break;*/ /*prueba*/
+                        listaIncidencias = inDao.obtenerIncidencias();
                         request.setAttribute("listaIncidencias",listaIncidencias);
                         view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
                         view.forward(request, response);
                         break;
-                    case ("restablecer"):
+                    case ("restablecerContrasenia"):
                         view = request.getRequestDispatcher("/Usuario/CambiarContrasenia.jsp");
                         view.forward(request, response);
                         break;
@@ -180,6 +182,7 @@ public class UsuarioServlet extends HttpServlet {
                 int IDtipoIncidencia = Integer.parseInt(request.getParameter("tipoIncidencia"));
                 int IDnivelUrgencia = Integer.parseInt(request.getParameter("nivelIncidencia"));
                 String fecha = request.getParameter("fecha");
+                int idEstadoIncidencia = 1;
                 //String estado= request.getParameter("estado");
 
 
@@ -198,13 +201,14 @@ public class UsuarioServlet extends HttpServlet {
                 incidencia.setDescripcion(descripcion);
 
                 EstadoIncidencia estado1 = new EstadoIncidencia();
-                estado1.setEstado("Registrado");
+                estado1.setIdEstado(idEstadoIncidencia);
                 incidencia.setEstadoIncidencia(estado1);
 
                 ZonaPUCP zonaPUCP = new ZonaPUCP();
                 zonaPUCP.setIdZonaPUCP(IDzonaPUCP);
                 incidencia.setZonaPUCP(zonaPUCP);
 
+                incidencia.setUsuario(usuario1);
 
                 idao.crearIncidencia(incidencia);
                 ArrayList<FotosIncidencias> fotosIncidencias = new ArrayList<>();
@@ -214,6 +218,7 @@ public class UsuarioServlet extends HttpServlet {
                     InputStream fileContent = filePart.getInputStream();
                     byte[] fileBytes = fileContent.readAllBytes();
                     FotosIncidencias fi = new FotosIncidencias();
+                    System.out.println(fileName);
                     fi.setFotobyte(fileBytes);
                     fi.setNombreFoto(fileName);
                     fi.setIncidencia(incidencia);
@@ -231,7 +236,14 @@ public class UsuarioServlet extends HttpServlet {
                 FotoPerfil fp = new FotoPerfil();
                 fp.setFotobyte(fileBytes);
                 fp.setNombreFoto(fileName);
-                uDao.actualizarFoto(fp, usuario1.getFotoPerfil().getIdFoto());
+                if (usuario1.getFotoPerfil().getIdFoto()==0){
+                    int idFoto = uDao.guardarFoto(fp.getFotobyte(),fp.getNombreFoto());
+                    fp.setIdFoto(idFoto);
+                    usuario1.setFotoPerfil(fp);
+                    uDao.FotoUsuario(fp.getIdFoto(),usuario1.getCodigo());
+                }else{
+                    uDao.actualizarFoto(fp, usuario1.getFotoPerfil().getIdFoto());
+                }
                 response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=perfil");
                 break;
         }

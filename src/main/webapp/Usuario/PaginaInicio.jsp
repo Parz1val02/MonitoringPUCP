@@ -17,9 +17,11 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="../css/style.min.css">
-        <link rel="stylesheet" href="../css/flex.css">
+
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../css/flex.css">
+        <script src="https://kit.fontawesome.com/cd456dd2e78.js" crossorigin="anonymous"></script>
     </head>
     <body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
         <div class="container-fluid" style=" padding: 0px">
@@ -355,8 +357,12 @@
                                                                                 <i class="material-icons">favorite</i>
                                                                                 <h7>Destacadas</h7>
                                                                             </div>
-                                                                            <div class="col-md-3">
+                                                                            <div class="col-md-2">
 
+                                                                                <a type="button" class="btn btn-danger", style="background-color: #7453fc; border-color: #7453fc"
+                                                                                   href="<%=request.getContextPath()%>/UsuarioDao?accion=destacar&des=<%=incidencia.getIdIncidencia()%>">
+                                                                                    <i class="fa-solid fa-pen">Destacar</i>
+                                                                                </a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -417,6 +423,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle2&id=<%=incidencia.getIdIncidencia()%>">Ver detalle</a>
                                                 </div>
                                             </div>
                                         </div>

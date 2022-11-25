@@ -31,12 +31,12 @@
                 </jsp:include>
             </div>
         </div>
-        <div class="container-fluid" style="min-height: 60vh; align-content: center;">
+        <div class="container" style="min-height: 60vh; align-content: center;">
             <div class="row" style="min-height: 60vh">
-                <div class="page-content fade-in-up col-md-6" style="align-content: center">
+                <div class="page-content fade-in-up col-md-5" style="align-content: center">
                     <div class="imagen">
                         <div class="img">
-                            <a target="blank" href="">
+                            <a target="blank">
                                 <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verPerfil" alt="">
                             </a>
                         </div>
@@ -46,127 +46,119 @@
                         <div class="col-md">
                             <div class="row g-2">
                                 <div class="col-md" style="display: flex; justify-content: center;margin-left: 10px">
-                                    <p class="campos-registrar-usuario">Cambiar foto de perfil:</p>
+                                    <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Cambiar foto de perfil:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
-                                        <input type="file" name="fotoPerfil" id="file" accept="image/png, image/gif, image/jpeg"  multiple/>
+                                        <input type="file" name="fotoPerfil" id="file" accept="image/png, image/gif, image/jpeg"/>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row g-2">
                                 <div class="col-md" style="display: flex; justify-content: center">
-                                    <a type="button" class="btn btn-primary"
-                                       href="<%=request.getContextPath()%>/Login?accion=logout">Cerrar sesión
-                                    </a>
-                                </div>
-                                <div class="col-md" style="display: flex; justify-content: center">
-                                    <a type="button" class="btn btn-primary"
-                                       href="<%=request.getContextPath()%>/UsuarioServlet?accion=restablecer">Cambiar contraseña
-                                    </a>
-                                </div>
-                                <div class="col-md" style="display: flex; justify-content: center">
-                                    <button class="btn btn-primary" type="submit" >Cambiar foto</button>
+                                    <button class="btn btn-primary btn-lg float-right" style="font-size: 15px;
+                               border-color: #042354; background-color: #042354" type="submit" >Cambiar foto</button>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="col-md-6" style="margin: 0 auto">
+                <div class="col-md-7" style="margin: 0 auto">
                     <div class="ibox" style="align-content: center">
                         <div class="page-heading" style="text-align: center;margin-top: 15px;margin-bottom: 20px;">
-                            <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Datos de usuario</b></h1>
+                            <h1 class="page-title" style="font-family: sans-serif,Montserrat; font-weight: 700;
+                            font-size: 30px; color: #042354"><b>DATOS DE USUARIO</b></h1>
                         </div>
+                        <div style="height: 25px; display: block;"></div>
                         <div class="ibox-body">
                             <form onsubmit="return false">
                                 <div class="row g-2">
                                     <div class="col-md">
                                         <div>
-                                            <label>Nombre: </label>
-                                            <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
-                                                <input class="form-control" type="text" id="LeoFall1" placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall1"><%=usuario.getNombre()%></label>
-                                            </div>
+                                            <label style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Nombre: </label>
+                                            <input class="form-control" type="text" placeholder="<%=usuario.getNombre()%>" aria-label="Disabled input example" disabled>
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div>
-                                            <label>Apellido: </label>
-                                            <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
-                                                <input class="form-control" type="text" id="LeoFall2" placeholder="Apellido" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall2"><%=usuario.getApellido()%></label>
-                                            </div>
+                                            <label style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Apellido: </label>
+                                            <input class="form-control" type="text" placeholder="<%=usuario.getApellido()%>" aria-label="Disabled input example" disabled>
                                         </div>
                                     </div>
                                 </div>
+                                <div style="height: 25px; display: block;"></div>
                                 <div class="row g-2">
                                     <div class="col-md">
                                         <div>
-                                            <label>Código PUCP </label>
-                                            <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
-                                                <input class="form-control" type="text" id="LeoFall3" placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall3"><%=usuario.getCodigo()%></label>
-                                            </div>
+                                            <label style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Código PUCP </label>
+                                            <input class="form-control" type="text" placeholder="<%=usuario.getCodigo()%>" aria-label="Disabled input example" disabled>
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div>
-                                            <label>Correo PUCP: </label>
-                                            <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
-                                                <input class="form-control" type="text" id="LeoFall4" placeholder="Apellido" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall4"><%=usuario.getCorreo()%></label>
-                                            </div>
+                                            <label style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Correo PUCP: </label>
+                                            <input class="form-control" type="text" placeholder="<%=usuario.getCorreo()%>" aria-label="Disabled input example" disabled>
                                         </div>
                                     </div>
                                 </div>
+                                <div style="height: 25px; display: block;"></div>
                                 <div class="row g-2">
                                     <div class="col-md">
                                         <div>
-                                            <label>DNI:</label>
-                                            <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
-                                                <input class="form-control" type="text" id="LeoFall5" placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall5"><%=usuario.getDni()%></label>
-                                            </div>
+                                            <label style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">DNI:</label>
+                                            <input class="form-control" type="text" placeholder="<%=usuario.getDni()%>" aria-label="Disabled input example" disabled>
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div>
-                                            <label>Celular:</label>
-                                            <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
-                                                <input class="form-control" type="text" id="LeoFall6" placeholder="Apellido" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall6"><%=usuario.getCelular()%></label>
-                                            </div>
+                                            <label style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Celular:</label>
+                                            <input class="form-control" type="text" placeholder="<%=usuario.getCelular()%>" aria-label="Disabled input example" disabled>
                                         </div>
                                     </div>
                                 </div>
+                                <div style="height: 25px; display: block;"></div>
                                 <div class="row g-2">
                                     <div class="col-md">
                                         <div>
-                                            <label>Categoría PUCP:</label>
-                                            <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
-                                                <input class="form-control" type="text" id="LeoFall7" placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall7"><%=usuario.getCategoriaPUCP().getNombreCategoria()%></label>
-                                            </div>
+                                            <label style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Categoría PUCP:</label>
+                                            <input class="form-control" type="text" placeholder="<%=usuario.getCategoriaPUCP().getNombreCategoria()%>" aria-label="Disabled input example" disabled>
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div>
-                                            <label>Rol de Usuario:</label>
-                                            <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
-                                                <input class="form-control" type="text" id="LeoFall8" placeholder="Apellido" aria-label="Disabled input example" disabled readonly>
-                                                <label for="LeoFall8"><%=usuario.getRol().getNombreRol()%></label>
-                                            </div>
+                                            <label style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Rol de Usuario:</label>
+                                            <input class="form-control" type="text" placeholder="<%=usuario.getRol().getNombreRol()%>" aria-label="Disabled input example" disabled>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
+                        <div style="height: 25px; display: block;"></div>
+                        <div align="center">
+                            <a type="button" class="btn btn-primary btn-mg float-right" style="font-size: 15px;
+                               border-color: #042354; background-color: #042354;"
+                               href="<%=request.getContextPath()%>/Login?accion=logout">Cerrar sesión
+                            </a>
+                            <div style="height: 25px; display: block;"></div>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-6">
+                                    <p style="text-align: right ;font-family: sans-serif,Montserrat; font-weight: 500; font-size: 15px; color: #042354"> ¿Deseas cambiar tu contraseña?</p>
+                                </div>
+                                <div class="col-md-5">
+                                    <label style="justify-content: left; display: flex">
+                                        <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=restablecerContrasenia" type="button" value="Cambiar contraseña" class="btn btn-primary btn-sm float-right" style="font-size: 12px;
+                        border-color: #042354; background-color: #042354;">Cambiar Contraseña</a>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
+        <div style="height: 100px; display: block;"></div>
         <!-- Footer -->
         <footer
                 class="text-center text-lg-start text-white"

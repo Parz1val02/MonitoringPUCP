@@ -30,7 +30,7 @@ public class EnviarCorreo {
         mensaje.setFrom(new InternetAddress(correo)); //FROM
         mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress(correoDestino));  //TO
         mensaje.setSubject("Cambio de Contraseña - MONITORING PUCP"); //
-        String link = "http://localhost:8080/Login?accion=restablecer";
+        String link = "http://localhost:8080/Login?accion=restablecerContrasenia";
         mensaje.setText(link);
         //mensaje.setText("Este es un mensaje que se envia desde JAVA");
 

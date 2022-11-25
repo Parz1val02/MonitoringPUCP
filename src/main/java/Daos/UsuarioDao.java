@@ -104,6 +104,21 @@ public class UsuarioDao extends DaoBase{
         return idFoto;
     }
 
+    public void FotoUsuario(int idFoto, String codigoUsuario){
+        String sql = "UPDATE Usuarios SET idFotoPerfil = ? where codigo  = ?";
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idFoto);
+            pstmt.setString(2, codigoUsuario);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //eliminar(delete) usuario---por ahora que aparezca modal
     public void borrar(String codigo) {
 
@@ -125,7 +140,7 @@ public class UsuarioDao extends DaoBase{
         Usuario usuario = new Usuario();
 
         String sql = "SELECT u.codigo, u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.celular, r.idRoles, r.nombreRol, catpucp.idCategoriaPUCP, catpucp.nombreCategoria,\n" +
-                "fp.idFotoPerfil, fp.nombreFoto, fp.fotoPerfil, u.dobleFactor \n" +
+                "fp.idFotoPerfil, fp.nombreFoto, fp.fotoPerfil \n" +
                 "FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP \n" +
                 "left join FotoPerfil fp on u.idFotoPerfil = fp.idFotoPerfil where u.codigo= ?";
 
@@ -269,7 +284,6 @@ public class UsuarioDao extends DaoBase{
         Matcher matcher = pattern.matcher(nombre);
         return matcher.find();
     }
-
     //FUNCION PARA VALIDAR DNI
     public boolean dniValid(String dni) {
         String regex = "^[0-9]{8,8}$";
@@ -277,26 +291,16 @@ public class UsuarioDao extends DaoBase{
         Matcher matcher = pattern.matcher(dni);
         return matcher.find();
     }
-
     public boolean celularValid(String celular) {
         String regex = "^[0-9]{9,9}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(celular);
         return matcher.find();
     }
-
-
-
-
-
     public boolean emailisValid(String email) {
         String regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "pucp.edu.pe";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         return matcher.find();
     }
-
-
-
-
 }

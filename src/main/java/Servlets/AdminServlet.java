@@ -146,7 +146,6 @@ public class AdminServlet extends HttpServlet {
 
                     break ;
                 }
-
                 for(Usuario u: listaUsuarios){
                     if(u.getCodigo().equalsIgnoreCase(codigo)){
                         request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
@@ -159,9 +158,6 @@ public class AdminServlet extends HttpServlet {
                     }
                 }
 
-
-
-
                 String nombre = request.getParameter("nombre");
                 if(!usuarioDao.nombreyApellidoValid(nombre)){
                     request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
@@ -172,7 +168,6 @@ public class AdminServlet extends HttpServlet {
 
                     break ;
                 }
-
 
                 String apellido = request.getParameter("apellido");
                 if(!usuarioDao.nombreyApellidoValid(apellido)){
@@ -193,10 +188,6 @@ public class AdminServlet extends HttpServlet {
                     view.forward(request, response);
                     break ;
                 }
-
-
-
-
                 for(Usuario u: listaUsuarios){
                     if(u.getCorreo().equalsIgnoreCase(correo)){
                         request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
@@ -209,9 +200,6 @@ public class AdminServlet extends HttpServlet {
                     }
                 }
 
-
-
-
                 String dni = request.getParameter("dni");
                 if(!usuarioDao.dniValid(dni)){
                     request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
@@ -221,7 +209,6 @@ public class AdminServlet extends HttpServlet {
                     view.forward(request, response);
                     break ;
                 }
-
                 for(Usuario u: listaUsuarios){
                     if(u.getDni().equalsIgnoreCase(dni)){
                         request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());

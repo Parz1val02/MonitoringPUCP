@@ -139,7 +139,7 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
-                                        <input type="file" name="fotoIncidencia" id="file" accept="image/png, image/gif, image/jpeg"  multiple/>
+                                        <input type="file" name="fotoIncidencia" id="file" accept="image/png, image/gif, image/jpeg"  multiple="multiple"/>
                                         <!--<label for="fileImage" class="labelinputimage">Escoge 3 imagenes</label> -->
                                     </div>
                                 </div>
@@ -298,7 +298,7 @@
                 La incidencia fue registrada con éxito.
             </div>
             <div class="modal-footer">
-                <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar y continuar</button>
             </div>
         </div>
