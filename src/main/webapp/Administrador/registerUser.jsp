@@ -13,7 +13,18 @@
 %>
 <%
   ArrayList<Rol> roles = (ArrayList<Rol>) request.getAttribute("roles");
-  String error = (String) request.getAttribute("error");
+
+
+  String codigovalido = (String) request.getAttribute("codigovalido");
+  String codigoRepeat = (String) request.getAttribute("codigoRepeat");
+  String nombrevalido = (String) request.getAttribute("nombrevalido");
+  String apellidovalido = (String) request.getAttribute("apellidovalido");
+  String correovalido = (String) request.getAttribute("correovalido");
+  String correoRepeat = (String) request.getAttribute("correoRepeat");
+  String dnivalido = (String) request.getAttribute("dnivalido");
+  String dniRepeat = (String) request.getAttribute("dniRepeat");
+  String celularvalido = (String) request.getAttribute("celularvalido");
+  String celularRepeat = (String) request.getAttribute("celularRepeat");
 
 %>
 
@@ -137,43 +148,98 @@
                     <div class="row g-2">
                       <div class="col-md">
                         <div class="form-floating" style="margin-bottom: 5px;">
-                          <input type="text" class="form-control" id="floatingInputGrid1" placeholder="Nombre" name="nombre" required>
+                          <input type="text" class="form-control <%=nombrevalido!=null?"is-invalid":""%>" id="floatingInputGrid1" placeholder="Nombre" name="nombre" required>
                           <label for="floatingInputGrid1">Nombre</label>
                         </div>
+                        <%if(nombrevalido!=null){%>
+                        <div  class="invalid-feedback">
+                          <%=nombrevalido%>
+                        </div>
+                        <%}%>
                       </div>
                       <div class="col-md">
                         <div class="form-floating" style="margin-bottom: 5px;">
-                          <input type="text" class="form-control" id="floatingInputGrid2" placeholder="Apellido" name="apellido" required>
+                          <input type="text" class="form-control <%=apellidovalido!=null?"is-invalid":""%>" id="floatingInputGrid2" placeholder="Apellido" name="apellido" required>
                           <label for="floatingInputGrid2">Apellido</label>
                         </div>
+                        <%if(apellidovalido!=null){%>
+                        <div  class="invalid-feedback">
+                          <%=apellidovalido%>
+                        </div>
+                        <%}%>
                       </div>
                     </div>
                     <div class="row g-2">
                       <div class="col-md">
                         <div class="form-floating" style="margin-bottom: 5px;">
-                          <input type="text" class="form-control" id="floatingInputGrid3" placeholder="Código PUCP" name="codigo" required>
+                          <input type="text" class="form-control <%=(codigovalido!=null || codigoRepeat!=null)?"is-invalid":""%>" id="floatingInputGrid3" placeholder="Código PUCP" name="codigo" required>
                           <label for="floatingInputGrid3">Código PUCP</label>
                         </div>
+                        <%if(codigovalido!=null){%>
+                        <div  class="invalid-feedback">
+                          <%=codigovalido%>
+                        </div>
+                        <%}%>
+
+                        <%if(codigoRepeat!=null){%>
+                        <div  class="invalid-feedback">
+                          <%=codigoRepeat%>
+                        </div>
+                        <%}%>
+
                       </div>
                       <div class="col-md">
                         <div class="form-floating" style="margin-bottom: 5px;">
-                          <input type="text" class="form-control" id="floatingInputGrid4" placeholder="Correo PUCP" name="correo" required>
+                          <input type="text" class="form-control <%=(correovalido!=null || correoRepeat!=null)?"is-invalid":""%>" id="floatingInputGrid4" placeholder="Correo PUCP" name="correo" required>
                           <label for="floatingInputGrid4">Correo PUCP</label>
                         </div>
+                        <%if(correovalido!=null){%>
+                        <div  class="invalid-feedback">
+                          <%=correovalido%>
+                        </div>
+                        <%}%>
+
+                        <%if(correoRepeat!=null){%>
+                        <div  class="invalid-feedback">
+                          <%=correoRepeat%>
+                        </div>
+                        <%}%>
                       </div>
                     </div>
                     <div class="row g-2">
                       <div class="col-md">
                         <div class="form-floating" style="margin-bottom: 5px;">
-                          <input type="text" class="form-control" id="floatingInputGrid5" placeholder="DNI" name="dni" required>
+                          <input type="text" class="form-control <%=(dnivalido!=null || dniRepeat!=null)?"is-invalid":""%>" id="floatingInputGrid5" placeholder="DNI" name="dni" required>
                           <label for="floatingInputGrid4">DNI</label>
                         </div>
+                        <%if(dnivalido!=null){%>
+                        <div  class="invalid-feedback">
+                          <%=dnivalido%>
+                        </div>
+                        <%}%>
+
+                        <%if(dniRepeat!=null){%>
+                        <div  class="invalid-feedback">
+                          <%=dniRepeat%>
+                        </div>
+                        <%}%>
                       </div>
                       <div class="col-md">
                         <div class="form-floating" style="margin-bottom: 5px;">
-                          <input type="text" class="form-control" id="floatingInputGrid6" placeholder="Celular" name="celular" >
+                          <input type="text" class="form-control <%=(celularvalido!=null || celularRepeat!=null)?"is-invalid":""%>" id="floatingInputGrid6" placeholder="Celular" name="celular" >
                           <label for="floatingInputGrid6">Celular</label>
                         </div>
+                        <%if(celularvalido!=null){%>
+                        <div  class="invalid-feedback">
+                          <%=celularvalido%>
+                        </div>
+                        <%}%>
+
+                        <%if(celularRepeat!=null){%>
+                        <div  class="invalid-feedback">
+                          <%=celularRepeat%>
+                        </div>
+                        <%}%>
                       </div>
                     </div>
                     <div class="row">

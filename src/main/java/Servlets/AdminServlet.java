@@ -133,91 +133,77 @@ public class AdminServlet extends HttpServlet {
         ArrayList<Usuario> listaUsuarios = usuarioDao.obtenerListaUsuarios();
 
         RequestDispatcher view;
-        aea:
+
         switch (action) {
             case "guardar":
                 String codigo = request.getParameter("codigo");
-                if(!usuarioDao.dniValid(codigo)){
-                    request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
-                    request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
-                    request.setAttribute("roles", rolDao.obtenerRoles());
-                    view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
-                    view.forward(request, response);
 
-                    break ;
+                //valida el codigo
+                String codigovalido = "";
+                if(!usuarioDao.dniValid(codigo)){
+                    codigovalido = "el codigo ingresado no fue correcto";
+
+
+
                 }
+                //valida que no se repita
+                String codigoRepeat = "";
                 for(Usuario u: listaUsuarios){
                     if(u.getCodigo().equalsIgnoreCase(codigo)){
-                        request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
-                        request.setAttribute("roles", rolDao.obtenerRoles());
-                        request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
-                        view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
-                        view.forward(request, response);
+                        codigoRepeat = "el codigo ingresado ya existe";
+                        break;
 
-                        break aea;
                     }
                 }
 
                 String nombre = request.getParameter("nombre");
-                if(!usuarioDao.nombreyApellidoValid(nombre)){
-                    request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
-                    request.setAttribute("roles", rolDao.obtenerRoles());
-                    request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
-                    view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
-                    view.forward(request, response);
 
-                    break ;
+                //valida el nombre ingresado
+                String nombrevalido = "";
+                if(!usuarioDao.nombreyApellidoValid(nombre)){
+                    nombrevalido = "el nombre ingresado no es valido";
+
                 }
 
                 String apellido = request.getParameter("apellido");
+                //valida el usuario ingresado
+                String apellidovalido = "";
                 if(!usuarioDao.nombreyApellidoValid(apellido)){
-                    request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
-                    request.setAttribute("roles", rolDao.obtenerRoles());
-                    request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
-                    view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
-                    view.forward(request, response);
-                    break ;
+                    apellidovalido = "el apellido ingresado no es valido";
+
+
                 }
 
                 String correo = request.getParameter("correo");
+                //valida el correo ingresado
+                String correovalido = "";
                 if(!usuarioDao.emailisValid(correo)){
-                    request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
-                    request.setAttribute("roles", rolDao.obtenerRoles());
-                    request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
-                    view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
-                    view.forward(request, response);
-                    break ;
+                     correovalido = "el correo ingresado no es valido";
+
                 }
+                //valida que no se repita el correo
+                String correoRepeat = "";
                 for(Usuario u: listaUsuarios){
                     if(u.getCorreo().equalsIgnoreCase(correo)){
-                        request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
-                        request.setAttribute("roles", rolDao.obtenerRoles());
-                        request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
-                        view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
-                        view.forward(request, response);
-
-                        break aea;
+                        correoRepeat = "el correo ingresado ya existe";
+                        break;
                     }
                 }
 
                 String dni = request.getParameter("dni");
+                //valida el dni ingresado
+                String dnivalido = "";
                 if(!usuarioDao.dniValid(dni)){
-                    request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
-                    request.setAttribute("roles", rolDao.obtenerRoles());
-                    request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
-                    view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
-                    view.forward(request, response);
-                    break ;
-                }
-                for(Usuario u: listaUsuarios){
-                    if(u.getDni().equalsIgnoreCase(dni)){
-                        request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
-                        request.setAttribute("roles", rolDao.obtenerRoles());
-                        request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
-                        view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
-                        view.forward(request, response);
+                    dnivalido = "el dni ingresado no es valido";
 
-                        break aea;
+
+                }
+                //valida que el dni no se repita
+                String dniRepeat = "";
+                for(Usuario u: listaUsuarios){
+                    if(u.getDni().equalsIgnoreCase(dni)) {
+                        dniRepeat = "El dni ingresado ya existe";
+                        break;
                     }
                 }
 
@@ -225,25 +211,20 @@ public class AdminServlet extends HttpServlet {
                 //boolean valida = Boolean.parseBoolean(request.getParameter("valida"));
                 String password = "password";
                 String celular = request.getParameter("celular");
+                //valida el celular ingresado
+                String celularvalido = "";
                 if(!usuarioDao.celularValid(celular)){
-                    request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
-                    request.setAttribute("roles", rolDao.obtenerRoles());
-                    request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
-                    view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
-                    view.forward(request, response);
-                    break ;
-                }
+                    celularvalido = "el celular ingresado no es valido";
 
+
+                }
+                //valida que el usuario no se repita
+                String celularRepeat = "";
                 for(Usuario u: listaUsuarios){
                     if(u.getCelular()!=null){
                         if(u.getCelular().equalsIgnoreCase(celular)){
-                            request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
-                            request.setAttribute("roles", rolDao.obtenerRoles());
-                            request.setAttribute("error","alguno(s) de los campos ingresado fue incorrecto");
-                            view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
-                            view.forward(request, response);
+                            celularRepeat = "el celular ingresado ya existe";
 
-                            break aea;
                         }
                     }
 
@@ -266,12 +247,38 @@ public class AdminServlet extends HttpServlet {
                 fp.setFotobyte(fileContent);
                 fp.setNombreFoto("usuario.png");
 
-                Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
 
-                usuarioDao.crearUsuario(usuario);
+                if(codigovalido.length()==0 && codigoRepeat.length()==0 &&
+                    nombrevalido.length()==0 && apellidovalido.length()==0 &&
+                        correovalido.length() == 0 && correoRepeat.length()==0 &&
+                        dnivalido.length() ==0 && dniRepeat.length() ==0 &&
+                        celularvalido.length() == 0 && celularRepeat.length() == 0){
+                    Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
 
-                response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
-                break;
+                    usuarioDao.crearUsuario(usuario);
+
+                    response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
+                    break;
+                }else{
+
+                    request.setAttribute("codigovalido",codigovalido);
+                    request.setAttribute("codigoRepeat",codigoRepeat);
+                    request.setAttribute("nombrevalido",nombrevalido);
+                    request.setAttribute("apellidovalido",apellidovalido);
+                    request.setAttribute("correovalido",correovalido);
+                    request.setAttribute("correoRepeat",correoRepeat);
+                    request.setAttribute("dnivalido",dnivalido);
+                    request.setAttribute("dniRepeat", dniRepeat);
+                    request.setAttribute("celularvalido",celularvalido);
+                    request.setAttribute("celularRepeat",celularRepeat);
+
+                    request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                    request.setAttribute("roles", rolDao.obtenerRoles());
+                    view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
+                    view.forward(request, response);
+                    break;
+                }
+
             case "actualizar":
                 String nombreUpdate = request.getParameter("nombre");
                 String apellidoUpdate = request.getParameter("apellido");
