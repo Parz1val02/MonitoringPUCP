@@ -137,7 +137,7 @@
                         </a>
 
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="" download="my_file.pdf">PDF</a></li>
+                            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/FormatosServlet?formato=pdf" download="prueba.pdf">PDF</a></li>
                             <li><a class="dropdown-item" href="<%=request.getContextPath()%>/FormatosServlet?formato=excel" download="reporteincidencias.xlsx">EXCEL</a></li>
                             <li><a class="dropdown-item" href="/assets/hello.txt" download="my_file.txt">TXT</a></li>
                         </ul>

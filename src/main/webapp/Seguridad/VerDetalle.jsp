@@ -36,8 +36,8 @@
     <header class="header" style="height: 72px;">
         <div class="page-brand " style = "background-color: #163297">
             <a>
-                <span class="brand" style="color: white; font-weight: bold">Administrador</span>
-                <span class="brand-mini">AD</span>
+                <span class="brand" style="color: white; font-weight: bold">Seguridad</span>
+                <span class="brand-mini">SG</span>
             </a>
         </div>
         <div class="flexbox flex-1">

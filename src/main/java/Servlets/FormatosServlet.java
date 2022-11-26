@@ -2,6 +2,7 @@ package Servlets;
 
 import Daos.IncidenciaDao;
 import Funcion.EscribirExcel;
+import Funcion.GenerarPdf;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -14,7 +15,7 @@ import java.io.OutputStream;
 public class FormatosServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        IncidenciaDao iDao = new IncidenciaDao();
+        //IncidenciaDao iDao = new IncidenciaDao();
 
         String formato = request.getParameter("formato");
 
@@ -39,10 +40,20 @@ public class FormatosServlet extends HttpServlet {
                 }
                 break;
             case "pdf":
-                //falta para pdf(similar a excel)
+                //pdf(similar a excel)
+                response.setContentType("application/pdf");
+                response.setHeader("Content-disposition", "attachment; filename=reporte.pdf");
+
+                try(OutputStream out = response.getOutputStream()) {
+
+                    GenerarPdf genPdf = new GenerarPdf();
+                    genPdf.crearPdf(out);
+
+                }
+
                 break;
             case "txt":
-                //formato que se meustre como un .csv (como comillas)
+                //formato que se muestre como un .csv (con comillas)
                 break;
 
 
