@@ -36,8 +36,7 @@
             <img src="../images/logoTelesystem.png" alt="logo" style="border-radius: 10px; border-top-style: solid;border-bottom-width: 0;border-bottom-style: solid;border-right-width: 0;border-right-style: solid;border-left-width: 0;border-left-style: solid;margin-top: 0px;margin-right: 25px;height: 67px;width: 220px;border-top-width: 0px; ">
         </nav>
     </div>
-    <!-- BARRA HORIZONTAL -->
-
+    <!-- HEADER -->
 
     <!-- CONTENT PRINCIPAL -->
     <div style="height: 100px; display: block;"></div>

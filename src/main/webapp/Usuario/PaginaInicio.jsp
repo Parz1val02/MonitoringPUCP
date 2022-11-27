@@ -22,13 +22,18 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../css/flex.css">
         <script src="https://kit.fontawesome.com/cd456dd2e78.js" crossorigin="anonymous"></script>
+        
     </head>
     <body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
+        <!-- HEADER -->
         <div class="container-fluid" style=" padding: 0px">
             <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #042354; height: 100px;justify-content: flex-end">
                 <img src="../images/logoTelesystem.png" alt="logo" style="border-radius: 10px; border-top-style: solid;border-bottom-width: 0;border-bottom-style: solid;border-right-width: 0;border-right-style: solid;border-left-width: 0;border-left-style: solid;margin-top: 0px;margin-right: 25px;height: 67px;width: 220px;border-top-width: 0px; ">
             </nav>
         </div>
+        <!-- HEADER -->
+
+        <!-- BARRA HORIZONTAL -->
         <div class="boxed-page">
             <div class="container" >
                 <jsp:include page="../includes/navbar.jsp">
@@ -36,294 +41,31 @@
                 </jsp:include>
             </div>
         </div>
+        <!-- BARRA HORIZONTAL -->
+
+        <div class="container" align="center">
+            <h5 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 22px; color: #042354;">
+                ¡Bienvenido a Monitoring PUCP!
+            </h5>
+            <p>
+                Esta aplicación te ayudará a gestionar, registrar y conocer incidencias en
+                nuestra comunidad PUCP. Será posible visualizar el envío de incidencias por una persona mediante este portal web,
+                mientras se encuentre en el campus PUCP.
+            </p>
+            <br>
+            <h5 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 19px; color: #042354;">
+                Te presentamos las 5 incidencias más destacadas de la plataforma:
+            </h5>
+        </div>
+        <div style="height: 40px; display: block;"></div>
+
+        <!-- CARROUSEL -->
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-8">
+                <div style="background: #dee2e6;">
+                    <div style="height: 20px; display: block; background: #dee2e6;"></div>
                     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <!--
-                            <div class="carousel-item active">
-                                <div class="d-block w-100">
-                                    <div class="container bg-grey d">
-                                        <div class="row">
-                                            <div class="col-lg-5">
-                                                <img src="../images/foto.jpg" alt="">
-                                            </div>
-                                            <div class="col-lg-5">
-                                                <div class="container-fluid">
-                                                    <div class="col-md-12">
-                                                        <div class="container-fluid">
-                                                            <div class="row">
-                                                                <div class="col-md-7">
-                                                                    <h8><%= listaIncidencias.get(0).getNombreIncidencia()%></h8>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <i class="material-icons">favorite</i>
-                                                                    <i>Destacadas</i>
-                                                                    <h8>
-                                                                        <%=listaIncidencias.get(0).getIncidenciasDestacadas().getContadorDestacado()%>
-                                                                    </h8>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-calendar">Fecha</i>
-                                                                <h8><%=listaIncidencias.get(0).getFecha()%></h8>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-location-arrow">Zona Pucp</i>
-                                                                <h8><%=listaIncidencias.get(0).getZonaPUCP()%></h8>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-ambulance">Tipo</i>
-                                                                <h8><%=listaIncidencias.get(0).getTipoIncidencia().getTipo()%></h8>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <i class="material-icons">traffic</i>
-                                                                <i>Urgencia</i>
-                                                                <h8><%= listaIncidencias.get(0).getNivelUrgencia().getNivel()%></h8>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>-->
-                            <!--
-                            <div class="carousel-item">
-                                <div class="d-block w-100">
-                                    <div class="container bg-grey d">
-                                        <div class="row">
-                                            <div class="col-lg-5">
-                                                <img src="../images/foto.jpg" alt="">
-                                            </div>
-                                            <div class="col-lg-5">
-                                                <div class="container-fluid">
-                                                    <div class="col-md-12">
-                                                        <div class="container-fluid">
-                                                            <div class="row">
-                                                                <div class="col-md-7">
-                                                                    <h8><%= listaIncidencias.get(1).getNombreIncidencia()%></h8>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <i class="material-icons">favorite</i>
-                                                                    <i>Destacadas</i>
-                                                                    <h8>
-                                                                        <%=listaIncidencias.get(1).getIncidenciasDestacadas().getContadorDestacado()%>
-                                                                    </h8>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-calendar">Fecha</i>
-                                                                <h8><%=listaIncidencias.get(1).getFecha()%></h8>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-location-arrow">Zona Pucp</i>
-                                                                <h8><%=listaIncidencias.get(1).getZonaPUCP()%></h8>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-ambulance">Tipo</i>
-                                                                <h8><%=listaIncidencias.get(1).getTipoIncidencia().getTipo()%></h8>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <i class="material-icons">traffic</i>
-                                                                <i>Urgencia</i>
-                                                                <h8><%= listaIncidencias.get(1).getNivelUrgencia().getNivel()%></h8>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="d-block w-100">
-                                    <div class="container bg-grey d">
-                                        <div class="row">
-                                            <div class="col-lg-5">
-                                                <img src="../images/foto.jpg" alt="">
-                                            </div>
-                                            <div class="col-lg-5">
-                                                <div class="container-fluid">
-                                                    <div class="col-md-12">
-                                                        <div class="container-fluid">
-                                                            <div class="row">
-                                                                <div class="col-md-7">
-                                                                    <h8><%= listaIncidencias.get(2).getNombreIncidencia()%></h8>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <i class="material-icons">favorite</i>
-                                                                    <i>Destacadas</i>
-                                                                    <h8>
-                                                                        <%=listaIncidencias.get(2).getIncidenciasDestacadas().getContadorDestacado()%>
-                                                                    </h8>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-calendar">Fecha</i>
-                                                                <h8><%=listaIncidencias.get(2).getFecha()%></h8>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-location-arrow">Zona Pucp</i>
-                                                                <h8><%=listaIncidencias.get(2).getZonaPUCP()%></h8>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-ambulance">Tipo</i>
-                                                                <h8><%=listaIncidencias.get(2).getTipoIncidencia().getTipo()%></h8>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <i class="material-icons">traffic</i>
-                                                                <i>Urgencia</i>
-                                                                <h8><%= listaIncidencias.get(2).getNivelUrgencia().getNivel()%></h8>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="d-block w-100">
-                                    <div class="container bg-grey d">
-                                        <div class="row">
-                                            <div class="col-lg-5">
-                                                <img src="../images/foto.jpg" alt="">
-                                            </div>
-                                            <div class="col-lg-5">
-                                                <div class="container-fluid">
-                                                    <div class="col-md-12">
-                                                        <div class="container-fluid">
-                                                            <div class="row">
-                                                                <div class="col-md-7">
-                                                                    <h8><%= listaIncidencias.get(3).getNombreIncidencia()%></h8>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <i class="material-icons">favorite</i>
-                                                                    <i>Destacadas</i>
-                                                                    <h8>
-                                                                        <%=listaIncidencias.get(3).getIncidenciasDestacadas().getContadorDestacado()%>
-                                                                    </h8>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-calendar">Fecha</i>
-                                                                <h8><%=listaIncidencias.get(3).getFecha()%></h8>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-location-arrow">Zona Pucp</i>
-                                                                <h8><%=listaIncidencias.get(3).getZonaPUCP()%></h8>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-ambulance">Tipo</i>
-                                                                <h8><%=listaIncidencias.get(3).getTipoIncidencia().getTipo()%></h8>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <i class="material-icons">traffic</i>
-                                                                <i>Urgencia</i>
-                                                                <h8><%= listaIncidencias.get(3).getNivelUrgencia().getNivel()%></h8>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="d-block w-100">
-                                    <div class="container bg-grey d">
-                                        <div class="row">
-                                            <div class="col-lg-5">
-                                                <img src="../images/foto.jpg" alt="">
-                                            </div>
-                                            <div class="col-lg-5">
-                                                <div class="container-fluid">
-                                                    <div class="col-md-12">
-                                                        <div class="container-fluid">
-                                                            <div class="row">
-                                                                <div class="col-md-7">
-                                                                    <h8><%= listaIncidencias.get(4).getNombreIncidencia()%></h8>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <i class="material-icons">favorite</i>
-                                                                    <i>Destacadas</i>
-                                                                    <h8>
-                                                                        <%=listaIncidencias.get(4).getIncidenciasDestacadas().getContadorDestacado()%>
-                                                                    </h8>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-calendar">Fecha</i>
-                                                                <h8><%=listaIncidencias.get(4).getFecha()%></h8>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-location-arrow">Zona Pucp</i>
-                                                                <h8><%=listaIncidencias.get(4).getZonaPUCP()%></h8>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <i class="fa fa-ambulance">Tipo</i>
-                                                                <h8><%=listaIncidencias.get(4).getTipoIncidencia().getTipo()%></h8>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <i class="material-icons">traffic</i>
-                                                                <i>Urgencia</i>
-                                                                <h8><%= listaIncidencias.get(4).getNivelUrgencia().getNivel()%></h8>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            -->
+                        <div class="carousel-inner" >
                             <%int i=0;%>
                             <% for(Incidencia incidencia : listaIncidencias) {%>
                             <%if(i==0){%>
@@ -334,98 +76,118 @@
                                 <div class="d-block w-100">
                                     <div class="container bg-grey d">
                                         <div class="row">
-                                            <div class="col-lg-5">
+                                            <div class="col-md-1" style="background: #dee2e6"></div>
+                                            <div class="col-md-5" style="background: #dee2e6">
                                                 <img src="../images/foto.jpg" alt="">
                                             </div>
-                                            <div class="col-lg-7">
-                                                <div class="container-fluid" style="padding-top: 5vh;">
-                                                    <div class="col-md-12" style="height: 15vh;">
-                                                        <div class="container-fluid">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div class="col-md-12">
-                                                                        <h7>Nombre Incidencia</h7>
+                                            <div class="col-md-5" style="background: #FFFFFF">
+                                                <div style="border-radius: 2px;border-color: black">
+                                                    <div class="container-fluid" style="padding-top: 4vh;" align="center">
+                                                        <div class="row" align="center">
+                                                            <div class="col-md-7" align="right">
+                                                                <div style="height: 5px; display: block;"></div>
+                                                                <h7 style="font-family: sans-serif,Montserrat; font-weight: 700;
+                                                        font-size: 20px; color: #783bb3;" align="center">
+                                                                    Incidencia #<%=i+1%>
+                                                                </h7>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-4" >
+                                                                <a type="button" class="btn btn-primary btn-mg float-right"
+                                                                   style="font-size: 15px; border-color: #042354; background-color: #042354;"
+                                                                   href="<%=request.getContextPath()%>/UsuarioDao?accion=destacar&des=<%=incidencia.getIdIncidencia()%>">
+                                                                    <i class="fa-solid fa-pen">Destacar</i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div style="height: 20px; display: block;"></div>
+                                                        <div class="col-md-12" style="margin: 0px">
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+                                                                    <div align="center">
+                                                                        <p style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 20px;
+                                                                    color: #042354; margin: 0px">Nombre de la Incidencia
+                                                                        </p>
+                                                                        <p style="font-family: sans-serif,Montserrat; font-weight: 450; font-size: 16px;">
+                                                                            <%= incidencia.getNombreIncidencia()%>
+                                                                        </p>
                                                                     </div>
-                                                                    <div class="col-md-12">
-                                                                        <h8><%= incidencia.getNombreIncidencia()%></h8>
+                                                                    <div style="height: 15px; display: block;"></div>
+                                                                    <div class="col-sm-7" align="right">
+                                                                        <p style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px;
+                                                                        color: #042354; margin: 0px"># de Destacadas</p>
                                                                     </div>
+                                                                    <div class="col-sm-2">
+                                                                        <input class="form-control" type="text" placeholder="<%=incidencia.getIncidenciasDestacadas().getContadorDestacado()%>"
+                                                                               aria-label="Disabled input example" disabled style="text-align: center">
+                                                                    </div>
+                                                                    <div class="col-sm-3"></div>
                                                                 </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="col-md-12">
-                                                                        <div class="row">
-                                                                            <div class="col-md-4">
-                                                                                <i class="material-icons">favorite</i>
-                                                                                <h7>Destacadas</h7>
-                                                                            </div>
-                                                                            <div class="col-md-2">
-
-                                                                                <a type="button" class="btn btn-danger", style="background-color: #7453fc; border-color: #7453fc"
-                                                                                   href="<%=request.getContextPath()%>/UsuarioDao?accion=destacar&des=<%=incidencia.getIdIncidencia()%>">
-                                                                                    <i class="fa-solid fa-pen">Destacar</i>
-                                                                                </a>
-                                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                        <div style="height: 40px; display: block;"></div>
+                                                        <div class="col-md-12" style="margin: 0px">
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="col-md-12">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                            <h8 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px;
+                                                                        color: #042354; margin: 0px">Fecha</h8>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <h8 style="font-family: sans-serif,Montserrat; font-weight: 450; font-size: 16px;"><%=incidencia.getFecha()%></h8>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-12">
-                                                                        <h8>
-                                                                            <%=incidencia.getIncidenciasDestacadas().getContadorDestacado()%>
-                                                                        </h8>
+                                                                    <div class="col-md-6">
+                                                                        <div class="col-md-12">
+                                                                            <i class="fa fa-location-arrow"></i>
+                                                                            <h8 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px;
+                                                                        color: #042354; margin: 0px">Zona PUCP</h8>
+                                                                        </div>
+                                                                        <div class="col-md-12" >
+                                                                            <h8 style="font-family: sans-serif,Montserrat; font-weight: 450; font-size: 16px;"><%=incidencia.getZonaPUCP().getNombreZona()%></h8>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-12" style="height: 15vh;">
-                                                        <div class="container-fluid">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div class="col-md-12">
-                                                                        <i class="fa fa-calendar"></i>
-                                                                        <h8>Fecha</h8>
+                                                        <div style="height: 30px; display: block;"></div>
+                                                        <div class="col-md-12" style="margin: 0px">
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="col-md-12">
+                                                                            <i class="fa fa-ambulance"></i>
+                                                                            <h8 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px;
+                                                                        color: #042354; margin: 0px">Tipo</h8>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <h8 style="font-family: sans-serif,Montserrat; font-weight: 450; font-size: 16px;"><%=incidencia.getTipoIncidencia().getTipo()%></h8>
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="col-md-12">
-                                                                        <h8><%=incidencia.getFecha()%></h8>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="col-md-12">
-                                                                        <i class="fa fa-location-arrow"></i>
-                                                                        <h8>Zona Pucp</h8>
-                                                                    </div>
-                                                                    <div class="col-md-12">
-                                                                        <h8><%=incidencia.getZonaPUCP().getNombreZona()%></h8>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12" style="height: 15vh;">
-                                                        <div class="container-fluid">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div class="col-md-12">
-                                                                        <i class="fa fa-ambulance"></i>
-                                                                        <h8>Tipo</h8>
-                                                                    </div>
-                                                                    <div class="col-md-12">
-                                                                        <h8><%=incidencia.getTipoIncidencia().getTipo()%></h8>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="col-md-12">
-                                                                        <i class="material-icons">traffic</i>
-                                                                        <h7>Urgencia</h7>
-                                                                    </div>
-                                                                    <div class="col-md-12">
-                                                                        <h8><%= incidencia.getNivelUrgencia().getNivel()%></h8>
+                                                                    <div class="col-md-6">
+                                                                        <div class="col-md-12">
+                                                                            <i class="material-icons">traffic</i>
+                                                                            <h8 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px;
+                                                                        color: #042354; margin: 0px">Urgencia</h8>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <h8 style="font-family: sans-serif,Montserrat; font-weight: 450; font-size: 16px;"><%= incidencia.getNivelUrgencia().getNivel()%></h8>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div style="height: 50px; display: block;"></div>
+                                                        <div align="center">
+                                                            <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle2&id=
+                                                            <%=incidencia.getIdIncidencia()%>" style="color: #783bb3; font-weight: bold; font-size: 17px">Ver detalle de la incidencia</a>
+                                                        </div>
                                                     </div>
-                                                    <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle2&id=<%=incidencia.getIdIncidencia()%>">Ver detalle</a>
                                                 </div>
                                             </div>
+                                            <div class="col-md-1" style="background: #dee2e6"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -434,43 +196,28 @@
                             <% }%>
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span aria-hidden="true">
+                                <img src="../images/flecha_izq.png" style="width: 40px">
+                            </span>
                             <span class="visually-hidden">Previous</span>
                         </button>
                         <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                            <img src="../images/flecha_derecha.png" style="width: 40px">
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="container">
-                        <div style="height: 20px; display: block;"></div>
-                        <div class="container-fluid" style="text-align: center">
-                            <div class="col-sm-12 col-md-12 " style="margin: 0px auto;">
-                                <form class="d-flex" role="search">
-                                    <input class="form-control-lg me-3" type="search" placeholder="Ingrese Palabra Clave" aria-label="Search">
-                                    <button class="btn btn-outline-success" type="submit" style="border-bottom-style: solid">Buscar</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-12">
-                            <div style="height: 20px; display: block;"></div>
-                            <div align="center">
-                                <p> ¡Bienvenido a Monitoring PUCP! Esta aplicación te ayudará a gestionar, registrar y conocer incidencias en nuestra comunidad PUCP.</p>
-                            </div>
-                            <div style="height: 20px; display: block;"></div>
-                            <div>
-                                <div class="google-maps" style="text-align: center">  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d9080.838408815116!2d-77.0851327328001!3d-12.069237033787196!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd7a0bfb797e5862e!2sPontificia%20Universidad%20Cat%C3%B3lica%20del%20Per%C3%BA!5e0!3m2!1ses!2spe!4v1665201780059!5m2!1ses!2spe" width="463.76" height="315" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div style="height: 20px; display: block; background: #dee2e6;"></div>
                 </div>
             </div>
         </div>
+        <!-- CARROUSEL -->
+
         <div style="height: 100px; display: block;"></div>
+
+        <!-- FOOTER -->
         <div class="container-fluid">
-            <!-- Footer -->
             <footer
                     class="text-center text-lg-start text-white"
                     style="background-color: #042354">
@@ -554,7 +301,8 @@
                 </div>
                 <!-- Grid container -->
             </footer>
-            <!-- Footer -->
         </div>
+        <!-- FOOTER -->
+
     </body>
 </html>
