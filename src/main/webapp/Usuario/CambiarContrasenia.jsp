@@ -84,6 +84,12 @@
                         border-color: #042354; background-color: #042354;">Aceptar</a>
                     <!--a href="<%//request.getContextPath()%>/UsuarioServlet" style="font-size: 15px"> Volver a la Sesión Principal</a-->
                 </label>
+
+                <div style="height: 20px; display: block;"></div>
+
+                <div align="center">
+                    <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=perfil" style="font-size: 15px">Cancelar</a>
+                </div>
             </div>
             <div class="col-md-1"></div>
         </div>

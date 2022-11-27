@@ -37,21 +37,20 @@
                     <div class="imagen">
                         <div class="img">
                             <a target="blank">
-                                <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verPerfil" alt="">
+                                <img src="../images/usuario.png">
+                                <!--<img src="<%/* request.getContextPath() */%>/UsuarioServlet?accion=verPerfil" alt="">-->
                             </a>
                         </div>
                     </div>
                     <br>
                     <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=actualizarFoto" enctype="multipart/form-data">
                         <div class="col-md">
-                            <div class="row g-2">
-                                <div class="col-md" style="display: flex; justify-content: center;margin-left: 10px">
+                            <div class="row">
+                                <div style="display: flex; justify-content: center;margin-left: 10px">
                                     <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Cambiar foto de perfil:</p>
                                 </div>
-                                <div class="col-md">
-                                    <div class="form-floating" style="margin-bottom: 15px;">
-                                        <input type="file" name="fotoPerfil" id="file" accept="image/png, image/gif, image/jpeg"/>
-                                    </div>
+                                <div class="form-floating" style="margin-bottom: 15px; margin-left: 20px">
+                                    <input type="file" name="fotoPerfil" id="file" accept="image/png, image/gif, image/jpeg"/>
                                 </div>
                             </div>
 
