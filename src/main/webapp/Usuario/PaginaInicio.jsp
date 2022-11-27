@@ -181,8 +181,7 @@
                                                         </div>
                                                         <div style="height: 50px; display: block;"></div>
                                                         <div align="center">
-                                                            <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle2&id=
-                                                            <%=incidencia.getIdIncidencia()%>" style="color: #783bb3; font-weight: bold; font-size: 17px">Ver detalle de la incidencia</a>
+                                                            <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle2&id=<%=incidencia.getIdIncidencia()%>" style="color: #783bb3; font-weight: bold; font-size: 17px">Ver detalle de la incidencia</a>
                                                         </div>
                                                     </div>
                                                 </div>
