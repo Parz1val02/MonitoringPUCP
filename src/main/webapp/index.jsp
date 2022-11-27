@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
-      <meta http-equiv="refresh" content="0; URL=http://localhost:8080/Login">
+      <meta http-equiv="refresh" content="0; URL=http://35.197.48.194:8080//MonitoringPUCP-1.0-SNAPSHOT/Login">
       <title></title>
     </head>
     <body>

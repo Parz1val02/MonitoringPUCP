@@ -73,7 +73,7 @@ public class GenerarPdf {
     public void crearTxt(OutputStream outputStream){
 
         try {
-            PrintWriter writer = new PrintWriter( outputStream , "UTF-8");
+            PrintWriter writer = new PrintWriter(outputStream.toString(), "UTF-8");
             writer.println("Primera línea");
             writer.print("Segunda línea");
             writer.close();

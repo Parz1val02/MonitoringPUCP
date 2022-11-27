@@ -269,9 +269,6 @@
                       </div>
                       <div style="color:#FF0000;"><p text-align="center;" style="margin-top: 10px;" class="font-weight-bold">Todos los campos son obligatorios.</p></div>
                       <div>
-                        <%if(error!=null){%>
-                        <%=error%>
-                        <%}%>
                       </div>
 
 
