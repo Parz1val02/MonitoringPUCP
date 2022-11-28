@@ -4,7 +4,7 @@ import Beans.Incidencia;
 import Beans.Usuario;
 import Daos.IncidenciaDao;
 import Daos.UsuarioDao;
-import Funcion.EnviarCorreo;
+import Funcion.EnviarCorreo2fa;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
