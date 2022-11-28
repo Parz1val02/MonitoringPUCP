@@ -1,7 +1,9 @@
 package Funcion;
+import Beans.Usuario;
+import Daos.UsuarioDao;
+
 import java.util.Timer;
 import java.util.TimerTask;
-
 
 
 public class Temporizador2FA {
