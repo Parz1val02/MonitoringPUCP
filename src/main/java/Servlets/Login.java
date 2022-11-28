@@ -5,6 +5,8 @@ import Beans.Usuario;
 import Daos.IncidenciaDao;
 import Daos.UsuarioDao;
 import Funcion.EnviarCorreo2fa;
+import Funcion.NroRandom;
+import Funcion.Temporizador2FA;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
