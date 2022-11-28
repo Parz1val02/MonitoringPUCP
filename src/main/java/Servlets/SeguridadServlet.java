@@ -52,8 +52,8 @@ public class SeguridadServlet extends HttpServlet {
                     view.forward(request, response);
                     break;
                 case ("doblefactor"):
-                    view = request.getRequestDispatcher("/Seguridad/doblefactorS.jsp");
-                    view.forward(request, response);
+                     view = request.getRequestDispatcher("/Login/doblefactor.jsp");
+                     view.forward(request, response);
                     break;
                 default:
                     response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
