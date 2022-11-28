@@ -139,7 +139,7 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
-                                        <input type="file" name="fotoIncidencia" id="file" accept="image/png, image/gif, image/jpeg"  multiple="multiple"/>
+                                        <input type="file" name="fotoIncidencia" id="file2" accept="image/png, image/gif, image/jpeg" multiple/>
                                         <!--<label for="fileImage" class="labelinputimage">Escoge 3 imagenes</label> -->
                                     </div>
                                 </div>

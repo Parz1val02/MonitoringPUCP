@@ -563,6 +563,9 @@ public class IncidenciaDao extends DaoBase{
         }
     }
 
+    public int getIdIncidencia(){
+        String sql = "Select ";
+    }
     public void guardarFotos(ArrayList<FotosIncidencias> fotosIncidencias){
         String sql = "INSERT into FotosIncidencias(fotoIncidencia,nombreFoto,idIncidencia) values (?,?,?)";
         for(FotosIncidencias i : fotosIncidencias) {

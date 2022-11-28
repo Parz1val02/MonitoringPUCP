@@ -37,8 +37,7 @@
                     <div class="imagen">
                         <div class="img">
                             <a target="blank">
-                                <img src="../images/usuario.png">
-                                <!--<img src="<%/* request.getContextPath() */%>/UsuarioServlet?accion=verPerfil" alt="">-->
+                                <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verPerfil" alt="">
                             </a>
                         </div>
                     </div>

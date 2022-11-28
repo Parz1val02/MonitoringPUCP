@@ -6,6 +6,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -13,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @WebServlet(name = "UsuarioServlet", value = "/UsuarioServlet")
@@ -206,6 +208,7 @@ public class UsuarioServlet extends HttpServlet {
                 incidencia.setUsuario(usuario1);
 
                 idao.crearIncidencia(incidencia);
+
                 ArrayList<FotosIncidencias> fotosIncidencias = new ArrayList<>();
                 ArrayList<Part> fileParts = (ArrayList<Part>) request.getParts().stream().filter(part -> "fotoIncidencia".equals(part.getName()) && part.getSize() > 0).collect(Collectors.toList()); // Retrieves <input type="file" name="files" multiple="true">
                 for (Part filePart : fileParts) {
