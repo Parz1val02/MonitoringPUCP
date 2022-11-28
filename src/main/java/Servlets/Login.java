@@ -227,9 +227,9 @@ public class Login extends HttpServlet {
                         } else {
                             session.setAttribute("msg", "Codigo de autenticación no válido");
                             if (usuario.getRol().getNombreRol().equals("Seguridad")) {
-                                response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
+                                response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");
                             } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
-                                response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                                response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");
                             }
                         }
 
@@ -237,18 +237,18 @@ public class Login extends HttpServlet {
                     } catch (NumberFormatException e) {
                         session.setAttribute("msg", "Codigo de autenticación no válido");
                         if (usuario.getRol().getNombreRol().equals("Seguridad")) {
-                                response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
+                                response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");
                             } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
-                                response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                                response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");
                             }
                         break;
                     }
                 } else {
                     session.setAttribute("msg", "Su código ha expirado. Solicite nuevo código");
                     if (usuario.getRol().getNombreRol().equals("Seguridad")) {
-                                response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
+                                response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");
                             } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
-                                response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                                response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");
                             }
                     break;
                 }
