@@ -67,12 +67,53 @@ public class Login extends HttpServlet {
                 session2.invalidate();
                 response.sendRedirect(request.getContextPath() + "/Login");
                 break;
+            /*DOBLE FACTOR DOGET. LUEGO DE HABER INGRESADO EL CODIGO ENTRA AQUI*/
+            case ("2auth"):
+                HttpSession session2Auth = request.getSession();
+                Usuario usuarioAuth = (Usuario) session2Auth.getAttribute("usuario");
+                if (usuarioAuth.getRol().getNombreRol().equals("Seguridad")) {
+                    /*response.sendRedirect(request.getContextPath() + "/SeguridadServlet");*/
+
+
+                    NroRandom nroRandom =  new NroRandom();
+                    int codigo2fa = nroRandom.generadorNrosRandom();
+                    /*int codigo2fa = 123456;*/
+                    uDao.guardarCodigo2fa(codigo2fa,(Usuario) session.getAttribute("usuario"));
+                    Temporizador2FA temporizador2FA =  new Temporizador2FA(120, (Usuario) session.getAttribute("usuario") );
+                    try {
+                        EnviarCorreo2fa.main(usuarioAuth.getCorreo(),codigo2fa);
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
+                    response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");
+
+                }  else if (usuarioAuth.getRol().getNombreRol().equals("Administrador")) {
+                   /* response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                        view = request.getRequestDispatcher("/Login/dobleFactor.jsp");
+                        view.forward(request, response);
+                        */
+                    NroRandom nroRandom =  new NroRandom();
+                    int codigo2fa = nroRandom.generadorNrosRandom();
+                    /*int codigo2fa = 123456;*/
+                    uDao.guardarCodigo2fa(codigo2fa,(Usuario) session.getAttribute("usuario"));
+                    Temporizador2FA temporizador2FA =  new Temporizador2FA(120, (Usuario) session.getAttribute("usuario") );
+                    try {
+                        EnviarCorreo2fa.main(usuarioAuth.getCorreo(),codigo2fa);
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
+                    response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");
+                }
+                break;
+            /*DOBLE FACTOR DOGET*/
             default:
                 response.sendRedirect(request.getContextPath() + "/Login");
         }
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        String accion = request.getParameter("accion")==null?"iniciar2":request.getParameter("accion"); /*para el nuevo switch case 2fa*/
         HttpSession session = request.getSession();
         String username = request.getParameter("email");
         String password = request.getParameter("password");
@@ -86,6 +127,9 @@ public class Login extends HttpServlet {
             e.printStackTrace();
         }*/
 
+        
+        
+        /*
         if (user.getRol()!=null){
             session.setAttribute("usuario",user);
             session.setMaxInactiveInterval(10*60);//10 minutos de inactividad
@@ -103,5 +147,104 @@ public class Login extends HttpServlet {
             RequestDispatcher view = request.getRequestDispatcher("/Login/InicioSesion.jsp");
             view.forward(request, response);
         }
+        */
+        
+        /*DOBLE FACTOR DOPOST. LUEGO DE INGRESAR CREDENCIALES, ENTRA AQUI. INCLUYE VALIDACIONES*/
+        switch (accion) {
+            case "iniciar2":
+                if (user.getRol()!=null){
+                    session.setAttribute("usuario",user);
+                    session.setMaxInactiveInterval(10*60);//10 minutos de inactividad
+                    //ingresa
+                    if (user.getRol().getNombreRol().equals("Usuario PUCP")){ //compara mayu y minu
+                        response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
+                    } else if (user.getRol().getNombreRol().equals("Seguridad")) {
+                        /*response.sendRedirect(request.getContextPath() + "/SeguridadServlet");*/
+
+
+                        NroRandom nroRandom =  new NroRandom();
+                        int codigo2fa = nroRandom.generadorNrosRandom();
+                        /*int codigo2fa = 123456;*/
+                        uDao.guardarCodigo2fa(codigo2fa,(Usuario) session.getAttribute("usuario"));
+                        Temporizador2FA temporizador2FA =  new Temporizador2FA(120, (Usuario) session.getAttribute("usuario") );
+                        try {
+                        EnviarCorreo2fa.main(username,codigo2fa);
+                        } catch (MessagingException e) {
+                        e.printStackTrace();
+                        }
+
+                        response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");
+
+                    }  else if (user.getRol().getNombreRol().equals("Administrador")) {
+                        /*response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                        view = request.getRequestDispatcher("/Login/dobleFactor.jsp");
+                        view.forward(request, response);
+                        */
+                        NroRandom nroRandom =  new NroRandom();
+                        int codigo2fa = nroRandom.generadorNrosRandom();
+                        /*int codigo2fa = 123456;*/
+                        uDao.guardarCodigo2fa(codigo2fa,(Usuario) session.getAttribute("usuario"));
+                        Temporizador2FA temporizador2FA =  new Temporizador2FA(120, (Usuario) session.getAttribute("usuario") );
+                        try {
+                            EnviarCorreo2fa.main(username,codigo2fa);
+                        } catch (MessagingException e) {
+                            e.printStackTrace();
+                        }
+
+                        response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");
+                    } else {
+                        response.sendRedirect(request.getContextPath() + "/Login");
+                    }
+                } else {
+                    //rechaza
+                    session.setAttribute("msg", "Correo o contraseña incorrectos");
+                    RequestDispatcher view = request.getRequestDispatcher("/Login/InicioSesion.jsp");
+                    view.forward(request, response);
+                }
+                break;
+            case "compararCodigo2fa":
+                Usuario usuario = (Usuario) session.getAttribute("usuario");
+                String codigo2fa = request.getParameter("codigo2fa");
+
+                if ( uDao.consultarActiveTime2faFlag( (Usuario) session.getAttribute("usuario")) ) {
+
+                    try {
+                        int codigo2faInt = Integer.parseInt(codigo2fa);
+                        boolean coincideCodigo2fa = uDao.compararCodigo2fa(codigo2fa, (Usuario) session.getAttribute("usuario"));
+
+                        //comparacion de codigo ingresado con codigo2fa en base de datos
+                        if (coincideCodigo2fa) {
+
+                            if (usuario.getRol().getNombreRol().equals("Seguridad")) {
+                                response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
+                            } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
+                                response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                            }
+
+                        } else {
+                            session.setAttribute("msg", "Codigo de autenticación no válido");
+                            response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");
+                        }
+
+                        break;
+                    } catch (NumberFormatException e) {
+                        session.setAttribute("msg", "Codigo de autenticación no válido");
+                        response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");
+                        break;
+                    }
+                } else {
+                    session.setAttribute("msg", "Su código ha expirado. Solicite nuevo código");
+                    response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");
+                    break;
+                }
+
+            default:
+                response.sendRedirect(request.getContextPath() + "/Login");
+        }
+           /*DOBLE FACTOR DOPOST. LUEGO DE INGRESAR CREDENCIALES, ENTRA AQUI. INCLUYE VALIDACIONES*/
+        
+        
+        
+        
     }
 }
