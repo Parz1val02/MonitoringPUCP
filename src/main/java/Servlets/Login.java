@@ -23,6 +23,7 @@ public class Login extends HttpServlet {
         HttpSession session = request.getSession();
         String accion = request.getParameter("accion") == null ? "iniciar" : request.getParameter("accion");
         RequestDispatcher view;
+        UsuarioDao uDao = new UsuarioDao();
         switch (accion) {
             case ("registrar"):
                 session = request.getSession();
