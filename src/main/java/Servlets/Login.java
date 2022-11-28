@@ -225,18 +225,30 @@ public class Login extends HttpServlet {
 
                         } else {
                             session.setAttribute("msg", "Codigo de autenticación no válido");
-                            response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");
+                            if (usuario.getRol().getNombreRol().equals("Seguridad")) {
+                                response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
+                            } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
+                                response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                            }
                         }
 
                         break;
                     } catch (NumberFormatException e) {
                         session.setAttribute("msg", "Codigo de autenticación no válido");
-                        response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");
+                        if (usuario.getRol().getNombreRol().equals("Seguridad")) {
+                                response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
+                            } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
+                                response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                            }
                         break;
                     }
                 } else {
                     session.setAttribute("msg", "Su código ha expirado. Solicite nuevo código");
-                    response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");
+                    if (usuario.getRol().getNombreRol().equals("Seguridad")) {
+                                response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
+                            } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
+                                response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                            }
                     break;
                 }
 
