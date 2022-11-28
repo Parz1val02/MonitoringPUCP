@@ -88,7 +88,7 @@ public class Login extends HttpServlet {
                     } catch (MessagingException e) {
                         e.printStackTrace();
                     }
-                    response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");
+                    response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");
 
                 }  else if (usuarioAuth.getRol().getNombreRol().equals("Administrador")) {
                    /* response.sendRedirect(request.getContextPath() + "/AdminServlet");
