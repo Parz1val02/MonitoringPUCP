@@ -22,101 +22,90 @@ public class AdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Usuario usuario1 = (Usuario) session.getAttribute("usuario");
-        if(usuario1!=null){
-            if(usuario1.getRol().getNombreRol().equals("Administrador")){
-                /*RequestDispatcher view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
-                view.forward(request,response);
-                UsuarioDao daoUsuario = new UsuarioDao();
-                ArrayList<Usuario> listaUsuarios = daoUsuario.obtenerListaUsuarios();
-                request.setAttribute("listaUsuarios",listaUsuarios);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Administrador/tabla_usuarios_admin.jsp");
-                requestDispatcher.forward(request,response); */
+        if(usuario1.getRol().getNombreRol().equals("Administrador")){
 
-                String accion = request.getParameter("accion")==null?"tabla_usuarios":request.getParameter("accion");
-                RequestDispatcher view;
-                UsuarioDao usuarioDao = new UsuarioDao();
-                IncidenciaDao incidenciaDao = new IncidenciaDao();
-                CategoriaDao categoriaDao = new CategoriaDao();
-                RolDao rolDao = new RolDao();
-                String usuarioCodigo;
-                Usuario usuario;
+            String accion = request.getParameter("accion")==null?"tabla_usuarios":request.getParameter("accion");
+            RequestDispatcher view;
+            UsuarioDao usuarioDao = new UsuarioDao();
+            IncidenciaDao incidenciaDao = new IncidenciaDao();
+            CategoriaDao categoriaDao = new CategoriaDao();
+            RolDao rolDao = new RolDao();
+            String usuarioCodigo;
+            Usuario usuario;
 
-                switch (accion){
-                    case ("tabla_usuarios") :
-                        ArrayList<Usuario> listaUsuarios = null;
+            switch (accion){
+                case ("tabla_usuarios") :
+                    ArrayList<Usuario> listaUsuarios = null;
 
-                        listaUsuarios = usuarioDao.obtenerListaUsuarios();
+                    listaUsuarios = usuarioDao.obtenerListaUsuarios();
 
-                        request.setAttribute("listaUsuarios",listaUsuarios);
-                        view = request.getRequestDispatcher("/Administrador/tabla_usuarios_admin.jsp");
-                        view.forward(request,response);
-                        break;
-                    case ("incidencias"):
-                        ArrayList<Incidencia> listaIncidencias = null;
+                    request.setAttribute("listaUsuarios",listaUsuarios);
+                    view = request.getRequestDispatcher("/Administrador/tabla_usuarios_admin.jsp");
+                    view.forward(request,response);
+                    break;
+                case ("incidencias"):
+                    ArrayList<Incidencia> listaIncidencias = null;
 
 
-                            listaIncidencias = incidenciaDao.obtenerIncidencias();
+                        listaIncidencias = incidenciaDao.obtenerIncidencias();
 
-                        request.setAttribute("listaIncidencias",listaIncidencias);
-                        view = request.getRequestDispatcher("/Administrador/incidencia_admin.jsp");
-                        view.forward(request,response);
-                        break;
-                    case ("registrar_usuario"): //crear usuario
+                    request.setAttribute("listaIncidencias",listaIncidencias);
+                    view = request.getRequestDispatcher("/Administrador/incidencia_admin.jsp");
+                    view.forward(request,response);
+                    break;
+                case ("registrar_usuario"): //crear usuario
 
-                        request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
-                        request.setAttribute("roles", rolDao.obtenerRoles());
-                        view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
+                    request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                    request.setAttribute("roles", rolDao.obtenerRoles());
+                    view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
+                    view.forward(request, response);
+                    break;
+                case ("editar_usuario"): //editar usuario
+
+                    usuarioCodigo = request.getParameter("codigo");
+                    usuario = usuarioDao.buscarPorId(usuarioCodigo);
+
+                    if (usuario != null) { //abro el form para editar
+                        request.setAttribute("usuario", usuario);
+                        view = request.getRequestDispatcher("/Administrador/editUser.jsp");
                         view.forward(request, response);
-                        break;
-                    case ("editar_usuario"): //editar usuario
-
-                        usuarioCodigo = request.getParameter("codigo");
-                        usuario = usuarioDao.buscarPorId(usuarioCodigo);
-
-                        if (usuario != null) { //abro el form para editar
-                            request.setAttribute("usuario", usuario);
-                            view = request.getRequestDispatcher("/Administrador/editUser.jsp");
-                            view.forward(request, response);
-                        } else { //id no encontrado
-                            response.sendRedirect(request.getContextPath() + "/AdminServlet");
-                        }
-                        break;
-                    case ("cambiar_contrasenia"):
-
-                        view = request.getRequestDispatcher("/Administrador/changepassword.jsp");
-                        view.forward(request, response);
-                        break;
-                    case ("doblefactor"):
-
-                        view = request.getRequestDispatcher("/Administrador/doblefactorA.jsp");
-                        view.forward(request, response);
-                        break;
-                    case ("verDetalle"):
-                        int idIncidencia = Integer.parseInt(request.getParameter("id"));
-                        Incidencia incidencia = incidenciaDao.obtenerIncidencia(idIncidencia);
-
-                        request.setAttribute("Incidencia",incidencia);
-
-                        view = request.getRequestDispatcher("/Administrador/detalle_incidencia_admin.jsp");
-                        view.forward(request, response);
-                        break;
-
-                    case "borrar":  // AdminServlet?action=borrar&id=
-                        String codigo = request.getParameter("codigo");
-                        usuarioDao.borrar(codigo);
+                    } else { //id no encontrado
                         response.sendRedirect(request.getContextPath() + "/AdminServlet");
-                        break;
+                    }
+                    break;
+                case ("cambiar_contrasenia"):
 
-                    default:
-                        response.sendRedirect(request.getContextPath() + "/AdminServlet");
-                }
-            }else if(usuario1.getRol().getNombreRol().equalsIgnoreCase("Seguridad")){
-                response.sendRedirect(request.getContextPath()+"/SeguridadServlet");
-            }else if(usuario1.getRol().getNombreRol().equalsIgnoreCase("Usuario PUCP")){
-                response.sendRedirect(request.getContextPath()+"/UsuarioServlet");
+                    view = request.getRequestDispatcher("/Administrador/changepassword.jsp");
+                    view.forward(request, response);
+                    break;
+                case ("doblefactor"):
+
+                    view = request.getRequestDispatcher("/Administrador/doblefactorA.jsp");
+                    view.forward(request, response);
+                    break;
+                case ("verDetalle"):
+                    int idIncidencia = Integer.parseInt(request.getParameter("id"));
+                    Incidencia incidencia = incidenciaDao.obtenerIncidencia(idIncidencia);
+
+                    request.setAttribute("Incidencia",incidencia);
+
+                    view = request.getRequestDispatcher("/Administrador/detalle_incidencia_admin.jsp");
+                    view.forward(request, response);
+                    break;
+
+                case "borrar":  // AdminServlet?action=borrar&id=
+                    String codigo = request.getParameter("codigo");
+                    usuarioDao.borrar(codigo);
+                    response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                    break;
+
+                default:
+                    response.sendRedirect(request.getContextPath() + "/AdminServlet");
             }
-        }else{
-            response.sendRedirect(request.getContextPath()+"/Login");
+        }else if(usuario1.getRol().getNombreRol().equalsIgnoreCase("Seguridad")){
+            response.sendRedirect(request.getContextPath()+"/SeguridadServlet");
+        }else if(usuario1.getRol().getNombreRol().equalsIgnoreCase("Usuario PUCP")){
+            response.sendRedirect(request.getContextPath()+"/UsuarioServlet");
         }
     }
 

@@ -22,126 +22,121 @@ public class UsuarioServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Usuario usuario1 = (Usuario) session.getAttribute("usuario");
-        if(usuario1!=null){
-            if(usuario1.getRol().getNombreRol().equals("Usuario PUCP")){
-                String accion = request.getParameter("accion")==null?"inicio":request.getParameter("accion");
-                RequestDispatcher view;
-                IncidenciaDao inDao = new IncidenciaDao();
-                ArrayList<Incidencia> listaIncidencias = null;
-                UsuarioDao udao = new UsuarioDao();
-                TipoIncidenciaDao tipoIncidenciaDao = new TipoIncidenciaDao();
-                NivelUrgenciaDao nivelDao = new NivelUrgenciaDao();
-                ZonaDao zonaDao = new ZonaDao();
-                Usuario usuario = null;
-                Incidencia incidencia = null;
-                switch (accion){
-                    case ("confirmar"):
-                        int idIncidencia = Integer.parseInt(request.getParameter("id"));
-                        incidencia = inDao.obtenerIncidencia(idIncidencia);
-                        request.setAttribute("Incidencia",incidencia);
-                        inDao.confirmar(idIncidencia);
-                        view = request.getRequestDispatcher("/Usuario/confirmarIncidencia.jsp");
-                        view.forward(request, response);
-                        //response.sendRedirect(request.getContextPath()+ "/UsuarioServlet");
-                        break;
-                    case ("borrar"):
-                        String idIncidencia1 = request.getParameter("id");
-                        int idd = Integer.parseInt(idIncidencia1);
-                        inDao.borrarIncidencia(idd);
-                        response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?accion=listar");
-                        break;
-                    case ("listar") :
-                        String codigoUsuarioPorSesion = usuario1.getCodigo();
-                        try {
-                            listaIncidencias = inDao.obtenerIncidenciasPorUsuario(codigoUsuarioPorSesion);
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
-                        request.setAttribute("listaIncidencias",listaIncidencias);
-                        view = request.getRequestDispatcher("/Usuario/MisIncidencias.jsp");
-                        view.forward(request,response);
-                        break;
-                    case ("listarDestacados") :
-
-                        listaIncidencias = inDao.obtenerIncidencias();
-
-                        request.setAttribute("listaIncidencias",listaIncidencias);
-                        view = request.getRequestDispatcher("/Usuario/IncidenciasDestacadas.jsp");
-                        view.forward(request,response);
-                        break;
-                    case ("verDetalle"):
-                        int idIncidencia3 = Integer.parseInt(request.getParameter("id"));
-                        incidencia = inDao.obtenerIncidencia(idIncidencia3);
-                        request.setAttribute("Incidencia",incidencia);
-                        view = request.getRequestDispatcher("/Usuario/DetalleReabierto.jsp");
-                        view.forward(request, response);
-                        break;
-                    case("verPerfil"):
-                        Usuario user1 = (Usuario) request.getSession().getAttribute("usuario");
-                        user1 = udao.buscarPorId(user1.getCodigo());
-                        String[] split = user1.getFotoPerfil().getNombreFoto().split("[.]");
-                        response.setContentType("image/"+split[1]);
-                        try (OutputStream out = response.getOutputStream()) {
-                            out.write(user1.getFotoPerfil().getFotobyte());
-                        }
-                    case ("verDetalle2"):
-                        // Ver detalle en la página de Inicio
-                        int idIncidencia4 = Integer.parseInt(request.getParameter("id"));
-                        incidencia = inDao.obtenerIncidencia(idIncidencia4);
-                        listaIncidencias = inDao.obtenerIncidencias();
-                        request.setAttribute("Incidencia",incidencia);
-                        request.setAttribute("listaIncidencias",listaIncidencias);
-                        view = request.getRequestDispatcher("/Usuario/DetalleIncidencia.jsp");
-                        view.forward(request, response);
-                        break;
-                    case("perfil"):
-                        view = request.getRequestDispatcher("/Usuario/UsuarioPerfil.jsp");
-                        view.forward(request, response);
-                        break;
-                    case("registrarIncidencia"):
-
-                        request.setAttribute("tipos", tipoIncidenciaDao.obtenerTipos() );
-                        request.setAttribute("niveles", nivelDao.obtenerNiveles());
-                        request.setAttribute("zonas", zonaDao.obtenerlistaZonas());
-                        view = request.getRequestDispatcher("/Usuario/RegistrarIncidencia.jsp");
-                        view.forward(request, response);
-                        break;
-                    case("buscarIncidencia"):
-                        listaIncidencias = inDao.obtenerIncidencias();
-                        request.setAttribute("listaIncidencias",listaIncidencias);
-                        view = request.getRequestDispatcher("/Usuario/BuscarIncidencia.jsp");
-                        view.forward(request, response);
-                        break;
-
-                    case("inicio"):
-                    /*try {
-                        listaDestacados = inDao.obtenerDestacadas();
+        if(usuario1.getRol().getNombreRol().equals("Usuario PUCP")){
+            String accion = request.getParameter("accion")==null?"inicio":request.getParameter("accion");
+            RequestDispatcher view;
+            IncidenciaDao inDao = new IncidenciaDao();
+            ArrayList<Incidencia> listaIncidencias = null;
+            UsuarioDao udao = new UsuarioDao();
+            TipoIncidenciaDao tipoIncidenciaDao = new TipoIncidenciaDao();
+            NivelUrgenciaDao nivelDao = new NivelUrgenciaDao();
+            ZonaDao zonaDao = new ZonaDao();
+            Incidencia incidencia = null;
+            switch (accion){
+                case ("confirmar"):
+                    int idIncidencia = Integer.parseInt(request.getParameter("id"));
+                    incidencia = inDao.obtenerIncidencia(idIncidencia);
+                    request.setAttribute("Incidencia",incidencia);
+                    inDao.confirmar(idIncidencia);
+                    view = request.getRequestDispatcher("/Usuario/confirmarIncidencia.jsp");
+                    view.forward(request, response);
+                    //response.sendRedirect(request.getContextPath()+ "/UsuarioServlet");
+                    break;
+                case ("borrar"):
+                    String idIncidencia1 = request.getParameter("id");
+                    int idd = Integer.parseInt(idIncidencia1);
+                    inDao.borrarIncidencia(idd);
+                    response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?accion=listar");
+                    break;
+                case ("listar") :
+                    String codigoUsuarioPorSesion = usuario1.getCodigo();
+                    try {
+                        listaIncidencias = inDao.obtenerIncidenciasPorUsuario(codigoUsuarioPorSesion);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    request.setAttribute("listaDestacados",listaDestacados);
-                    view = request.getRequestDispatcher("/Usuario/inicio.jsp");
+                    request.setAttribute("listaIncidencias",listaIncidencias);
+                    view = request.getRequestDispatcher("/Usuario/MisIncidencias.jsp");
                     view.forward(request,response);
-                    break;*/ /*prueba*/
-                        listaIncidencias = inDao.obtenerIncidencias();
-                        request.setAttribute("listaIncidencias",listaIncidencias);
-                        view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
-                        view.forward(request, response);
-                        break;
-                    case ("restablecerContrasenia"):
-                        view = request.getRequestDispatcher("/Usuario/CambiarContrasenia.jsp");
-                        view.forward(request, response);
-                        break;
-                    default:
-                        response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
+                    break;
+                case ("listarDestacados") :
+
+                    listaIncidencias = inDao.obtenerIncidencias();
+
+                    request.setAttribute("listaIncidencias",listaIncidencias);
+                    view = request.getRequestDispatcher("/Usuario/IncidenciasDestacadas.jsp");
+                    view.forward(request,response);
+                    break;
+                case ("verDetalle"):
+                    int idIncidencia3 = Integer.parseInt(request.getParameter("id"));
+                    incidencia = inDao.obtenerIncidencia(idIncidencia3);
+                    request.setAttribute("Incidencia",incidencia);
+                    view = request.getRequestDispatcher("/Usuario/DetalleReabierto.jsp");
+                    view.forward(request, response);
+                    break;
+                case("verPerfil"):
+                    Usuario user1 = (Usuario) request.getSession().getAttribute("usuario");
+                    user1 = udao.buscarPorId(user1.getCodigo());
+                    String[] split = user1.getFotoPerfil().getNombreFoto().split("[.]");
+                    response.setContentType("image/"+split[1]);
+                    try (OutputStream out = response.getOutputStream()) {
+                        out.write(user1.getFotoPerfil().getFotobyte());
+                    }
+                case ("verDetalle2"):
+                    // Ver detalle en la página de Inicio
+                    int idIncidencia4 = Integer.parseInt(request.getParameter("id"));
+                    incidencia = inDao.obtenerIncidencia(idIncidencia4);
+                    listaIncidencias = inDao.obtenerIncidencias();
+                    request.setAttribute("Incidencia",incidencia);
+                    request.setAttribute("listaIncidencias",listaIncidencias);
+                    view = request.getRequestDispatcher("/Usuario/DetalleIncidencia.jsp");
+                    view.forward(request, response);
+                    break;
+                case("perfil"):
+                    view = request.getRequestDispatcher("/Usuario/UsuarioPerfil.jsp");
+                    view.forward(request, response);
+                    break;
+                case("registrarIncidencia"):
+
+                    request.setAttribute("tipos", tipoIncidenciaDao.obtenerTipos() );
+                    request.setAttribute("niveles", nivelDao.obtenerNiveles());
+                    request.setAttribute("zonas", zonaDao.obtenerlistaZonas());
+                    view = request.getRequestDispatcher("/Usuario/RegistrarIncidencia.jsp");
+                    view.forward(request, response);
+                    break;
+                case("buscarIncidencia"):
+                    listaIncidencias = inDao.obtenerIncidencias();
+                    request.setAttribute("listaIncidencias",listaIncidencias);
+                    view = request.getRequestDispatcher("/Usuario/BuscarIncidencia.jsp");
+                    view.forward(request, response);
+                    break;
+
+                case("inicio"):
+                /*try {
+                    listaDestacados = inDao.obtenerDestacadas();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
-            }else if(usuario1.getRol().getNombreRol().equalsIgnoreCase("Seguridad")){
-                response.sendRedirect(request.getContextPath()+"/SeguridadServlet");
-            }else if(usuario1.getRol().getNombreRol().equalsIgnoreCase("Administrador")){
-                response.sendRedirect(request.getContextPath()+"/AdminServlet");
+                request.setAttribute("listaDestacados",listaDestacados);
+                view = request.getRequestDispatcher("/Usuario/inicio.jsp");
+                view.forward(request,response);
+                break;*/ /*prueba*/
+                    listaIncidencias = inDao.obtenerIncidencias();
+                    request.setAttribute("listaIncidencias",listaIncidencias);
+                    view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
+                    view.forward(request, response);
+                    break;
+                case ("restablecerContrasenia"):
+                    view = request.getRequestDispatcher("/Usuario/CambiarContrasenia.jsp");
+                    view.forward(request, response);
+                    break;
+                default:
+                    response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
             }
-        }else{
-            response.sendRedirect(request.getContextPath()+"/Login");
+        }else if(usuario1.getRol().getNombreRol().equalsIgnoreCase("Seguridad")){
+            response.sendRedirect(request.getContextPath()+"/SeguridadServlet");
+        }else if(usuario1.getRol().getNombreRol().equalsIgnoreCase("Administrador")){
+            response.sendRedirect(request.getContextPath()+"/AdminServlet");
         }
     }
 
