@@ -145,11 +145,16 @@ public class IncidenciaDao extends DaoBase{
                     IncidenciasDestacadas a = new IncidenciasDestacadas();
                     a.setContadorDestacado(rs.getInt(21));
                     incidencia.setIncidenciasDestacadas(a);
+                    
+                    /*
                     if (rs.getInt(21)>0){
                         listaDU.add(incidencia);
                     }else {
                         break;
-                    }
+                    }*/
+                    
+                    listaDU.add(incidencia);
+                    
                 }
 
             }
