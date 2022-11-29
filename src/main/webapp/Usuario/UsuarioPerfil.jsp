@@ -37,8 +37,7 @@
                     <div class="imagen">
                         <div class="img">
                             <a target="blank">
-                                <img src="../images/usuario.png">
-                                <!--<img src="<%/* request.getContextPath() */%>/UsuarioServlet?accion=verPerfil" alt="">-->
+                                <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verPerfil" alt="">
                             </a>
                         </div>
                     </div>
@@ -135,11 +134,6 @@
                         </div>
                         <div style="height: 25px; display: block;"></div>
                         <div align="center">
-                            <a type="button" class="btn btn-primary btn-mg float-right" style="font-size: 15px;
-                               border-color: #042354; background-color: #042354;"
-                               href="<%=request.getContextPath()%>/Login?accion=logout">Cerrar sesión
-                            </a>
-                            <div style="height: 25px; display: block;"></div>
                             <div class="row">
                                 <div class="col-md-1"></div>
                                 <div class="col-md-6">

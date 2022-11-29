@@ -17,8 +17,8 @@ public abstract class DaoBase {
         String passBD= "Iuseclashbtw";
         String IP = "35.247.38.109";
         String localhost = "localhost";
-        String url = "jdbc:mysql://"+IP+":3306/telesystem_aa?serverTimezone=America/Lima";
+        String url = "jdbc:mysql://"+localhost+":3306/telesystem_aa?serverTimezone=America/Lima";
 
-        return DriverManager.getConnection(url,user,passBD);
+        return DriverManager.getConnection(url,user,pass);
     }
 }

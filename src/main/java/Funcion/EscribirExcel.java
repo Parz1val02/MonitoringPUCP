@@ -23,7 +23,7 @@ public class EscribirExcel {
                 final String nombreArchivo = "reporteincidencias.xlsx";
                 Sheet hoja = libro.createSheet("Hoja 1");
 
-                String[] encabezados = {"Nombre incidencia", "nivel de urgencia", "descripcion","estado","Codigo del usuario"};
+                String[] encabezados = {"Nombre incidencia", "Nivel de urgencia", "Descripcion","Estado","Codigo del usuario","Fecha de registro"};
                 int indiceFila = 0;
 
                 Row fila = hoja.createRow(indiceFila);
@@ -42,7 +42,7 @@ public class EscribirExcel {
                     fila.createCell(2).setCellValue(incidencia.getDescripcion());
                     fila.createCell(3).setCellValue(incidencia.getEstadoIncidencia().getEstado());
                     fila.createCell(4).setCellValue(incidencia.getUsuario().getCodigo());
-
+                    fila.createCell(5).setCellValue(incidencia.getFecha());
                     indiceFila++;
                 }
 

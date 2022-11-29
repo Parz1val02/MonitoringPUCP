@@ -64,5 +64,15 @@
                 <div class="name"><span data-text="Perfil">Perfil</span></div>
                 <!-- we are create first menu item name home -->
             </a>
+
+            <a class="navbar-brand" href="<%=request.getContextPath()%>/Login?accion=logout">
+                <!-- this anchor text for link your home to another page -->
+                <div class="icon">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i><!-- this is home icon link get form fornt-awesome icon for home button -->
+                    <i class="fa fa-sign-out" aria-hidden="true"></i><!-- copy and paste the home icon link here for hover effect -->
+                </div>
+                <div class="name"><span data-text="Cerrar Sesión">Cerrar Sesión</span></div>
+                <!-- we are create first menu item name home -->
+            </a>
         </div>
     </nav>

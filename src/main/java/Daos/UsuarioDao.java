@@ -267,6 +267,23 @@ public class UsuarioDao extends DaoBase{
         }
         return usuario;
     }
+    
+    public void cambiarContrasenaUsuario(String correo, String contrasenia){
+        String sql = "UPDATE Usuarios set password=sha2(?,256) where correo=?";
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)){
+
+            pstmt.setString(1,contrasenia);
+            pstmt.setString(2,correo);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    
+    
     public void actualizarFoto(FotoPerfil foto, int idCodigo){
         String sql = "UPDATE FotoPerfil set FotoPerfil = ?,nombreFoto = ? where idFotoPerfil = ?";
         try (Connection connection = this.getConnection();
@@ -309,7 +326,12 @@ public class UsuarioDao extends DaoBase{
         return matcher.find();
     }
     
-    
+    public boolean contrasenaisValid(String contrasenia) {
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(contrasenia);
+        return matcher.find();
+    }
     
     
     /*METODOS PARA DOBLE FACTOR*/

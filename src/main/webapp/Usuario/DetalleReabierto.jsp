@@ -1,4 +1,6 @@
-<%@ page import="Beans.Incidencia" %><%--
+<%@ page import="Beans.Incidencia" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="Beans.FotosIncidencias" %><%--
   Created by IntelliJ IDEA.
   User: Luis
   Date: 24/10/2022
@@ -8,6 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Incidencia incidencia = (Incidencia) request.getAttribute("Incidencia");
+    ArrayList<FotosIncidencias> fotos = (ArrayList<FotosIncidencias>) request.getAttribute("Fotos");
 %>
 <html>
 <head>
@@ -28,6 +31,8 @@
     <style>
         #map { height: 300px; }
     </style>
+    <link rel="stylesheet" href=../css/style.min.css>
+
 </head>
 <body>
     <div class="container" style="margin-top: 50px">
@@ -57,13 +62,24 @@
             <label class="form-label">Descripcion de la incidencia:</label>
             <input type="text" class="form-control" name="descripcionIncidencia" value="<%=incidencia.getDescripcion()%>" aria-label="Disabled input example" disabled>
         </div>
-
+        <div style="height: 25px; display: block;"></div>
         <div id="map"></div>
-
-        <div style =  "margin-left: 10px">
-            <p> Foto:
-                <a href="#" class="link-primary">Click para ver la foto</a>
-            </p>
+        <div style="height: 25px; display: block;"></div>
+        <div class="container" style="min-height: 60vh; align-content: center;">
+            <div class="row" style="min-height: 60vh">
+                <div class="page-content fade-in-up col-md-5" style="align-content: center">
+                    <%for(FotosIncidencias fotito : fotos){%>
+                        <div class="imagen" style =  "align-content: center">
+                            <div class="img">
+                                <a target="blank">
+                                    <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    <div style="height: 25px; display: block;"></div>
+                    <%}%>
+                </div>
+            </div>
         </div>
 
         <div style =  "margin-left: 10px" class="form-floating">

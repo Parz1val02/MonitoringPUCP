@@ -53,9 +53,17 @@ public class FormatosServlet extends HttpServlet {
 
                 break;
             case "txt":
-                //formato que se muestre como un .csv (con comillas)
-                break;
+               //formato que se muestre como un .csv (con comillas)
+                response.setContentType("text/plain");
+                response.setHeader("Content-disposition", "attachment; filename=reporte.txt");
 
+                try(OutputStream out = response.getOutputStream()) {
+
+                    GenerarPdf genPdf = new GenerarPdf();
+                    genPdf.crearTxt(out); //lo que devuelve el servlet
+
+                }
+                break;
 
         }
     }

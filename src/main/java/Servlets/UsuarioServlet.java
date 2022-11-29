@@ -6,9 +6,11 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -69,7 +71,9 @@ public class UsuarioServlet extends HttpServlet {
                 case ("verDetalle"):
                     int idIncidencia3 = Integer.parseInt(request.getParameter("id"));
                     incidencia = inDao.obtenerIncidencia(idIncidencia3);
+                    ArrayList<FotosIncidencias> fotos = inDao.obtenerFotos(idIncidencia3);
                     request.setAttribute("Incidencia",incidencia);
+                    request.setAttribute("Fotos",fotos);
                     view = request.getRequestDispatcher("/Usuario/DetalleReabierto.jsp");
                     view.forward(request, response);
                     break;
@@ -80,6 +84,15 @@ public class UsuarioServlet extends HttpServlet {
                     response.setContentType("image/"+split[1]);
                     try (OutputStream out = response.getOutputStream()) {
                         out.write(user1.getFotoPerfil().getFotobyte());
+                    }
+                case("verFoto"):
+                    int idFotito = Integer.parseInt(request.getParameter("id"));
+                    FotosIncidencias fotito = inDao.sacarFoto(idFotito);
+                    String[] split1 = fotito.getNombreFoto().split("[.]");
+                    System.out.println(fotito.getNombreFoto());
+                    response.setContentType("image/"+split1[1]);
+                    try (OutputStream out = response.getOutputStream()) {
+                        out.write(fotito.getFotobyte());
                     }
                 case ("verDetalle2"):
                     // Ver detalle en la página de Inicio
@@ -224,6 +237,9 @@ public class UsuarioServlet extends HttpServlet {
                 incidencia.setUsuario(usuario1);
 
                 idao.crearIncidencia(incidencia);
+
+                incidencia.setIdIncidencia(idao.getIdIncidencia(incidencia));
+
                 ArrayList<FotosIncidencias> fotosIncidencias = new ArrayList<>();
                 ArrayList<Part> fileParts = (ArrayList<Part>) request.getParts().stream().filter(part -> "fotoIncidencia".equals(part.getName()) && part.getSize() > 0).collect(Collectors.toList()); // Retrieves <input type="file" name="files" multiple="true">
                 for (Part filePart : fileParts) {
@@ -240,6 +256,7 @@ public class UsuarioServlet extends HttpServlet {
                 idao.guardarFotos(fotosIncidencias);
                 response.sendRedirect(request.getContextPath()+"/UsuarioServlet");
                 break;
+
             case "actualizarFoto":
                 Part filePart = request.getPart("fotoPerfil"); // Retrieves <input type="file" name="file">
                 String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
@@ -258,6 +275,48 @@ public class UsuarioServlet extends HttpServlet {
                 }
                 response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=perfil");
                 break;
+
+             case "cambiarContrasena":
+                String correo = usuario1.getCorreo();
+                String actual = request.getParameter("contraseñaActual");
+                String nueva = request.getParameter("contraseñaNueva");
+                String repass = request.getParameter("repass");
+
+                //UsuarioDao uDao = new UsuarioDao();
+
+
+                boolean contrasenaCorrecta = uDao.contrasenaisValid(nueva);
+
+                if (contrasenaCorrecta){
+
+                    if (nueva.equalsIgnoreCase("") ||  repass.equalsIgnoreCase("")){
+                        session.setAttribute("msg", "La contrasena no puede estar vacia");
+                        response.sendRedirect(request.getContextPath() + "/UsuarioServlet?accion=restablecerContrasenia");
+
+                    } else if (!nueva.equalsIgnoreCase(repass)) { //si cuando confirma la nueva contraseña no es igual
+                        session.setAttribute("msg","Para confirmar, ambas contrasenas deben ser iguales");
+                        response.sendRedirect(request.getContextPath() + "/UsuarioServlet?accion=restablecerContrasenia");
+
+                    } else if (nueva.equalsIgnoreCase(actual)) {//si la contraseña nueva es igual a la actual----> no se puede
+                        session.setAttribute("msg","las contrasenas no pueden ser iguales");
+                        response.sendRedirect(request.getContextPath() + "/UsuarioServlet?accion=restablecerContrasenia");
+                    } else {
+
+                        uDao.cambiarContrasenaUsuario(correo,nueva);
+
+
+
+                    }
+
+
+                }else {
+                    session.setAttribute("msg","digite otra contraseña que cumpla los requerimentos");
+                    response.sendRedirect(request.getContextPath() + "/UsuarioServlet?accion=restablecerContrasenia");
+                }
+
+                response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
+                break;
+
         }
 
 
