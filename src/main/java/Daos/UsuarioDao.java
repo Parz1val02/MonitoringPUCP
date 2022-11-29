@@ -248,6 +248,11 @@ public class UsuarioDao extends DaoBase{
 
                 try (ResultSet rs = pstmt.executeQuery()) {
                     if (rs.next()) {
+                        /*PARA DOBLE FACTOR INDISPENSABLE PARA ADMIN*/
+                        usuario.setCodigo( String.valueOf( rs.getInt(1) ) );
+                        usuario.setCorreo(rs.getString("registroadmin.correo"));
+                        /*FINISH PARA DOBLE FACTOR INDISPENSABLE PARA ADMIN*/
+                        
                         usuario.setNombre(rs.getString(2));
                         usuario.setPassword(rs.getString(3));
                         Rol rol = new Rol();
@@ -303,4 +308,184 @@ public class UsuarioDao extends DaoBase{
         Matcher matcher = pattern.matcher(email);
         return matcher.find();
     }
+    
+    
+    
+    
+    /*METODOS PARA DOBLE FACTOR*/
+    
+    public void guardarCodigo2fa(int codigo2fa, Usuario usuario){
+
+        if (usuario.getRol().getNombreRol().equals("Seguridad")) {
+
+            String sql = "update Usuarios SET codigo2fa = ? where codigo = ? ";
+
+            try (Connection connection = this.getConnection();
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+                pstmt.setInt(1, codigo2fa);
+                pstmt.setString(2, usuario.getCodigo());
+
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
+            String sql = "update registroAdmin SET codigo2fa = ? where idRegistroAdmin = ? ";
+
+            try (Connection connection = this.getConnection();
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+                pstmt.setInt(1, codigo2fa);
+                pstmt.setInt(2, Integer.parseInt(usuario.getCodigo()));
+
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+    }
+
+    public boolean compararCodigo2fa(String codigo2faIngresado, Usuario usuario) {
+
+        boolean coincideCodigo2fa = false;
+        String codigo2faBaseDatos = null;
+
+        if (usuario.getRol().getNombreRol().equals("Seguridad")) {
+
+            String sql = "SELECT codigo2fa FROM usuarios where codigo=?;";
+
+            try(Connection connection = this.getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)){
+
+                pstmt.setString(1, usuario.getCodigo());
+
+                try(ResultSet rs = pstmt.executeQuery();){
+                    if (rs.next()) {
+                        codigo2faBaseDatos = rs.getString(1);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+
+            if (codigo2faIngresado.equalsIgnoreCase(codigo2faBaseDatos)) {
+                coincideCodigo2fa = true;
+            }
+
+        } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
+            String sql = "SELECT codigo2fa FROM registroadmin where idRegistroAdmin=?;";
+
+            try(Connection connection = this.getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)){
+
+                pstmt.setInt(1, Integer.parseInt(usuario.getCodigo()));
+
+                try(ResultSet rs = pstmt.executeQuery();){
+                    if (rs.next()) {
+                        codigo2faBaseDatos = rs.getString(1);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+
+            if (codigo2faIngresado.equalsIgnoreCase(codigo2faBaseDatos)) {
+                coincideCodigo2fa = true;
+            }
+
+        }
+
+
+        return coincideCodigo2fa;
+    }
+
+
+    public void guardarActiveTime2faFlag(int flag, Usuario usuario){
+
+        if (usuario.getRol().getNombreRol().equals("Seguridad")) {
+
+            String sql = "update Usuarios SET activeTime2fa = ? where codigo = ? ";
+
+            try (Connection connection = this.getConnection();
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+                pstmt.setInt(1, flag);
+                pstmt.setString(2, usuario.getCodigo());
+
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
+            String sql = "update registroAdmin SET activeTime2fa = ? where idRegistroAdmin = ? ";
+
+            try (Connection connection = this.getConnection();
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+                pstmt.setInt(1, flag);
+                pstmt.setInt(2, Integer.parseInt(usuario.getCodigo()));
+
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+    }
+
+    public boolean consultarActiveTime2faFlag(Usuario usuario) {
+
+        boolean activeTime = false;
+
+        if (usuario.getRol().getNombreRol().equals("Seguridad")) {
+
+            String sql = "SELECT activeTime2fa FROM usuarios where codigo=?;";
+
+            try(Connection connection = this.getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)){
+
+                pstmt.setString(1, usuario.getCodigo());
+
+                try(ResultSet rs = pstmt.executeQuery();){
+                    if (rs.next()) {
+                        activeTime = rs.getBoolean("activeTime2fa");
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
+            String sql = "SELECT activeTime2fa FROM registroAdmin where idRegistroAdmin=?;";
+
+            try(Connection connection = this.getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)){
+
+                pstmt.setInt(1, Integer.parseInt(usuario.getCodigo()));
+
+                try(ResultSet rs = pstmt.executeQuery();){
+                    if (rs.next()) {
+                        activeTime = rs.getBoolean("activeTime2fa");
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+
+
+        }
+
+        return activeTime;
+    }
+     /*FINISH METODOS PARA DOBLE FACTOR*/
+  
 }

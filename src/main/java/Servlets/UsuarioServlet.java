@@ -10,11 +10,10 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
+
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @WebServlet(name = "UsuarioServlet", value = "/UsuarioServlet")
@@ -72,7 +71,9 @@ public class UsuarioServlet extends HttpServlet {
                 case ("verDetalle"):
                     int idIncidencia3 = Integer.parseInt(request.getParameter("id"));
                     incidencia = inDao.obtenerIncidencia(idIncidencia3);
+                    ArrayList<FotosIncidencias> fotos = inDao.obtenerFotos(idIncidencia3);
                     request.setAttribute("Incidencia",incidencia);
+                    request.setAttribute("Fotos",fotos);
                     view = request.getRequestDispatcher("/Usuario/DetalleReabierto.jsp");
                     view.forward(request, response);
                     break;
@@ -83,6 +84,15 @@ public class UsuarioServlet extends HttpServlet {
                     response.setContentType("image/"+split[1]);
                     try (OutputStream out = response.getOutputStream()) {
                         out.write(user1.getFotoPerfil().getFotobyte());
+                    }
+                case("verFoto"):
+                    int idFotito = Integer.parseInt(request.getParameter("id"));
+                    FotosIncidencias fotito = inDao.sacarFoto(idFotito);
+                    String[] split1 = fotito.getNombreFoto().split("[.]");
+                    System.out.println(fotito.getNombreFoto());
+                    response.setContentType("image/"+split1[1]);
+                    try (OutputStream out = response.getOutputStream()) {
+                        out.write(fotito.getFotobyte());
                     }
                 case ("verDetalle2"):
                     // Ver detalle en la página de Inicio
@@ -209,6 +219,8 @@ public class UsuarioServlet extends HttpServlet {
 
                 idao.crearIncidencia(incidencia);
 
+                incidencia.setIdIncidencia(idao.getIdIncidencia(incidencia));
+
                 ArrayList<FotosIncidencias> fotosIncidencias = new ArrayList<>();
                 ArrayList<Part> fileParts = (ArrayList<Part>) request.getParts().stream().filter(part -> "fotoIncidencia".equals(part.getName()) && part.getSize() > 0).collect(Collectors.toList()); // Retrieves <input type="file" name="files" multiple="true">
                 for (Part filePart : fileParts) {
@@ -216,7 +228,6 @@ public class UsuarioServlet extends HttpServlet {
                     InputStream fileContent = filePart.getInputStream();
                     byte[] fileBytes = fileContent.readAllBytes();
                     FotosIncidencias fi = new FotosIncidencias();
-                    System.out.println(fileName);
                     fi.setFotobyte(fileBytes);
                     fi.setNombreFoto(fileName);
                     fi.setIncidencia(incidencia);

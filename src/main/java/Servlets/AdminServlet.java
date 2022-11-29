@@ -80,8 +80,8 @@ public class AdminServlet extends HttpServlet {
                     break;
                 case ("doblefactor"):
 
-                    view = request.getRequestDispatcher("/Administrador/doblefactorA.jsp");
-                    view.forward(request, response);
+                     view = request.getRequestDispatcher("/Login/doblefactor.jsp");
+                     view.forward(request, response);
                     break;
                 case ("verDetalle"):
                     int idIncidencia = Integer.parseInt(request.getParameter("id"));

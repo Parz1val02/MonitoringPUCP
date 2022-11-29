@@ -145,11 +145,16 @@ public class IncidenciaDao extends DaoBase{
                     IncidenciasDestacadas a = new IncidenciasDestacadas();
                     a.setContadorDestacado(rs.getInt(21));
                     incidencia.setIncidenciasDestacadas(a);
+                    
+                    /*
                     if (rs.getInt(21)>0){
                         listaDU.add(incidencia);
                     }else {
                         break;
-                    }
+                    }*/
+                    
+                    listaDU.add(incidencia);
+                    
                 }
 
             }
@@ -563,8 +568,21 @@ public class IncidenciaDao extends DaoBase{
         }
     }
 
-    public int getIdIncidencia(){
-        String sql = "Select ";
+    public int getIdIncidencia(Incidencia incidencia){
+        String sql = "Select idIncidencia from Incidencias where nombreIncidencia = ?";
+        int idIncidencia = 0;
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1,incidencia.getNombreIncidencia());
+            try(ResultSet rs = pstmt.executeQuery();){
+                if(rs.next()){
+                    idIncidencia = rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return idIncidencia;
     }
     public void guardarFotos(ArrayList<FotosIncidencias> fotosIncidencias){
         String sql = "INSERT into FotosIncidencias(fotoIncidencia,nombreFoto,idIncidencia) values (?,?,?)";
@@ -581,10 +599,28 @@ public class IncidenciaDao extends DaoBase{
             }
         }
     }
+    public FotosIncidencias sacarFoto(int idFoto){
+        String sql = "select * from FotosIncidencias where idFotosIncidencias=?";
+        FotosIncidencias fotito = new FotosIncidencias();
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, idFoto);
+            try(ResultSet rs = pstmt.executeQuery();) {
+                if(rs.next()){
+                    fotito.setIdFotos(rs.getInt(1));
+                    fotito.setFotobyte(rs.getBytes(2));
+                    fotito.setNombreFoto(rs.getString(3));
+                    fotito.setIncidencia(obtenerIncidencia(rs.getInt(4)));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return fotito;
 
+    }
     public ArrayList<FotosIncidencias> obtenerFotos(int idIncidencia){
         ArrayList<FotosIncidencias> fis = new ArrayList<>();
-        FotosIncidencias fi = new FotosIncidencias();
         String sql = "select * from FotosIncidencias where idIncidencia=?";
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -592,6 +628,7 @@ public class IncidenciaDao extends DaoBase{
             pstmt.setInt(1, idIncidencia);
             try(ResultSet rs = pstmt.executeQuery();) {
                 while(rs.next()){
+                    FotosIncidencias fi = new FotosIncidencias();
                     fi.setIdFotos(rs.getInt(1));
                     fi.setFotobyte(rs.getBytes(2));
                     fi.setNombreFoto(rs.getString(3));
