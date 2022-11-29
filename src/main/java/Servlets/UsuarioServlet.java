@@ -255,6 +255,48 @@ public class UsuarioServlet extends HttpServlet {
                 }
                 response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=perfil");
                 break;
+                
+             case "cambiarContrasena":
+                String correo = usuario1.getCorreo();
+                String actual = request.getParameter("contraseñaActual");
+                String nueva = request.getParameter("contraseñaNueva");
+                String repass = request.getParameter("repass");
+
+                //UsuarioDao uDao = new UsuarioDao();
+
+
+                boolean contrasenaCorrecta = uDao.contrasenaisValid(nueva);
+
+                if (contrasenaCorrecta){
+
+                    if (nueva.equalsIgnoreCase("") ||  repass.equalsIgnoreCase("")){
+                        session.setAttribute("msg", "La contrasena no puede estar vacia");
+                        response.sendRedirect(request.getContextPath() + "/UsuarioServlet?accion=restablecerContrasenia");
+
+                    } else if (!nueva.equalsIgnoreCase(repass)) { //si cuando confirma la nueva contraseña no es igual
+                        session.setAttribute("msg","Para confirmar, ambas contrasenas deben ser iguales");
+                        response.sendRedirect(request.getContextPath() + "/UsuarioServlet?accion=restablecerContrasenia");
+
+                    } else if (nueva.equalsIgnoreCase(actual)) {//si la contraseña nueva es igual a la actual----> no se puede
+                        session.setAttribute("msg","las contrasenas no pueden ser iguales");
+                        response.sendRedirect(request.getContextPath() + "/UsuarioServlet?accion=restablecerContrasenia");
+                    } else {
+
+                        uDao.cambiarContrasenaUsuario(correo,nueva);
+
+
+
+                    }
+
+
+                }else {
+                    session.setAttribute("msg","digite otra contraseña que cumpla los requerimentos");
+                    response.sendRedirect(request.getContextPath() + "/UsuarioServlet?accion=restablecerContrasenia");
+                }
+
+                response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
+                break;
+   
         }
 
 
