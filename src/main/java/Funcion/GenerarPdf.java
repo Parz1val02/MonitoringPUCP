@@ -27,7 +27,7 @@ public class GenerarPdf {
             document.open();
 
             // Este codigo genera una tabla de 3 columnas
-            PdfPTable table = new PdfPTable(5);
+           PdfPTable table = new PdfPTable(6);
 
             // addCell() agrega una celda a la tabla, el cambio de fila
             // ocurre automaticamente al llenar la fila
@@ -37,6 +37,7 @@ public class GenerarPdf {
 
             table.addCell("Estado");
             table.addCell("Codigo del usuario");
+            table.addCell("Fecha de registro");
 
             for (Incidencia incidencia:listaIncidencias){
 
@@ -45,9 +46,8 @@ public class GenerarPdf {
                 table.addCell(incidencia.getDescripcion());
                 table.addCell(incidencia.getEstadoIncidencia().getEstado());
                 table.addCell(incidencia.getUsuario().getCodigo());
+                table.addCell(incidencia.getFecha());
             }
-
-
             // Si desea crear una celda de mas de una columna
             // Cree un objecto Cell y cambie su propiedad span
 
@@ -70,13 +70,22 @@ public class GenerarPdf {
     }
 
 
-    public void crearTxt(OutputStream outputStream){
+   public void crearTxt(OutputStream outputStream){
+
+        ArrayList<Incidencia> listaIncidencias;
+        IncidenciaDao iDao = new IncidenciaDao();
 
         try {
-            PrintWriter writer = new PrintWriter(outputStream.toString(), "UTF-8");
-            writer.println("Primera línea");
-            writer.print("Segunda línea");
-            writer.close();
+            listaIncidencias = iDao.obtenerIncidencias();
+            PrintWriter writer = new PrintWriter(outputStream);
+
+            for (Incidencia incidencia:listaIncidencias){
+
+                writer.append(incidencia.getNombreIncidencia() + "," + incidencia.getNivelUrgencia().getNivel() + "," + incidencia.getDescripcion() + "," + incidencia.getEstadoIncidencia().getEstado() + "," + incidencia.getUsuario().getCodigo() + "," + incidencia.getFecha() + "\n");
+                writer.flush();
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
