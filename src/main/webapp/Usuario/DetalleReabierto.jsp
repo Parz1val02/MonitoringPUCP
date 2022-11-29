@@ -35,27 +35,27 @@
 
         <div class="mb-3">
             <label class="form-label">Nombre Incidencia:</label>
-            <input type="text" class="form-control" name="nombreIncidencia" value="<%=incidencia.getNombreIncidencia()%>">
+            <input type="text" class="form-control" name="nombreIncidencia" value="<%=incidencia.getNombreIncidencia()%>" aria-label="Disabled input example" disabled>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Tipo Incidencia:</label>
-            <input type="text" class="form-control" name="tipoIncidencia" value="<%=incidencia.getTipoIncidencia().getTipo()%>">
+            <input type="text" class="form-control" name="tipoIncidencia" value="<%=incidencia.getTipoIncidencia().getTipo()%>" aria-label="Disabled input example" disabled>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Zona PUCP:</label>
-            <input type="text" class="form-control" name="zonaPUCP" value="<%=incidencia.getZonaPUCP().getNombreZona()%>">
+            <input type="text" class="form-control" name="zonaPUCP" value="<%=incidencia.getZonaPUCP().getNombreZona()%>" aria-label="Disabled input example" disabled>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Nivel de urgencia:</label>
-            <input type="text" class="form-control" name="nivelDeUrgencia" value="<%=incidencia.getNivelUrgencia().getNivel()%>">
+            <input type="text" class="form-control" name="nivelDeUrgencia" value="<%=incidencia.getNivelUrgencia().getNivel()%>" aria-label="Disabled input example" disabled>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Descripcion de la incidencia:</label>
-            <input type="text" class="form-control" name="descripcionIncidencia" value="<%=incidencia.getDescripcion()%>">
+            <input type="text" class="form-control" name="descripcionIncidencia" value="<%=incidencia.getDescripcion()%>" aria-label="Disabled input example" disabled>
         </div>
 
         <div id="map"></div>

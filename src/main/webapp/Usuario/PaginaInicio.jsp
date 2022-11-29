@@ -3,7 +3,8 @@
 <%@ page import="java.util.ArrayList"%>
 <%
     //ArrayList<Incidencia> listaDestacados  = new ArrayList<Incidencia>(); request.getAttribute("listaDestacados");
-    ArrayList<Incidencia> listaIncidencias = (ArrayList<Incidencia>) request.getAttribute("listaIncidencias");
+    ArrayList<Incidencia> listaIncidencias = (ArrayList<Incidencia>) request.getAttribute("destacadas");
+    ArrayList<Integer> estados = (ArrayList<Integer>) request.getAttribute("estados");
 %>
 <html lang="en">
 
@@ -93,11 +94,19 @@
                                                             </div>
                                                             <div class="col-md-1"></div>
                                                             <div class="col-md-4" >
+                                                                <%if (estados.get(i)==0){%>
                                                                 <a type="button" class="btn btn-primary btn-mg float-right"
                                                                    style="font-size: 15px; border-color: #042354; background-color: #042354;"
-                                                                   href="<%=request.getContextPath()%>/UsuarioDao?accion=destacar&des=<%=incidencia.getIdIncidencia()%>">
+                                                                   href="<%=request.getContextPath()%>/UsuarioServlet?accion=adddestacar&des=<%=incidencia.getIdIncidencia()%>">
                                                                     <i class="fa-solid fa-pen">Destacar</i>
                                                                 </a>
+                                                                <%} else if (estados.get(i)==1) {%>
+                                                                <a type="button" class="btn btn-primary btn-mg float-right"
+                                                                   style="font-size: 15px; border-color: #042354; background-color: #042354;"
+                                                                   href="<%=request.getContextPath()%>/UsuarioServlet?accion=deletedestacar&des=<%=incidencia.getIdIncidencia()%>">
+                                                                    <i class="fa-solid fa-pen">Quitar Destacado</i>
+                                                                </a>
+                                                                <%}%>
                                                             </div>
                                                         </div>
                                                         <div style="height: 20px; display: block;"></div>
