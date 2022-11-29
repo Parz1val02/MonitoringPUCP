@@ -59,38 +59,40 @@
                 </div>
                 <div style="height: 40px; display: block;"></div>
             </div>
-            <div class="col-md-5" style="margin: auto; font-size: 18px">
-                <p style="font-weight: 700; color: #042354"> Contraseña Actual</p>
-                <label for="contraseñaActual"></label>
-                <input type="password" class="form-control" id="contraseñaActual">
+            <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=cambiarContrasena">
+                <div class="col-md-5" style="margin: auto; font-size: 18px">
+                    <p style="font-weight: 700; color: #042354"> Contraseña Actual</p>
+                    <label for="contraseñaActual"></label>
+                    <input type="password" class="form-control" id="contraseñaActual" name="contraseñaActual">
 
-                <div style="height: 30px; display: block;"></div>
+                    <div style="height: 30px; display: block;"></div>
 
-                <p style="font-weight: 700; color: #042354"> Contraseña Nueva</p>
-                <label for="contraseñaNueva"></label>
-                <input type="password" class="form-control" id="contraseñaNueva">
+                    <p style="font-weight: 700; color: #042354"> Contraseña Nueva</p>
+                    <label for="contraseñaNueva"></label>
+                    <input type="password" class="form-control" id="contraseñaNueva" name="contraseñaNueva">
 
-                <div style="height: 30px; display: block;"></div>
+                    <div style="height: 30px; display: block;"></div>
 
-                <p style="font-weight: 700; color: #042354"> Confirmar Contraseña Nueva</p>
-                <label for="contaseñaNuevaConfirmada"></label>
-                <input type="password" class="form-control" id="contaseñaNuevaConfirmada">
+                    <p style="font-weight: 700; color: #042354"> Confirmar Contraseña Nueva</p>
+                    <label for="contaseñaNuevaConfirmada"></label>
+                    <input type="password" class="form-control" id="contaseñaNuevaConfirmada" name="repass">
 
-                <div style="height: 45px; display: block;"></div>
+                    <div style="height: 45px; display: block;"></div>
 
-                <label style="justify-content: center; display: flex">
-                    <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=restablecerContrasenia" type="button"
-                       class="btn btn-primary btn-mg float-right" style="font-size: 15px;
-                        border-color: #042354; background-color: #042354;">Aceptar</a>
-                    <!--a href="<%//request.getContextPath()%>/UsuarioServlet" style="font-size: 15px"> Volver a la Sesión Principal</a-->
-                </label>
+                    <label style="justify-content: center; display: flex">
+                        <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=restablecerContrasenia" type="submit"
+                           class="btn btn-primary btn-mg float-right" style="font-size: 15px;
+                            border-color: #042354; background-color: #042354;">Aceptar</a>
+                        <!--a href="<%//request.getContextPath()%>/UsuarioServlet" style="font-size: 15px"> Volver a la Sesión Principal</a-->
+                    </label>
 
-                <div style="height: 20px; display: block;"></div>
+                    <div style="height: 20px; display: block;"></div>
 
-                <div align="center">
-                    <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=perfil" style="font-size: 15px">Cancelar</a>
+                    <div align="center">
+                        <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=perfil" style="font-size: 15px">Cancelar</a>
+                    </div>
                 </div>
-            </div>
+            </form>
             <div class="col-md-1"></div>
         </div>
     </div>
