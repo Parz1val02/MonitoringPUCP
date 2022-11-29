@@ -45,4 +45,4 @@ insert into Incidencias (fecha,nombreIncidencia, validaIncidencia, descripcion,
                          (now(),"Laptop perdida en el V",true,"Mi Macbook M1, que no sirve para jugar Valorant, se extravio ayer",0,4,3,1,20113456,2);
 insert into IncidenciasDestacadas (contadorDestacado,idIncidencia) values (0,1),(0,2),(1,3),(0,4),(1,5);
 
-insert into RegistroAdmin (nombreAdmin, passwordAdmin, nombreRol, correo, codigo2fa, activeTime2fa) values("EternalBlue", sha2("DoublePulsar",256), "Administrador", "a20202073@pucp.edu.pe", null, null);
+insert into RegistroAdmin (nombreAdmin, passwordAdmin, nombreRol, correo, codigo2fa, activeTime2fa) values("EternalBlue", sha2("DoublePulsar",256), "Administrador", "EternalBlue@pucp.edu.pe", null, null);
