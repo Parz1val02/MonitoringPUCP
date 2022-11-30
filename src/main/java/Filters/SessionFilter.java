@@ -23,13 +23,15 @@ public class SessionFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
         Usuario usuario1 = (Usuario) session.getAttribute("usuario");
+
+
+
         if(usuario1==null){
             res.sendRedirect(req.getContextPath()+"/Login");
         }else{
-            res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-            res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-            res.setDateHeader("Expires", 0);
+
             chain.doFilter(request, response);
         }
+
     }
 }
