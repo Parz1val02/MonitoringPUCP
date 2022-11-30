@@ -80,7 +80,7 @@
                     <div style="height: 45px; display: block;"></div>
 
                     <label style="justify-content: center; display: flex">
-                        <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=restablecerContrasenia" type="submit"
+                        <a href="<%=request.getContextPath()%>/UsuarioServlet" type="submit"
                            class="btn btn-primary btn-mg float-right" style="font-size: 15px;
                             border-color: #042354; background-color: #042354;">Aceptar</a>
                         <!--a href="<%//request.getContextPath()%>/UsuarioServlet" style="font-size: 15px"> Volver a la Sesión Principal</a-->

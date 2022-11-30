@@ -89,7 +89,6 @@ public class UsuarioServlet extends HttpServlet {
                     int idFotito = Integer.parseInt(request.getParameter("id"));
                     FotosIncidencias fotito = inDao.sacarFoto(idFotito);
                     String[] split1 = fotito.getNombreFoto().split("[.]");
-                    System.out.println(fotito.getNombreFoto());
                     response.setContentType("image/"+split1[1]);
                     try (OutputStream out = response.getOutputStream()) {
                         out.write(fotito.getFotobyte());
@@ -99,8 +98,10 @@ public class UsuarioServlet extends HttpServlet {
                     int idIncidencia4 = Integer.parseInt(request.getParameter("id"));
                     incidencia = inDao.obtenerIncidencia(idIncidencia4);
                     listaIncidencias = inDao.obtenerIncidencias();
+                    ArrayList<FotosIncidencias> fotos2 = inDao.obtenerFotos(idIncidencia4);
                     request.setAttribute("Incidencia",incidencia);
                     request.setAttribute("listaIncidencias",listaIncidencias);
+                    request.setAttribute("Fotos",fotos2);
                     view = request.getRequestDispatcher("/Usuario/DetalleIncidencia.jsp");
                     view.forward(request, response);
                     break;
