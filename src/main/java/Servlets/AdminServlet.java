@@ -236,19 +236,22 @@ public class AdminServlet extends HttpServlet {
                 fp.setFotobyte(fileContent);
                 fp.setNombreFoto("usuario.png");
 
+                Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
 
                 if(codigovalido.length()==0 && codigoRepeat.length()==0 &&
                     nombrevalido.length()==0 && apellidovalido.length()==0 &&
                         correovalido.length() == 0 && correoRepeat.length()==0 &&
                         dnivalido.length() ==0 && dniRepeat.length() ==0 &&
                         celularvalido.length() == 0 && celularRepeat.length() == 0){
-                    Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
+
 
                     usuarioDao.crearUsuario(usuario);
 
                     response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
                     break;
                 }else{
+
+                    request.setAttribute("usuario",usuario);
 
                     request.setAttribute("codigovalido",codigovalido);
                     request.setAttribute("codigoRepeat",codigoRepeat);
