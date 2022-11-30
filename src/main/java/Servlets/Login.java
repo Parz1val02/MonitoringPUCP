@@ -70,6 +70,10 @@ public class Login extends HttpServlet {
                 session2.invalidate();
                 response.sendRedirect(request.getContextPath() + "/Login");
                 break;
+            case("2fa"):
+                view = request.getRequestDispatcher("/Login/doblefactor.jsp");
+                view.forward(request, response);
+                break;
             /*DOBLE FACTOR DOGET. LUEGO DE HABER INGRESADO EL CODIGO ENTRA AQUI*/
             case ("2auth"):
                 HttpSession session2Auth = request.getSession();
@@ -88,7 +92,9 @@ public class Login extends HttpServlet {
                     } catch (MessagingException e) {
                         e.printStackTrace();
                     }
-                    response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");
+                    /* response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor"); */
+                    view = request.getRequestDispatcher("/Login/doblefactor.jsp");
+                    view.forward(request, response);
 
                 }  else if (usuarioAuth.getRol().getNombreRol().equals("Administrador")) {
                    /* response.sendRedirect(request.getContextPath() + "/AdminServlet");
@@ -105,7 +111,9 @@ public class Login extends HttpServlet {
                     } catch (MessagingException e) {
                         e.printStackTrace();
                     }
-                    response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");
+                    view = request.getRequestDispatcher("/Login/doblefactor.jsp");
+                    view.forward(request, response);
+                    /* response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");*/
                 }
                 break;
             /*DOBLE FACTOR DOGET*/
@@ -155,6 +163,8 @@ public class Login extends HttpServlet {
             case "iniciar2":
                 if (user.getRol()!=null){
                     session.setAttribute("usuario",user);
+                    int flag = 0;
+                    session.setAttribute("flag",flag);
                     session.setMaxInactiveInterval(10*60);//10 minutos de inactividad
                     //ingresa
                     if (user.getRol().getNombreRol().equals("Usuario PUCP")){ //compara mayu y minu
@@ -174,7 +184,9 @@ public class Login extends HttpServlet {
                         e.printStackTrace();
                         }
 
-                        response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");
+                        /* response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor"); */
+                        RequestDispatcher view = request.getRequestDispatcher("/Login/doblefactor.jsp");
+                        view.forward(request, response);
 
                     }  else if (user.getRol().getNombreRol().equals("Administrador")) {
                         /*response.sendRedirect(request.getContextPath() + "/AdminServlet");
@@ -192,7 +204,12 @@ public class Login extends HttpServlet {
                             e.printStackTrace();
                         }
 
-                        response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");
+
+                        RequestDispatcher view = request.getRequestDispatcher("/Login/doblefactor.jsp");
+                        view.forward(request, response);
+                        /* response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");*/
+
+
                     } else {
                         response.sendRedirect(request.getContextPath() + "/Login");
                     }
@@ -218,17 +235,25 @@ public class Login extends HttpServlet {
                         if (coincideCodigo2fa) {
 
                             if (usuario.getRol().getNombreRol().equals("Seguridad")) {
+                                int flag = 1;
+                                session.setAttribute("flag",flag);
                                 response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
                             } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
+                                int flag = 1;
+                                session.setAttribute("flag",flag);
                                 response.sendRedirect(request.getContextPath() + "/AdminServlet");
                             }
 
                         } else {
                             session.setAttribute("msg", "Codigo de autenticación no válido");
                             if (usuario.getRol().getNombreRol().equals("Seguridad")) {
-                                response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");
+                                RequestDispatcher view = request.getRequestDispatcher("/Login/doblefactor.jsp");
+                                view.forward(request, response);
+                                /* response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");*/
                             } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
-                                response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");
+                                RequestDispatcher view = request.getRequestDispatcher("/Login/doblefactor.jsp");
+                                view.forward(request, response);
+                                /*response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");*/
                             }
                         }
 
@@ -236,19 +261,32 @@ public class Login extends HttpServlet {
                     } catch (NumberFormatException e) {
                         session.setAttribute("msg", "Codigo de autenticación no válido");
                         if (usuario.getRol().getNombreRol().equals("Seguridad")) {
-                                response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");
+                            RequestDispatcher view = request.getRequestDispatcher("/Login/doblefactor.jsp");
+                            view.forward(request, response);
+                            /* response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");*/
+
                             } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
-                                response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");
+                            RequestDispatcher view = request.getRequestDispatcher("/Login/doblefactor.jsp");
+                            view.forward(request, response);
+                            /*response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");*/
+
                             }
                         break;
                     }
                 } else {
                     session.setAttribute("msg", "Su código ha expirado. Solicite nuevo código");
                     if (usuario.getRol().getNombreRol().equals("Seguridad")) {
-                                response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");
-                            } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
-                                response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");
-                            }
+
+                        RequestDispatcher view = request.getRequestDispatcher("/Login/doblefactor.jsp");
+                        view.forward(request, response);
+                       /* response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");*/
+
+                    } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
+
+                        RequestDispatcher view = request.getRequestDispatcher("/Login/doblefactor.jsp");
+                        view.forward(request, response);
+                        /*response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");*/
+                    }
                     break;
                 }
 
