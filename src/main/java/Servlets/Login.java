@@ -138,8 +138,6 @@ public class Login extends HttpServlet {
             e.printStackTrace();
         }*/
 
-        
-        
         /*
         if (user.getRol()!=null){
             session.setAttribute("usuario",user);
@@ -217,9 +215,10 @@ public class Login extends HttpServlet {
                     }
                 } else {
                     //rechaza
-                    session.setAttribute("msg", "Correo o contraseña incorrectos");
+                    session.setAttribute("msg", "El correo o contraseña son incorrectos");
                     RequestDispatcher view = request.getRequestDispatcher("/Login/InicioSesion.jsp");
                     view.forward(request, response);
+                    break;
                 }
                 break;
             case "compararCodigo2fa":

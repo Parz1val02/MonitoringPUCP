@@ -22,7 +22,7 @@ public class IncidenciaDao extends DaoBase{
         try (Connection conn = this.getConnection();
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("select i.idIncidencia, i.fecha, i.nombreIncidencia, i.validaIncidencia, i.descripcion, i.contadorReabierto, i.otroTipo, \n" +
-                     "ti.idTipoIncidencia, ti.tipo, ti.iconoFoto, ti.nombreIcono, nu.idNivelUrgencia, nu.nivel, e.idEstadoIncidencia, e.estado,\n" +
+                     "ti.idTipoIncidencia, ti.tipo, ti.iconoFoto, nu.idNivelUrgencia, nu.nivel, e.idEstadoIncidencia, e.estado,\n" +
                      "u.codigo, z.idZonaPUCP, z.nombreZona, z.latitud, z.longitud, d.contadorDestacado\n" +
                      "from Incidencias i \n" +
                      "inner join NivelUrgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
@@ -44,17 +44,16 @@ public class IncidenciaDao extends DaoBase{
                 TipoIncidencia tipoIncidencia = new TipoIncidencia();
                 tipoIncidencia.setIdTipo(rs.getInt(8));
                 tipoIncidencia.setTipo(rs.getString("tipo"));
-                tipoIncidencia.setIconobyte(rs.getBytes(10));
-                tipoIncidencia.setNombreIcono(rs.getString(11));
+                tipoIncidencia.setFotoIcono((rs.getString("iconoFoto")));
                 incidencia.setTipoIncidencia(tipoIncidencia);
 
                 NivelUrgencia nivel = new NivelUrgencia();
-                nivel.setIdNivelUrgencia(rs.getInt(12));
+                nivel.setIdNivelUrgencia(rs.getInt(11));
                 nivel.setNivel(rs.getString("nivel"));
                 incidencia.setNivelUrgencia(nivel);
 
                 EstadoIncidencia estado = new EstadoIncidencia();
-                estado.setIdEstado(rs.getInt(14));
+                estado.setIdEstado(rs.getInt(13));
                 estado.setEstado(rs.getString("estado"));
                 incidencia.setEstadoIncidencia(estado);
 
@@ -62,10 +61,10 @@ public class IncidenciaDao extends DaoBase{
                 incidencia.setUsuario(uDao.buscarPorId(rs.getString("codigo")));
 
                 ZonaPUCP zonaPUCP = new ZonaPUCP();
-                zonaPUCP.setIdZonaPUCP(rs.getInt(17));
-                zonaPUCP.setNombreZona(rs.getString(18));
-                zonaPUCP.setLatitud(rs.getDouble(19));
-                zonaPUCP.setLongitud(rs.getDouble(20));
+                zonaPUCP.setIdZonaPUCP(rs.getInt(16));
+                zonaPUCP.setNombreZona(rs.getString(17));
+                zonaPUCP.setLatitud(rs.getDouble(18));
+                zonaPUCP.setLongitud(rs.getDouble(19));
 
                 incidencia.setZonaPUCP(zonaPUCP);
 
@@ -87,7 +86,7 @@ public class IncidenciaDao extends DaoBase{
         ArrayList<Incidencia> listaDU = new ArrayList<>();
 
         String sql = "select i.idIncidencia, i.fecha, i.nombreIncidencia, i.validaIncidencia, i.descripcion, i.contadorReabierto, i.otroTipo, \n" +
-                "ti.idTipoIncidencia, ti.tipo, ti.iconoFoto, ti.nombreIcono, nu.idNivelUrgencia, nu.nivel, e.idEstadoIncidencia, e.estado,\n" +
+                "ti.idTipoIncidencia, ti.tipo, ti.iconoFoto, nu.idNivelUrgencia, nu.nivel, e.idEstadoIncidencia, e.estado,\n" +
                 "u.codigo, z.idZonaPUCP, z.nombreZona, z.latitud, z.longitud, d.contadorDestacado\n" +
                 "from Incidencias i \n" +
                 "inner join NivelUrgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
@@ -116,17 +115,16 @@ public class IncidenciaDao extends DaoBase{
                     TipoIncidencia tipoIncidencia = new TipoIncidencia();
                     tipoIncidencia.setIdTipo(rs.getInt(8));
                     tipoIncidencia.setTipo(rs.getString("tipo"));
-                    tipoIncidencia.setIconobyte(rs.getBytes(10));
-                    tipoIncidencia.setNombreIcono(rs.getString(11));
+                    tipoIncidencia.setFotoIcono(rs.getString("iconoFoto"));
                     incidencia.setTipoIncidencia(tipoIncidencia);
 
                     NivelUrgencia nivel = new NivelUrgencia();
-                    nivel.setIdNivelUrgencia(rs.getInt(12));
+                    nivel.setIdNivelUrgencia(rs.getInt(11));
                     nivel.setNivel(rs.getString("nivel"));
                     incidencia.setNivelUrgencia(nivel);
 
                     EstadoIncidencia estado = new EstadoIncidencia();
-                    estado.setIdEstado(rs.getInt(14));
+                    estado.setIdEstado(rs.getInt(13));
                     estado.setEstado(rs.getString("estado"));
                     incidencia.setEstadoIncidencia(estado);
 
@@ -134,16 +132,16 @@ public class IncidenciaDao extends DaoBase{
                     incidencia.setUsuario(uDao.buscarPorId(rs.getString("codigo")));
 
                     ZonaPUCP zonaPUCP = new ZonaPUCP();
-                    zonaPUCP.setIdZonaPUCP(rs.getInt(17));
-                    zonaPUCP.setNombreZona(rs.getString(18));
-                    zonaPUCP.setLatitud(rs.getDouble(19));
-                    zonaPUCP.setLongitud(rs.getDouble(20));
+                    zonaPUCP.setIdZonaPUCP(rs.getInt(16));
+                    zonaPUCP.setNombreZona(rs.getString(17));
+                    zonaPUCP.setLatitud(rs.getDouble(18));
+                    zonaPUCP.setLongitud(rs.getDouble(19));
 
                     incidencia.setZonaPUCP(zonaPUCP);
 
 
                     IncidenciasDestacadas a = new IncidenciasDestacadas();
-                    a.setContadorDestacado(rs.getInt(21));
+                    a.setContadorDestacado(rs.getInt(20));
                     incidencia.setIncidenciasDestacadas(a);
                     
 
@@ -166,7 +164,7 @@ public class IncidenciaDao extends DaoBase{
     public Incidencia obtenerIncidencia (int id) {
 
         String sql = "select i.idIncidencia, i.fecha, i.nombreIncidencia, i.validaIncidencia, i.descripcion, i.contadorReabierto, i.otroTipo, \n" +
-                "ti.idTipoIncidencia, ti.tipo, ti.iconoFoto, ti.nombreIcono, nu.idNivelUrgencia, nu.nivel, e.idEstadoIncidencia, e.estado,\n" +
+                "ti.idTipoIncidencia, ti.tipo, ti.iconoFoto, nu.idNivelUrgencia, nu.nivel, e.idEstadoIncidencia, e.estado,\n" +
                 "u.codigo, z.idZonaPUCP, z.nombreZona, z.latitud, z.longitud\n" +
                 "from Incidencias i \n" +
                 "inner join NivelUrgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
@@ -196,17 +194,16 @@ public class IncidenciaDao extends DaoBase{
                     TipoIncidencia tipoIncidencia = new TipoIncidencia();
                     tipoIncidencia.setIdTipo(rs.getInt(8));
                     tipoIncidencia.setTipo(rs.getString("tipo"));
-                    tipoIncidencia.setIconobyte(rs.getBytes(10));
-                    tipoIncidencia.setNombreIcono(rs.getString(11));
+                    tipoIncidencia.setFotoIcono(rs.getString("iconoFoto"));
                     incidencia.setTipoIncidencia(tipoIncidencia);
 
                     NivelUrgencia nivel = new NivelUrgencia();
-                    nivel.setIdNivelUrgencia(rs.getInt(12));
+                    nivel.setIdNivelUrgencia(rs.getInt(11));
                     nivel.setNivel(rs.getString("nivel"));
                     incidencia.setNivelUrgencia(nivel);
 
                     EstadoIncidencia estado = new EstadoIncidencia();
-                    estado.setIdEstado(rs.getInt(14));
+                    estado.setIdEstado(rs.getInt(13));
                     estado.setEstado(rs.getString("estado"));
                     incidencia.setEstadoIncidencia(estado);
 
@@ -214,10 +211,10 @@ public class IncidenciaDao extends DaoBase{
                     incidencia.setUsuario(uDao.buscarPorId(rs.getString("codigo")));
 
                     ZonaPUCP zonaPUCP = new ZonaPUCP();
-                    zonaPUCP.setIdZonaPUCP(rs.getInt(17));
-                    zonaPUCP.setNombreZona(rs.getString(18));
-                    zonaPUCP.setLatitud(rs.getDouble(19));
-                    zonaPUCP.setLongitud(rs.getDouble(20));
+                    zonaPUCP.setIdZonaPUCP(rs.getInt(16));
+                    zonaPUCP.setNombreZona(rs.getString(17));
+                    zonaPUCP.setLatitud(rs.getDouble(18));
+                    zonaPUCP.setLongitud(rs.getDouble(19));
 
                     incidencia.setZonaPUCP(zonaPUCP);
 
@@ -266,17 +263,16 @@ public class IncidenciaDao extends DaoBase{
                     TipoIncidencia tipoIncidencia = new TipoIncidencia();
                     tipoIncidencia.setIdTipo(rs.getInt(8));
                     tipoIncidencia.setTipo(rs.getString("tipo"));
-                    tipoIncidencia.setIconobyte(rs.getBytes(10));
-                    tipoIncidencia.setNombreIcono(rs.getString(11));
+                    tipoIncidencia.setFotoIcono(rs.getString("iconoFoto"));
                     incidencia.setTipoIncidencia(tipoIncidencia);
 
                     NivelUrgencia nivel = new NivelUrgencia();
-                    nivel.setIdNivelUrgencia(rs.getInt(12));
+                    nivel.setIdNivelUrgencia(rs.getInt(11));
                     nivel.setNivel(rs.getString("nivel"));
                     incidencia.setNivelUrgencia(nivel);
 
                     EstadoIncidencia estado = new EstadoIncidencia();
-                    estado.setIdEstado(rs.getInt(14));
+                    estado.setIdEstado(rs.getInt(13));
                     estado.setEstado(rs.getString("estado"));
                     incidencia.setEstadoIncidencia(estado);
 
@@ -284,10 +280,10 @@ public class IncidenciaDao extends DaoBase{
                     incidencia.setUsuario(uDao.buscarPorId(rs.getString("codigo")));
 
                     ZonaPUCP zonaPUCP = new ZonaPUCP();
-                    zonaPUCP.setIdZonaPUCP(rs.getInt(17));
-                    zonaPUCP.setNombreZona(rs.getString(18));
-                    zonaPUCP.setLatitud(rs.getDouble(19));
-                    zonaPUCP.setLongitud(rs.getDouble(20));
+                    zonaPUCP.setIdZonaPUCP(rs.getInt(16));
+                    zonaPUCP.setNombreZona(rs.getString(17));
+                    zonaPUCP.setLatitud(rs.getDouble(18));
+                    zonaPUCP.setLongitud(rs.getDouble(19));
 
                     incidencia.setZonaPUCP(zonaPUCP);
 
@@ -471,7 +467,7 @@ public class IncidenciaDao extends DaoBase{
         try (Connection conn = this.getConnection();
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("select i.idIncidencia, i.fecha, i.nombreIncidencia, i.validaIncidencia, i.descripcion, i.contadorReabierto, i.otroTipo, \n" +
-                     "ti.idTipoIncidencia, ti.tipo, ti.iconoFoto, ti.nombreIcono, nu.idNivelUrgencia, nu.nivel, e.idEstadoIncidencia, e.estado,\n" +
+                     "ti.idTipoIncidencia, ti.tipo, ti.iconoFoto, nu.idNivelUrgencia, nu.nivel, e.idEstadoIncidencia, e.estado,\n" +
                      "u.codigo, z.idZonaPUCP, z.nombreZona, z.latitud, z.longitud, d.contadorDestacado\n" +
                      "from Incidencias i \n" +
                      "inner join NivelUrgencia nu on nu.idNivelUrgencia = i.idNivelUrgencia\n" +
@@ -493,17 +489,16 @@ public class IncidenciaDao extends DaoBase{
                 TipoIncidencia tipoIncidencia = new TipoIncidencia();
                 tipoIncidencia.setIdTipo(rs.getInt(8));
                 tipoIncidencia.setTipo(rs.getString("tipo"));
-                tipoIncidencia.setIconobyte(rs.getBytes(10));
-                tipoIncidencia.setNombreIcono(rs.getString(11));
+                tipoIncidencia.setFotoIcono(rs.getString("iconoFoto"));
                 incidencia.setTipoIncidencia(tipoIncidencia);
 
                 NivelUrgencia nivel = new NivelUrgencia();
-                nivel.setIdNivelUrgencia(rs.getInt(12));
+                nivel.setIdNivelUrgencia(rs.getInt(11));
                 nivel.setNivel(rs.getString("nivel"));
                 incidencia.setNivelUrgencia(nivel);
 
                 EstadoIncidencia estado = new EstadoIncidencia();
-                estado.setIdEstado(rs.getInt(14));
+                estado.setIdEstado(rs.getInt(13));
                 estado.setEstado(rs.getString("estado"));
                 incidencia.setEstadoIncidencia(estado);
 
@@ -511,15 +506,15 @@ public class IncidenciaDao extends DaoBase{
                 incidencia.setUsuario(uDao.buscarPorId(rs.getString("codigo")));
 
                 ZonaPUCP zonaPUCP = new ZonaPUCP();
-                zonaPUCP.setIdZonaPUCP(rs.getInt(17));
-                zonaPUCP.setNombreZona(rs.getString(18));
-                zonaPUCP.setLatitud(rs.getDouble(19));
-                zonaPUCP.setLongitud(rs.getDouble(20));
+                zonaPUCP.setIdZonaPUCP(rs.getInt(16));
+                zonaPUCP.setNombreZona(rs.getString(17));
+                zonaPUCP.setLatitud(rs.getDouble(18));
+                zonaPUCP.setLongitud(rs.getDouble(19));
 
                 incidencia.setZonaPUCP(zonaPUCP);
 
                 IncidenciasDestacadas a = new IncidenciasDestacadas();
-                a.setContadorDestacado(rs.getInt(21));
+                a.setContadorDestacado(rs.getInt(20));
                 incidencia.setIncidenciasDestacadas(a);
                 listaDestacadas.add(incidencia);
                 i++;
