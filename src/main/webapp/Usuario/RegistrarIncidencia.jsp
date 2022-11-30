@@ -43,36 +43,40 @@
 <!-- PRINCIPAL -->
 <div class="container-fluid" style="min-height: 60vh; align-content: center;">
     <div class="row" style="min-height: 60vh">
+        <div class="page-heading" style="text-align: center; margin: auto">
+            <h1 class="page-title" style="font-family: sans-serif,Montserrat; font-weight: 700;
+            font-size: 35px; color: #042354;"><b>Registrar Incidencias</b></h1>
+        </div>
+        <div style="height: 10px; display: block;"></div>
         <div class="page-content fade-in-up col-md-6" style="align-content: center">
             <div class="container" style=" height: 100%">
-                <div class="page-heading" style="text-align: center;margin-bottom: 20px;margin-left: 15%">
-                    <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Registrar Incidencias</b></h1>
-                </div>
-                <div class="ibox" style="align-content: center; min-height:60%; max-width: 85%; margin-left: 15% " >
+                <div class="ibox" style="align-content: center; min-height:60%; max-width: 85%; margin: auto; background: #dee2e6" >
                     <!--div class="ibox-head">
                         <div class="ibox-title" style="font-size: 20px">Registrar Incidencia</div>
                         <div class="ibox-tools">
                             <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
                         </div>
                     </div-->
-                    <div class="ibox-body" >
+                    <div class="ibox-body">
                         <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=guardar" enctype="multipart/form-data">
 
                             <!-- 1era fila -->
                             <div class="row g-2">
                                 <div class="col-md-4"  style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Nombre:</p>
+                                    <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat;
+                                    font-weight: 600; font-size: 18px; color: #042354;">Nombre:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px">
                                         <input type="text" class="form-control" id="floatingInputGrid2" placeholder="Nombre Incidencia" name="nombre_incidencia">
-                                        <label for="floatingInputGrid2" class="label-form-flujousuario">Nombre Incidencia</label>
+                                        <label for="floatingInputGrid2" class="label-form-flujousuario" >Nombre Incidencia</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row g-2">
                                 <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Fecha:</p>
+                                    <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat;
+                                    font-weight: 600; font-size: 18px; color: #042354;">Fecha:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px">
@@ -83,7 +87,8 @@
                             <!-- 2da fila -->
                             <div class="row g-2">
                                 <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Zona PUCP:</p>
+                                    <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat;
+                                    font-weight: 600; font-size: 18px; color: #042354;">Zona PUCP:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
@@ -93,14 +98,15 @@
                                             <% }%>
                                         </select>
 
-                                        <label for="floatingSelectGrid2" class="label-form-flujousuario">Zona PUCP</label>
+                                        <label for="floatingSelectGrid2" class="label-form-flujousuario" >Zona PUCP</label>
                                     </div>
                                 </div>
                             </div>
                             <!-- 3era fila -->
                             <div class="row g-2">
                                 <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Tipo de Incidencia:</p>
+                                    <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat;
+                                    font-weight: 600; font-size: 18px; color: #042354;">Tipo de Incidencia:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating " style="margin-bottom: 15px;">
@@ -118,7 +124,8 @@
                             <!-- 4ta fila -->
                             <div class="row g-2">
                                 <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Nivel de Urgencia:</p>
+                                    <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat;
+                                    font-weight: 600; font-size: 18px; color: #042354;">Nivel de Urgencia:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
@@ -135,7 +142,8 @@
                             <!-- 6ta fila -->
                             <div class="row g-2">
                                 <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Foto:</p>
+                                    <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat;
+                                    font-weight: 600; font-size: 18px; color: #042354;">Foto:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
@@ -147,7 +155,8 @@
                             <!-- 7ma fila -->
                             <div class="row g-2">
                                 <div class="col-md-4" style="display: flex; flex-direction: column">
-                                    <p class="campos-registrar-usuario">Descripción:</p>
+                                    <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat;
+                                    font-weight: 600; font-size: 18px; color: #042354;">Descripción:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
@@ -177,9 +186,11 @@
             <div class="container text-center" style="display: flex; justify-content: center;  flex-direction: column ; height: 100%"  >
                 <!-- Gallery -->
                 <div id="wrapper" >
-                    <h1 style="margin-bottom:15px ;font-family: 'Open Sans', sans-serif;font-size: 20px;font-weight: bold">Previsualización de Imágenes</h1>
-                    <div id="container-input"  >
-                        <div class="wrap-file">
+                    <h1 style="font-family: sans-serif,Montserrat;
+                        font-weight: 600; font-size: 20px; color: #042354;">Previsualización de Imágenes</h1>
+                    <div style="height: 20px; display: block;"></div>
+                    <div id="container-input" >
+                        <div class="wrap-file" style="height: 300px; width: 80%">
                             <div class="content-icon-camera">
                                 <!-- <input type="file" id="file" name="file[]" accept="image/*" multiple />  -->
                                 <div class="icon-camera"></div>
@@ -200,8 +211,11 @@
     </div>
 </div>
 <!-- END PRINCIPAL-->
-    <!-- Footer -->
-    <footer
+
+<div style="height: 100px; display: block;"></div>
+
+<!-- Footer -->
+<footer
             class="text-center text-lg-start text-white"
             style="background-color: #042354">
         <!-- Grid container -->
@@ -284,7 +298,7 @@
         </div>
         <!-- Grid container -->
     </footer>
-    <!-- Footer -->
+<!-- Footer -->
 
 <!-- Modal chequer funcionamiento-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

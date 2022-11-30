@@ -61,11 +61,12 @@
               </div>
             </div>
             <%if(session.getAttribute("msg")!=null){%>
-            <div id="validation" class="invalid-feedback" style="display: block; margin-bottom: 10px">
+            <div id="validation" class="invalid-feedback" style="display: block; margin-bottom: 10px;
+            font-family: sans-serif,Montserrat; font-size: 15px">
               <%=session.getAttribute("msg")%>
             </div>
-            <%session.removeAttribute("msg");%>
             <%}%>
+            <%session.removeAttribute("msg");%>
             <div align="center">
               <button type="submit" class="btn btn-outline-dark" style="border-radius: 5px">Aceptar y Continuar</button>
             </div>
