@@ -87,21 +87,19 @@
     </p>
   </div>
 
-
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade" id="exampleModal" aria-hidden="true" aria-labelledby="exampleModalLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Alerta</h1>
+          <h5 class="modal-title" id="exampleModalLabel">Registrar cambios</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          Se cambiara el estado de la incidencia
+          Se actualizó el estado de la incidencia
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
           <form action="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">
-            <button type="submit" class="btn btn-secondary">Cancelar</button>
+            <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Regresar a la ventana principal</button>
           </form>
         </div>
       </div>
