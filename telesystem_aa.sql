@@ -1,11 +1,11 @@
 use telesystem_aa;
-insert into TipoIncidencia(tipo) 
-		values ("Accidente"),
-			("Reporte de robos"),
-            ("Infraestructura en mal estado"),
-            ("Objetos perdidos"),
-            ("Ambulancia PUCP"),
-            ("Otros");
+insert into TipoIncidencia(tipo,iconoFoto) 
+		values ("Accidente", "../iconosReabrirIncidencia/clash-royale.jpg"),
+			("Reporte de robos","../iconosReabrirIncidencia/linuxuser.png"),
+            ("Infraestructura en mal estado","../iconosReabrirIncidencia/clash-royale.jpg"),
+            ("Objetos perdidos","../iconosReabrirIncidencia/clash-royale.jpg"),
+            ("Ambulancia PUCP","../iconosReabrirIncidencia/clash-royale.jpg"),
+            ("Otros","../iconosReabrirIncidencia/clash-royale.jpg");
 
 insert into NivelUrgencia (nivel) values ("Leve"), ("Moderado"), ("Critico");
 insert into EstadoIncidencia (estado) values ("Registrado"),

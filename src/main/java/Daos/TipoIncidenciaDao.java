@@ -22,8 +22,7 @@ public class TipoIncidenciaDao extends DaoBase {
                 TipoIncidencia tipo = new TipoIncidencia();
                 tipo.setIdTipo(rs.getInt(1));
                 tipo.setTipo(rs.getString(2));
-                tipo.setIconobyte(rs.getBytes(3));
-                tipo.setNombreIcono(rs.getString(4));
+                tipo.setFotoIcono(rs.getString(3));
                 tipos.add(tipo);
             }
 
