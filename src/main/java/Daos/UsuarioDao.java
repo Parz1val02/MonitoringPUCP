@@ -510,5 +510,28 @@ public class UsuarioDao extends DaoBase{
         return activeTime;
     }
      /*FINISH METODOS PARA DOBLE FACTOR*/
+     public boolean consultarMasterTable(String codigo, String correo ) {
+
+         boolean usuario_registrado = false;
+
+         String sql = "SELECT * FROM telesystem_aa.mastertable where codigo=? and correo = ?;";
+
+         try(Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)){
+
+             pstmt.setString(1, codigo);
+             pstmt.setString(2, correo);
+
+             try(ResultSet rs = pstmt.executeQuery();){
+                 if (rs.next()) {
+                     usuario_registrado = true;
+                 }
+             }
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
+         return usuario_registrado;
+     }
+
   
 }

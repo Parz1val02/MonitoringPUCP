@@ -10,6 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     ArrayList<Incidencia> listaIncidencias = (ArrayList<Incidencia>) request.getAttribute("listaIncidencias");
+    ArrayList<Integer> estados = (ArrayList<Integer>) request.getAttribute("estados");
 %>
 <html lang="en">
 <head>
@@ -36,68 +37,83 @@
     </div>
 </div>
 <!-- PRINCIPAL -->
-<div class="col-md-10" style="margin: 0 auto">
-    <div class="content-wrapper">
-        <div class="page-heading" style="text-align: center;margin-top: 15px;margin-bottom: 20px;">
-            <h1 class="page-title" style="font-size: 41px; font-weight: bold"><b>Buscar Incidencias</b></h1>
-        </div>
-        <div class="page-content fade-in-up">
-            <div class="ibox">
-                <div class="ibox-body">
-                    <table class="table table-striped table-bordered table-hover" id="example-table">
-                        <thead>
-                        <tr>
-                            <th>Nombre de la incidencia</th>
-                            <th>Nombre del usuario</th>
-                            <th>Estado</th>
-                            <!--<th>N° reabierta</th>-->
-                            <th>N° destacados</th>
-                            <!--<th>¿Reabrir incidencia?</th>-->
-
-                        </tr>
+    <div class="col-md-10" style="margin: 0 auto">
+        <div class="content-wrapper">
+            <div class="page-heading" style="text-align: center;margin-top: 15px;margin-bottom: 20px;">
+                <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Buscar Incidencias</b></h1>
+            </div>
+            <div class="page-content fade-in-up">
+                <div class="ibox">
+                    <div class="ibox-body">
+                        <table class="table table-striped table-bordered table-hover" id="example-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre de la incidencia</th>
+                                    <th>Nombre del usuario</th>
+                                    <th>Estado</th>
+                                    <!--<th>N° reabierta</th>-->
+                                    <th>N° destacados</th>
+                                    <!--<th>¿Reabrir incidencia?</th>-->
+                                    <th>Destacar</th>
+                                </tr>
                         </thead>
-
-                        <tbody>
-                        <% for(Incidencia incidencia : listaIncidencias) {%>
-                        <tr>
-                            <td><%= incidencia.getNombreIncidencia()%> </td>
-                            <td><%= incidencia.getUsuario().getNombre()%></td>
-                            <td><%= incidencia.getEstadoIncidencia().getEstado()%> </td
-                            <td></td>
-                            <td><%= incidencia.getIncidenciasDestacadas().getContadorDestacado()%> </td>
-
-                        </tr>
-                        <% }%>
-                        </tbody>
-                    </table>
+                            <tbody>
+                                <%int i=0;%>
+                                <% for(Incidencia incidencia : listaIncidencias) {%>
+                                <tr>
+                                    <td><%= incidencia.getNombreIncidencia()%> </td>
+                                    <td><%= incidencia.getUsuario().getNombre()%></td>
+                                    <td><%= incidencia.getEstadoIncidencia().getEstado()%> </td
+                                    <td></td>
+                                    <td><%= incidencia.getIncidenciasDestacadas().getContadorDestacado()%></td>
+                                    <td>
+                                        <%if (estados.get(i)==0){%>
+                                        <a type="button" class="btn btn-primary btn-mg float-right"
+                                           style="font-size: 15px; border-color: #042354; background-color: #042354;"
+                                           href="<%=request.getContextPath()%>/UsuarioServlet?accion=adddestacar&des=<%=incidencia.getIdIncidencia()%>">
+                                            <i class="fa-solid fa-pen">Destacar</i>
+                                        </a>
+                                        <%} else if (estados.get(i)==1) {%>
+                                        <a type="button" class="btn btn-primary btn-mg float-right"
+                                           style="font-size: 15px; border-color: #042354; background-color: #042354;"
+                                           href="<%=request.getContextPath()%>/UsuarioServlet?accion=deletedestacar&des=<%=incidencia.getIdIncidencia()%>">
+                                            <i class="fa-solid fa-pen">Quitar Destacado</i>
+                                        </a>
+                                        <%}%>
+                                    </td>
+                                </tr>
+                                <%i++;%>
+                                <% }%>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<br>
-<!-- Footer -->
-<footer
-        class="text-center text-lg-start text-white"
-        style="background-color: #042354">
-    <!-- Grid container -->
-    <div class="container p-4 pb-0">
-        <!-- Section: Links -->
-        <section class="">
-            <!--Grid row-->
-            <div class="row">
-                <!-- Grid column -->
-                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">
-                        UBICACIÓN
-                    </h6>
-                    <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px; color: #a9b9d4">
-                        Campus principal
-                        <div style="height: 1px; display: block;"></div>
-                        Av. Universitaria 1801, San Miguel, 15088
-                        <div style="height: 1px; display: block;"></div>
-                        Lima, Perú
-                    </div>
+    <br>
+    <!-- Footer -->
+    <footer
+            class="text-center text-lg-start text-white"
+            style="background-color: #042354">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+            <!-- Section: Links -->
+            <section class="">
+                <!--Grid row-->
+                <div class="row">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                        <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">
+                            UBICACIÓN
+                        </h6>
+                        <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px; color: #a9b9d4">
+                            Campus principal
+                            <div style="height: 1px; display: block;"></div>
+                            Av. Universitaria 1801, San Miguel, 15088
+                            <div style="height: 1px; display: block;"></div>
+                            Lima, Perú
+                        </div>
 
                 </div>
                 <!-- Grid column -->

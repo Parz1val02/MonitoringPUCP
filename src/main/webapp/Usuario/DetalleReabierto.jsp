@@ -141,6 +141,28 @@
                     </div>
                 </div>
             </div>
+        <div class="mb-3">
+            <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=reabrir&id=<%=incidencia.getIdIncidencia()%>">
+                <div class="form-floating" style="margin-left: 10px">
+                    <p>
+                        Justificacion de la incidencia: <br>
+                        <label for="floatingTextarea2"></label>
+                        <textarea class="form-control" placeholder="<%=incidencia.getDescripcion()%>" style="height: 100px" aria-label="Disabled input example" disabled readonly></textarea>
+                    </p>
+                </div>
+                <div class="form-floating" style="margin-left: 10px">
+                    <p>N° veces reabierta: <%=incidencia.getContadorReabierto()%>/5</p>
+                    <p>
+                        ¿Por qué desea reabrir esta incidencia?: <br>
+                        <label for="floatingTextarea2"></label>
+                        <textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" name ="reopen" style="height: 100px"></textarea>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit" >Reabrir Incidencia</button>
+                    <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar" class="btn btn-secondary">Regresar a la ventana principal</a>
+                </div>
+            </form>
         </div>
     </div>
 
