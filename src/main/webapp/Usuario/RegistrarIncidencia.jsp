@@ -57,7 +57,7 @@
                             <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
                         </div>
                     </div-->
-                    <div class="ibox-body" >
+                    <div class="ibox-body">
                         <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=guardar" enctype="multipart/form-data">
 
                             <!-- 1era fila -->

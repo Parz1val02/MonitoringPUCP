@@ -39,7 +39,7 @@
 <div class="col-md-10" style="margin: 0 auto">
     <div class="content-wrapper">
         <div class="page-heading" style="text-align: center;margin-top: 15px;margin-bottom: 20px;">
-            <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Buscar Incidencias</b></h1>
+            <h1 class="page-title" style="font-size: 41px; font-weight: bold"><b>Buscar Incidencias</b></h1>
         </div>
         <div class="page-content fade-in-up">
             <div class="ibox">

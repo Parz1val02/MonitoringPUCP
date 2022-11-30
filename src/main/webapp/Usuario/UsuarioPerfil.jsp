@@ -41,7 +41,7 @@
                             </a>
                         </div>
                     </div>
-                    <br>
+                    <br></br>
                     <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=actualizarFoto" enctype="multipart/form-data">
                         <div class="col-md">
                             <div class="row">
