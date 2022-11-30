@@ -11,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   Usuario usuario = (Usuario) request.getAttribute("usuario");
-
+  String error = request.getAttribute("msg").toString();
   ArrayList<CategoriaPUCP> listaCategorias = (ArrayList<CategoriaPUCP>) request.getAttribute("listaCategorias");
 %>
 <%
