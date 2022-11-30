@@ -135,12 +135,11 @@
                         <div style="height: 25px; display: block;"></div>
                         <div align="center">
                             <div class="row">
-                                <div class="col-md-1"></div>
-                                <div class="col-md-6">
-                                    <p style="text-align: right ;font-family: sans-serif,Montserrat; font-weight: 500; font-size: 15px; color: #042354"> ¿Deseas cambiar tu contraseña?</p>
+                                <div>
+                                    <p style="text-align: center ;font-family: sans-serif,Montserrat; font-weight: 500; font-size: 15px; color: #042354"> ¿Deseas cambiar tu contraseña?</p>
                                 </div>
-                                <div class="col-md-5">
-                                    <label style="justify-content: left; display: flex">
+                                <div>
+                                    <label style="justify-content: center; display: flex">
                                         <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=restablecerContrasenia" type="button" value="Cambiar contraseña" class="btn btn-primary btn-sm float-right" style="font-size: 12px;
                         border-color: #042354; background-color: #042354;">Cambiar Contraseña</a>
                                     </label>

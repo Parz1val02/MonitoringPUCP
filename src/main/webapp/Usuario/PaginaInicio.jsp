@@ -84,20 +84,12 @@
                                                 <div style="border-radius: 2px;border-color: black">
                                                     <div class="container-fluid" style="padding-top: 4vh;" align="center">
                                                         <div class="row" align="center">
-                                                            <div class="col-md-7" align="right">
+                                                            <div  align="center">
                                                                 <div style="height: 5px; display: block;"></div>
                                                                 <h7 style="font-family: sans-serif,Montserrat; font-weight: 700;
                                                         font-size: 20px; color: #783bb3;" align="center">
                                                                     Incidencia #<%=i+1%>
                                                                 </h7>
-                                                            </div>
-                                                            <div class="col-md-1"></div>
-                                                            <div class="col-md-4" >
-                                                                <a type="button" class="btn btn-primary btn-mg float-right"
-                                                                   style="font-size: 15px; border-color: #042354; background-color: #042354;"
-                                                                   href="<%=request.getContextPath()%>/UsuarioDao?accion=destacar&des=<%=incidencia.getIdIncidencia()%>">
-                                                                    <i class="fa-solid fa-pen">Destacar</i>
-                                                                </a>
                                                             </div>
                                                         </div>
                                                         <div style="height: 20px; display: block;"></div>
@@ -113,7 +105,7 @@
                                                                         </p>
                                                                     </div>
                                                                     <div style="height: 15px; display: block;"></div>
-                                                                    <div class="col-sm-7" align="right">
+                                                                    <div class="col-sm-7" align="center">
                                                                         <p style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px;
                                                                         color: #042354; margin: 0px"># de Destacadas</p>
                                                                     </div>
@@ -181,6 +173,12 @@
                                                         </div>
                                                         <div style="height: 50px; display: block;"></div>
                                                         <div align="center">
+                                                            <a type="button" class="btn btn-primary btn-mg float-right"
+                                                               style="font-size: 15px; border-color: #042354; background-color: #042354;"
+                                                               href="<%=request.getContextPath()%>/UsuarioDao?accion=destacar&des=<%=incidencia.getIdIncidencia()%>">
+                                                                <i class="fa-solid fa-pen">Destacar</i>
+                                                            </a>
+                                                            <div style="height: 10px; display: block; background: #FFFFFF;"></div>
                                                             <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle2&id=<%=incidencia.getIdIncidencia()%>" style="color: #783bb3; font-weight: bold; font-size: 17px">Ver detalle de la incidencia</a>
                                                         </div>
                                                     </div>
