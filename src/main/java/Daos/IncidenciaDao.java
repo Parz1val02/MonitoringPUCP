@@ -70,7 +70,7 @@ public class IncidenciaDao extends DaoBase{
 
 
                 IncidenciasDestacadas a = new IncidenciasDestacadas();
-                a.setContadorDestacado(rs.getInt(21));
+                a.setContadorDestacado(rs.getInt(20));
                 incidencia.setIncidenciasDestacadas(a);
                 listaIncidencia.add(incidencia);
             }
@@ -477,7 +477,7 @@ public class IncidenciaDao extends DaoBase{
                      "left join Usuarios u on i.codigousuario = u.codigo \n" +
                      "left join ZonaPUCP z on i.idZonaPUCP=z.idZonaPUCP where validaIncidencia = 1 order by d.contadorDestacado DESC;")) {
             int i = 0;
-            while (rs.next() & i<=5) {
+            while (rs.next() & i<5) {
                 Incidencia incidencia = new Incidencia();
                 incidencia.setIdIncidencia(rs.getInt("i.IdIncidencia"));
                 incidencia.setFecha(rs.getString(2));
@@ -678,5 +678,31 @@ public class IncidenciaDao extends DaoBase{
         return fis;
     }
 
+    public ArrayList<FotosIncidencias> fotosInicio(ArrayList<Integer> ids){
+        ArrayList<FotosIncidencias> fotosIncidencias = new ArrayList<>();
+        String sql = "select * from FotosIncidencias where idIncidencia in (?,?,?,?,?) group by idIncidencia;";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+
+            pstmt.setInt(1, ids.get(0));
+            pstmt.setInt(2, ids.get(1));
+            pstmt.setInt(3, ids.get(2));
+            pstmt.setInt(4, ids.get(3));
+            pstmt.setInt(5, ids.get(4));
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while(rs.next()){
+                    FotosIncidencias fi = new FotosIncidencias();
+                    fi.setIdFotos(rs.getInt(1));
+                    fi.setFotobyte(rs.getBytes(2));
+                    fi.setNombreFoto(rs.getString(3));
+                    fotosIncidencias.add(fi);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return fotosIncidencias;
+    }
 }
 

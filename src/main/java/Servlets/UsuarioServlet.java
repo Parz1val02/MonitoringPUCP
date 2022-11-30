@@ -150,11 +150,15 @@ public class UsuarioServlet extends HttpServlet {
                         listaIncidencias = inDao.obtenerIncidenciasDestacadas();
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
+                    }ArrayList<Integer> ids = new ArrayList<>();
+                    for(Incidencia i : listaIncidencias){
+                        ids.add(i.getIdIncidencia());
                     }
-
+                    ArrayList<FotosIncidencias> fotosIncidencias = inDao.fotosInicio(ids);
                     ArrayList<Integer> estados = inDao.estados(listaIncidencias,usuario1.getCodigo());
                     request.setAttribute("destacadas",listaIncidencias);
                     request.setAttribute("estados",estados);
+                    request.setAttribute("fotosIndicencias", fotosIncidencias);
                     view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
                     view.forward(request, response);
                     break;

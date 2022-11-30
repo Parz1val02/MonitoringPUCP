@@ -31,7 +31,9 @@
     <style>
         #map { height: 300px; }
     </style>
+    <link rel="stylesheet" href="../css/flex.css">
     <link rel="stylesheet" href=../css/style.min.css>
+
 
 </head>
 <body>
@@ -65,24 +67,38 @@
         <div style="height: 25px; display: block;"></div>
         <div id="map"></div>
         <div style="height: 25px; display: block;"></div>
-        <%if(fotos.size()>0){%>
-        <div class="container" style="align-content: center;">
+
+        <div class="container">
             <div class="row">
-                <%for(FotosIncidencias fotito : fotos){%>
-                <div class="page-content fade-in-up col-md-5" style="align-content: center;align-items: center">
-                        <div class="imagen" style =  "align-content: center; align-items: center">
-                            <div class="img">
-                                <a target="blank">
-                                    <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="">
-                                </a>
+                <div class="col-md-6" style="margin: auto">
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <%int i=0;%>
+                            <%for(FotosIncidencias fotito : fotos){%>
+                            <%if(i==0){%>
+                            <div class="carousel-item active">
+                                <%}else {%>
+                                <div class="carousel-item">
+                                    <%}%>
+                                    <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="..." class="d-block w-100">
+                                </div>
+                                <%i++;%>
+                                <%}%>
                             </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
                         </div>
-                    <div style="height: 25px; display: block;"></div>
+                    </div>
                 </div>
-                <%}%>
             </div>
         </div>
-        <%}%>
+
         <div style =  "margin-left: 10px" class="form-floating">
             <p>
                 Justificacion de la incidencia: <br>
