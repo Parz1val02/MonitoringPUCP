@@ -67,7 +67,6 @@
         <div style="height: 25px; display: block;"></div>
         <div id="map"></div>
         <div style="height: 25px; display: block;"></div>
-
         <div class="container">
             <div class="row">
                 <div class="col-md-6" style="margin: auto">
@@ -98,8 +97,7 @@
                 </div>
             </div>
         </div>
-
-            <div class="mb-3">
+        <div class="mb-3">
                 <div class="container">
                     <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=reabrir&id=<%=incidencia.getIdIncidencia()%>">
                         <div class="form-floating" style="margin-left: 10px">
@@ -131,6 +129,7 @@
                     </form>
                 </div>
             </div>
+    </div>
 </body>
 <script type="text/javascript">
     function set_map() {
