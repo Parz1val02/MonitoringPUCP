@@ -10,7 +10,7 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -122,19 +122,38 @@ public class UsuarioServlet extends HttpServlet {
                     view = request.getRequestDispatcher("/Usuario/BuscarIncidencia.jsp");
                     view.forward(request, response);
                     break;
-
+                case "deletedestacar":
+                    String est1 = request.getParameter("des");
+                    int es1 = Integer.parseInt(est1);
+                    try {
+                        inDao.destacarIncidenciaBorrar(es1,usuario1.getCodigo());
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=inicio");
+                    break;
+                case("adddestacar"):
+                    String est = request.getParameter("des");
+                    int es = Integer.parseInt(est);
+                    try {
+                        inDao.destacarIncidenciaAdd(es,usuario1.getCodigo());
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=inicio");
+                    /*view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
+                    view.forward(request, response);*/
+                    break;
                 case("inicio"):
-                /*try {
-                    listaDestacados = inDao.obtenerDestacadas();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                request.setAttribute("listaDestacados",listaDestacados);
-                view = request.getRequestDispatcher("/Usuario/inicio.jsp");
-                view.forward(request,response);
-                break;*/ /*prueba*/
-                    listaIncidencias = inDao.obtenerIncidencias();
-                    request.setAttribute("listaIncidencias",listaIncidencias);
+                    try {
+                        listaIncidencias = inDao.obtenerIncidenciasDestacadas();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    ArrayList<Integer> estados = inDao.estados(listaIncidencias,usuario1.getCodigo());
+                    request.setAttribute("destacadas",listaIncidencias);
+                    request.setAttribute("estados",estados);
                     view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
                     view.forward(request, response);
                     break;
@@ -228,6 +247,7 @@ public class UsuarioServlet extends HttpServlet {
                     InputStream fileContent = filePart.getInputStream();
                     byte[] fileBytes = fileContent.readAllBytes();
                     FotosIncidencias fi = new FotosIncidencias();
+                    System.out.println(fileName);
                     fi.setFotobyte(fileBytes);
                     fi.setNombreFoto(fileName);
                     fi.setIncidencia(incidencia);
@@ -255,7 +275,7 @@ public class UsuarioServlet extends HttpServlet {
                 }
                 response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=perfil");
                 break;
-                
+
              case "cambiarContrasena":
                 String correo = usuario1.getCorreo();
                 String actual = request.getParameter("contraseñaActual");
@@ -296,7 +316,7 @@ public class UsuarioServlet extends HttpServlet {
 
                 response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
                 break;
-   
+
         }
 
 
