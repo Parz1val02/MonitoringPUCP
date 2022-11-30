@@ -13,11 +13,12 @@ public abstract class DaoBase {
             throw new RuntimeException(e);
         }
         String user= "root";
-        String pass="root";
-        String passBD= "Iuseclashbtw";
-        String IP = "35.247.38.109";
-        String localhost = "localhost";
-        String url = "jdbc:mysql://"+localhost+":3306/telesystem_aa?serverTimezone=America/Lima";
+        String pass="salchipapa";
+        //String passBD= "Iuseclashbtw";
+        //String IP = "35.247.38.109";
+        //String localhost = "localhost";
+        //String url = "jdbc:mysql://"+localhost+":3306/telesystem_aa?serverTimezone=America/Lima";
+        String url = "jdbc:mysql://:3306/telesystem_aa?serverTimezone=America/Lima";
 
         return DriverManager.getConnection(url,user,pass);
     }
