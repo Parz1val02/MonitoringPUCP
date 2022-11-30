@@ -1,6 +1,7 @@
 <%@ page import="Beans.Incidencia" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Objects" %>
+<%@ page import="Beans.FotosIncidencias" %>
 <%--
   Created by IntelliJ IDEA.
   User: Labtel
@@ -12,6 +13,7 @@
 <%
     Incidencia incidencia = (Incidencia) request.getAttribute("Incidencia");
     ArrayList<Incidencia> listaIncidencias = (ArrayList<Incidencia>) request.getAttribute("listaIncidencias");
+    ArrayList<FotosIncidencias> fotos = (ArrayList<FotosIncidencias>) request.getAttribute("Fotos");
 %>
 <html>
 <head>
@@ -45,12 +47,17 @@
             <div class="col-md-6" style="margin: auto">
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
+                        <%int i=0;%>
+                        <%for(FotosIncidencias fotito : fotos){%>
+                        <%if(i==0){%>
                         <div class="carousel-item active">
-                            <img src="../images/accidente1.png" class="d-block w-100" alt="...">
+                            <%}else {%>
+                            <div class="carousel-item">
+                                <%}%>
+                            <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="..." class="d-block w-100">
                         </div>
-                        <div class="carousel-item">
-                            <img src="../images/accidente2.png" class="d-block w-100" alt="...">
-                        </div>
+                                <%i++;%>
+                        <%}%>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>

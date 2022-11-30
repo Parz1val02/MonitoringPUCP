@@ -48,7 +48,7 @@
             font-size: 35px; color: #042354;"><b>Registrar Incidencias</b></h1>
         </div>
         <div style="height: 10px; display: block;"></div>
-        <div class="page-content fade-in-up col-md-6" style="align-content: center">
+        <div class="page-content fade-in-up" style="align-content: center">
             <div class="container" style=" height: 100%">
                 <div class="ibox" style="align-content: center; min-height:60%; max-width: 85%; margin: auto; background: #dee2e6" >
                     <!--div class="ibox-head">
@@ -182,9 +182,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <!--div class="col-md-6">
             <div class="container text-center" style="display: flex; justify-content: center;  flex-direction: column ; height: 100%"  >
-                <!-- Gallery -->
+                < Gallery>
                 <div id="wrapper" >
                     <h1 style="font-family: sans-serif,Montserrat;
                         font-weight: 600; font-size: 20px; color: #042354;">Previsualización de Imágenes</h1>
@@ -192,22 +192,22 @@
                     <div id="container-input" >
                         <div class="wrap-file" style="height: 300px; width: 80%">
                             <div class="content-icon-camera">
-                                <!-- <input type="file" id="file" name="file[]" accept="image/*" multiple />  -->
+                                < <input type="file" id="file" name="file[]" accept="image/*" multiple />  >
                                 <div class="icon-camera"></div>
                             </div>
                             <div id="preview-images"></div>
                         </div>
                         <button id="publish">Publicar</button>
                     </div>
-                    <!--div class="preload">
+                    div class="preload">
                         <img src="assets/images/preload.gif" alt="preload" />
                     </div>
                     <h2 id="success"></h2>
-                </div-->
-                    <!-- Gallery -->
+                </div>
+                    < Gallery>
                 </div>
             </div>
-        </div>
+        </div-->
     </div>
 </div>
 <!-- END PRINCIPAL-->
@@ -319,7 +319,7 @@
     </div>
 </div>
     <!--CUSTOM SCRIPTS-->
-    <script src="../scripts/flujo-usuario.js"></script> <!--previsualizador de imagenes-->
+    <!--script src="../scripts/flujo-usuario.js"></script> <previsualizador de imagenes-->
     <!-- CORE SCRIPTS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 

@@ -6,6 +6,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+  Usuario usuario = (Usuario) session.getAttribute("usuario");
+  int flag = (int) session.getAttribute("flag");
+  if (usuario != null && flag == 1 && usuario.getRol().getNombreRol().equals("Seguridad") ) {
+    response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
+  } else if (usuario != null && flag == 1 && usuario.getRol().getNombreRol().equals("Administrador")  ) {
+    response.sendRedirect(request.getContextPath() + "/AdminServlet");
+  }
+%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
