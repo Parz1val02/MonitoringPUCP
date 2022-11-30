@@ -8,11 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   Usuario usuario = (Usuario) session.getAttribute("usuario");
-  int flag = (int) session.getAttribute("flag");
+  Integer flag = (Integer) session.getAttribute("flag");
   if (usuario != null && flag == 1 && usuario.getRol().getNombreRol().equals("Seguridad") ) {
     response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
   } else if (usuario != null && flag == 1 && usuario.getRol().getNombreRol().equals("Administrador")  ) {
     response.sendRedirect(request.getContextPath() + "/AdminServlet");
+  } else if (usuario == null) {
+    response.sendRedirect(request.getContextPath() + "/Login");
   }
 %>
 <!DOCTYPE html>

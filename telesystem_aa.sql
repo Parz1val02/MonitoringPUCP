@@ -1,11 +1,11 @@
 use telesystem_aa;
 insert into TipoIncidencia(tipo,iconoFoto) 
-		values ("Accidente", "../iconosReabrirIncidencia/clash-royale.jpg"),
+		values ("Accidente", "../iconosReabrirIncidencia/accidente.png"),
 			("Reporte de robos","../iconosReabrirIncidencia/linuxuser.png"),
-            ("Infraestructura en mal estado","../iconosReabrirIncidencia/clash-royale.jpg"),
-            ("Objetos perdidos","../iconosReabrirIncidencia/clash-royale.jpg"),
-            ("Ambulancia PUCP","../iconosReabrirIncidencia/clash-royale.jpg"),
-            ("Otros","../iconosReabrirIncidencia/clash-royale.jpg");
+            ("Infraestructura en mal estado","../iconosReabrirIncidencia/mala-infraestructura.png"),
+            ("Objetos perdidos","../iconosReabrirIncidencia/objetos-perdidos.png"),
+            ("Ambulancia PUCP","../iconosReabrirIncidencia/ambulanciaPUCP.png"),
+            ("Otros","../iconosReabrirIncidencia/otros.png");
 
 insert into NivelUrgencia (nivel) values ("Leve"), ("Moderado"), ("Critico");
 insert into EstadoIncidencia (estado) values ("Registrado"),
