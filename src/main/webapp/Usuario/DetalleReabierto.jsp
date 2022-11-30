@@ -99,73 +99,38 @@
             </div>
         </div>
 
-        <div style =  "margin-left: 10px" class="form-floating">
-            <p>
-                Justificacion de la incidencia: <br>
-                <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea" style="height: 100px"></textarea>
-            </p>
-        </div>
-
-        <div style =  "margin-left: 10px" class="form-floating">
-
-            <p align="right">N° veces reabierta: <%=incidencia.getContadorReabierto()%>/5</p>
-            <p>
-                ¿Por qué desea reabrir esta incidencia?: <br>
-                <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px"></textarea>
-            </p>
-        </div>
-
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Registrar reapertura
-            </button>
-            <form action="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">
-                <button type="submit" class="btn btn-secondary" data-bs-toggle="modal">Cancelar</button>
-            </form>
-        </div>
-
-        <div class="modal fade" id="exampleModal" aria-hidden="true" aria-labelledby="exampleModalLabel" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Registrar cambios</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Se actualizó el estado de la incidencia
-                    </div>
-                    <div class="modal-footer">
-                        <form action="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">
-                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Regresar a la ventana principal</button>
-                        </form>
-                    </div>
+            <div class="mb-3">
+                <div class="container">
+                    <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=reabrir&id=<%=incidencia.getIdIncidencia()%>">
+                        <div class="form-floating" style="margin-left: 10px">
+                            <p>
+                                Justificacion de la incidencia: <br>
+                                <label for="floatingTextarea2"></label>
+                                <textarea class="form-control" placeholder="<%=incidencia.getDescripcion()%>" style="height: 100px" aria-label="Disabled input example" disabled readonly></textarea>
+                            </p>
+                        </div>
+                        <div class="form-floating" style="margin-left: 10px">
+                            <p>N° veces reabierta: <%=incidencia.getContadorReabierto()%>/5</p>
+                            <p>
+                                ¿Por qué desea reabrir esta incidencia?: <br>
+                                <label for="floatingTextarea2"></label>
+                                <textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" name ="reopen" style="height: 100px"></textarea>
+                            </p>
+                        </div>
+                        <%if(session.getAttribute("info")!=null){%>
+                        <div class="form-group">
+                            <button class="btn btn-danger"><%=session.getAttribute("info")%></button>
+                            <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar" class="btn btn-secondary">Regresar a la ventana principal</a>
+                        </div>
+                        <%} else{%>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit" >Reabrir Incidencia</button>
+                            <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar" class="btn btn-secondary">Regresar a la ventana principal</a>
+                        </div>
+                        <%}%>
+                    </form>
                 </div>
             </div>
-        <div class="mb-3">
-            <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=reabrir&id=<%=incidencia.getIdIncidencia()%>">
-                <div class="form-floating" style="margin-left: 10px">
-                    <p>
-                        Justificacion de la incidencia: <br>
-                        <label for="floatingTextarea2"></label>
-                        <textarea class="form-control" placeholder="<%=incidencia.getDescripcion()%>" style="height: 100px" aria-label="Disabled input example" disabled readonly></textarea>
-                    </p>
-                </div>
-                <div class="form-floating" style="margin-left: 10px">
-                    <p>N° veces reabierta: <%=incidencia.getContadorReabierto()%>/5</p>
-                    <p>
-                        ¿Por qué desea reabrir esta incidencia?: <br>
-                        <label for="floatingTextarea2"></label>
-                        <textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" name ="reopen" style="height: 100px"></textarea>
-                    </p>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" type="submit" >Reabrir Incidencia</button>
-                    <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar" class="btn btn-secondary">Regresar a la ventana principal</a>
-                </div>
-            </form>
-        </div>
-    </div>
-
 </body>
 <script type="text/javascript">
     function set_map() {

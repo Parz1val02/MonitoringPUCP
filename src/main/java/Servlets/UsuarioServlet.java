@@ -100,6 +100,7 @@ public class UsuarioServlet extends HttpServlet {
                     incidencia = inDao.obtenerIncidencia(idIncidencia4);
                     listaIncidencias = inDao.obtenerIncidencias();
                     ArrayList<FotosIncidencias> fotos2 = inDao.obtenerFotos(idIncidencia4);
+                    System.out.println(fotos2.size());
                     request.setAttribute("Incidencia",incidencia);
                     request.setAttribute("listaIncidencias",listaIncidencias);
                     request.setAttribute("Fotos",fotos2);
@@ -197,8 +198,17 @@ public class UsuarioServlet extends HttpServlet {
         switch (accion){
             case ("reabrir"):
                 int idIncidencia5 = Integer.parseInt(request.getParameter("id"));
-                idao.reabrir(idIncidencia5);
-                response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
+                Incidencia jijija = idao.obtenerIncidencia(idIncidencia5);
+                int cont = jijija.getContadorReabierto();
+                String comentarioreopen = request.getParameter("reopen");
+                System.out.println(comentarioreopen);
+                if (cont>=5){
+                    request.getSession().setAttribute("info", "Ya se ha alcanzado el número máximo de reaperturas");
+                    response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=verDetalle&id="+jijija.getIdIncidencia());
+                }else {
+                    idao.reabrir(idIncidencia5);
+                    response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
+                }
                 break;
             case ("confirmarIncidencia"):
                 int idIncidencia2 = Integer.parseInt(request.getParameter("id"));

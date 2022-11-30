@@ -56,7 +56,7 @@
                                 <%}%>
                             <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="..." class="d-block w-100">
                         </div>
-                                <%i++;%>
+                            <%i++;%>
                         <%}%>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
