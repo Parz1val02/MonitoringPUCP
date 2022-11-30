@@ -121,6 +121,7 @@ public class UsuarioServlet extends HttpServlet {
                 case("buscarIncidencia"):
                     listaIncidencias = inDao.obtenerIncidencias();
                     ArrayList<Integer> estados = inDao.estados(listaIncidencias,usuario1.getCodigo());
+                    System.out.println(listaIncidencias.size());
                     request.setAttribute("estados",estados);
                     request.setAttribute("listaIncidencias",listaIncidencias);
                     view = request.getRequestDispatcher("/Usuario/BuscarIncidencia.jsp");

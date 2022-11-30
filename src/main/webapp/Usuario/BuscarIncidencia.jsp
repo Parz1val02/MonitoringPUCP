@@ -54,20 +54,35 @@
                                     <!--<th>N° reabierta</th>-->
                                     <th>N° destacados</th>
                                     <!--<th>¿Reabrir incidencia?</th>-->
-
-                        </tr>
+                                    <th>Destacar</th>
+                                </tr>
                         </thead>
-
                             <tbody>
+                                <%int i=0;%>
                                 <% for(Incidencia incidencia : listaIncidencias) {%>
                                 <tr>
                                     <td><%= incidencia.getNombreIncidencia()%> </td>
                                     <td><%= incidencia.getUsuario().getNombre()%></td>
                                     <td><%= incidencia.getEstadoIncidencia().getEstado()%> </td
                                     <td></td>
-                                    <td><%= incidencia.getIncidenciasDestacadas().getContadorDestacado()%> </td>
-
+                                    <td><%= incidencia.getIncidenciasDestacadas().getContadorDestacado()%></td>
+                                    <td>
+                                        <%if (estados.get(i)==0){%>
+                                        <a type="button" class="btn btn-primary btn-mg float-right"
+                                           style="font-size: 15px; border-color: #042354; background-color: #042354;"
+                                           href="<%=request.getContextPath()%>/UsuarioServlet?accion=adddestacar&des=<%=incidencia.getIdIncidencia()%>">
+                                            <i class="fa-solid fa-pen">Destacar</i>
+                                        </a>
+                                        <%} else if (estados.get(i)==1) {%>
+                                        <a type="button" class="btn btn-primary btn-mg float-right"
+                                           style="font-size: 15px; border-color: #042354; background-color: #042354;"
+                                           href="<%=request.getContextPath()%>/UsuarioServlet?accion=deletedestacar&des=<%=incidencia.getIdIncidencia()%>">
+                                            <i class="fa-solid fa-pen">Quitar Destacado</i>
+                                        </a>
+                                        <%}%>
+                                    </td>
                                 </tr>
+                                <%i++;%>
                                 <% }%>
                             </tbody>
                         </table>

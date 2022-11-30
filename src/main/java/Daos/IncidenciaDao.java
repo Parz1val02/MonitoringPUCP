@@ -70,7 +70,7 @@ public class IncidenciaDao extends DaoBase{
 
 
                 IncidenciasDestacadas a = new IncidenciasDestacadas();
-                a.setContadorDestacado(rs.getInt(21));
+                a.setContadorDestacado(rs.getInt(20));
                 incidencia.setIncidenciasDestacadas(a);
                 listaIncidencia.add(incidencia);
             }
@@ -79,7 +79,7 @@ public class IncidenciaDao extends DaoBase{
         }
         return listaIncidencia;
     }
-    
+
     
     public ArrayList<Incidencia> obtenerIncidenciasPorUsuario(String codigoUsuario) throws SQLException {
 
