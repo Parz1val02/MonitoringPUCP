@@ -168,6 +168,8 @@ public class Login extends HttpServlet {
                     session.setMaxInactiveInterval(10*60);//10 minutos de inactividad
                     //ingresa
                     if (user.getRol().getNombreRol().equals("Usuario PUCP")){ //compara mayu y minu
+                        flag = 1;
+                        session.setAttribute("flag",flag);
                         response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
                     } else if (user.getRol().getNombreRol().equals("Seguridad")) {
                         /*response.sendRedirect(request.getContextPath() + "/SeguridadServlet");*/
