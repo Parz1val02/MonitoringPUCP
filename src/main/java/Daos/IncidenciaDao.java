@@ -545,7 +545,21 @@ public class IncidenciaDao extends DaoBase{
     public void confirmar(int id) {
 
         //con borrado logico
-        String sql = "UPDATE incidencias SET idEstadoIncidencia=4 where idIncidencia  = ?" ;
+        String sql = "UPDATE Incidencias SET idEstadoIncidencia=4 where idIncidencia  = ?" ;
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            System.out.println("Confirmar");
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void reabrir(int id) {
+        //con borrado logico
+        String sql = "UPDATE Incidencias SET idEstadoIncidencia=2, contadorReabierto = contadorReabierto+1 where idIncidencia  = ?" ;
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {

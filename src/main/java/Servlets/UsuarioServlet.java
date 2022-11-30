@@ -37,8 +37,9 @@ public class UsuarioServlet extends HttpServlet {
                 case ("confirmar"):
                     int idIncidencia = Integer.parseInt(request.getParameter("id"));
                     incidencia = inDao.obtenerIncidencia(idIncidencia);
+                    ArrayList<FotosIncidencias> fotos1 = inDao.obtenerFotos(idIncidencia);
                     request.setAttribute("Incidencia",incidencia);
-                    inDao.confirmar(idIncidencia);
+                    request.setAttribute("Fotos",fotos1);
                     view = request.getRequestDispatcher("/Usuario/confirmarIncidencia.jsp");
                     view.forward(request, response);
                     //response.sendRedirect(request.getContextPath()+ "/UsuarioServlet");
@@ -61,9 +62,9 @@ public class UsuarioServlet extends HttpServlet {
                     view.forward(request,response);
                     break;
                 case ("listarDestacados") :
-
                     listaIncidencias = inDao.obtenerIncidencias();
-
+                    ArrayList<Integer> estados4 = inDao.estados(listaIncidencias,usuario1.getCodigo());
+                    request.setAttribute("estados",estados4);
                     request.setAttribute("listaIncidencias",listaIncidencias);
                     view = request.getRequestDispatcher("/Usuario/IncidenciasDestacadas.jsp");
                     view.forward(request,response);
@@ -119,6 +120,8 @@ public class UsuarioServlet extends HttpServlet {
                     break;
                 case("buscarIncidencia"):
                     listaIncidencias = inDao.obtenerIncidencias();
+                    ArrayList<Integer> estados = inDao.estados(listaIncidencias,usuario1.getCodigo());
+                    request.setAttribute("estados",estados);
                     request.setAttribute("listaIncidencias",listaIncidencias);
                     view = request.getRequestDispatcher("/Usuario/BuscarIncidencia.jsp");
                     view.forward(request, response);
@@ -152,9 +155,9 @@ public class UsuarioServlet extends HttpServlet {
                         throw new RuntimeException(e);
                     }
 
-                    ArrayList<Integer> estados = inDao.estados(listaIncidencias,usuario1.getCodigo());
+                    ArrayList<Integer> estados1 = inDao.estados(listaIncidencias,usuario1.getCodigo());
                     request.setAttribute("destacadas",listaIncidencias);
-                    request.setAttribute("estados",estados);
+                    request.setAttribute("estados",estados1);
                     view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
                     view.forward(request, response);
                     break;
@@ -186,6 +189,17 @@ public class UsuarioServlet extends HttpServlet {
         RequestDispatcher view ;
 
         switch (accion){
+            case ("reabrir"):
+                int idIncidencia5 = Integer.parseInt(request.getParameter("id"));
+                idao.reabrir(idIncidencia5);
+                response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
+                break;
+            case ("confirmarIncidencia"):
+                int idIncidencia2 = Integer.parseInt(request.getParameter("id"));
+                idao.confirmar(idIncidencia2);
+                System.out.println("Confirmar");
+                response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
+                break;
 
             case "guardar": //guardar incidencia
                 Incidencia incidencia = new Incidencia();
