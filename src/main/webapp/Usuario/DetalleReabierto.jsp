@@ -65,11 +65,12 @@
         <div style="height: 25px; display: block;"></div>
         <div id="map"></div>
         <div style="height: 25px; display: block;"></div>
-        <div class="container" style="min-height: 60vh; align-content: center;">
-            <div class="row" style="min-height: 60vh">
-                <div class="page-content fade-in-up col-md-5" style="align-content: center">
-                    <%for(FotosIncidencias fotito : fotos){%>
-                        <div class="imagen" style =  "align-content: center">
+        <%if(fotos.size()>0){%>
+        <div class="container" style="align-content: center;">
+            <div class="row">
+                <%for(FotosIncidencias fotito : fotos){%>
+                <div class="page-content fade-in-up col-md-5" style="align-content: center;align-items: center">
+                        <div class="imagen" style =  "align-content: center; align-items: center">
                             <div class="img">
                                 <a target="blank">
                                     <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="">
@@ -77,11 +78,11 @@
                             </div>
                         </div>
                     <div style="height: 25px; display: block;"></div>
-                    <%}%>
                 </div>
+                <%}%>
             </div>
         </div>
-
+        <%}%>
         <div style =  "margin-left: 10px" class="form-floating">
             <p>
                 Justificacion de la incidencia: <br>
