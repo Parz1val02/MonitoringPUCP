@@ -354,7 +354,7 @@ public class UsuarioDao extends DaoBase{
             }
 
         } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
-            String sql = "update registroAdmin SET codigo2fa = ? where idRegistroAdmin = ? ";
+            String sql = "update RegistroAdmin SET codigo2fa = ? where idRegistroAdmin = ? ";
 
             try (Connection connection = this.getConnection();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -378,7 +378,7 @@ public class UsuarioDao extends DaoBase{
 
         if (usuario.getRol().getNombreRol().equals("Seguridad")) {
 
-            String sql = "SELECT codigo2fa FROM usuarios where codigo=?;";
+            String sql = "SELECT codigo2fa FROM Usuarios where codigo=?;";
 
             try(Connection connection = this.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)){
@@ -400,7 +400,7 @@ public class UsuarioDao extends DaoBase{
             }
 
         } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
-            String sql = "SELECT codigo2fa FROM registroadmin where idRegistroAdmin=?;";
+            String sql = "SELECT codigo2fa FROM RegistroAdmin where idRegistroAdmin=?;";
 
             try(Connection connection = this.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)){
@@ -446,7 +446,7 @@ public class UsuarioDao extends DaoBase{
             }
 
         } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
-            String sql = "update registroAdmin SET activeTime2fa = ? where idRegistroAdmin = ? ";
+            String sql = "update RegistroAdmin SET activeTime2fa = ? where idRegistroAdmin = ? ";
 
             try (Connection connection = this.getConnection();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -469,7 +469,7 @@ public class UsuarioDao extends DaoBase{
 
         if (usuario.getRol().getNombreRol().equals("Seguridad")) {
 
-            String sql = "SELECT activeTime2fa FROM usuarios where codigo=?;";
+            String sql = "SELECT activeTime2fa FROM Usuarios where codigo=?;";
 
             try(Connection connection = this.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)){
@@ -486,7 +486,7 @@ public class UsuarioDao extends DaoBase{
             }
 
         } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
-            String sql = "SELECT activeTime2fa FROM registroAdmin where idRegistroAdmin=?;";
+            String sql = "SELECT activeTime2fa FROM RegistroAdmin where idRegistroAdmin=?;";
 
             try(Connection connection = this.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)){
