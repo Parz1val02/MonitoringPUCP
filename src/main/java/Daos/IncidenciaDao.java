@@ -7,14 +7,31 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.util.Date;
 
 import static java.nio.file.Files.newOutputStream;
 
 public class IncidenciaDao extends DaoBase{
+
+
+    public String formatDate(String oldDate) throws ParseException {
+        SimpleDateFormat parseador = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = null;
+        try {
+            date = parseador.parse(oldDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return formateador.format(date);
+    }
 
     public ArrayList<Incidencia> obtenerIncidencias()  {
 
@@ -35,7 +52,10 @@ public class IncidenciaDao extends DaoBase{
             while (rs.next()) {
                 Incidencia incidencia = new Incidencia();
                 incidencia.setIdIncidencia(rs.getInt("i.IdIncidencia"));
-                incidencia.setFecha(rs.getString(2));
+                String fe = rs.getString(2);
+                String fi = fe.substring(0,10);
+                String newDate = formatDate(fi);
+                incidencia.setFecha(newDate);
                 incidencia.setNombreIncidencia(rs.getString(3));
                 incidencia.setValidaIncidencia(rs.getBoolean("validaIncidencia"));
                 incidencia.setDescripcion(rs.getString(5));
@@ -76,6 +96,8 @@ public class IncidenciaDao extends DaoBase{
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         return listaIncidencia;
     }

@@ -51,6 +51,7 @@
                                     <th>Nombre de la incidencia</th>
                                     <th>Nombre del usuario</th>
                                     <th>Estado</th>
+                                    <th>Fecha</th>
                                     <!--<th>N° reabierta</th>-->
                                     <th>N° destacados</th>
                                     <!--<th>¿Reabrir incidencia?</th>-->
@@ -64,7 +65,7 @@
                                     <td><%= incidencia.getNombreIncidencia()%> </td>
                                     <td><%= incidencia.getUsuario().getNombre()%></td>
                                     <td><%= incidencia.getEstadoIncidencia().getEstado()%> </td
-                                    <td></td>
+                                    <td><td><%= incidencia.getFecha().substring(0,10)%></td></td>
                                     <td><%= incidencia.getIncidenciasDestacadas().getContadorDestacado()%></td>
                                     <td>
                                         <%if (estados.get(i)==0){%>
