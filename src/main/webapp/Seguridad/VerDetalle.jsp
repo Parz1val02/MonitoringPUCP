@@ -1,4 +1,6 @@
-<%@ page import="Beans.Incidencia" %><%--
+<%@ page import="Beans.Incidencia" %>
+<%@ page import="Beans.EstadoIncidencia" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: Lenovo
   Date: 21/10/2022
@@ -8,6 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Incidencia incidencia = (Incidencia) request.getAttribute("Incidencia");
+    ArrayList<EstadoIncidencia> estados = (ArrayList<EstadoIncidencia>) request.getAttribute("estados");
 %>
 <html>
 <head>
@@ -104,6 +107,8 @@
     <div class="content-wrapper">
         <div class="container" style="margin-top: 50px">
 
+
+
             <label class="form-label">Fecha:</label>
             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                 <input class="form-control" type="text"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
@@ -123,6 +128,14 @@
                 <label ><%=incidencia.getTipoIncidencia().getTipo()%></label>
             </div>
 
+
+            <%if (incidencia.getTipoIncidencia().getTipo().equalsIgnoreCase("otros")) { %>
+                <label class="form-label">Nombre tipo:</label>
+                <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
+                    <input class="form-control" type="text"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
+                    <label ><%=incidencia.getOtroTipo()%></label>
+                </div>
+            <% }%>
             <label class="form-label">Zona PUCP:</label>
             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                 <input class="form-control" type="text"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
@@ -158,46 +171,32 @@
             </div>
 
 
+            <form method="post" action="<%=request.getContextPath()%>/SeguridadServlet?accion=guardar">
+                <input type="text" class="form-control" name="idIncidencia" value="<%=incidencia.getIdIncidencia()%>" hidden>
+                <br>
+                <p style="margin-top: 20px;margin-left: 10px">Estado de la incidencia </p>
+                <div style =  "margin-left: 10px" class="form-check">
+                    <select class="form-select" aria-label="Default select example" name="idEstado" >
 
-            <br>
-            <p style="margin-top: 20px;margin-left: 10px">Estado de la incidencia </p>
-
-            <div style =  "margin-left: 10px" class="form-check">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Estado</option>
-                    <option value="3">Atendido</option>
-                    <option value="3"><% incidencia.getEstadoIncidencia().setEstado("Atendido");%></option>
-                </select>
-            </div>
-
-            <br><br>
-            <div style =  "margin-left: 10px" class="form-floating">
-                <p>
-                    Justificacion de la incidencia: <br>
-                    <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px"></textarea>
-                </p>
-            </div>
-
-
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Alerta</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Se cambiara el estado de la incidencia
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
-                            <form action="<%=request.getContextPath()%>/SeguridadServlet?accion=listar">
-                                <button type="submit" class="btn btn-secondary">Cancelar</button>
-                            </form>
-                        </div>
-                    </div>
+                        <% for (EstadoIncidencia estado : estados) {%>  <!--compara el estado de la incidencia con las opciones del combo box -->
+                        <option value="<%=estado.getIdEstado()%>" <%= incidencia.getEstadoIncidencia().getEstado().equalsIgnoreCase(estado.getEstado())?"selected":""%> > <%=estado.getEstado()%></option>
+                        <% }%>
+                    </select>
                 </div>
-            </div>
+
+                <br>
+                <div style =  "margin-left: 10px" class="form-floating">
+                    <p>
+                        Justificacion de la incidencia: <br>
+                        <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px" name="justificacion"></textarea>
+                    </p>
+                </div>
+
+                <button type="submit" class="btn btn-primary" >Aceptar</button>
+
+                <a href="<%=request.getContextPath()%>/SeguridadServlet" class="btn btn-danger">Cancelar</a>
+
+            </form>
 
         </div>
     </div>

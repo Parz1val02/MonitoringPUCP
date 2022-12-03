@@ -489,21 +489,45 @@ public class IncidenciaDao extends DaoBase{
         return listaDestacadas;
     }
 
-    public void actualizarIncidencia(String estadoIncidenciaUpdate) {
+    public void actualizarIncidencia(Incidencia incidencia) {
 
         //puede editar mas campos
-        String sql = "UPDATE incidencias set estadoincidencia = ?";
+        String sql = "UPDATE incidencias set idEstadoIncidencia=? where idIncidencia = ?";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
-            pstmt.setString(1, estadoIncidenciaUpdate);
+            pstmt.setInt(1, incidencia.getEstadoIncidencia().getIdEstado());
+            pstmt.setInt(2, incidencia.getIdIncidencia());
+
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+
+    //para crear comentario(justificacion y comentario al reabrir)
+    public void crearComentario(Comentario comentario){
+
+        String sql = "insert into comentario (idComentario, comentarios, fecha, codigoUsuario, idIncidencia) values(?,?,?,?,?)";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setInt(1, comentario.getIdComentario());
+            pstmt.setString(2, comentario.getComentario());
+            pstmt.setString(3,comentario.getIncidencia().getFecha());  //preguntar a jandro
+            pstmt.setString(4,comentario.getIncidencia().getUsuario().getCodigo());
+            pstmt.setInt(5,comentario.getIncidencia().getIdIncidencia());
+
+
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void confirmar(int id) {
@@ -555,7 +579,8 @@ public class IncidenciaDao extends DaoBase{
             pstmt.setBoolean(3, incidencia.getValidaIncidencia());
             pstmt.setString(4, incidencia.getDescripcion());
             pstmt.setInt(5, incidencia.getContadorReabierto());
-            pstmt.setNull(6, Types.VARCHAR);
+            pstmt.setString(6,incidencia.getOtroTipo());
+           //pstmt.setNull(6, Types.VARCHAR);
             pstmt.setInt(7, incidencia.getTipoIncidencia().getIdTipo());  //tipo incidencia
             pstmt.setInt(8, incidencia.getNivelUrgencia().getIdNivelUrgencia());  //nivel urgencia
             pstmt.setInt(9,incidencia.getEstadoIncidencia().getIdEstado()); //estado incidencia

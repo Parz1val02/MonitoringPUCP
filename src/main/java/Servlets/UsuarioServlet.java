@@ -192,14 +192,23 @@ public class UsuarioServlet extends HttpServlet {
                 int idEstadoIncidencia = 1;
                 //String estado= request.getParameter("estado");
 
+                String otroTipo = request.getParameter("Otros");
 
                 incidencia.setNombreIncidencia(nombreIncidencia);
                 incidencia.setFecha(fecha);
                 incidencia.setValidaIncidencia(true);
                 incidencia.setContadorReabierto(0);
                 TipoIncidencia tipoIncidencia1 = new TipoIncidencia();
+
+                // logica
                 tipoIncidencia1.setIdTipo(IDtipoIncidencia);
                 incidencia.setTipoIncidencia(tipoIncidencia1);
+
+                System.out.println(otroTipo);
+                if (IDtipoIncidencia == 6){
+                    incidencia.setOtroTipo(otroTipo);
+                }
+
 
                 NivelUrgencia nivelUrgencia1 = new NivelUrgencia();
                 nivelUrgencia1.setIdNivelUrgencia(IDnivelUrgencia);
@@ -264,12 +273,12 @@ public class UsuarioServlet extends HttpServlet {
 
                 //UsuarioDao uDao = new UsuarioDao();
 
-
+                //primero se valida que la contraseña sea valida
                 boolean contrasenaCorrecta = uDao.contrasenaisValid(nueva);
 
                 if (contrasenaCorrecta){
 
-                    if (nueva.equalsIgnoreCase("") ||  repass.equalsIgnoreCase("")){
+                    if (nueva.equalsIgnoreCase("") ||  repass.equalsIgnoreCase("")){ //ambos campos no pueden estar vacios
                         session.setAttribute("msg", "La contrasena no puede estar vacia");
                         response.sendRedirect(request.getContextPath() + "/UsuarioServlet?accion=restablecerContrasenia");
 

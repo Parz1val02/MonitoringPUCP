@@ -126,14 +126,14 @@ public class Login extends HttpServlet {
 
         /*try {
             EnviarCorreo.main(username);
-        } catch (MessagingException e) {
+        } catch ( MessagingException e) {
             e.printStackTrace();
         }*/
 
         
         
-        /*
-        if (user.getRol()!=null){
+
+        /*if (user.getRol()!=null){
             session.setAttribute("usuario",user);
             session.setMaxInactiveInterval(10*60);//10 minutos de inactividad
             //ingresa
@@ -149,8 +149,8 @@ public class Login extends HttpServlet {
             session.setAttribute("msg", "Correo o contraseña incorrectos");
             RequestDispatcher view = request.getRequestDispatcher("/Login/InicioSesion.jsp");
             view.forward(request, response);
-        }
-        */
+        }*/
+
         
         /*DOBLE FACTOR DOPOST. LUEGO DE INGRESAR CREDENCIALES, ENTRA AQUI. INCLUYE VALIDACIONES*/
         switch (accion) {

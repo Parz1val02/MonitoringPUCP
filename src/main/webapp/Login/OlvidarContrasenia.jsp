@@ -41,7 +41,7 @@
         <div class="col-md-6">
             <div align="center" style="margin: 50px 0px 10px 0px; background: #FFFFFF; border-radius: 10px; border: 1px solid grey">
                 <div style="height: 30px; display: block;"></div>
-                <form method="post" action="<%= request.getContextPath()%>/Login">
+                <form method="post" action="<%=request.getContextPath()%>/Login">
                     <label style="font-size: 18px; margin: 0px 5px 2px 8px">Ingrese su correo electrónico: </label>
                     <div style="margin: 20px 40px 10px 40px">
                         <input type="correo" class="form-control" id="inputPassword2" placeholder="Correo PUCP" name="email">

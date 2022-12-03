@@ -87,13 +87,13 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
-                                        <select class="form-select" id="floatingSelectGrid6" name="zonaPUCP">
+                                        <select class="form-select" id="zonaPUCP" name="zonaPUCP">
                                             <% for (ZonaPUCP zona : zonas) {%>
                                             <option value="<%=zona.getIdZonaPUCP()%>"><%= zona.getNombreZona()%></option>
                                             <% }%>
                                         </select>
 
-                                        <label for="floatingSelectGrid2" class="label-form-flujousuario">Zona PUCP</label>
+                                        <label for="zonaPUCP" class="label-form-flujousuario">Zona PUCP</label>
                                     </div>
                                 </div>
                             </div>
@@ -104,15 +104,17 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating " style="margin-bottom: 15px;">
-                                        <select class="form-select" id="floatingSelectGrid2" name="tipoIncidencia">
+                                        <select class="form-select" id="tipoIncidencia" name="tipoIncidencia">
                                             <% for (TipoIncidencia tipo : tipos) {%>
                                             <option value="<%=tipo.getIdTipo()%>"><%= tipo.getTipo()%></option>
-
                                             <% }%>
                                         </select>
 
-                                        <label for="floatingSelectGrid2" class="label-form-flujousuario">Tipo de Incidencia</label>
+                                        <label for="tipoIncidencia" class="label-form-flujousuario">Tipo de Incidencia</label>
                                     </div>
+
+                                    <input type="text" class="form-control" id="Otros" placeholder="tipo" name="Otros" disabled>
+
                                 </div>
                             </div>
                             <!-- 4ta fila -->
@@ -308,6 +310,26 @@
     <script src="../scripts/flujo-usuario.js"></script> <!--previsualizador de imagenes-->
     <!-- CORE SCRIPTS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"
+    ></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#tipoIncidencia').change(function (e) { //#id
+
+                console.log($(this).val())
+                if ($(this).val() == "6") {
+                    $('#Otros').prop("disabled", false);//habilita
+                } else {
+                    $('#Otros').prop("disabled", true); //deshabilita
+                }
+            })
+        });
+    </script>
+
 
 </body>
 </html>

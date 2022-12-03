@@ -20,6 +20,9 @@ public class Incidencia {
     private EstadoIncidencia estadoIncidencia; //estado incidencia
 
     private IncidenciasDestacadas incidenciasDestacadas;
+
+
+
     public EstadoIncidencia getEstadoIncidencia() {
         return estadoIncidencia;
     }
