@@ -31,7 +31,9 @@
     <style>
         #map { height: 300px; }
     </style>
+    <link rel="stylesheet" href="../css/flex.css">
     <link rel="stylesheet" href=../css/style.min.css>
+
 
 </head>
 <body>
@@ -40,108 +42,116 @@
 
         <div class="mb-3">
             <label class="form-label">Nombre Incidencia:</label>
-            <input type="text" class="form-control" name="nombreIncidencia" value="<%=incidencia.getNombreIncidencia()%>">
+            <input type="text" class="form-control" name="nombreIncidencia" value="<%=incidencia.getNombreIncidencia()%>" aria-label="Disabled input example" disabled>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Tipo Incidencia:</label>
-            <input type="text" class="form-control" name="tipoIncidencia" value="<%=incidencia.getTipoIncidencia().getTipo()%>">
+            <input type="text" class="form-control" name="tipoIncidencia" value="<%=incidencia.getTipoIncidencia().getTipo()%>" aria-label="Disabled input example" disabled>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Zona PUCP:</label>
-            <input type="text" class="form-control" name="zonaPUCP" value="<%=incidencia.getZonaPUCP().getNombreZona()%>">
+            <input type="text" class="form-control" name="zonaPUCP" value="<%=incidencia.getZonaPUCP().getNombreZona()%>" aria-label="Disabled input example" disabled>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Nivel de urgencia:</label>
-            <input type="text" class="form-control" name="nivelDeUrgencia" value="<%=incidencia.getNivelUrgencia().getNivel()%>">
+            <input type="text" class="form-control" name="nivelDeUrgencia" value="<%=incidencia.getNivelUrgencia().getNivel()%>" aria-label="Disabled input example" disabled>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Descripcion de la incidencia:</label>
-            <input type="text" class="form-control" name="descripcionIncidencia" value="<%=incidencia.getDescripcion()%>">
+            <input type="text" class="form-control" name="descripcionIncidencia" value="<%=incidencia.getDescripcion()%>" aria-label="Disabled input example" disabled>
         </div>
         <div style="height: 25px; display: block;"></div>
         <div id="map"></div>
         <div style="height: 25px; display: block;"></div>
-        <div class="container" style="min-height: 60vh; align-content: center;">
-            <div class="row" style="min-height: 60vh">
-                <div class="page-content fade-in-up col-md-5" style="align-content: center">
-                    <%for(FotosIncidencias fotito : fotos){%>
-                        <div class="imagen" style =  "align-content: center">
-                            <div class="img">
-                                <a target="blank">
-                                    <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="">
-                                </a>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6" style="margin: auto">
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <%int i=0;%>
+                            <%for(FotosIncidencias fotito : fotos){%>
+                            <%if(i==0){%>
+                            <div class="carousel-item active">
+                                <%}else {%>
+                                <div class="carousel-item">
+                                    <%}%>
+                                    <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="..." class="d-block w-100">
+                                </div>
+                                <%i++;%>
+                                <%}%>
                             </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
                         </div>
-                    <div style="height: 25px; display: block;"></div>
-                    <%}%>
-                </div>
-            </div>
-        </div>
-
-        <div style =  "margin-left: 10px" class="form-floating">
-            <p>
-                Justificacion de la incidencia: <br>
-                <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea" style="height: 100px"></textarea>
-            </p>
-        </div>
-
-        <div style =  "margin-left: 10px" class="form-floating">
-
-            <p align="right">N° veces reabierta: <%=incidencia.getContadorReabierto()%>/5</p>
-            <p>
-                ¿Por qué desea reabrir esta incidencia?: <br>
-                <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px"></textarea>
-            </p>
-        </div>
-
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Registrar reapertura
-            </button>
-            <form action="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">
-                <button type="submit" class="btn btn-secondary" data-bs-toggle="modal">Cancelar</button>
-            </form>
-        </div>
-
-        <div class="modal fade" id="exampleModal" aria-hidden="true" aria-labelledby="exampleModalLabel" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Registrar cambios</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Se actualizó el estado de la incidencia
-                    </div>
-                    <div class="modal-footer">
-                        <form action="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">
-                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Regresar a la ventana principal</button>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="mb-3">
+                <div class="container">
+                    <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=reabrir&id=<%=incidencia.getIdIncidencia()%>">
+                        <div class="form-floating" style="margin-left: 10px">
+                            <p>
+                                Justificacion de la incidencia: <br>
+                                <label for="floatingTextarea2"></label>
+                                <textarea class="form-control" placeholder="<%=incidencia.getDescripcion()%>" style="height: 100px" aria-label="Disabled input example" disabled readonly></textarea>
+                            </p>
+                        </div>
+                        <div class="form-floating" style="margin-left: 10px">
+                            <p>N° veces reabierta: <%=incidencia.getContadorReabierto()%>/5</p>
+                            <p>
+                                ¿Por qué desea reabrir esta incidencia?: <br>
+                                <label for="floatingTextarea2"></label>
+                                <textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" name ="reopen" style="height: 100px"></textarea>
+                            </p>
+                        </div>
+                        <%if(session.getAttribute("info")!=null){%>
+                        <div class="form-group">
+                            <button class="btn btn-danger"><%=session.getAttribute("info")%></button>
+                            <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar" class="btn btn-secondary">Regresar a la ventana principal</a>
+                        </div>
+                        <%} else{%>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit" >Reabrir Incidencia</button>
+                            <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar" class="btn btn-secondary">Regresar a la ventana principal</a>
+                        </div>
+                        <%}%>
+                    </form>
+                </div>
+            </div>
     </div>
-
 </body>
 <script type="text/javascript">
     function set_map() {
 
         var latitud = <%=incidencia.getZonaPUCP().getLatitud()%>;
         var longitud = <%=incidencia.getZonaPUCP().getLongitud()%>;
+        var icono = L.icon({
+            iconUrl: '<%=incidencia.getTipoIncidencia().getFotoIcono()%>',
+
+            iconSize:     [38, 38], // size of the icon
+            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
         var map = L.map('map').setView([latitud, longitud], 30);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
-            L.marker([latitud, longitud]).addTo(map)
-                .bindPopup('<%=incidencia.getZonaPUCP().getNombreZona()%>')
-                .openPopup();
+        L.marker([latitud, longitud], {icon: icono}).addTo(map)
+            .bindPopup('<%=incidencia.getTipoIncidencia().getTipo()%>')
+            .openPopup();
     }
     document.addEventListener("DOMContentLoaded", set_map);
 </script>

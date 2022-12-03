@@ -7,8 +7,15 @@ public class TipoIncidencia {
 
     private int idTipo;
     private String tipo;
-    private String nombreIcono;
-    private byte[] iconobyte; //para los iconos dependiendo del tipo de incidencia
+    private String fotoIcono;
+
+    public String getFotoIcono() {
+        return fotoIcono;
+    }
+
+    public void setFotoIcono(String fotoIcono) {
+        this.fotoIcono = fotoIcono;
+    }
 
     public int getIdTipo() {
         return idTipo;
@@ -26,19 +33,4 @@ public class TipoIncidencia {
         this.tipo = tipo;
     }
 
-    public void setNombreIcono(String nombreIcono) {
-        this.nombreIcono = nombreIcono;
-    }
-
-    public byte[] getIconobyte() {
-        return iconobyte;
-    }
-
-    public void setIconobyte(byte[] iconobyte) {
-        this.iconobyte = iconobyte;
-    }
-
-    public String getNombreIcono() {
-        return nombreIcono;
-    }
 }

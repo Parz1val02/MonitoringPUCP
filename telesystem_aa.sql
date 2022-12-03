@@ -1,11 +1,11 @@
 use telesystem_aa;
-insert into TipoIncidencia(tipo) 
-		values ("Accidente"),
-			("Reporte de robos"),
-            ("Infraestructura en mal estado"),
-            ("Objetos perdidos"),
-            ("Ambulancia PUCP"),
-            ("Otros");
+insert into TipoIncidencia(tipo,iconoFoto) 
+		values ("Accidente", "../iconosReabrirIncidencia/accidente.png"),
+			("Reporte de robos","../iconosReabrirIncidencia/linuxuser.png"),
+            ("Infraestructura en mal estado","../iconosReabrirIncidencia/mala-infraestructura.png"),
+            ("Objetos perdidos","../iconosReabrirIncidencia/objetos-perdidos.png"),
+            ("Ambulancia PUCP","../iconosReabrirIncidencia/ambulanciaPUCP.png"),
+            ("Otros","../iconosReabrirIncidencia/otros.png");
 
 insert into NivelUrgencia (nivel) values ("Leve"), ("Moderado"), ("Critico");
 insert into EstadoIncidencia (estado) values ("Registrado"),
@@ -28,11 +28,10 @@ insert into ZonaPUCP(nombreZona,latitud,longitud) values("Entrada Principal",-12
                                                         ("Edificio McGregor",-12.068447704957036, -77.07872784337455),
                                                         ("Cancha de Minas",-12.072218866144826, -77.08199637475859);
                                                         
-insert into Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil, codigo2fa, activeTime2fa)
-					values (20201696, "Leonardo", "Abanto", "a20201696@pucp.edu.pe", 12345678, true, sha2("clashroyale123",256),"987654321",1,1,null, null, null),
-                    (19905060,"Jorge","Gonzales", "jorege.g@pucp.edu.pe",87654321, true,sha2("tele1000",256),null,1,4,null, null, null),
-                    (20113456,"Goku","kakaroto", "goku.kakaroto@pucp.edu.pe", 56546767, true,sha2("milk4355",256),"976976976", 2,null,null, null, null),
-                    (20202073,"Rodrigo","Barrios", "a20202073@pucp.edu.pe", 48392817, true,sha2("EternalBlue",256),"976233214", 1,1,null, null, null);
+insert into Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil, codigo2fa, activeTime2fa, primerIngreso)
+					values (20201696, "Leonardo", "Abanto", "a20201696@pucp.edu.pe", 12345678, true, sha2("clashroyale123",256),"987654321",1,1,null, null, null,1),
+                    (19905060,"Jorge","Gonzales", "jorege.g@pucp.edu.pe",87654321, true,sha2("tele1000",256),null,1,4,null, null, null,1),
+                    (20113456,"Goku","kakaroto", "goku.kakaroto@pucp.edu.pe", 56546767, true,sha2("milk4355",256),"976976976", 2,null,null, null, null,1);
                     
 insert into Incidencias (fecha,nombreIncidencia, validaIncidencia, descripcion,
 						 contadorReabierto, idTipoIncidencia, idNivelUrgencia, idEstadoIncidencia,
@@ -45,4 +44,8 @@ insert into Incidencias (fecha,nombreIncidencia, validaIncidencia, descripcion,
                          (now(),"Laptop perdida en el V",true,"Mi Macbook M1, que no sirve para jugar Valorant, se extravio ayer",0,4,3,1,20113456,2);
 insert into IncidenciasDestacadas (contadorDestacado,idIncidencia) values (0,1),(0,2),(1,3),(0,4),(1,5);
 
-insert into RegistroAdmin (nombreAdmin, passwordAdmin, nombreRol, correo, codigo2fa, activeTime2fa) values("EternalBlue", sha2("DoublePulsar",256), "Administrador", "EternalBlue@pucp.edu.pe", null, null);
+insert into RegistroAdmin (nombreAdmin, passwordAdmin, nombreRol, correo, codigo2fa, activeTime2fa) values("EternalBlue", sha2("DoublePulsar",256), "Administrador", "a20202073@pucp.edu.pe", null, null);
+insert into MasterTable(codigo, nombre, apellido, correo, DNI)
+values(20201696, "Leonardo", "Abanto", "a20201696@pucp.edu.pe",12345678),
+(19905060,"Jorge","Gonzales", "jorege.g@pucp.edu.pe",87654321),
+(20113456,"Goku","kakaroto", "goku.kakaroto@pucp.edu.pe", 56546767);
