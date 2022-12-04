@@ -198,7 +198,7 @@
                 <div style =  "margin-left: 10px" class="form-floating">
                     <p>
                         Justificacion de la incidencia: <br>
-                        <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px" name="justificacion"></textarea>
+                        <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px" name="justificacion" required></textarea>
                     </p>
                 </div>
 
