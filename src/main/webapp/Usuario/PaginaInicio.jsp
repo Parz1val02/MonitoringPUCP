@@ -82,7 +82,7 @@
                                         <div class="row">
                                             <div class="col-md-1" style="background: #dee2e6"></div>
                                             <div class="col-md-6" style="background: #dee2e6; margin: auto">
-                                                <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=listaFotos.get(i).getIdFotos()%>" alt="..." class="d-block w-100">
+                                                <!--img src="<%//=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%//=listaFotos.get(i).getIdFotos()%>" alt="..." class="d-block w-100"-->
                                             </div>
                                             <div class="col-md-4" style="background: #FFFFFF">
                                                 <div style="border-radius: 2px;border-color: black">

@@ -50,10 +50,10 @@ insert into Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, pass
 insert into Incidencias (fecha,nombreIncidencia, validaIncidencia, descripcion,
 						 contadorReabierto, otroTipo, idTipoIncidencia, idNivelUrgencia, idEstadoIncidencia,
                          codigoUsuario, idZonaPUCP)
-                         values (now(),"Explosion en KILO",true,"Fuga de gas ocurrido en la mañana, previo al abrir al local",0,null,3,1,20201696,9),
+                         values (now(),"Explosion en KILO",true,"Fuga de gas ocurrido en la mañana, previo al abrir al local",6,"Explosion",3,1,1,20201696,9),
                          (now(),"Robo en Bilioteca Central",true,"Sujetos armados entraron a las instalaciones muy temprano, antes de que abriera",1,null,2,3,3,20201696,8),
                          (now(),"Accidente de semana de Ingenieria",true,"Lesion de alumno en evento",0,null,1,2,1,19905060,11),
-                         (now(),"Laptop perdida en Charlotte",true,"Mi Macbook M1, que no sirve para jugar Valorant, se extravio ayer",0,null,4,3,1,20113456,10),
+                         (now(),"Laptop perdida en Charlotte",true,"Mi Macbook M1, que no sirve para jugar Valorant, se extravio ayer",0,null,4,3,1,19905060,10),
                          (now(),"Accidente en CIA",true,"Lesion de alumno en evento",0,null,1,2,1,19905060,6),
                          (now(),"Laptop perdida en el V",true,"Mi Macbook M1, que no sirve para jugar Valorant, se extravio ayer",0,null,4,3,1,20113456,2),
                          (now(),"Explosion en KILO",true,"Fuga de gas ocurrido en la mañana, previo al abrir al local",0,null,1,3,1,20201696,9),
