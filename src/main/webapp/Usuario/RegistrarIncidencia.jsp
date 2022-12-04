@@ -2,6 +2,7 @@
 <%@ page import="Beans.TipoIncidencia" %>
 <%@ page import="Beans.NivelUrgencia" %>
 <%@ page import="Beans.ZonaPUCP" %>
+<%@ page import="Beans.Incidencia" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     ArrayList<TipoIncidencia> tipos = (ArrayList<TipoIncidencia>) request.getAttribute("tipos");
@@ -14,6 +15,9 @@
     ArrayList<ZonaPUCP> zonas = (ArrayList<ZonaPUCP>) request.getAttribute("zonas");
     String error = (String) request.getAttribute("msg");
 %>
+<%
+    Incidencia incidencia = (Incidencia) request.getAttribute("incidencia");
+%>
 
 <html lang="en"  style="min-height: 100vh">
 <head>
@@ -24,6 +28,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href=../css/style.min.css>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+    <style>
+        #map { height: 150px; }
+    </style>
     <!-- CSS de registrar-flujo-usuarioo -->
     <link rel="stylesheet" href="../css/Registrar_FlujoUsuario.css">
 </head>
@@ -113,7 +127,7 @@
                                         <label for="tipoIncidencia" class="label-form-flujousuario">Tipo de Incidencia</label>
                                     </div>
 
-                                    <input type="text" class="form-control" id="Otros" placeholder="tipo" name="Otros" disabled>
+                                    <!--input type="text" class="form-control" id="Otros" placeholder="tipo" name="Otros" disabled -->
 
                                 </div>
                             </div>
@@ -189,6 +203,9 @@
                             <div id="preview-images"></div>
                         </div>
                         <button id="publish">Publicar</button>
+                    </div>
+                    <div id="container">
+                        <div id="map"></div>
                     </div>
                     <!--div class="preload">
                         <img src="assets/images/preload.gif" alt="preload" />
@@ -306,6 +323,7 @@
         </div>
     </div>
 </div>
+
     <!--CUSTOM SCRIPTS-->
     <script src="../scripts/flujo-usuario.js"></script> <!--previsualizador de imagenes-->
     <!-- CORE SCRIPTS-->
@@ -329,7 +347,30 @@
             })
         });
     </script>
+<script type="text/javascript">
+    function set_map() {
 
+        var latitud = <%=incidencia.getZonaPUCP().getLatitud()%>;
+        var longitud = <%=incidencia.getZonaPUCP().getLongitud()%>;
+        var icono = L.icon({
+            iconUrl: '<%=incidencia.getTipoIncidencia().getFotoIcono()%>',
+
+            iconSize:     [38, 38], // size of the icon
+            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+        var map = L.map('map').setView([latitud, longitud], 30);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([latitud, longitud], {icon: icono}).addTo(map)
+            .bindPopup('<%=incidencia.getTipoIncidencia().getTipo()%>')
+            .openPopup();
+    }
+    document.addEventListener("DOMContentLoaded", set_map);
+</script>
 
 </body>
 </html>

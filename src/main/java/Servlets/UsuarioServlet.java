@@ -273,6 +273,7 @@ public class UsuarioServlet extends HttpServlet {
                 ZonaPUCP zonaPUCP = new ZonaPUCP();
                 zonaPUCP.setIdZonaPUCP(IDzonaPUCP);
                 incidencia.setZonaPUCP(zonaPUCP);
+                request.setAttribute("incidencia", incidencia);
 
                 incidencia.setUsuario(usuario1);
 
