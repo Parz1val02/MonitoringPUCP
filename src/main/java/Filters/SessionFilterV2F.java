@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(filterName = "SessionV2FaFilter", servletNames = {"UsuarioServlet","SeguridadServlet", "AdminServlet", "FormatosServlet"})
-public class SessionV2FaFilter implements Filter {
+@WebFilter(filterName = "SessionFilterV2F", servletNames = {"UsuarioServlet","SeguridadServlet", "AdminServlet", "FormatosServlet"})
+public class SessionFilterV2F implements Filter {
     public void init(FilterConfig config) throws ServletException {
     }
 

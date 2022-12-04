@@ -27,7 +27,7 @@
     <script src="https://kit.fontawesome.com/cd456dd2e78.js" crossorigin="anonymous"></script>
 
 </head>
-<body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
+<body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout" style="background-size: contain;">
 <!-- HEADER -->
 <div class="container-fluid" style=" padding: 0px">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #042354; height: 100px;justify-content: flex-end">
@@ -82,7 +82,7 @@
                                         <div class="row">
                                             <div class="col-md-1" style="background: #dee2e6"></div>
                                             <div class="col-md-6" style="background: #dee2e6; margin: auto">
-                                                <!--img src="<%//=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%//=listaFotos.get(i).getIdFotos()%>" alt="..." class="d-block w-100"-->
+                                                <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=listaFotos.get(i).getIdFotos()%>" alt="..." class="d-block w-100">
                                             </div>
                                             <div class="col-md-4" style="background: #FFFFFF">
                                                 <div style="border-radius: 2px;border-color: black">

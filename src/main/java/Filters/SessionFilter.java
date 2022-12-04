@@ -29,7 +29,6 @@ public class SessionFilter implements Filter {
         if(usuario1==null){
             res.sendRedirect(req.getContextPath()+"/Login");
         }else{
-
             chain.doFilter(request, response);
         }
 

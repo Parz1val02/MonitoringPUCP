@@ -18,7 +18,7 @@ public class EstadoIncidenciaDao extends DaoBase{
 
         try (Connection conn = this.getConnection();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery( "SELECT * FROM estadoincidencia");){
+             ResultSet rs = stmt.executeQuery( "SELECT * FROM EstadoIncidencia");){
 
             while (rs.next()) {
 

@@ -43,7 +43,7 @@
 <!-- PRINCIPAL -->
 <div class="container-fluid" style="min-height: 60vh; align-content: center;">
     <div class="row" style="min-height: 60vh">
-        <div class="page-content fade-in-up col-md-6" style="align-content: center">
+        <div class="page-content fade-in-up col-md-8" style="align-content: center; margin: auto">
             <div class="container" style=" height: 100%">
                 <div class="page-heading" style="text-align: center;margin-bottom: 20px;margin-left: 15%">
                     <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Registrar Incidencias</b></h1>
@@ -112,9 +112,8 @@
 
                                         <label for="tipoIncidencia" class="label-form-flujousuario">Tipo de Incidencia</label>
                                     </div>
-
-                                    <input type="text" class="form-control" id="Otros" placeholder="tipo" name="Otros" disabled>
-
+                                    <input type="text" class="form-control" id="Otros" placeholder="Tipo" name="Otros" disabled>
+                                    <div style="height: 25px; display: block;"></div>
                                 </div>
                             </div>
                             <!-- 4ta fila -->
@@ -175,30 +174,30 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <!--div class="col-md-6">
             <div class="container text-center" style="display: flex; justify-content: center;  flex-direction: column ; height: 100%"  >
-                <!-- Gallery -->
+                < Gallery>
                 <div id="wrapper" >
                     <h1 style="margin-bottom:15px ;font-family: 'Open Sans', sans-serif;font-size: 20px;font-weight: bold">Previsualización de Imágenes</h1>
                     <div id="container-input"  >
                         <div class="wrap-file">
                             <div class="content-icon-camera">
-                                <!-- <input type="file" id="file" name="file[]" accept="image/*" multiple />  -->
+                                < <input type="file" id="file" name="file[]" accept="image/*" multiple />  >
                                 <div class="icon-camera"></div>
                             </div>
                             <div id="preview-images"></div>
                         </div>
                         <button id="publish">Publicar</button>
                     </div>
-                    <!--div class="preload">
+                    <div class="preload">
                         <img src="assets/images/preload.gif" alt="preload" />
                     </div>
                     <h2 id="success"></h2>
-                </div-->
-                    <!-- Gallery -->
+                </div>
+                    < Gallery >
                 </div>
             </div>
-        </div>
+        </div-->
     </div>
 </div>
 <!-- END PRINCIPAL-->
@@ -307,7 +306,7 @@
     </div>
 </div>
     <!--CUSTOM SCRIPTS-->
-    <script src="../scripts/flujo-usuario.js"></script> <!--previsualizador de imagenes-->
+    <!--script src="../scripts/flujo-usuario.js"></script> <previsualizador de imagenes-->
     <!-- CORE SCRIPTS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 
