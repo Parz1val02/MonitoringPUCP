@@ -2,6 +2,7 @@
 <%@ page import="Beans.TipoIncidencia" %>
 <%@ page import="Beans.NivelUrgencia" %>
 <%@ page import="Beans.ZonaPUCP" %>
+<%@ page import="Beans.Incidencia" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     ArrayList<TipoIncidencia> tipos = (ArrayList<TipoIncidencia>) request.getAttribute("tipos");
@@ -13,6 +14,9 @@
 <%
     ArrayList<ZonaPUCP> zonas = (ArrayList<ZonaPUCP>) request.getAttribute("zonas");
     String error = (String) request.getAttribute("msg");
+%>
+<%
+    Incidencia incidencia = (Incidencia) request.getAttribute("incidencia");
 %>
 
 <html lang="en"  style="min-height: 100vh">
@@ -193,6 +197,7 @@
                         <img src="assets/images/preload.gif" alt="preload" />
                     </div>
                     <h2 id="success"></h2>
+                </div>
                 </div>
                     < Gallery >
                 </div>
