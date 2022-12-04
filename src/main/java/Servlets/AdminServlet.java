@@ -112,7 +112,7 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-
+        HttpSession session = request.getSession();
         String action = request.getParameter("action");
 
         UsuarioDao usuarioDao = new UsuarioDao();
@@ -275,7 +275,7 @@ public class AdminServlet extends HttpServlet {
                         break;
                 }
                 } else {
-                    request.setAttribute("msg", "El usuario no está registrado");
+                    session.setAttribute("msg", "El usuario no está registrado");
                     view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
                     view.forward(request, response);
                     break;
