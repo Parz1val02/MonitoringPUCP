@@ -29,10 +29,18 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/flex.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin=""/>
 
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
 
     <script src="https://kit.fontawesome.com/cd456dd2e78.js" crossorigin="anonymous"></script>
-
+    <style>
+        #map { height: 300px; }
+    </style>
 </head>
 <body>
     <!-- HEADER -->
@@ -48,6 +56,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6" style="margin: auto">
+                <div id="map"></div>
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <%int i=0;%>
@@ -211,5 +220,28 @@
     </footer>
     </div>
 </body>
+<script type="text/javascript">
+    function set_map() {
 
+        var latitud = <%=incidencia.getZonaPUCP().getLatitud()%>;
+        var longitud = <%=incidencia.getZonaPUCP().getLongitud()%>;
+        var icono = L.icon({
+            iconUrl: '<%=incidencia.getTipoIncidencia().getFotoIcono()%>',
+
+            iconSize:     [38, 38], // size of the icon
+            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+        var map = L.map('map').setView([latitud, longitud], 30);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([latitud, longitud], {icon: icono}).addTo(map)
+            .bindPopup('<%=incidencia.getTipoIncidencia().getTipo()%>')
+            .openPopup();
+    }
+    document.addEventListener("DOMContentLoaded", set_map);
+</script>
 </html>
