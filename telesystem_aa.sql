@@ -9,9 +9,9 @@ insert into TipoIncidencia(tipo,iconoFoto)
 
 insert into NivelUrgencia (nivel) values ("Leve"), ("Moderado"), ("Critico");
 insert into EstadoIncidencia (estado) values ("Registrado"),
-																	("En proceso"),
-																	("Atendido"),
-                                                                    ("Resuelto");
+											("En proceso"),
+											("Atendido"),
+                                            ("Resuelto");
 insert into Roles (nombreRol) values ("Usuario PUCP"),("Seguridad");
 
 insert into CategoriaPUCP(nombreCategoria) values ("Alumno"),("Administrativo"),("Jefe de practica"),("Profesor"),("Egresado");
@@ -55,7 +55,7 @@ insert into Incidencias (fecha,nombreIncidencia, validaIncidencia, descripcion,
                          (now(),"Accidente de semana de Ingenieria",true,"Lesion de alumno en evento",0,null,1,2,1,19905060,11),
                          (now(),"Laptop perdida en Charlotte",true,"Mi Macbook M1, que no sirve para jugar Valorant, se extravio ayer",0,null,4,3,1,20113456,10),
                          (now(),"Accidente en CIA",true,"Lesion de alumno en evento",0,null,1,2,1,19905060,6),
-                         (now(),"Laptop perdida en el V",true,"Mi Macbook M1, que no sirve para jugar Valorant, se extravio ayer",0,null,4,3,1,20113456,2);
+                         (now(),"Laptop perdida en el V",true,"Mi Macbook M1, que no sirve para jugar Valorant, se extravio ayer",0,null,4,3,1,20113456,2),
                          (now(),"Explosion en KILO",true,"Fuga de gas ocurrido en la mañana, previo al abrir al local",0,null,1,3,1,20201696,9),
                          (now(),"Accidente de semana de Ingenieria",true,"Lesion de alumno en evento",0,null,1,2,1,19905060,11),
                          (now(),"Laptop perdida en Charlotte",true,"Mi Macbook M1, que no sirve para jugar Valorant, se extravio ayer",0,null,4,3,1,20195922,10),
@@ -71,7 +71,7 @@ insert into Incidencias (fecha,nombreIncidencia, validaIncidencia, descripcion,
                         (now(),"Ransomware en el V",true,"Se colo el wannacry en el V pipipi",0,"Hackeo",6,3,1,20195922,2),
                         (now(),"Robo de bibicleta",true,"Se robaron mi bici, partieron el candado a la mitad y f",0,null,2,2,1,20047106,5);
 
-insert into IncidenciasDestacadas (contadorDestacado,idIncidencia) values (0,1),(0,2),(1,3),(0,4),(1,5);
+insert into IncidenciasDestacadas (contadorDestacado,idIncidencia) values (1,1),(1,2),(1,3),(1,4),(1,5);
 
 insert into RegistroAdmin (nombreAdmin, passwordAdmin, nombreRol, correo, codigo2fa, activeTime2fa) values("EternalBlue", sha2("EternalBlue",256), "Administrador", "EternalBlue@pucp.edu.pe", null, null);
 insert into MasterTable(codigo, nombre, apellido, correo, DNI)
