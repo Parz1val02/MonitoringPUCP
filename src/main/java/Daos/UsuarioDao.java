@@ -514,7 +514,7 @@ public class UsuarioDao extends DaoBase{
 
          boolean usuario_registrado = false;
 
-         String sql = "SELECT * FROM telesystem_aa.mastertable where codigo=? and correo = ?;";
+         String sql = "SELECT * FROM Mastertable where codigo=? and correo = ?;";
 
          try(Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)){

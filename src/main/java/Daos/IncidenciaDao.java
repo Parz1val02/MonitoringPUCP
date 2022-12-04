@@ -379,7 +379,7 @@ public class IncidenciaDao extends DaoBase{
         return listaDestacadas;
     }*/
     public void destacarIncidenciaBorrar(int idIncidencia, String usuario) throws SQLException{
-        String sql3 ="DELETE FROM usuarios_has_incidenciasdestacadas where (codigoUsuario = ? AND idIncidenciaDestacadas = ?)";
+        String sql3 ="DELETE FROM Usuarios_has_IncidenciasDestacadas where (codigoUsuario = ? AND idIncidenciaDestacadas = ?)";
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql3)){
             pstmt.setString(1, usuario);
@@ -411,7 +411,7 @@ public class IncidenciaDao extends DaoBase{
         }
     }
     public void destacarIncidenciaAdd (int idIncidencia, String usuario) throws SQLException{
-        String sql ="INSERT INTO usuarios_has_incidenciasdestacadas (codigoUsuario, idIncidenciaDestacadas) values (?,?)";
+        String sql ="INSERT INTO Usuarios_has_IncidenciasDestacadas (codigoUsuario, idIncidenciaDestacadas) values (?,?)";
         try (Connection conn1 = this.getConnection();
              PreparedStatement pstmt = conn1.prepareStatement(sql)){
             pstmt.setString(1, usuario);
@@ -550,7 +550,7 @@ public class IncidenciaDao extends DaoBase{
     public void actualizarIncidencia(Incidencia incidencia) {
 
         //puede editar mas campos
-        String sql = "UPDATE incidencias set idEstadoIncidencia=? where idIncidencia = ?";
+        String sql = "UPDATE Incidencias set idEstadoIncidencia=? where idIncidencia = ?";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -570,7 +570,7 @@ public class IncidenciaDao extends DaoBase{
     //para crear comentario(justificacion y comentario al reabrir)
     public void crearComentario(Comentario comentario){
 
-        String sql = "insert into comentario (idComentario, comentarios, fecha, codigoUsuario, idIncidencia) values(?,?,?,?,?)";
+        String sql = "insert into Comentario (idComentario, comentarios, fecha, codigoUsuario, idIncidencia) values(?,?,?,?,?)";
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 

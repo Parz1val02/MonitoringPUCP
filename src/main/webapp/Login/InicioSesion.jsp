@@ -65,8 +65,8 @@
             font-family: sans-serif,Montserrat; font-size: 15px">
               <%=session.getAttribute("msg")%>
             </div>
-            <%}%>
             <%session.removeAttribute("msg");%>
+            <%}%>
             <div align="center">
               <button type="submit" class="btn btn-outline-dark" style="border-radius: 5px">Aceptar y Continuar</button>
             </div>
