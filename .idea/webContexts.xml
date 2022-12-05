@@ -4,9 +4,12 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/Administrador/editUser.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Administrador" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/Seguridad/VerDetalle.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Seguridad" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/Usuario/BuscarIncidencia.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Usuario" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/Usuario/DetalleIncidencia.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Usuario" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/Usuario/DetalleReabierto.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Usuario" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/Usuario/PaginaInicio.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Usuario" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/Usuario/RegistrarIncidencia.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Usuario" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/Usuario/UsuarioPerfil.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Usuario" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/Usuario/inicio.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Usuario" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/Usuario/reabrirIncidencia.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Usuario" />

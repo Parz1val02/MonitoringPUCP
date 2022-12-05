@@ -285,8 +285,7 @@ public class UsuarioDao extends DaoBase{
         }
 
     }
-    
-    
+
     public void actualizarFoto(FotoPerfil foto, int idCodigo){
         String sql = "UPDATE FotoPerfil set FotoPerfil = ?,nombreFoto = ? where idFotoPerfil = ?";
         try (Connection connection = this.getConnection();
@@ -300,7 +299,6 @@ public class UsuarioDao extends DaoBase{
             throw new RuntimeException(e);
         }
     }
-
 
     //FUNCION PARA VALIDAR NOMBRE Y APELLIDOS
     public boolean nombreyApellidoValid(String nombre) {
@@ -516,7 +514,7 @@ public class UsuarioDao extends DaoBase{
 
          boolean usuario_registrado = false;
 
-         String sql = "SELECT * FROM telesystem_aa.mastertable where codigo=? and correo = ?;";
+         String sql = "SELECT * FROM Mastertable where codigo=? and correo = ?;";
 
          try(Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)){

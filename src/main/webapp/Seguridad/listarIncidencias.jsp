@@ -47,6 +47,13 @@
             width: 80% !important;
             height: 80% !important;
         }
+        .cont {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 40px;
+            height: 10px;
+        }
 
     </style>
 
@@ -130,8 +137,16 @@
                 <div class="col-10" style="">
                     <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Incidencias PUCP</b></h1>
                 </div>
-                <div class="col-2">
-                    <div style =  "margin-left: 10px" class="dropdown">
+                <% if (session.getAttribute("msg") != null) { %> <!-- si el cambio del estado es exitoso-->
+                <div>
+                    <div class="alert alert-success" role="alert"><%=session.getAttribute("msg")%></div>
+                </div>
+                <%session.removeAttribute("msg");%> <!-- luego de refrescar la pagina, se elimina el mensaje-->
+                <% }%>
+
+                <div class="col-2" >
+
+                    <div style =  "margin-left: 10px" class="cont">
                         <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Descargar como
                         </a>
@@ -141,8 +156,12 @@
                             <li><a class="dropdown-item" href="<%=request.getContextPath()%>/FormatosServlet?formato=excel" download="reporteincidencias.xlsx">EXCEL</a></li>
                             <li><a class="dropdown-item" href="<%=request.getContextPath()%>/FormatosServlet?formato=txt" download="reporte.txt">TEXTO</a></li>
                         </ul>
+
                     </div>
+
                 </div>
+
+
             </div>
         </div>
 

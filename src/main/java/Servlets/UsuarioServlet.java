@@ -2,6 +2,9 @@ package Servlets;
 
 import Beans.*;
 import Daos.*;
+import Funcion.EnviarCorreo2fa;
+import Funcion.EnviarCorreoEstado;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -37,11 +40,11 @@ public class UsuarioServlet extends HttpServlet {
                 case ("confirmar"):
                     int idIncidencia = Integer.parseInt(request.getParameter("id"));
                     incidencia = inDao.obtenerIncidencia(idIncidencia);
+                    ArrayList<FotosIncidencias> fotos1 = inDao.obtenerFotos(idIncidencia);
                     request.setAttribute("Incidencia",incidencia);
-                    inDao.confirmar(idIncidencia);
+                    request.setAttribute("Fotos",fotos1);
                     view = request.getRequestDispatcher("/Usuario/confirmarIncidencia.jsp");
                     view.forward(request, response);
-                    //response.sendRedirect(request.getContextPath()+ "/UsuarioServlet");
                     break;
                 case ("borrar"):
                     String idIncidencia1 = request.getParameter("id");
@@ -61,9 +64,9 @@ public class UsuarioServlet extends HttpServlet {
                     view.forward(request,response);
                     break;
                 case ("listarDestacados") :
-
                     listaIncidencias = inDao.obtenerIncidencias();
-
+                    ArrayList<Integer> estados4 = inDao.estados(listaIncidencias,usuario1.getCodigo());
+                    request.setAttribute("estados",estados4);
                     request.setAttribute("listaIncidencias",listaIncidencias);
                     view = request.getRequestDispatcher("/Usuario/IncidenciasDestacadas.jsp");
                     view.forward(request,response);
@@ -99,6 +102,7 @@ public class UsuarioServlet extends HttpServlet {
                     incidencia = inDao.obtenerIncidencia(idIncidencia4);
                     listaIncidencias = inDao.obtenerIncidencias();
                     ArrayList<FotosIncidencias> fotos2 = inDao.obtenerFotos(idIncidencia4);
+                    System.out.println(fotos2.size());
                     request.setAttribute("Incidencia",incidencia);
                     request.setAttribute("listaIncidencias",listaIncidencias);
                     request.setAttribute("Fotos",fotos2);
@@ -119,6 +123,9 @@ public class UsuarioServlet extends HttpServlet {
                     break;
                 case("buscarIncidencia"):
                     listaIncidencias = inDao.obtenerIncidencias();
+                    ArrayList<Integer> estados = inDao.estados(listaIncidencias,usuario1.getCodigo());
+                    System.out.println(listaIncidencias.size());
+                    request.setAttribute("estados",estados);
                     request.setAttribute("listaIncidencias",listaIncidencias);
                     view = request.getRequestDispatcher("/Usuario/BuscarIncidencia.jsp");
                     view.forward(request, response);
@@ -150,11 +157,16 @@ public class UsuarioServlet extends HttpServlet {
                         listaIncidencias = inDao.obtenerIncidenciasDestacadas();
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
+                    }ArrayList<Integer> ids = new ArrayList<>();
+                    for(Incidencia i : listaIncidencias){
+                        ids.add(i.getIdIncidencia());
                     }
+                    ArrayList<FotosIncidencias> fotosIncidencias = inDao.fotosInicio(ids);
 
-                    ArrayList<Integer> estados = inDao.estados(listaIncidencias,usuario1.getCodigo());
+                    ArrayList<Integer> estados1 = inDao.estados(listaIncidencias,usuario1.getCodigo());
                     request.setAttribute("destacadas",listaIncidencias);
-                    request.setAttribute("estados",estados);
+                    request.setAttribute("fotosIndicencias", fotosIncidencias);
+                    request.setAttribute("estados",estados1);
                     view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
                     view.forward(request, response);
                     break;
@@ -186,6 +198,57 @@ public class UsuarioServlet extends HttpServlet {
         RequestDispatcher view ;
 
         switch (accion){
+            case ("reabrir"):
+                int idIncidencia5 = Integer.parseInt(request.getParameter("id"));
+                Incidencia jijija = idao.obtenerIncidencia(idIncidencia5);
+                int cont = jijija.getContadorReabierto();
+                String comentarioreopen = request.getParameter("reopen");
+                System.out.println(comentarioreopen);
+                if (cont>=5){
+                    request.getSession().setAttribute("info", "Ya se ha alcanzado el número máximo de reaperturas");
+                    response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=verDetalle&id="+jijija.getIdIncidencia());
+                }else {
+                    try {
+                        EnviarCorreoEstado.main(usuario1.getCorreo(),jijija,2,"Reabierto");
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        ArrayList<Usuario> listausuariosdestacados = idao.obtenerUsuarioxDestacada(jijija.getIdIncidencia());
+                        if(listausuariosdestacados != null){
+                            for (Usuario u : listausuariosdestacados){
+                                EnviarCorreoEstado.main(u.getCorreo(),jijija,2,"Reabierto");
+                            }
+                        }
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
+                    idao.reabrir(idIncidencia5);
+                    response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
+                }
+                break;
+            case ("confirmarIncidencia"):
+                int idIncidencia2 = Integer.parseInt(request.getParameter("id"));
+                Incidencia in = idao.obtenerIncidencia(idIncidencia2);
+                try {
+                    EnviarCorreoEstado.main(usuario1.getCorreo(),in,2,"Resuelto");
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    ArrayList<Usuario> listausuariosdestacados = idao.obtenerUsuarioxDestacada(in.getIdIncidencia());
+                    if(listausuariosdestacados != null){
+                        for (Usuario u : listausuariosdestacados){
+                            EnviarCorreoEstado.main(u.getCorreo(),in,2,"Resuelto");
+                        }
+                    }
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+                idao.confirmar(idIncidencia2);
+                System.out.println("Confirmar");
+                response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
+                break;
 
             case "guardar": //guardar incidencia
                 Incidencia incidencia = new Incidencia();
@@ -211,51 +274,84 @@ public class UsuarioServlet extends HttpServlet {
                 String fecha = request.getParameter("fecha");
                 int idEstadoIncidencia = 1;
                 //String estado= request.getParameter("estado");
+                String otroTipo = request.getParameter("Otros");
+                int a = 0,b=0,c=0,d=0;
+                if (nombreIncidencia==null){
+                    a=1;
 
-
-                incidencia.setNombreIncidencia(nombreIncidencia);
-                incidencia.setFecha(fecha);
-                incidencia.setValidaIncidencia(true);
-                incidencia.setContadorReabierto(0);
-                TipoIncidencia tipoIncidencia1 = new TipoIncidencia();
-                tipoIncidencia1.setIdTipo(IDtipoIncidencia);
-                incidencia.setTipoIncidencia(tipoIncidencia1);
-
-                NivelUrgencia nivelUrgencia1 = new NivelUrgencia();
-                nivelUrgencia1.setIdNivelUrgencia(IDnivelUrgencia);
-                incidencia.setNivelUrgencia(nivelUrgencia1);
-
-                incidencia.setDescripcion(descripcion);
-
-                EstadoIncidencia estado1 = new EstadoIncidencia();
-                estado1.setIdEstado(idEstadoIncidencia);
-                incidencia.setEstadoIncidencia(estado1);
-
-                ZonaPUCP zonaPUCP = new ZonaPUCP();
-                zonaPUCP.setIdZonaPUCP(IDzonaPUCP);
-                incidencia.setZonaPUCP(zonaPUCP);
-
-                incidencia.setUsuario(usuario1);
-
-                idao.crearIncidencia(incidencia);
-
-                incidencia.setIdIncidencia(idao.getIdIncidencia(incidencia));
-
-                ArrayList<FotosIncidencias> fotosIncidencias = new ArrayList<>();
-                ArrayList<Part> fileParts = (ArrayList<Part>) request.getParts().stream().filter(part -> "fotoIncidencia".equals(part.getName()) && part.getSize() > 0).collect(Collectors.toList()); // Retrieves <input type="file" name="files" multiple="true">
-                for (Part filePart : fileParts) {
-                    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-                    InputStream fileContent = filePart.getInputStream();
-                    byte[] fileBytes = fileContent.readAllBytes();
-                    FotosIncidencias fi = new FotosIncidencias();
-                    System.out.println(fileName);
-                    fi.setFotobyte(fileBytes);
-                    fi.setNombreFoto(fileName);
-                    fi.setIncidencia(incidencia);
-                    fotosIncidencias.add(fi);
+                }else {
+                    if (!nombreIncidencia.isEmpty()){
+                        b=1;
+                        String validanombre = nombreIncidencia.substring(0,1);
+                        if (validanombre.equals(" ") & (validanombre.length()==nombreIncidencia.length())){
+                            c=1;
+                        }
+                    }
                 }
-                idao.guardarFotos(fotosIncidencias);
-                response.sendRedirect(request.getContextPath()+"/UsuarioServlet");
+                if (fecha.isEmpty()){
+                    d=1;
+                }
+                if(a==1||b==1 || c==1 || d==1){
+                    request.getSession().setAttribute("info", "El nombre ingresado no es válido");
+                    response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=registrarIncidencia");
+                }else {
+                    incidencia.setNombreIncidencia(nombreIncidencia);
+                    incidencia.setFecha(fecha);
+                    incidencia.setValidaIncidencia(true);
+                    incidencia.setContadorReabierto(0);
+                    TipoIncidencia tipoIncidencia1 = new TipoIncidencia();
+
+                    // logica
+                    tipoIncidencia1.setIdTipo(IDtipoIncidencia);
+                    incidencia.setTipoIncidencia(tipoIncidencia1);
+
+                    System.out.println(otroTipo);
+                    if (IDtipoIncidencia == 6){
+                        incidencia.setOtroTipo(otroTipo);
+                    }
+
+
+                    NivelUrgencia nivelUrgencia1 = new NivelUrgencia();
+                    nivelUrgencia1.setIdNivelUrgencia(IDnivelUrgencia);
+                    incidencia.setNivelUrgencia(nivelUrgencia1);
+
+                    incidencia.setDescripcion(descripcion);
+
+                    EstadoIncidencia estado1 = new EstadoIncidencia();
+                    estado1.setIdEstado(idEstadoIncidencia);
+                    incidencia.setEstadoIncidencia(estado1);
+
+                    ZonaPUCP zonaPUCP = new ZonaPUCP();
+                    zonaPUCP.setIdZonaPUCP(IDzonaPUCP);
+                    incidencia.setZonaPUCP(zonaPUCP);
+
+                    incidencia.setUsuario(usuario1);
+
+                    idao.crearIncidencia(incidencia);
+
+                    incidencia.setIdIncidencia(idao.getIdIncidencia(incidencia));
+
+                    ArrayList<FotosIncidencias> fotosIncidencias = new ArrayList<>();
+                    ArrayList<Part> fileParts = (ArrayList<Part>) request.getParts().stream().filter(part -> "fotoIncidencia".equals(part.getName()) && part.getSize() > 0).collect(Collectors.toList()); // Retrieves <input type="file" name="files" multiple="true">
+                    for (Part filePart : fileParts) {
+                        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+                        InputStream fileContent = filePart.getInputStream();
+                        byte[] fileBytes = fileContent.readAllBytes();
+                        FotosIncidencias fi = new FotosIncidencias();
+                        System.out.println(fileName);
+                        fi.setFotobyte(fileBytes);
+                        fi.setNombreFoto(fileName);
+                        fi.setIncidencia(incidencia);
+                        fotosIncidencias.add(fi);
+                    }
+                    idao.guardarFotos(fotosIncidencias);
+                    try {
+                        EnviarCorreoEstado.main(usuario1.getCorreo(),incidencia,1,"");
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
+                    response.sendRedirect(request.getContextPath()+"/UsuarioServlet");
+                }
                 break;
 
             case "actualizarFoto":
@@ -285,12 +381,12 @@ public class UsuarioServlet extends HttpServlet {
 
                 //UsuarioDao uDao = new UsuarioDao();
 
-
+                //primero se valida que la contraseña sea valida
                 boolean contrasenaCorrecta = uDao.contrasenaisValid(nueva);
 
                 if (contrasenaCorrecta){
 
-                    if (nueva.equalsIgnoreCase("") ||  repass.equalsIgnoreCase("")){
+                    if (nueva.equalsIgnoreCase("") ||  repass.equalsIgnoreCase("")){ //ambos campos no pueden estar vacios
                         session.setAttribute("msg", "La contrasena no puede estar vacia");
                         response.sendRedirect(request.getContextPath() + "/UsuarioServlet?accion=restablecerContrasenia");
 

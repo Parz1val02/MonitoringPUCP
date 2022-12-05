@@ -1,22 +1,23 @@
 package Funcion;
+
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.Session;
 import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-//import jakarta.swing.*;
 import java.util.Properties;
 
-//para enviar correo al olvidar contraseña y registrarse(cambiar algunas cosas)
+
+//para enviar correo al olvidar contraseña y registrarse
 public class EnviarCorreo {
 
-    public static void main(String correoDestino)throws  MessagingException {
-        //public static void llamar(String correoDestino) throws AddressException, MessagingException{
+    public static void main(String correoDestino)throws MessagingException {
+
         String correo = "pucpmonitoring2022@gmail.com"; //cambiar correo
         String contra = "cxzmeohuebkelqhc";  //cambiar contraseña
 
-        // CONTRASEÑA 16 CARACETERES QUE SE TIENE QUE USAR -> paeocxrkjrtkcyuy
+        // CONTRASEÑA 16 CARACETERES QUE SE TIENE QUE USAR ->
         Properties p = new Properties();
         p.put("mail.smtp.host","smtp.gmail.com");
         p.setProperty("mail.smtp.starttls.enable","true");
@@ -30,7 +31,7 @@ public class EnviarCorreo {
         mensaje.setFrom(new InternetAddress(correo)); //FROM
         mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress(correoDestino));  //TO
         mensaje.setSubject("Cambio de Contraseña - MONITORING PUCP"); //
-        String link = "http://localhost:8080/Login?accion=restablecerContrasenia";
+        String link = "http://localhost:8080/Login?accion=restablecer";
         mensaje.setText(link);
         //mensaje.setText("Este es un mensaje que se envia desde JAVA");
 

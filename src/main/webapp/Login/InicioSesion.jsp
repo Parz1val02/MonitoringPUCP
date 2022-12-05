@@ -45,7 +45,7 @@
         <h2 class="create-account" style="font-family: 'Arial Black'; font-size: 20px; " align="center">Iniciar Sesión</h2>
         <div style="height: 20px; display: block;"></div>
 
-          <form method="post" action="<%= request.getContextPath()%>/Login">
+          <form method="post" action="<%=request.getContextPath()%>/Login">
             <div>
               <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label" style="font-size: 15px; margin: 0px 5px 2px 8px">Correo</label>
@@ -65,8 +65,8 @@
             font-family: sans-serif,Montserrat; font-size: 15px">
               <%=session.getAttribute("msg")%>
             </div>
-            <%}%>
             <%session.removeAttribute("msg");%>
+            <%}%>
             <div align="center">
               <button type="submit" class="btn btn-outline-dark" style="border-radius: 5px">Aceptar y Continuar</button>
             </div>

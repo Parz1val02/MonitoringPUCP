@@ -11,7 +11,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   Usuario usuario = (Usuario) request.getAttribute("usuario");
-  String error = request.getAttribute("msg").toString();
   ArrayList<CategoriaPUCP> listaCategorias = (ArrayList<CategoriaPUCP>) request.getAttribute("listaCategorias");
 %>
 <%
@@ -307,9 +306,14 @@
                         </div>
                       </div>
                       <div style="color:#FF0000;"><p text-align="center;" style="margin-top: 10px;" class="font-weight-bold">Todos los campos son obligatorios.</p></div>
-                      <div>
+                      <div style="height: 25px; display: block;"></div>
+                      <%if(session.getAttribute("msg")!=null){%>
+                      <div id="validation" class="invalid-feedback" style="display: block; margin-bottom: 10px;
+                      font-family: sans-serif,Montserrat; font-size: 15px">
+                        <%=session.getAttribute("msg")%>
                       </div>
-
+                      <%session.removeAttribute("msg");%>
+                      <%}%>
 
                     </div>
                     <div class="form-group">

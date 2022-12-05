@@ -1,4 +1,7 @@
-<%@ page import="Beans.Incidencia" %><%--
+<%@ page import="Beans.Incidencia" %>
+<%@ page import="Beans.EstadoIncidencia" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="Beans.FotosIncidencias" %><%--
   Created by IntelliJ IDEA.
   User: Lenovo
   Date: 21/10/2022
@@ -8,6 +11,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Incidencia incidencia = (Incidencia) request.getAttribute("Incidencia");
+    ArrayList<EstadoIncidencia> estados = (ArrayList<EstadoIncidencia>) request.getAttribute("estados");
+    ArrayList<FotosIncidencias> fotos = (ArrayList<FotosIncidencias>) request.getAttribute("Fotos");
 %>
 <html>
 <head>
@@ -20,7 +25,16 @@
     <link href="css/main.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin=""/>
 
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+    <style>
+        #map { height: 300px; }
+    </style>
 
     <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
@@ -104,6 +118,8 @@
     <div class="content-wrapper">
         <div class="container" style="margin-top: 50px">
 
+
+
             <label class="form-label">Fecha:</label>
             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                 <input class="form-control" type="text"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
@@ -123,6 +139,14 @@
                 <label ><%=incidencia.getTipoIncidencia().getTipo()%></label>
             </div>
 
+
+            <%if (incidencia.getTipoIncidencia().getTipo().equalsIgnoreCase("otros")) { %>
+                <label class="form-label">Nombre tipo:</label>
+                <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
+                    <input class="form-control" type="text"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
+                    <label ><%=incidencia.getOtroTipo()%></label>
+                </div>
+            <% }%>
             <label class="form-label">Zona PUCP:</label>
             <div class="form-floating" style="margin-bottom: 5px;display: flex; align-items: center">
                 <input class="form-control" type="text"  placeholder="Nombre" aria-label="Disabled input example" disabled readonly>
@@ -148,56 +172,69 @@
                 <label ><%=incidencia.getDescripcion()%></label>
             </div>
 
-
-            <div class="google-maps" style="text-align: center">  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d9080.838408815116!2d-77.0851327328001!3d-12.069237033787196!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd7a0bfb797e5862e!2sPontificia%20Universidad%20Cat%C3%B3lica%20del%20Per%C3%BA!5e0!3m2!1ses!2spe!4v1665201780059!5m2!1ses!2spe" width="600" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> </div>
-
-            <div style =  "margin-left: 10px">
-                <p> Foto:
-                    <a href="#" class="link-primary">Click para ver foto</a>
-                </p>
-            </div>
+            <div style="height: 25px; display: block;"></div>
+            <div id="map"></div>
+            <div style="height: 25px; display: block;"></div>
 
 
-
-            <br>
-            <p style="margin-top: 20px;margin-left: 10px">Estado de la incidencia </p>
-
-            <div style =  "margin-left: 10px" class="form-check">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Estado</option>
-                    <option value="3">Atendido</option>
-                    <option value="3"><% incidencia.getEstadoIncidencia().setEstado("Atendido");%></option>
-                </select>
-            </div>
-
-            <br><br>
-            <div style =  "margin-left: 10px" class="form-floating">
-                <p>
-                    Justificacion de la incidencia: <br>
-                    <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px"></textarea>
-                </p>
-            </div>
-
-
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Alerta</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Se cambiara el estado de la incidencia
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
-                            <form action="<%=request.getContextPath()%>/SeguridadServlet?accion=listar">
-                                <button type="submit" class="btn btn-secondary">Cancelar</button>
-                            </form>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6" style="margin: auto">
+                        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <%int i=0;%>
+                                <%for(FotosIncidencias fotito : fotos){%>
+                                <%if(i==0){%>
+                                <div class="carousel-item active">
+                                    <%}else {%>
+                                    <div class="carousel-item">
+                                        <%}%>
+                                        <img src="<%=request.getContextPath()%>/SeguridadServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="..." class="d-block w-100">
+                                    </div>
+                                    <%i++;%>
+                                    <%}%>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+            <form method="post" action="<%=request.getContextPath()%>/SeguridadServlet?accion=guardar">
+                <input type="text" class="form-control" name="idIncidencia" value="<%=incidencia.getIdIncidencia()%>" hidden>
+                <br>
+                <p style="margin-top: 20px;margin-left: 10px">Estado de la incidencia </p>
+                <div style =  "margin-left: 10px" class="form-check">
+                    <select class="form-select" aria-label="Default select example" name="idEstado" >
+
+                        <% for (EstadoIncidencia estado : estados) {%>  <!--compara el estado de la incidencia con las opciones del combo box -->
+                        <option value="<%=estado.getIdEstado()%>" <%= incidencia.getEstadoIncidencia().getEstado().equalsIgnoreCase(estado.getEstado())?"selected":""%> > <%=estado.getEstado()%></option>
+                        <% }%>
+                    </select>
+                </div>
+
+                <br>
+                <div style =  "margin-left: 10px" class="form-floating">
+                    <p>
+                        Justificacion de la incidencia: <br>
+                        <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px" name="justificacion" required></textarea>
+                    </p>
+                </div>
+
+                <button type="submit" class="btn btn-primary" >Aceptar</button>
+
+                <a href="<%=request.getContextPath()%>/SeguridadServlet" class="btn btn-danger">Cancelar</a>
+
+            </form>
 
         </div>
     </div>
@@ -213,7 +250,30 @@
 <!-- CORE SCRIPTS-->
 <script src="scripts/app.min.js" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    function set_map() {
 
+        var latitud = <%=incidencia.getZonaPUCP().getLatitud()%>;
+        var longitud = <%=incidencia.getZonaPUCP().getLongitud()%>;
+        var icono = L.icon({
+            iconUrl: '<%=incidencia.getTipoIncidencia().getFotoIcono()%>',
+
+            iconSize:     [38, 38], // size of the icon
+            iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
+            popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+        });
+        var map = L.map('map',{zoomControl:false}).setView([latitud, longitud], 30);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([latitud, longitud], {icon: icono}).addTo(map)
+            .bindPopup('<%=incidencia.getTipoIncidencia().getTipo()%>')
+            .openPopup();
+    }
+    document.addEventListener("DOMContentLoaded", set_map);
+</script>
 
 </body>
 </html>

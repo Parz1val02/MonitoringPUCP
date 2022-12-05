@@ -2,6 +2,7 @@
 <%@ page import="Beans.TipoIncidencia" %>
 <%@ page import="Beans.NivelUrgencia" %>
 <%@ page import="Beans.ZonaPUCP" %>
+<%@ page import="Beans.Incidencia" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     ArrayList<TipoIncidencia> tipos = (ArrayList<TipoIncidencia>) request.getAttribute("tipos");
@@ -26,6 +27,16 @@
     <link rel="stylesheet" href=../css/style.min.css>
     <!-- CSS de registrar-flujo-usuarioo -->
     <link rel="stylesheet" href="../css/Registrar_FlujoUsuario.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+
+    <style>
+        #map { height: 300px }
+    </style>
 </head>
 <body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout " >
 <div class="container-fluid" style=" padding: 0px">
@@ -43,40 +54,41 @@
 <!-- PRINCIPAL -->
 <div class="container-fluid" style="min-height: 60vh; align-content: center;">
     <div class="row" style="min-height: 60vh">
-        <div class="page-heading" style="text-align: center; margin: auto">
-            <h1 class="page-title" style="font-family: sans-serif,Montserrat; font-weight: 700;
-            font-size: 35px; color: #042354;"><b>Registrar Incidencias</b></h1>
-        </div>
-        <div style="height: 10px; display: block;"></div>
-        <div class="page-content fade-in-up" style="align-content: center">
+        <div class="page-content fade-in-up col-md-8" style="align-content: center; margin: auto">
             <div class="container" style=" height: 100%">
-                <div class="ibox" style="align-content: center; min-height:60%; max-width: 85%; margin: auto; background: #dee2e6" >
+                <div class="page-heading" style="text-align: center;margin-bottom: 20px;margin-left: 15%">
+                    <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Registrar Incidencias</b></h1>
+                </div>
+                <div class="ibox" style="align-content: center; min-height:60%; max-width: 85%; margin-left: 15% " >
                     <!--div class="ibox-head">
                         <div class="ibox-title" style="font-size: 20px">Registrar Incidencia</div>
                         <div class="ibox-tools">
                             <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
                         </div>
                     </div-->
-                    <div class="ibox-body">
+                    <div class="ibox-body" >
+                        <%if(session.getAttribute("info")!=null){%>
+                        <div class="alert alert-danger" role="alert">
+                            <%=session.getAttribute("info")%>
+                        </div>
+                        <%}%>
                         <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=guardar" enctype="multipart/form-data">
 
                             <!-- 1era fila -->
                             <div class="row g-2">
                                 <div class="col-md-4"  style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat;
-                                    font-weight: 600; font-size: 18px; color: #042354;">Nombre:</p>
+                                    <p class="campos-registrar-usuario">Nombre:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px">
                                         <input type="text" class="form-control" id="floatingInputGrid2" placeholder="Nombre Incidencia" name="nombre_incidencia">
-                                        <label for="floatingInputGrid2" class="label-form-flujousuario" >Nombre Incidencia</label>
+                                        <label for="floatingInputGrid2" class="label-form-flujousuario">Nombre Incidencia</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row g-2">
                                 <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat;
-                                    font-weight: 600; font-size: 18px; color: #042354;">Fecha:</p>
+                                    <p class="campos-registrar-usuario">Fecha:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px">
@@ -87,45 +99,47 @@
                             <!-- 2da fila -->
                             <div class="row g-2">
                                 <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat;
-                                    font-weight: 600; font-size: 18px; color: #042354;">Zona PUCP:</p>
+                                    <p class="campos-registrar-usuario">Zona PUCP:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
-                                        <select class="form-select" id="floatingSelectGrid6" name="zonaPUCP">
+                                        <select class="form-select" id="zonaPUCP" name="zonaPUCP">
                                             <% for (ZonaPUCP zona : zonas) {%>
                                             <option value="<%=zona.getIdZonaPUCP()%>"><%= zona.getNombreZona()%></option>
                                             <% }%>
                                         </select>
 
-                                        <label for="floatingSelectGrid2" class="label-form-flujousuario" >Zona PUCP</label>
+                                        <label for="zonaPUCP" class="label-form-flujousuario">Zona PUCP</label>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row g-2">
+                                <div id="map"></div>
+                                <div style="height: 15px; display: block;"></div>
                             </div>
                             <!-- 3era fila -->
                             <div class="row g-2">
                                 <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat;
-                                    font-weight: 600; font-size: 18px; color: #042354;">Tipo de Incidencia:</p>
+                                    <p class="campos-registrar-usuario">Tipo de Incidencia:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating " style="margin-bottom: 15px;">
-                                        <select class="form-select" id="floatingSelectGrid2" name="tipoIncidencia">
+                                        <select class="form-select" id="tipoIncidencia" name="tipoIncidencia">
                                             <% for (TipoIncidencia tipo : tipos) {%>
                                             <option value="<%=tipo.getIdTipo()%>"><%= tipo.getTipo()%></option>
-
                                             <% }%>
                                         </select>
 
-                                        <label for="floatingSelectGrid2" class="label-form-flujousuario">Tipo de Incidencia</label>
+                                        <label for="tipoIncidencia" class="label-form-flujousuario">Tipo de Incidencia</label>
                                     </div>
+                                    <input type="text" class="form-control" id="Otros" placeholder="Tipo" name="Otros" disabled>
+                                    <div style="height: 25px; display: block;"></div>
                                 </div>
                             </div>
                             <!-- 4ta fila -->
                             <div class="row g-2">
                                 <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat;
-                                    font-weight: 600; font-size: 18px; color: #042354;">Nivel de Urgencia:</p>
+                                    <p class="campos-registrar-usuario">Nivel de Urgencia:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
@@ -142,8 +156,7 @@
                             <!-- 6ta fila -->
                             <div class="row g-2">
                                 <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat;
-                                    font-weight: 600; font-size: 18px; color: #042354;">Foto:</p>
+                                    <p class="campos-registrar-usuario">Foto:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
@@ -155,8 +168,7 @@
                             <!-- 7ma fila -->
                             <div class="row g-2">
                                 <div class="col-md-4" style="display: flex; flex-direction: column">
-                                    <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat;
-                                    font-weight: 600; font-size: 18px; color: #042354;">Descripción:</p>
+                                    <p class="campos-registrar-usuario">Descripción:</p>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
@@ -186,11 +198,9 @@
             <div class="container text-center" style="display: flex; justify-content: center;  flex-direction: column ; height: 100%"  >
                 < Gallery>
                 <div id="wrapper" >
-                    <h1 style="font-family: sans-serif,Montserrat;
-                        font-weight: 600; font-size: 20px; color: #042354;">Previsualización de Imágenes</h1>
-                    <div style="height: 20px; display: block;"></div>
-                    <div id="container-input" >
-                        <div class="wrap-file" style="height: 300px; width: 80%">
+                    <h1 style="margin-bottom:15px ;font-family: 'Open Sans', sans-serif;font-size: 20px;font-weight: bold">Previsualización de Imágenes</h1>
+                    <div id="container-input"  >
+                        <div class="wrap-file">
                             <div class="content-icon-camera">
                                 < <input type="file" id="file" name="file[]" accept="image/*" multiple />  >
                                 <div class="icon-camera"></div>
@@ -199,23 +209,21 @@
                         </div>
                         <button id="publish">Publicar</button>
                     </div>
-                    div class="preload">
+                    <div class="preload">
                         <img src="assets/images/preload.gif" alt="preload" />
                     </div>
                     <h2 id="success"></h2>
                 </div>
-                    < Gallery>
+                </div>
+                    < Gallery >
                 </div>
             </div>
         </div-->
     </div>
 </div>
 <!-- END PRINCIPAL-->
-
-<div style="height: 100px; display: block;"></div>
-
-<!-- Footer -->
-<footer
+    <!-- Footer -->
+    <footer
             class="text-center text-lg-start text-white"
             style="background-color: #042354">
         <!-- Grid container -->
@@ -298,7 +306,7 @@
         </div>
         <!-- Grid container -->
     </footer>
-<!-- Footer -->
+    <!-- Footer -->
 
 <!-- Modal chequer funcionamiento-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -322,6 +330,60 @@
     <!--script src="../scripts/flujo-usuario.js"></script> <previsualizador de imagenes-->
     <!-- CORE SCRIPTS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"
+    ></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#tipoIncidencia').change(function (e) { //#id
+
+                console.log($(this).val())
+                if ($(this).val() == "6") {
+                    $('#Otros').prop("disabled", false);//habilita
+                } else {
+                    $('#Otros').prop("disabled", true); //deshabilita
+                }
+            })
+            $('#zonaPUCP').on('change', function() {
+                set_map( $(this).val() );
+            });
+            var map= L.map('map')
+
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            ;
+            var marker;
+            function set_map(value) {
+                var latitud=1;
+                var longitud=1;
+                var nombre;
+                <% for(ZonaPUCP z: zonas){ %>
+                if (value==="<%=z.getIdZonaPUCP()%>"){
+                    latitud = <%=z.getLatitud()%>;
+                    longitud = <%=z.getLongitud()%>;
+                    nombre = "<%=z.getNombreZona()%>"
+                }
+                <%}%>
+                map.setView([latitud, longitud], 30);
+
+                if (marker){
+                    marker.setLatLng([latitud,longitud])
+                        .bindPopup(nombre)
+                        .openPopup();
+                }
+                else{
+                    marker = L.marker([latitud, longitud]).addTo(map)
+                        .bindPopup(nombre)
+                        .openPopup();
+                }
+            }
+            set_map($('#zonaPUCP').val())
+        });
+    </script>
 
 </body>
 </html>

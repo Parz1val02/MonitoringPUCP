@@ -7,14 +7,31 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.util.Date;
 
 import static java.nio.file.Files.newOutputStream;
 
 public class IncidenciaDao extends DaoBase{
+
+
+    public String formatDate(String oldDate) throws ParseException {
+        SimpleDateFormat parseador = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = null;
+        try {
+            date = parseador.parse(oldDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return formateador.format(date);
+    }
 
     public ArrayList<Incidencia> obtenerIncidencias()  {
 
@@ -35,7 +52,10 @@ public class IncidenciaDao extends DaoBase{
             while (rs.next()) {
                 Incidencia incidencia = new Incidencia();
                 incidencia.setIdIncidencia(rs.getInt("i.IdIncidencia"));
-                incidencia.setFecha(rs.getString(2));
+                String fe = rs.getString(2);
+                String fi = fe.substring(0,10);
+                String newDate = formatDate(fi);
+                incidencia.setFecha(newDate);
                 incidencia.setNombreIncidencia(rs.getString(3));
                 incidencia.setValidaIncidencia(rs.getBoolean("validaIncidencia"));
                 incidencia.setDescripcion(rs.getString(5));
@@ -70,16 +90,18 @@ public class IncidenciaDao extends DaoBase{
 
 
                 IncidenciasDestacadas a = new IncidenciasDestacadas();
-                a.setContadorDestacado(rs.getInt(21));
+                a.setContadorDestacado(rs.getInt(20));
                 incidencia.setIncidenciasDestacadas(a);
                 listaIncidencia.add(incidencia);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         return listaIncidencia;
     }
-    
+
     
     public ArrayList<Incidencia> obtenerIncidenciasPorUsuario(String codigoUsuario) throws SQLException {
 
@@ -357,7 +379,7 @@ public class IncidenciaDao extends DaoBase{
         return listaDestacadas;
     }*/
     public void destacarIncidenciaBorrar(int idIncidencia, String usuario) throws SQLException{
-        String sql3 ="DELETE FROM usuarios_has_incidenciasdestacadas where (codigoUsuario = ? AND idIncidenciaDestacadas = ?)";
+        String sql3 ="DELETE FROM Usuarios_has_IncidenciasDestacadas where (codigoUsuario = ? AND idIncidenciaDestacadas = ?)";
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql3)){
             pstmt.setString(1, usuario);
@@ -389,7 +411,7 @@ public class IncidenciaDao extends DaoBase{
         }
     }
     public void destacarIncidenciaAdd (int idIncidencia, String usuario) throws SQLException{
-        String sql ="INSERT INTO usuarios_has_incidenciasdestacadas (codigoUsuario, idIncidenciaDestacadas) values (?,?)";
+        String sql ="INSERT INTO Usuarios_has_IncidenciasDestacadas (codigoUsuario, idIncidenciaDestacadas) values (?,?)";
         try (Connection conn1 = this.getConnection();
              PreparedStatement pstmt = conn1.prepareStatement(sql)){
             pstmt.setString(1, usuario);
@@ -477,7 +499,7 @@ public class IncidenciaDao extends DaoBase{
                      "left join Usuarios u on i.codigousuario = u.codigo \n" +
                      "left join ZonaPUCP z on i.idZonaPUCP=z.idZonaPUCP where validaIncidencia = 1 order by d.contadorDestacado DESC;")) {
             int i = 0;
-            while (rs.next() & i<=5) {
+            while (rs.next() & i<5) {
                 Incidencia incidencia = new Incidencia();
                 incidencia.setIdIncidencia(rs.getInt("i.IdIncidencia"));
                 incidencia.setFecha(rs.getString(2));
@@ -525,15 +547,17 @@ public class IncidenciaDao extends DaoBase{
         return listaDestacadas;
     }
 
-    public void actualizarIncidencia(String estadoIncidenciaUpdate) {
+    public void actualizarIncidencia(Incidencia incidencia) {
 
         //puede editar mas campos
-        String sql = "UPDATE incidencias set estadoincidencia = ?";
+        String sql = "UPDATE Incidencias set idEstadoIncidencia=? where idIncidencia = ?";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
-            pstmt.setString(1, estadoIncidenciaUpdate);
+            pstmt.setInt(1, incidencia.getEstadoIncidencia().getIdEstado());
+            pstmt.setInt(2, incidencia.getIdIncidencia());
+
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -542,10 +566,66 @@ public class IncidenciaDao extends DaoBase{
 
     }
 
+
+    //para crear comentario(justificacion y comentario al reabrir)
+    public void crearComentario(Comentario comentario){
+
+        String sql = "insert into Comentario (idComentario, comentarios, fecha, codigoUsuario, idIncidencia) values(?,?,?,?,?)";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setInt(1, comentario.getIdComentario());
+            pstmt.setString(2, comentario.getComentario());
+            pstmt.setString(3,comentario.getIncidencia().getFecha());  //preguntar a jandro
+            pstmt.setString(4,comentario.getIncidencia().getUsuario().getCodigo());
+            pstmt.setInt(5,comentario.getIncidencia().getIdIncidencia());
+
+
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ArrayList<Usuario> obtenerUsuarioxDestacada(int idIncidencia){
+        ArrayList<Usuario> usuariosxDestacada = new ArrayList<>();
+        String sql = "select * from usuarios_has_incidenciasdestacadas where idIncidenciaDestacadas=?";
+        try (Connection conn6 = this.getConnection();
+             PreparedStatement pstmt = conn6.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idIncidencia);
+            try(ResultSet rs = pstmt.executeQuery();) {
+                UsuarioDao ud = new UsuarioDao();
+                while(rs.next()){
+                    String codigo = rs.getString("codigoUsuario");
+                    Usuario use = ud.buscarPorId(codigo);
+                    usuariosxDestacada.add(use);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return usuariosxDestacada;
+    }
+
     public void confirmar(int id) {
 
         //con borrado logico
-        String sql = "UPDATE incidencias SET idEstadoIncidencia=4 where idIncidencia  = ?" ;
+        String sql = "UPDATE Incidencias SET idEstadoIncidencia=4 where idIncidencia  = ?" ;
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            System.out.println("Confirmar");
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void reabrir(int id) {
+        //con borrado logico
+        String sql = "UPDATE Incidencias SET idEstadoIncidencia=2, contadorReabierto = contadorReabierto+1 where idIncidencia  = ?" ;
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -591,7 +671,8 @@ public class IncidenciaDao extends DaoBase{
             pstmt.setBoolean(3, incidencia.getValidaIncidencia());
             pstmt.setString(4, incidencia.getDescripcion());
             pstmt.setInt(5, incidencia.getContadorReabierto());
-            pstmt.setNull(6, Types.VARCHAR);
+            pstmt.setString(6,incidencia.getOtroTipo());
+           //pstmt.setNull(6, Types.VARCHAR);
             pstmt.setInt(7, incidencia.getTipoIncidencia().getIdTipo());  //tipo incidencia
             pstmt.setInt(8, incidencia.getNivelUrgencia().getIdNivelUrgencia());  //nivel urgencia
             pstmt.setInt(9,incidencia.getEstadoIncidencia().getIdEstado()); //estado incidencia
@@ -678,5 +759,31 @@ public class IncidenciaDao extends DaoBase{
         return fis;
     }
 
+    public ArrayList<FotosIncidencias> fotosInicio(ArrayList<Integer> ids){
+        ArrayList<FotosIncidencias> fotosIncidencias = new ArrayList<>();
+        String sql = "select * from FotosIncidencias where idIncidencia in (?,?,?,?,?) group by idIncidencia;";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+
+            pstmt.setInt(1, ids.get(0));
+            pstmt.setInt(2, ids.get(1));
+            pstmt.setInt(3, ids.get(2));
+            pstmt.setInt(4, ids.get(3));
+            pstmt.setInt(5, ids.get(4));
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while(rs.next()){
+                    FotosIncidencias fi = new FotosIncidencias();
+                    fi.setIdFotos(rs.getInt(1));
+                    fi.setFotobyte(rs.getBytes(2));
+                    fi.setNombreFoto(rs.getString(3));
+                    fotosIncidencias.add(fi);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return fotosIncidencias;
+    }
 }
 

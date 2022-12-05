@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -86,13 +87,21 @@ public class AdminServlet extends HttpServlet {
                 case ("verDetalle"):
                     int idIncidencia = Integer.parseInt(request.getParameter("id"));
                     Incidencia incidencia = incidenciaDao.obtenerIncidencia(idIncidencia);
-
+                    ArrayList<FotosIncidencias> fotos1 = incidenciaDao.obtenerFotos(idIncidencia);
+                    request.setAttribute("Fotos",fotos1);
                     request.setAttribute("Incidencia",incidencia);
 
                     view = request.getRequestDispatcher("/Administrador/detalle_incidencia_admin.jsp");
                     view.forward(request, response);
                     break;
-
+                case("verFoto"):
+                    int idFotito = Integer.parseInt(request.getParameter("id"));
+                    FotosIncidencias fotito = incidenciaDao.sacarFoto(idFotito);
+                    String[] split1 = fotito.getNombreFoto().split("[.]");
+                    response.setContentType("image/"+split1[1]);
+                    try (OutputStream out = response.getOutputStream()) {
+                        out.write(fotito.getFotobyte());
+                    }
                 case "borrar":  // AdminServlet?action=borrar&id=
                     String codigo = request.getParameter("codigo");
                     usuarioDao.borrar(codigo);
@@ -112,7 +121,7 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-
+        HttpSession session = request.getSession();
         String action = request.getParameter("action");
 
         UsuarioDao usuarioDao = new UsuarioDao();
@@ -275,7 +284,7 @@ public class AdminServlet extends HttpServlet {
                         break;
                 }
                 } else {
-                    request.setAttribute("msg", "El usuario no está registrado");
+                    session.setAttribute("msg", "El usuario no está registrado");
                     view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
                     view.forward(request, response);
                     break;

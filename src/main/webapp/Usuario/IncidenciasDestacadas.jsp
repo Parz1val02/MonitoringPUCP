@@ -12,6 +12,7 @@
 <!--creando una lista de incidencias-->
 <%
   ArrayList<Incidencia> listaIncidencias = (ArrayList<Incidencia>) request.getAttribute("listaIncidencias");
+  ArrayList<Integer> estados = (ArrayList<Integer>) request.getAttribute("estados");
 %>
 <html lang="en">
   <head>
@@ -70,20 +71,35 @@
                     <!--<th>N° reabierta</th>-->
                     <th>N° destacados</th>
                     <!--<th>¿Reabrir incidencia?</th>-->
+                    <th>Detalles</th>
+                    <th></th>
 
                   </tr>
                 </thead>
 
                 <tbody>
+                  <%int i=0;%>
                   <% for(Incidencia incidencia : listaIncidencias) {%>
+                  <%if (estados.get(i)==1) {%>
                   <tr>
                     <td><%= incidencia.getNombreIncidencia()%> </td>
                     <td><%= incidencia.getUsuario().getNombre()%></td>
                     <td><%= incidencia.getEstadoIncidencia().getEstado()%> </td
                     <td></td>
                     <td><%= incidencia.getIncidenciasDestacadas().getContadorDestacado()%> </td>
-
+                    <td>
+                      <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle2&id=<%=incidencia.getIdIncidencia()%>">Ver detalle</a>
+                    </td>
+                    <td>
+                      <a type="button" class="btn btn-primary btn-mg float-right"
+                         style="font-size: 15px; border-color: #042354; background-color: #042354;"
+                         href="<%=request.getContextPath()%>/UsuarioServlet?accion=deletedestacar&des=<%=incidencia.getIdIncidencia()%>">
+                        <i class="fa-solid fa-pen">Quitar Destacado</i>
+                      </a>
+                    </td>
                   </tr>
+                  <%}%>
+                  <%i++;%>
                   <% }%>
                 </tbody>
               </table>
