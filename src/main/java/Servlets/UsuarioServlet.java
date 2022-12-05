@@ -2,6 +2,9 @@ package Servlets;
 
 import Beans.*;
 import Daos.*;
+import Funcion.EnviarCorreo2fa;
+import Funcion.EnviarCorreoEstado;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -294,6 +297,11 @@ public class UsuarioServlet extends HttpServlet {
                     fotosIncidencias.add(fi);
                 }
                 idao.guardarFotos(fotosIncidencias);
+                try {
+                    EnviarCorreoEstado.main(usuario1.getCorreo(),incidencia,1,"");
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
                 response.sendRedirect(request.getContextPath()+"/UsuarioServlet");
                 break;
 

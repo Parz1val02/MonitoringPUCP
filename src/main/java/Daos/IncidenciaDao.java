@@ -587,6 +587,26 @@ public class IncidenciaDao extends DaoBase{
             throw new RuntimeException(e);
         }
     }
+    public ArrayList<Usuario> obtenerUsuarioxDestacada(int idIncidencia){
+        ArrayList<Usuario> usuariosxDestacada = new ArrayList<>();
+        String sql = "select * from usuarios_has_incidenciasdestacadas where idIncidenciaDestacadas=?";
+        try (Connection conn6 = this.getConnection();
+             PreparedStatement pstmt = conn6.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idIncidencia);
+            try(ResultSet rs = pstmt.executeQuery();) {
+                UsuarioDao ud = new UsuarioDao();
+                while(rs.next()){
+                    String codigo = rs.getString("codigoUsuario");
+                    Usuario use = ud.buscarPorId(codigo);
+                    usuariosxDestacada.add(use);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return usuariosxDestacada;
+    }
 
     public void confirmar(int id) {
 
