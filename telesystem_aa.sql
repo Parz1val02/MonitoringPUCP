@@ -37,8 +37,8 @@ insert into ZonaPUCP(nombreZona,latitud,longitud) values("Entrada Principal",-12
                                                         ("DTI", -12.07046,-77.08053),
                                                         ("Tesoreria General", -12.06963,-77.07923),
                                                         ("CEPREPUC", -12.07151,-77.08091);
-                                                        
-												
+
+
                                                         
 insert into Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil, codigo2fa, activeTime2fa, primerIngreso)
 					values (20201696, "Leonardo", "Abanto", "a20201696@pucp.edu.pe", 12345678, true, sha2("clashroyale123",256),"987654321",1,1,null, null, null,1),
