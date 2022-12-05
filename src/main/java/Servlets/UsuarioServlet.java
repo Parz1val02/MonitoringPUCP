@@ -42,7 +42,6 @@ public class UsuarioServlet extends HttpServlet {
                     request.setAttribute("Fotos",fotos1);
                     view = request.getRequestDispatcher("/Usuario/confirmarIncidencia.jsp");
                     view.forward(request, response);
-                    //response.sendRedirect(request.getContextPath()+ "/UsuarioServlet");
                     break;
                 case ("borrar"):
                     String idIncidencia1 = request.getParameter("id");

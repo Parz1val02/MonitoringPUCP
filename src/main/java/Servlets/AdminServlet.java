@@ -86,7 +86,8 @@ public class AdminServlet extends HttpServlet {
                 case ("verDetalle"):
                     int idIncidencia = Integer.parseInt(request.getParameter("id"));
                     Incidencia incidencia = incidenciaDao.obtenerIncidencia(idIncidencia);
-
+                    ArrayList<FotosIncidencias> fotos1 = incidenciaDao.obtenerFotos(idIncidencia);
+                    request.setAttribute("Fotos",fotos1);
                     request.setAttribute("Incidencia",incidencia);
 
                     view = request.getRequestDispatcher("/Administrador/detalle_incidencia_admin.jsp");

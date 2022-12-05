@@ -1,6 +1,7 @@
 <%@ page import="Beans.Incidencia" %>
 <%@ page import="Beans.EstadoIncidencia" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="Beans.FotosIncidencias" %><%--
   Created by IntelliJ IDEA.
   User: Lenovo
   Date: 21/10/2022
@@ -11,6 +12,7 @@
 <%
     Incidencia incidencia = (Incidencia) request.getAttribute("Incidencia");
     ArrayList<EstadoIncidencia> estados = (ArrayList<EstadoIncidencia>) request.getAttribute("estados");
+    ArrayList<FotosIncidencias> fotos = (ArrayList<FotosIncidencias>) request.getAttribute("Fotos");
 %>
 <html>
 <head>
@@ -174,10 +176,36 @@
             <div id="map"></div>
             <div style="height: 25px; display: block;"></div>
 
-            <div style =  "margin-left: 10px">
-                <p> Foto:
-                    <a href="#" class="link-primary">Click para ver foto</a>
-                </p>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6" style="margin: auto">
+                        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <%int i=0;%>
+                                <%for(FotosIncidencias fotito : fotos){%>
+                                <%if(i==0){%>
+                                <div class="carousel-item active">
+                                    <%}else {%>
+                                    <div class="carousel-item">
+                                        <%}%>
+                                        <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="..." class="d-block w-100">
+                                    </div>
+                                    <%i++;%>
+                                    <%}%>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 

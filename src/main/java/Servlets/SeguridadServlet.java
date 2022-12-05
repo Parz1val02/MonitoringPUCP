@@ -38,9 +38,9 @@ public class SeguridadServlet extends HttpServlet {
                 case ("verDetalle"):
                     int idIncidencia = Integer.parseInt(request.getParameter("id"));
                     Incidencia incidencia = idao.obtenerIncidencia(idIncidencia);
-                    //System.out.println(incidencia.getNombreIncidencia());
+                    ArrayList<FotosIncidencias> fotos1 = idao.obtenerFotos(idIncidencia);
                     request.setAttribute("Incidencia", incidencia);
-
+                    request.setAttribute("Fotos",fotos1);
                     ArrayList<EstadoIncidencia> estados = eDao.obtenerEstados();
 
                     for (EstadoIncidencia e:estados) {
@@ -52,7 +52,6 @@ public class SeguridadServlet extends HttpServlet {
                             request.setAttribute("estados", estados1);
                         }
                     }
-                    //request.setAttribute("estados", eDao.obtenerEstados());
                     view = request.getRequestDispatcher("/Seguridad/VerDetalle.jsp");
                     view.forward(request, response);
                     break;
