@@ -34,7 +34,7 @@
 
             .img-container {
                 max-width: 642px;
-                max-height: 50px;
+                max-height: 376px;
                 width: 100%;
                 height: 100%;
                 overflow: hidden;
@@ -42,7 +42,7 @@
 
             .img-container img {
                 max-width: 642px;
-                max-height: 50px;
+                max-height: 376px;
                 width: 100%;
                 height: 100%;
                 object-fit: cover;

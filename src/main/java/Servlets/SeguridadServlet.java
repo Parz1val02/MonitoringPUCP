@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -55,7 +56,14 @@ public class SeguridadServlet extends HttpServlet {
                     view = request.getRequestDispatcher("/Seguridad/VerDetalle.jsp");
                     view.forward(request, response);
                     break;
-
+                case("verFoto"):
+                    int idFotito = Integer.parseInt(request.getParameter("id"));
+                    FotosIncidencias fotito = idao.sacarFoto(idFotito);
+                    String[] split1 = fotito.getNombreFoto().split("[.]");
+                    response.setContentType("image/"+split1[1]);
+                    try (OutputStream out = response.getOutputStream()) {
+                        out.write(fotito.getFotobyte());
+                    }
                 case ("restablece"):
 
                     view = request.getRequestDispatcher("/Seguridad/restablecer_contrasena_seguridad.jsp");

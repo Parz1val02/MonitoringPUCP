@@ -189,7 +189,7 @@
                                     <%}else {%>
                                     <div class="carousel-item">
                                         <%}%>
-                                        <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="..." class="d-block w-100">
+                                        <img src="<%=request.getContextPath()%>/SeguridadServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="..." class="d-block w-100">
                                     </div>
                                     <%i++;%>
                                     <%}%>

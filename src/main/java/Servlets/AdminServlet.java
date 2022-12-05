@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -93,7 +94,14 @@ public class AdminServlet extends HttpServlet {
                     view = request.getRequestDispatcher("/Administrador/detalle_incidencia_admin.jsp");
                     view.forward(request, response);
                     break;
-
+                case("verFoto"):
+                    int idFotito = Integer.parseInt(request.getParameter("id"));
+                    FotosIncidencias fotito = incidenciaDao.sacarFoto(idFotito);
+                    String[] split1 = fotito.getNombreFoto().split("[.]");
+                    response.setContentType("image/"+split1[1]);
+                    try (OutputStream out = response.getOutputStream()) {
+                        out.write(fotito.getFotobyte());
+                    }
                 case "borrar":  // AdminServlet?action=borrar&id=
                     String codigo = request.getParameter("codigo");
                     usuarioDao.borrar(codigo);
