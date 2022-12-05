@@ -15,9 +15,6 @@
     ArrayList<ZonaPUCP> zonas = (ArrayList<ZonaPUCP>) request.getAttribute("zonas");
     String error = (String) request.getAttribute("msg");
 %>
-<%
-    Incidencia incidencia = (Incidencia) request.getAttribute("incidencia");
-%>
 
 <html lang="en"  style="min-height: 100vh">
 <head>
@@ -30,6 +27,16 @@
     <link rel="stylesheet" href=../css/style.min.css>
     <!-- CSS de registrar-flujo-usuarioo -->
     <link rel="stylesheet" href="../css/Registrar_FlujoUsuario.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+
+    <style>
+        #map { height: 300px }
+    </style>
 </head>
 <body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout " >
 <div class="container-fluid" style=" padding: 0px">
@@ -100,6 +107,10 @@
                                         <label for="zonaPUCP" class="label-form-flujousuario">Zona PUCP</label>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row g-2">
+                                <div id="map"></div>
+                                <div style="height: 15px; display: block;"></div>
                             </div>
                             <!-- 3era fila -->
                             <div class="row g-2">
@@ -331,9 +342,43 @@
                     $('#Otros').prop("disabled", true); //deshabilita
                 }
             })
+            $('#zonaPUCP').on('change', function() {
+                set_map( $(this).val() );
+            });
+            var map= L.map('map')
+
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            ;
+            var marker;
+            function set_map(value) {
+                var latitud=1;
+                var longitud=1;
+                var nombre;
+                <% for(ZonaPUCP z: zonas){ %>
+                if (value==="<%=z.getIdZonaPUCP()%>"){
+                    latitud = <%=z.getLatitud()%>;
+                    longitud = <%=z.getLongitud()%>;
+                    nombre = "<%=z.getNombreZona()%>"
+                }
+                <%}%>
+                map.setView([latitud, longitud], 30);
+
+                if (marker){
+                    marker.setLatLng([latitud,longitud])
+                        .bindPopup('Julio zzzzzz '+nombre)
+                        .openPopup();
+                }
+                else{
+                    marker = L.marker([latitud, longitud]).addTo(map)
+                        .bindPopup('Julio zzzzzz '+nombre)
+                        .openPopup();
+                }
+            }
+            set_map($('#zonaPUCP').val())
         });
     </script>
-
 
 </body>
 </html>
