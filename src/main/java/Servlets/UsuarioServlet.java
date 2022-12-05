@@ -208,12 +208,43 @@ public class UsuarioServlet extends HttpServlet {
                     request.getSession().setAttribute("info", "Ya se ha alcanzado el número máximo de reaperturas");
                     response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=verDetalle&id="+jijija.getIdIncidencia());
                 }else {
+                    try {
+                        EnviarCorreoEstado.main(usuario1.getCorreo(),jijija,2,"Reabierto");
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        ArrayList<Usuario> listausuariosdestacados = idao.obtenerUsuarioxDestacada(jijija.getIdIncidencia());
+                        if(listausuariosdestacados != null){
+                            for (Usuario u : listausuariosdestacados){
+                                EnviarCorreoEstado.main(u.getCorreo(),jijija,2,"Reabierto");
+                            }
+                        }
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
                     idao.reabrir(idIncidencia5);
                     response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
                 }
                 break;
             case ("confirmarIncidencia"):
                 int idIncidencia2 = Integer.parseInt(request.getParameter("id"));
+                Incidencia in = idao.obtenerIncidencia(idIncidencia2);
+                try {
+                    EnviarCorreoEstado.main(usuario1.getCorreo(),in,2,"Resuelto");
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    ArrayList<Usuario> listausuariosdestacados = idao.obtenerUsuarioxDestacada(in.getIdIncidencia());
+                    if(listausuariosdestacados != null){
+                        for (Usuario u : listausuariosdestacados){
+                            EnviarCorreoEstado.main(u.getCorreo(),in,2,"Resuelto");
+                        }
+                    }
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
                 idao.confirmar(idIncidencia2);
                 System.out.println("Confirmar");
                 response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
