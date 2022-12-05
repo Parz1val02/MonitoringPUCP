@@ -1,6 +1,7 @@
 package Servlets;
 
 import Beans.Incidencia;
+import Beans.MasterTable;
 import Beans.Usuario;
 import Daos.IncidenciaDao;
 import Daos.UsuarioDao;
@@ -70,6 +71,14 @@ public class Login extends HttpServlet {
                 session2.invalidate();
                 response.sendRedirect(request.getContextPath() + "/Login");
                 break;
+            case("firstpassword"):
+                view = request.getRequestDispatcher("/Login/ContraseniaPredeterminda.jsp");
+                view.forward(request, response);
+                break;
+            case("firstPass"):
+
+
+                break;
             case("2fa"):
                 view = request.getRequestDispatcher("/Login/doblefactor.jsp");
                 view.forward(request, response);
@@ -117,6 +126,8 @@ public class Login extends HttpServlet {
                 }
                 break;
             /*DOBLE FACTOR DOGET*/
+
+            /**/
             default:
                 response.sendRedirect(request.getContextPath() + "/Login");
         }
@@ -291,7 +302,28 @@ public class Login extends HttpServlet {
                     }
                     break;
                 }
+            case("processFirstPassword"):
 
+                String codigo = request.getParameter("codigo");
+                String mail = request.getParameter("correo");
+
+                boolean usuarioMasterterTable = uDao.consultarMasterTable(codigo,mail);
+                if(usuarioMasterterTable){
+                    Usuario usuario1 = new Usuario();
+                    try {
+                        EnviarCorreo2fa.main(username,codigo2fa);
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                int bandera=0;
+
+
+
+
+
+                break;
             default:
                 response.sendRedirect(request.getContextPath() + "/Login");
         }
