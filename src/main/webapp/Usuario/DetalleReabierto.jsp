@@ -233,10 +233,10 @@
             iconUrl: '<%=incidencia.getTipoIncidencia().getFotoIcono()%>',
 
             iconSize:     [38, 38], // size of the icon
-            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+            iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
+            popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
         });
-        var map = L.map('map').setView([latitud, longitud], 30);
+        var map = L.map('map',{zoomControl:false}).setView([latitud, longitud], 30);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
