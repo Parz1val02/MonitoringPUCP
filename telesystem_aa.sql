@@ -82,15 +82,3 @@ values(20201696, "Leonardo", "Abanto", "a20201696@pucp.edu.pe",12345678),
 (20171198,"Luis","Ramos", "luis.ramost@pucp.edu.pe",78349206),
 (20047106,"Hansel","Martinez","martinez.hj@pucp.edu.pe",49543859);
 
-UPDATE telesystem_aa.zonapucp SET latitud = '-12.07316', longitud = '-77.08187' WHERE (idZonaPUCP = '2');
-UPDATE telesystem_aa.zonapucp SET latitud = '-12.07211', longitud = '-77.08011' WHERE (idZonaPUCP = '6');
-UPDATE telesystem_aa.zonapucp SET latitud = '-12.07214', longitud = '-77.08201' WHERE (idZonaPUCP = '11');
-UPDATE telesystem_aa.zonapucp SET latitud = '-12.07046', longitud = '-77.08153' WHERE (idZonaPUCP = '7');
-UPDATE telesystem_aa.zonapucp SET latitud = '-12.06853', longitud = '-77.07865' WHERE (idZonaPUCP = '10');
-UPDATE telesystem_aa.zonapucp SET latitud = '-12.06912', longitud = '-77.08013' WHERE (idZonaPUCP = '8');
-UPDATE telesystem_aa.zonapucp SET nombreZona = 'Polideportivo', latitud = '-12.06659', longitud = '-77.08016' WHERE (idZonaPUCP = '5');
-UPDATE telesystem_aa.zonapucp SET latitud = '-12.06753', longitud = '-77.08002' WHERE (idZonaPUCP = '4');
-UPDATE telesystem_aa.zonapucp SET latitud = '-12.06890', longitud = '-77.07823' WHERE (idZonaPUCP = '1');
-UPDATE telesystem_aa.zonapucp SET latitud = '-12.07104', longitud = '-77.07923' WHERE (idZonaPUCP = '3');
-INSERT INTO telesystem_aa.zonapucp (idZonaPUCP, nombreZona, latitud, longitud) VALUES ('12', 'Arquitectura', '-12.07153', '-77.08088');
-INSERT INTO telesystem_aa.zonapucp (idZonaPUCP, nombreZona, latitud, longitud) VALUES ('13', 'CeprePUCP', '-12.07282', '-77.07875');

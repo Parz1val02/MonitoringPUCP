@@ -367,12 +367,12 @@
 
                 if (marker){
                     marker.setLatLng([latitud,longitud])
-                        .bindPopup('Julio zzzzzz '+nombre)
+                        .bindPopup(nombre)
                         .openPopup();
                 }
                 else{
                     marker = L.marker([latitud, longitud]).addTo(map)
-                        .bindPopup('Julio zzzzzz '+nombre)
+                        .bindPopup(nombre)
                         .openPopup();
                 }
             }
