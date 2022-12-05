@@ -5,9 +5,7 @@ import Beans.MasterTable;
 import Beans.Usuario;
 import Daos.IncidenciaDao;
 import Daos.UsuarioDao;
-import Funcion.EnviarCorreo2fa;
-import Funcion.NroRandom;
-import Funcion.Temporizador2FA;
+import Funcion.*;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -310,11 +308,16 @@ public class Login extends HttpServlet {
                 boolean usuarioMasterterTable = uDao.consultarMasterTable(codigo,mail);
                 if(usuarioMasterterTable){
                     Usuario usuario1 = new Usuario();
+
+
+                    GeneradorDeContrasenha generadorDeContrasenha=new GeneradorDeContrasenha();
+                    String firstPassword = generadorDeContrasenha.crearPassword();
                     try {
-                        EnviarCorreo2fa.main(username,codigo2fa);
+                        EnviarPrimeraContrasenia.main(username, Integer.parseInt(firstPassword));
                     } catch (MessagingException e) {
                         e.printStackTrace();
                     }
+
                 }
 
                 int bandera=0;
