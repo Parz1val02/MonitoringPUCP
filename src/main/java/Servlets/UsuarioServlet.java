@@ -278,20 +278,22 @@ public class UsuarioServlet extends HttpServlet {
                 int a = 0,b=0,c=0,d=0;
                 if (nombreIncidencia==null){
                     a=1;
-                }
-                if (nombreIncidencia.isEmpty()){
-                    b=1;
-                }
-                String validanombre = nombreIncidencia.substring(0,1);
-                if (validanombre.equals(" ") & (validanombre.length()==nombreIncidencia.length())){
-                    c=1;
+
+                }else {
+                    if (!nombreIncidencia.isEmpty()){
+                        b=1;
+                        String validanombre = nombreIncidencia.substring(0,1);
+                        if (validanombre.equals(" ") & (validanombre.length()==nombreIncidencia.length())){
+                            c=1;
+                        }
+                    }
                 }
                 if (fecha.isEmpty()){
                     d=1;
                 }
                 if(a==1||b==1 || c==1 || d==1){
                     request.getSession().setAttribute("info", "El nombre ingresado no es válido");
-                    response.sendRedirect(request.getContextPath());
+                    response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=registrarIncidencia");
                 }else {
                     incidencia.setNombreIncidencia(nombreIncidencia);
                     incidencia.setFecha(fecha);
