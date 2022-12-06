@@ -59,33 +59,126 @@ public class UsuarioDao extends DaoBase{
 
     }
 
-    //crear usuario y guardar en DB
-    public void crearUsuario(Usuario usuario){
-        String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?)";
-        int idFoto = 0;
-        try (Connection connection = this.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+    
+    
+    
+    
+    
+    
+    public ArrayList<Usuario> obtenerListaMasterTable() {
 
-            pstmt.setString(1, usuario.getCodigo());
-            pstmt.setString(2, usuario.getNombre());
-            pstmt.setString(3, usuario.getApellido());
-            pstmt.setString(4, usuario.getCorreo());
-            pstmt.setString(5, usuario.getDni());
-            pstmt.setBoolean(6, true);
-            pstmt.setString(7, usuario.getPassword());
-            pstmt.setString(8, usuario.getCelular());
-            /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
-            pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
-            pstmt.setInt(9, usuario.getRol().getIdRol());
-            pstmt.setInt(10, usuario.getCategoriaPUCP().getIdCategoria());
-            idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
-            pstmt.setInt(11, idFoto);
-            pstmt.executeUpdate();
+        ArrayList<Usuario> listaMasterTable = new ArrayList<>();
+        String sql = "SELECT * FROM telesystem_aa.mastertable masterT left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = masterT.idCategoriaPUCP order by codigo;";
+        try (Connection conn = this.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery( sql);){
+
+            while (rs.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setCodigo(rs.getString(1));
+                usuario.setNombre(rs.getString(2));
+                usuario.setApellido(rs.getString(3));
+                usuario.setCorreo(rs.getString(4));
+                usuario.setDni(rs.getString(5));
+                usuario.setCelular(rs.getString(6));
+
+                /*
+                Rol rol = new Rol();
+                rol.setIdRol(rs.getInt(9));
+                rol.setNombreRol(rs.getString(10));
+                usuario.setRol(rol);*/
+
+                CategoriaPUCP categoriaPUCP = new CategoriaPUCP();
+                categoriaPUCP.setIdCategoria(rs.getInt(7));
+                categoriaPUCP.setNombreCategoria(rs.getString(9));
+                usuario.setCategoriaPUCP(categoriaPUCP);
+
+                /*
+                FotoPerfil fotoPerfil = new FotoPerfil();
+                fotoPerfil.setIdFoto(rs.getInt(13));
+                fotoPerfil.setNombreFoto(rs.getString(14));
+                fotoPerfil.setFotobyte(rs.getBytes(15));
+                usuario.setFotoPerfil(fotoPerfil);
+
+                usuario.setPrimerIngreso(rs.getBoolean(16));*/
+                listaMasterTable.add(usuario);
+            }
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+        }
+
+        return listaMasterTable;
+
+    }
+
+
+
+
+
+    //crear usuario y guardar en DB
+    /*verificar con base de datos que se llenen los campos de primerIngreso en master y no solicite primerIngreso en tabla usuarios*/
+    public void crearUsuario(Usuario usuario){
+
+        if (usuario.getRol().getIdRol()==1) {
+            String sql = "INSERT INTO mastertable (codigo, nombre, apellido, correo, DNI, celular, idCategoriaPUCP,primerIngreso) VALUES (?,?,?,?,?,?,?,?)";
+            //int idFoto = 0;
+            try (Connection connection = this.getConnection();
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setString(1, usuario.getCodigo());
+                pstmt.setString(2, usuario.getNombre());
+                pstmt.setString(3, usuario.getApellido());
+                pstmt.setString(4, usuario.getCorreo());
+                pstmt.setString(5, usuario.getDni());
+                //pstmt.setBoolean(6, true);
+                //pstmt.setString(6, usuario.getPassword());
+                pstmt.setString(6, usuario.getCelular());
+                /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
+                pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
+                //pstmt.setInt(9, usuario.getRol().getIdRol());
+                pstmt.setInt(7, usuario.getCategoriaPUCP().getIdCategoria());
+                /*idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
+                pstmt.setInt(11, idFoto);*/
+                //pstmt.setBoolean(12, 1);
+                 pstmt.setBoolean(8, true);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+
+        } else if (usuario.getRol().getIdRol()==2) {
+            String sql = "INSERT INTO usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?)";
+            int idFoto = 0;
+            try (Connection connection = this.getConnection();
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setString(1, usuario.getCodigo());
+                pstmt.setString(2, usuario.getNombre());
+                pstmt.setString(3, usuario.getApellido());
+                pstmt.setString(4, usuario.getCorreo());
+                pstmt.setString(5, usuario.getDni());
+                pstmt.setBoolean(6, true);
+                pstmt.setString(7, usuario.getPassword());
+                pstmt.setString(8, usuario.getCelular());
+                /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
+                pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
+                //pstmt.setInt(9, usuario.getRol().getIdRol());
+                pstmt.setInt(9, usuario.getRol().getIdRol());
+                pstmt.setNull(10, Types.INTEGER);
+                idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
+                pstmt.setInt(11, idFoto);
+                /*pstmt.setBoolean(12, usuario.getPrimerIngreso());*/
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
+    
+    
+    
+    
     public int guardarFoto(byte[] fotobyte, String nombreFoto) {
         String sql = "INSERT INTO FotoPerfil (fotoPerfil, nombreFoto) values (?,?)";
         int idFoto = 0;
