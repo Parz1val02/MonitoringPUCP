@@ -532,6 +532,63 @@ public class UsuarioDao extends DaoBase{
          }
          return usuario_registrado;
      }
+    public boolean compararPrimeraContrasenia(String primeraContraseniaIngresada, Usuario usuario) {
+
+        boolean coincideContrasenia= false;
+        String contraseniaBaseDatos = null;
+
+        if (usuario.getRol().getNombreRol().equals("Seguridad")||usuario.getRol().getNombreRol().equals("Usuario")) {
+
+            String sql = "SELECT password FROM telesystem_aa.usuarios where codigo=?;";
+
+            try(Connection connection = this.getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)){
+
+                pstmt.setString(1, usuario.getCodigo());
+
+                try(ResultSet rs = pstmt.executeQuery();){
+                    if (rs.next()) {
+                        contraseniaBaseDatos = rs.getString(1);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+
+            if (primeraContraseniaIngresada.equalsIgnoreCase(contraseniaBaseDatos)) {
+                coincideContrasenia = true;
+            }
+
+        }
+        return coincideContrasenia;
+    }
+    public boolean validarPrimerIngreso(Usuario usuario) {
+
+        boolean primerIngreso = false;
+
+        if (usuario.getRol().getNombreRol().equals("Seguridad") || usuario.getRol().getNombreRol().equals("Usuario")) {
+
+            String sql = "SELECT primerIngreso FROM Usuarios where codigo=?;";
+
+            try(Connection connection = this.getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)){
+
+                pstmt.setString(1, usuario.getCodigo());
+
+                try(ResultSet rs = pstmt.executeQuery();){
+                    if (rs.next()) {
+                        primerIngreso = rs.getBoolean("primerIngreso");
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return primerIngreso;
+    }
+
 
 
      public boolean contraValida (String pass,String correo){
