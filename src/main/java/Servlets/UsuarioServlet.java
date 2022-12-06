@@ -275,7 +275,7 @@ public class UsuarioServlet extends HttpServlet {
                 int idEstadoIncidencia = 1;
                 //String estado= request.getParameter("estado");
                 String otroTipo = request.getParameter("Otros");
-                int a = 0,b=0,c=0,d=0;
+                int a = 0,b=0,c=0,d=0,f=0;
                 if (nombreIncidencia==null){
                     a=1;
 
@@ -283,15 +283,18 @@ public class UsuarioServlet extends HttpServlet {
                     if (!nombreIncidencia.isEmpty()){
                         b=1;
                         String validanombre = nombreIncidencia.substring(0,1);
-                        if (validanombre.equals(" ") & (validanombre.length()==nombreIncidencia.length())){
+                        if (validanombre.equals(" ")){
                             c=1;
+                        }
+                        if ((validanombre.length()==nombreIncidencia.length())){
+                            f=1;
                         }
                     }
                 }
                 if (fecha.isEmpty()){
                     d=1;
                 }
-                if(a==1||b==1 || c==1 || d==1){
+                if(a==1||b==1 || c==1 || d==1 || f==1){
                     request.getSession().setAttribute("info", "El nombre ingresado no es válido");
                     response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=registrarIncidencia");
                 }else {
