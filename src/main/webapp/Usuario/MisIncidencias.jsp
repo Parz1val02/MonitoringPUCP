@@ -92,7 +92,11 @@
                                     </a>
                                 </td>
                                 <td>
+                                    <%if(incidencia.getEstadoIncidencia().getEstado().equals("Resuelto")){%>
+                                    <i>Incidencia Resuelta</i>
+                                    <%}else{%>
                                     <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=confirmar&id=<%=incidencia.getIdIncidencia()%>">Confirmar atención</a>
+                                    <%}%>
                                 </td>
                             </tr>
                             <% }%>
