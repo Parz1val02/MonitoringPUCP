@@ -379,11 +379,23 @@ public class IncidenciaDao extends DaoBase{
         return listaDestacadas;
     }*/
     public void destacarIncidenciaBorrar(int idIncidencia, String usuario) throws SQLException{
+        String sql101 = "SELECT * FROM IncidenciasDestacadas where idIncidencia = ?";
+        int iddest1 = 0;
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt10 = conn.prepareStatement(sql101)) {
+            pstmt10.setInt(1, idIncidencia);
+            try (ResultSet rs10 = pstmt10.executeQuery();) {
+                if (rs10.next()) {
+                    iddest1 = rs10.getInt("idIncidenciaDestacadas");
+                }
+            } catch (SQLException throwables) {
+            }
+        }
         String sql3 ="DELETE FROM Usuarios_has_IncidenciasDestacadas where (codigoUsuario = ? AND idIncidenciaDestacadas = ?)";
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql3)){
             pstmt.setString(1, usuario);
-            pstmt.setInt(2, idIncidencia);
+            pstmt.setInt(2, iddest1);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -411,16 +423,6 @@ public class IncidenciaDao extends DaoBase{
         }
     }
     public void destacarIncidenciaAdd (int idIncidencia, String usuario) throws SQLException{
-        String sql ="INSERT INTO Usuarios_has_IncidenciasDestacadas (codigoUsuario, idIncidenciaDestacadas) values (?,?)";
-        try (Connection conn1 = this.getConnection();
-             PreparedStatement pstmt = conn1.prepareStatement(sql)){
-            pstmt.setString(1, usuario);
-            pstmt.setInt(2, idIncidencia);
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         String sql1 = "SELECT * FROM IncidenciasDestacadas where idIncidencia = ?";
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt1 = conn.prepareStatement(sql1)) {
@@ -438,27 +440,62 @@ public class IncidenciaDao extends DaoBase{
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
+                }else {
+                    String sql3 = "Insert into IncidenciasDestacadas (contadorDestacado,idIncidencia) values (?,?)";
+                    try (Connection connection = this.getConnection();
+                         PreparedStatement pstmt = connection.prepareStatement(sql3)){
+                        pstmt.setInt(1, 1);
+                        pstmt.setInt(2,idIncidencia);
+                        pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         } catch (SQLException throwables) {
-            String sql3 = "Insert into IncidenciasDestacadas (idIncidenciaDestacadas,contadorDestacado,idIncidencia) values (?,?,?)";
-            try (Connection connection = this.getConnection();
-                 PreparedStatement pstmt = connection.prepareStatement(sql3)){
-                pstmt.setInt(1, idIncidencia);
-                pstmt.setInt(2, 0);
-                pstmt.setInt(3,idIncidencia);
-                pstmt.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+
+        }
+        String sql10 = "SELECT * FROM IncidenciasDestacadas where idIncidencia = ?";
+        int iddest = 0;
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt10 = conn.prepareStatement(sql10)) {
+            pstmt10.setInt(1, idIncidencia);
+            try (ResultSet rs10 = pstmt10.executeQuery();) {
+                if (rs10.next()) {
+                    iddest = rs10.getInt("idIncidenciaDestacadas");
+                }
+            } catch (SQLException throwables) {
             }
         }
+        String sql = "INSERT INTO Usuarios_has_IncidenciasDestacadas (codigoUsuario, idIncidenciaDestacadas) values (?,?)";
+        try (Connection conn1 = this.getConnection();
+             PreparedStatement pstmt = conn1.prepareStatement(sql)) {
+            pstmt.setString(1, usuario);
+            pstmt.setInt(2, iddest);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
-    public Integer usuarioDestacado (String user, int idIncidencia){
+    public Integer usuarioDestacado (String user, int idIncidencia) throws SQLException {
+        String sql1011 = "SELECT * FROM IncidenciasDestacadas where idIncidencia = ?";
+        int iddest11 = 0;
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt10 = conn.prepareStatement(sql1011)) {
+            pstmt10.setInt(1, idIncidencia);
+            try (ResultSet rs10 = pstmt10.executeQuery();) {
+                if (rs10.next()) {
+                    iddest11 = rs10.getInt("idIncidenciaDestacadas");
+                }
+            } catch (SQLException throwables) {
+            }
+        }
         int presente = 0;
         String ssqqll = "Select * from Usuarios_has_IncidenciasDestacadas where (idIncidenciaDestacadas = ? and codigoUsuario = ?)";
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt1 = conn.prepareStatement(ssqqll)) {
-            pstmt1.setInt(1, idIncidencia);
+            pstmt1.setInt(1, iddest11);
             pstmt1.setString(2,user);
             try(ResultSet rs1 = pstmt1.executeQuery();){
                 if (rs1.next()) {
@@ -474,12 +511,16 @@ public class IncidenciaDao extends DaoBase{
         return presente;
     }
 
-    public ArrayList<Integer> estados(ArrayList<Incidencia> destacados, String usuario){
+    public ArrayList<Integer> estados(ArrayList<Incidencia> destacados, String usuario) throws SQLException {
         ArrayList<Integer> estados = new ArrayList<>();
         int i = 0;
         for (Incidencia k : destacados){
-            i = usuarioDestacado(usuario,k.getIdIncidencia());
-            estados.add(i);
+            try {
+                i = usuarioDestacado(usuario,k.getIdIncidencia());
+                estados.add(i);
+            }catch (SQLException e){
+
+            }
         }
         return estados;
     }
