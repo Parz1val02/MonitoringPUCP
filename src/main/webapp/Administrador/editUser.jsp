@@ -70,7 +70,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="<%=request.getContextPath()%>/AdminServlet?accion=regitrar_usuario">
+                  <a href="<%=request.getContextPath()%>/AdminServlet?accion=registrar_usuario">
                     <div class="div-barra-lateral">
                       <i class="bi bi-person-plus xaea12 iconos-barra-lateral"></i>
                       <span class="nav-label">Registrar Usuario</span>
