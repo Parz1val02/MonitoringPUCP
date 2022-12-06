@@ -58,6 +58,7 @@
         <div class="row">
             <div class="col-md-6" style="margin: auto">
                 <div id="map"></div>
+                <div style="height: 25px; display: block;"></div>
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <%int i=0;%>
