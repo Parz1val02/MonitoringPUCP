@@ -281,14 +281,15 @@ public class UsuarioServlet extends HttpServlet {
 
                 }else {
                     if (!nombreIncidencia.isEmpty()){
-                        b=1;
                         String validanombre = nombreIncidencia.substring(0,1);
                         if (validanombre.equals(" ")){
                             c=1;
                         }
-                        if ((validanombre.length()==nombreIncidencia.length())){
+                        if (nombreIncidencia.length()==1){
                             f=1;
                         }
+                    }else {b=1;
+
                     }
                 }
                 if (fecha.isEmpty()){
