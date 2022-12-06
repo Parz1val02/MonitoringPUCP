@@ -669,6 +669,26 @@ public class UsuarioDao extends DaoBase{
             throw new RuntimeException(e);
         }
     }
+    public boolean contraValida (String pass,String correo){
+         String sql = "Select * from usuarios where password=sha2(?,256) and correo = ?";
+         boolean valido = false;
+         try(Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)){
+
+             pstmt.setString(1,pass);
+             pstmt.setString(2,correo);
+             try(ResultSet rs = pstmt.executeQuery();){
+                 if (rs.next()) {
+                    valido = true;
+                 }
+             }
+
+         } catch (SQLException e) {
+             throw new RuntimeException(e);
+         }
+            return valido;
+
+     }
 
 
 
