@@ -62,7 +62,7 @@ insert into Incidencias (fecha,nombreIncidencia, validaIncidencia, descripcion,
                         ("2022-12-01 00:00:00","Ruidos en el cubiculo",true,"Chicos que estan gritando y no dejan estudiar tmr",0,"Ruidos molestos",6,1,3,20195922,6),
                         ("2022-12-01 00:00:00","Problemas en la graduacion",true,"No dejan entrar a mas de 2 personas ",0,"Alerta",6,1,4,20047106,5),
                         (now(),"Ransomware en el V",true,"Se colo el wannacry en el V pipipi",0,"Hackeo",6,3,1,20195922,2),
-                        (now(),"Robo de bibicleta",true,"Se robaron mi bici, partieron el candado a la mitad y f",0,null,2,2,1,20047106,5);
+                        (now(),"Robo de bicicleta",true,"Se robaron mi bici, partieron el candado a la mitad y f",0,null,2,2,1,20047106,5);
 
 insert into IncidenciasDestacadas (contadorDestacado,idIncidencia) values (1,12),(1,11),(1,2),(1,7),(1,1);
 

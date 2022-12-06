@@ -102,7 +102,6 @@ public class UsuarioServlet extends HttpServlet {
                     incidencia = inDao.obtenerIncidencia(idIncidencia4);
                     listaIncidencias = inDao.obtenerIncidencias();
                     ArrayList<FotosIncidencias> fotos2 = inDao.obtenerFotos(idIncidencia4);
-                    System.out.println(fotos2.size());
                     request.setAttribute("Incidencia",incidencia);
                     request.setAttribute("listaIncidencias",listaIncidencias);
                     request.setAttribute("Fotos",fotos2);
@@ -124,7 +123,6 @@ public class UsuarioServlet extends HttpServlet {
                 case("buscarIncidencia"):
                     listaIncidencias = inDao.obtenerIncidencias();
                     ArrayList<Integer> estados = inDao.estados(listaIncidencias,usuario1.getCodigo());
-                    System.out.println(listaIncidencias.size());
                     request.setAttribute("estados",estados);
                     request.setAttribute("listaIncidencias",listaIncidencias);
                     view = request.getRequestDispatcher("/Usuario/BuscarIncidencia.jsp");
@@ -157,9 +155,11 @@ public class UsuarioServlet extends HttpServlet {
                         listaIncidencias = inDao.obtenerIncidenciasDestacadas();
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
-                    }ArrayList<Integer> ids = new ArrayList<>();
+                    }
+                    ArrayList<Integer> ids = new ArrayList<>();
                     for(Incidencia i : listaIncidencias){
                         ids.add(i.getIdIncidencia());
+                        System.out.println(i.getIdIncidencia());
                     }
                     ArrayList<FotosIncidencias> fotosIncidencias = inDao.fotosInicio(ids);
 

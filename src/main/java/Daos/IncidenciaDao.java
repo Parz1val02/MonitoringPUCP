@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.*;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -589,7 +589,7 @@ public class IncidenciaDao extends DaoBase{
     }
     public ArrayList<Usuario> obtenerUsuarioxDestacada(int idIncidencia){
         ArrayList<Usuario> usuariosxDestacada = new ArrayList<>();
-        String sql = "select * from usuarios_has_incidenciasdestacadas where idIncidenciaDestacadas=?";
+        String sql = "select * from Usuarios_has_IncidenciasDestacadas where idIncidenciaDestacadas=?";
         try (Connection conn6 = this.getConnection();
              PreparedStatement pstmt = conn6.prepareStatement(sql)) {
 
@@ -640,7 +640,7 @@ public class IncidenciaDao extends DaoBase{
     public void borrarIncidencia(int id) {
 
         //con borrado logico
-        String sql = "UPDATE incidencias SET validaIncidencia=0 where idIncidencia  = ?" ;
+        String sql = "UPDATE Incidencias SET validaIncidencia=0 where idIncidencia  = ?" ;
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -777,13 +777,24 @@ public class IncidenciaDao extends DaoBase{
                     fi.setIdFotos(rs.getInt(1));
                     fi.setFotobyte(rs.getBytes(2));
                     fi.setNombreFoto(rs.getString(3));
+                    fi.setIncidencia(obtenerIncidencia(rs.getInt(4)));
                     fotosIncidencias.add(fi);
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return fotosIncidencias;
+        ArrayList<FotosIncidencias> fotosOrdenadas = new ArrayList<>();
+        for(int a : ids){
+            for(FotosIncidencias foto : fotosIncidencias){
+                if(a==foto.getIncidencia().getIdIncidencia()){
+                    System.out.println("a = " + a);
+                    System.out.println("id = " + foto.getIncidencia().getIdIncidencia());
+                    fotosOrdenadas.add(foto);
+                }
+            }
+        }
+        return fotosOrdenadas;
     }
 }
 
