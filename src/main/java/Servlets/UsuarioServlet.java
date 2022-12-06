@@ -274,65 +274,84 @@ public class UsuarioServlet extends HttpServlet {
                 String fecha = request.getParameter("fecha");
                 int idEstadoIncidencia = 1;
                 //String estado= request.getParameter("estado");
-
                 String otroTipo = request.getParameter("Otros");
+                int a = 0,b=0,c=0,d=0;
+                if (nombreIncidencia==null){
+                    a=1;
 
-                incidencia.setNombreIncidencia(nombreIncidencia);
-                incidencia.setFecha(fecha);
-                incidencia.setValidaIncidencia(true);
-                incidencia.setContadorReabierto(0);
-                TipoIncidencia tipoIncidencia1 = new TipoIncidencia();
-
-                // logica
-                tipoIncidencia1.setIdTipo(IDtipoIncidencia);
-                incidencia.setTipoIncidencia(tipoIncidencia1);
-
-                System.out.println(otroTipo);
-                if (IDtipoIncidencia == 6){
-                    incidencia.setOtroTipo(otroTipo);
+                }else {
+                    if (!nombreIncidencia.isEmpty()){
+                        b=1;
+                        String validanombre = nombreIncidencia.substring(0,1);
+                        if (validanombre.equals(" ") & (validanombre.length()==nombreIncidencia.length())){
+                            c=1;
+                        }
+                    }
                 }
-
-
-                NivelUrgencia nivelUrgencia1 = new NivelUrgencia();
-                nivelUrgencia1.setIdNivelUrgencia(IDnivelUrgencia);
-                incidencia.setNivelUrgencia(nivelUrgencia1);
-
-                incidencia.setDescripcion(descripcion);
-
-                EstadoIncidencia estado1 = new EstadoIncidencia();
-                estado1.setIdEstado(idEstadoIncidencia);
-                incidencia.setEstadoIncidencia(estado1);
-
-                ZonaPUCP zonaPUCP = new ZonaPUCP();
-                zonaPUCP.setIdZonaPUCP(IDzonaPUCP);
-                incidencia.setZonaPUCP(zonaPUCP);
-
-                incidencia.setUsuario(usuario1);
-
-                idao.crearIncidencia(incidencia);
-
-                incidencia.setIdIncidencia(idao.getIdIncidencia(incidencia));
-
-                ArrayList<FotosIncidencias> fotosIncidencias = new ArrayList<>();
-                ArrayList<Part> fileParts = (ArrayList<Part>) request.getParts().stream().filter(part -> "fotoIncidencia".equals(part.getName()) && part.getSize() > 0).collect(Collectors.toList()); // Retrieves <input type="file" name="files" multiple="true">
-                for (Part filePart : fileParts) {
-                    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-                    InputStream fileContent = filePart.getInputStream();
-                    byte[] fileBytes = fileContent.readAllBytes();
-                    FotosIncidencias fi = new FotosIncidencias();
-                    System.out.println(fileName);
-                    fi.setFotobyte(fileBytes);
-                    fi.setNombreFoto(fileName);
-                    fi.setIncidencia(incidencia);
-                    fotosIncidencias.add(fi);
+                if (fecha.isEmpty()){
+                    d=1;
                 }
-                idao.guardarFotos(fotosIncidencias);
-                try {
-                    EnviarCorreoEstado.main(usuario1.getCorreo(),incidencia,1,"");
-                } catch (MessagingException e) {
-                    e.printStackTrace();
+                if(a==1||b==1 || c==1 || d==1){
+                    request.getSession().setAttribute("info", "El nombre ingresado no es válido");
+                    response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=registrarIncidencia");
+                }else {
+                    incidencia.setNombreIncidencia(nombreIncidencia);
+                    incidencia.setFecha(fecha);
+                    incidencia.setValidaIncidencia(true);
+                    incidencia.setContadorReabierto(0);
+                    TipoIncidencia tipoIncidencia1 = new TipoIncidencia();
+
+                    // logica
+                    tipoIncidencia1.setIdTipo(IDtipoIncidencia);
+                    incidencia.setTipoIncidencia(tipoIncidencia1);
+
+                    System.out.println(otroTipo);
+                    if (IDtipoIncidencia == 6){
+                        incidencia.setOtroTipo(otroTipo);
+                    }
+
+
+                    NivelUrgencia nivelUrgencia1 = new NivelUrgencia();
+                    nivelUrgencia1.setIdNivelUrgencia(IDnivelUrgencia);
+                    incidencia.setNivelUrgencia(nivelUrgencia1);
+
+                    incidencia.setDescripcion(descripcion);
+
+                    EstadoIncidencia estado1 = new EstadoIncidencia();
+                    estado1.setIdEstado(idEstadoIncidencia);
+                    incidencia.setEstadoIncidencia(estado1);
+
+                    ZonaPUCP zonaPUCP = new ZonaPUCP();
+                    zonaPUCP.setIdZonaPUCP(IDzonaPUCP);
+                    incidencia.setZonaPUCP(zonaPUCP);
+
+                    incidencia.setUsuario(usuario1);
+
+                    idao.crearIncidencia(incidencia);
+
+                    incidencia.setIdIncidencia(idao.getIdIncidencia(incidencia));
+
+                    ArrayList<FotosIncidencias> fotosIncidencias = new ArrayList<>();
+                    ArrayList<Part> fileParts = (ArrayList<Part>) request.getParts().stream().filter(part -> "fotoIncidencia".equals(part.getName()) && part.getSize() > 0).collect(Collectors.toList()); // Retrieves <input type="file" name="files" multiple="true">
+                    for (Part filePart : fileParts) {
+                        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+                        InputStream fileContent = filePart.getInputStream();
+                        byte[] fileBytes = fileContent.readAllBytes();
+                        FotosIncidencias fi = new FotosIncidencias();
+                        System.out.println(fileName);
+                        fi.setFotobyte(fileBytes);
+                        fi.setNombreFoto(fileName);
+                        fi.setIncidencia(incidencia);
+                        fotosIncidencias.add(fi);
+                    }
+                    idao.guardarFotos(fotosIncidencias);
+                    try {
+                        EnviarCorreoEstado.main(usuario1.getCorreo(),incidencia,1,"");
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
+                    response.sendRedirect(request.getContextPath()+"/UsuarioServlet");
                 }
-                response.sendRedirect(request.getContextPath()+"/UsuarioServlet");
                 break;
 
             case "actualizarFoto":

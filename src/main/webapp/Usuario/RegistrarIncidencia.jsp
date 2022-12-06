@@ -67,6 +67,11 @@
                         </div>
                     </div-->
                     <div class="ibox-body" >
+                        <%if(session.getAttribute("info")!=null){%>
+                        <div class="alert alert-danger" role="alert">
+                            <%=session.getAttribute("info")%>
+                        </div>
+                        <%}%>
                         <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=guardar" enctype="multipart/form-data">
 
                             <!-- 1era fila -->

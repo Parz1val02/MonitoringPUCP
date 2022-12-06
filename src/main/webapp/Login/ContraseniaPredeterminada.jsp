@@ -88,9 +88,6 @@
 
                         <div style="height: 20px; display: block;"></div>
 
-                        <div align="center">
-                            <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=perfil" style="font-size: 15px">Cancelar</a>
-                        </div>
                     </div>
                 </form>
                 <div class="col-md-1"></div>
