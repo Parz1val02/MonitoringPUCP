@@ -283,7 +283,7 @@ public class UsuarioServlet extends HttpServlet {
                     if (!nombreIncidencia.isEmpty()){
                         b=1;
                         String validanombre = nombreIncidencia.substring(0,1);
-                        if (validanombre.equals(" ") & (validanombre.length()==nombreIncidencia.length())){
+                        if (validanombre.equals(" ")){
                             c=1;
                         }
                         if ((validanombre.length()==nombreIncidencia.length())){
