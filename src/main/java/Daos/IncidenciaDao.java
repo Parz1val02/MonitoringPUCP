@@ -15,6 +15,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.nio.file.Files.newOutputStream;
 
@@ -835,5 +837,48 @@ public class IncidenciaDao extends DaoBase{
         }
         return fotosOrdenadas;
     }
+
+    public boolean idValid(String id) {
+        String regex = "[0-9]";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(id);
+        return matcher.find();
+    }
+
+    public boolean verificarIncidencia(String id){
+        String sql = "Select idIncidencia from Incidencias where idIncidencia = ?";
+        boolean existe = false;
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1,id);
+            try(ResultSet rs = pstmt.executeQuery();){
+                if(rs.next()){
+                    existe = true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return existe;
+    }
+
+    public boolean verificarFoto(String id){
+        String sql = "Select idFotosIncidencias from FotosIncidencias where idFotosIncidencias = ?";
+        boolean existe = false;
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1,id);
+            try(ResultSet rs = pstmt.executeQuery();){
+                if(rs.next()){
+                    existe = true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return existe;
+    }
+
+
 }
 

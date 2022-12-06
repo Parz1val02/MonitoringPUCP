@@ -693,6 +693,23 @@ public class UsuarioDao extends DaoBase{
 
      }
 
+    public boolean verificarUsuario(String codigo){
+        String sql = "Select codigo from Usuarios where codigo = ?";
+        boolean existe = false;
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1,codigo);
+            try(ResultSet rs = pstmt.executeQuery();){
+                if(rs.next()){
+                    existe = true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return existe;
+    }
+
 
 
 }

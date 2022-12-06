@@ -210,7 +210,7 @@
 
 
 
-              <div style =  "margin-left: 10px" class="dropdown">
+              <!--div style =  "margin-left: 10px" class="dropdown">
                 <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Descargar como
                 </a>
@@ -220,7 +220,7 @@
                   <li><a class="dropdown-item" href="#">XML</a></li>
                   <li><a class="dropdown-item" href="#">TXT</a></li>
                 </ul>
-              </div>
+              </div-->
               <br>
 
               <div class="modal-footer">
@@ -243,7 +243,7 @@
                       Se borrará la incidencia
                     </div>
                     <div class="modal-footer">
-                      <a href="<%=request.getContextPath()%>/AdminServlet?accion=incidencias">
+                      <a href="<%=request.getContextPath()%>/AdminServlet?accion=borrarIncidencia&id=<%=incidencia.getIdIncidencia()%>">
                         <button type="button" class="btn btn-primary" >Aceptar</button>
                       </a>
 

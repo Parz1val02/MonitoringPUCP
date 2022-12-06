@@ -31,83 +31,94 @@ public class AdminServlet extends HttpServlet {
             IncidenciaDao incidenciaDao = new IncidenciaDao();
             CategoriaDao categoriaDao = new CategoriaDao();
             RolDao rolDao = new RolDao();
-            String usuarioCodigo;
             Usuario usuario;
-
             switch (accion){
                 case ("tabla_usuarios") :
                     ArrayList<Usuario> listaUsuarios = null;
-
                     listaUsuarios = usuarioDao.obtenerListaUsuarios();
-
                     request.setAttribute("listaUsuarios",listaUsuarios);
                     view = request.getRequestDispatcher("/Administrador/tabla_usuarios_admin.jsp");
                     view.forward(request,response);
                     break;
                 case ("incidencias"):
                     ArrayList<Incidencia> listaIncidencias = null;
-
-
-                        listaIncidencias = incidenciaDao.obtenerIncidencias();
-
+                    listaIncidencias = incidenciaDao.obtenerIncidencias();
                     request.setAttribute("listaIncidencias",listaIncidencias);
                     view = request.getRequestDispatcher("/Administrador/incidencia_admin.jsp");
                     view.forward(request,response);
                     break;
                 case ("registrar_usuario"): //crear usuario
-
                     request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
                     request.setAttribute("roles", rolDao.obtenerRoles());
                     view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
                     view.forward(request, response);
                     break;
                 case ("editar_usuario"): //editar usuario
-
-                    usuarioCodigo = request.getParameter("codigo");
-                    usuario = usuarioDao.buscarPorId(usuarioCodigo);
-
-                    if (usuario != null) { //abro el form para editar
+                    String strCodigo = request.getParameter("codigo");
+                    if(incidenciaDao.idValid(strCodigo)&&usuarioDao.verificarUsuario(strCodigo)){
+                        usuario = usuarioDao.buscarPorId(strCodigo);
                         request.setAttribute("usuario", usuario);
                         view = request.getRequestDispatcher("/Administrador/editUser.jsp");
                         view.forward(request, response);
-                    } else { //id no encontrado
+                    }else{
                         response.sendRedirect(request.getContextPath() + "/AdminServlet");
                     }
                     break;
                 case ("cambiar_contrasenia"):
-
                     view = request.getRequestDispatcher("/Administrador/changepassword.jsp");
                     view.forward(request, response);
                     break;
                 case ("doblefactor"):
-
                      view = request.getRequestDispatcher("/Login/doblefactor.jsp");
                      view.forward(request, response);
                     break;
                 case ("verDetalle"):
-                    int idIncidencia = Integer.parseInt(request.getParameter("id"));
-                    Incidencia incidencia = incidenciaDao.obtenerIncidencia(idIncidencia);
-                    ArrayList<FotosIncidencias> fotos1 = incidenciaDao.obtenerFotos(idIncidencia);
-                    request.setAttribute("Fotos",fotos1);
-                    request.setAttribute("Incidencia",incidencia);
-
-                    view = request.getRequestDispatcher("/Administrador/detalle_incidencia_admin.jsp");
-                    view.forward(request, response);
+                    String strId = request.getParameter("id");
+                    if(incidenciaDao.idValid(strId) && incidenciaDao.verificarIncidencia(strId)){
+                        int idIncidencia = Integer.parseInt(strId);
+                        Incidencia incidencia = incidenciaDao.obtenerIncidencia(idIncidencia);
+                        ArrayList<FotosIncidencias> fotos1 = incidenciaDao.obtenerFotos(idIncidencia);
+                        request.setAttribute("Fotos",fotos1);
+                        request.setAttribute("Incidencia",incidencia);
+                        view = request.getRequestDispatcher("/Administrador/detalle_incidencia_admin.jsp");
+                        view.forward(request, response);
+                    }else{
+                        response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=incidencias");
+                    }
                     break;
                 case("verFoto"):
-                    int idFotito = Integer.parseInt(request.getParameter("id"));
-                    FotosIncidencias fotito = incidenciaDao.sacarFoto(idFotito);
-                    String[] split1 = fotito.getNombreFoto().split("[.]");
-                    response.setContentType("image/"+split1[1]);
-                    try (OutputStream out = response.getOutputStream()) {
-                        out.write(fotito.getFotobyte());
+                    strId = request.getParameter("id");
+                    if(incidenciaDao.idValid(strId) && incidenciaDao.verificarFoto(strId)){
+                        int idFotito = Integer.parseInt(request.getParameter("id"));
+                        FotosIncidencias fotito = incidenciaDao.sacarFoto(idFotito);
+                        String[] split1 = fotito.getNombreFoto().split("[.]");
+                        response.setContentType("image/"+split1[1]);
+                        try (OutputStream out = response.getOutputStream()) {
+                            out.write(fotito.getFotobyte());
+                        }
+                    }else{
+                        response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                        break;
                     }
                 case "borrar":  // AdminServlet?action=borrar&id=
-                    String codigo = request.getParameter("codigo");
-                    usuarioDao.borrar(codigo);
-                    response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                    strCodigo = request.getParameter("codigo");
+                    if(incidenciaDao.idValid(strCodigo)&&usuarioDao.verificarUsuario(strCodigo)){
+                        usuarioDao.borrar(strCodigo);
+                        response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                    }else{
+                        response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                    }
                     break;
-
+                case "borrarIncidencia":
+                    strId = request.getParameter("id");
+                    if(incidenciaDao.idValid(strId) && incidenciaDao.verificarIncidencia(strId)){
+                        int idd = Integer.parseInt(strId);
+                        incidenciaDao.borrarIncidencia(idd);
+                        response.sendRedirect(request.getContextPath()+ "/AdminServlet?accion=incidencias");
+                    }else{
+                        response.sendRedirect(request.getContextPath()+ "/AdminServlet?accion=incidencias");
+                    }
+                    break;
                 default:
                     response.sendRedirect(request.getContextPath() + "/AdminServlet");
             }
@@ -127,7 +138,7 @@ public class AdminServlet extends HttpServlet {
         UsuarioDao usuarioDao = new UsuarioDao();
         RolDao rolDao = new RolDao();
         CategoriaDao categoriaDao = new CategoriaDao();
-
+        IncidenciaDao incidenciaDao = new IncidenciaDao();
         ArrayList<Usuario> listaUsuarios = usuarioDao.obtenerListaUsuarios();
 
         RequestDispatcher view;
@@ -240,7 +251,7 @@ public class AdminServlet extends HttpServlet {
                     categoriaPUCP1.setIdCategoria(Integer.parseInt(request.getParameter("categoriaPUCP")));
 
                     //Foto
-                    String relativeWebPath = "./images/usuario.png";
+                    String relativeWebPath = "../images/usuario.png";
                     String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
                     File file = new File(absoluteDiskPath);
                     byte[] fileContent = Files.readAllBytes(file.toPath());
@@ -261,11 +272,8 @@ public class AdminServlet extends HttpServlet {
                         usuarioDao.crearUsuario(usuario);
 
                         response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
-                        break;
                     }else{
-
                         request.setAttribute("usuario",usuario);
-
                         request.setAttribute("codigovalido",codigovalido);
                         request.setAttribute("codigoRepeat",codigoRepeat);
                         request.setAttribute("nombrevalido",nombrevalido);
@@ -276,69 +284,66 @@ public class AdminServlet extends HttpServlet {
                         request.setAttribute("dniRepeat", dniRepeat);
                         request.setAttribute("celularvalido",celularvalido);
                         request.setAttribute("celularRepeat",celularRepeat);
-
                         request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
                         request.setAttribute("roles", rolDao.obtenerRoles());
                         view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
                         view.forward(request, response);
-                        break;
-                }
+                    }
+                    break;
                 } else {
                     session.setAttribute("msg", "El usuario no está registrado");
                     view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
                     view.forward(request, response);
                     break;
                 }
-
             case "actualizar":
-                String nombreUpdate = request.getParameter("nombre");
-                String apellidoUpdate = request.getParameter("apellido");
                 String codigoUpdate = request.getParameter("codigoPUCP");
-                String correoUpdate = request.getParameter("correoPUCP");
-                String dniUpdate = request.getParameter("dni");
-                String celularUpdate = request.getParameter("celular");
-                String categoriaUpdateStr = request.getParameter("categoriaPUCP");
-                String rolUpdateStr = request.getParameter("rol");
+                if(incidenciaDao.idValid(codigoUpdate)&&usuarioDao.verificarUsuario(codigoUpdate)){
+                    String nombreUpdate = request.getParameter("nombre");
+                    String apellidoUpdate = request.getParameter("apellido");
+                    String correoUpdate = request.getParameter("correoPUCP");
+                    String dniUpdate = request.getParameter("dni");
+                    String celularUpdate = request.getParameter("celular");
+                    String categoriaUpdateStr = request.getParameter("categoriaPUCP");
+                    String rolUpdateStr = request.getParameter("rol");
 
-                int categoriaUpdateInt = 0;
-                /*Usuario usuarioUpdate = new Usuario();
-                usuarioUpdate.setNombre(nombreUpdate);
-                usuarioUpdate.setApellido(apellidoUpdate);
-                usuarioUpdate.setCodigo(codigoUpdate);
-                usuarioUpdate.setCorreo(correoUpdate);
-                usuarioUpdate.setDni(dniUpdate);
-                usuarioUpdate.setCelular(celularUpdate);*/
-                if (categoriaUpdateStr.equalsIgnoreCase("alumno")) {
-                    categoriaUpdateInt = 1;
-                } else if (categoriaUpdateStr.equalsIgnoreCase("administrativo")) {
-                    categoriaUpdateInt = 2;
-                } else if (categoriaUpdateStr.equalsIgnoreCase("jefe de práctica")) {
-                    categoriaUpdateInt = 3;
-                } else if (categoriaUpdateStr.equalsIgnoreCase("profesor")) {
-                    categoriaUpdateInt = 4;
-                } else if (categoriaUpdateStr.equalsIgnoreCase("egresado")) {
-                    categoriaUpdateInt = 5;
-                } else if (categoriaUpdateStr.equalsIgnoreCase("no tiene categoria")) {
-                   categoriaUpdateInt = 0;
-                }
+                    int categoriaUpdateInt = 0;
+                    /*Usuario usuarioUpdate = new Usuario();
+                    usuarioUpdate.setNombre(nombreUpdate);
+                    usuarioUpdate.setApellido(apellidoUpdate);
+                    usuarioUpdate.setCodigo(codigoUpdate);
+                    usuarioUpdate.setCorreo(correoUpdate);
+                    usuarioUpdate.setDni(dniUpdate);
+                    usuarioUpdate.setCelular(celularUpdate);*/
+                    if (categoriaUpdateStr.equalsIgnoreCase("alumno")) {
+                        categoriaUpdateInt = 1;
+                    } else if (categoriaUpdateStr.equalsIgnoreCase("administrativo")) {
+                        categoriaUpdateInt = 2;
+                    } else if (categoriaUpdateStr.equalsIgnoreCase("jefe de práctica")) {
+                        categoriaUpdateInt = 3;
+                    } else if (categoriaUpdateStr.equalsIgnoreCase("profesor")) {
+                        categoriaUpdateInt = 4;
+                    } else if (categoriaUpdateStr.equalsIgnoreCase("egresado")) {
+                        categoriaUpdateInt = 5;
+                    } /*else if (categoriaUpdateStr.equalsIgnoreCase("no tiene categoria")) {
+                        categoriaUpdateInt = 0;
+                    }*/
 
+                    try {
+                        int rolUpdateInt = Integer.parseInt(rolUpdateStr);
+                        //usuarioUpdate.setIdCategoriaPUCP(categoriaUpdateInt);
+                        //usuarioUpdate.setIdRoles(rolUpdateInt);
 
-                try {
+                        usuarioDao.actualizarUsuario(nombreUpdate,apellidoUpdate,codigoUpdate,correoUpdate,dniUpdate,celularUpdate,categoriaUpdateInt,rolUpdateInt);
 
-                    int rolUpdateInt = Integer.parseInt(rolUpdateStr);
-                    //usuarioUpdate.setIdCategoriaPUCP(categoriaUpdateInt);
-                    //usuarioUpdate.setIdRoles(rolUpdateInt);
-
-                    usuarioDao.actualizarUsuario(nombreUpdate,apellidoUpdate,codigoUpdate,correoUpdate,dniUpdate,celularUpdate,categoriaUpdateInt,rolUpdateInt);
-
+                        response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                    } catch (NumberFormatException e) {
+                        response.sendRedirect(request.getContextPath() + "/AdminServlet?action=editar_usuario&id=" + codigoUpdate);
+                    }
+                }else{
                     response.sendRedirect(request.getContextPath() + "/AdminServlet");
-                } catch (NumberFormatException e) {
-                    response.sendRedirect(request.getContextPath() + "/AdminServlet?action=editar_usuario&id=" + codigoUpdate);
                 }
                 break;
-
-
-
         }
     }
 }
