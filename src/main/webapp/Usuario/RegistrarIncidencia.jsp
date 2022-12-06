@@ -31,6 +31,10 @@
     if(fechaValida==null){
         fechaValida="";
     }
+    String fechaValida2 = (String) request.getAttribute("fechaValida2");
+    if(fechaValida2==null){
+        fechaValida2="";
+    }
     String otroTipoValida = (String) request.getAttribute("otroTipoValida");
     if(otroTipoValida==null){
         otroTipoValida="";
@@ -39,6 +43,11 @@
     if(fotoValida==null){
         fotoValida="";
     }
+    String extensionValida = (String) request.getAttribute("extensionValida");
+    if(extensionValida==null){
+        extensionValida="";
+    }
+
 
 %>
 
@@ -123,10 +132,15 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px">
-                                        <input type="date" name="fecha" id="date" class="sangria-filter <%=fechaValida.length()>0?"is-invalid":""%>" placeholder="dd-mm-yyyy" max="<%=dateFormat.format(today)%>" style="margin-top: 5px;margin-bottom: 5px">
+                                        <input type="date" name="fecha" id="date" class="sangria-filter <%=fechaValida.length()>0?"is-invalid":""%> <%=fechaValida2.length()>0?"is-invalid":""%>" placeholder="dd-mm-yyyy" max="<%=dateFormat.format(today)%>" style="margin-top: 5px;margin-bottom: 5px">
                                         <%if(fechaValida.length()>0){%>
                                         <div  class="invalid-feedback">
                                             <%=fechaValida%>
+                                        </div>
+                                        <%}%>
+                                        <%if(fechaValida2.length()>0){%>
+                                        <div  class="invalid-feedback">
+                                            <%=fechaValida2%>
                                         </div>
                                         <%}%>
                                     </div>
@@ -201,10 +215,15 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
-                                        <input type="file" name="fotoIncidencia" id="file2" accept="image/png, image/gif, image/jpeg" multiple />
+                                        <input type="file" name="fotoIncidencia" id="file2" accept="image/png, image/gif, image/jpeg" multiple class="<%=fotoValida.length()>0?"is-invalid":""%> <%=extensionValida.length()>0?"is-invalid":""%>"/>
                                         <%if(fotoValida.length()>0){%>
                                         <div  class="invalid-feedback">
                                             <%=fotoValida%>
+                                        </div>
+                                        <%}%>
+                                        <%if(extensionValida.length()>0){%>
+                                        <div  class="invalid-feedback">
+                                            <%=extensionValida%>
                                         </div>
                                         <%}%>
                                     </div>

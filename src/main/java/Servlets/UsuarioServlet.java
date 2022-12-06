@@ -16,6 +16,8 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -295,6 +297,15 @@ public class UsuarioServlet extends HttpServlet {
                     fechaValida="La fecha es obligatoria";
                 }
 
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+                String fechaValida2="";
+                try {
+                    format.parse(fecha);
+                }
+                catch(ParseException e) {
+                    fechaValida2 = "Ingresar un formato de fecha valido";
+                }
 
                 incidencia.setNombreIncidencia(nombreIncidencia);
                 incidencia.setFecha(fecha);
@@ -335,8 +346,8 @@ public class UsuarioServlet extends HttpServlet {
                 if(fileParts.size()==0){
                     fotoValida = "Se requiere minimo una foto por incidencia";
                 }
-
-                if(nombreValido.length()==0 &&
+                String extensionValida="";
+                if(nombreValido.length()==0 && fechaValida2.length()==0 &&
                     descripcionValida.length()==0 && fechaValida.length()==0 &&
                         otroTipoValida.length() == 0 && fotoValida.length()==0){
 
@@ -353,6 +364,33 @@ public class UsuarioServlet extends HttpServlet {
                         fi.setFotobyte(fileBytes);
                         fi.setNombreFoto(fileName);
                         fi.setIncidencia(incidencia);
+
+                        String[] split = fi.getNombreFoto().split("[.]");
+                        String[] fileExtensions = {"jpg", "jpeg", "bmp", "gif", "png"};
+                        boolean match=false;
+                        for(String ext : fileExtensions){
+                            if (ext.equalsIgnoreCase(split[1])) {
+                                match = true;
+                            }
+                        }
+                        if(!match){
+                            extensionValida="Extension de archivo no valida";
+                            request.setAttribute("nombreValido",nombreValido);
+                            request.setAttribute("descripcionValida",descripcionValida);
+                            request.setAttribute("fechaValida",fechaValida);
+                            request.setAttribute("fechaValida2",fechaValida2);
+                            request.setAttribute("otroTipoValida",otroTipoValida);
+                            request.setAttribute("fotoValida",fotoValida);
+                            request.setAttribute("extensionValida",extensionValida);
+
+                            request.setAttribute("tipos", tipoIncidenciaDao.obtenerTipos() );
+                            request.setAttribute("niveles", nivelDao.obtenerNiveles());
+                            request.setAttribute("zonas", zonaDao.obtenerlistaZonas());
+                            view = request.getRequestDispatcher("/Usuario/RegistrarIncidencia.jsp");
+                            view.forward(request, response);
+                            break;
+                        }
+
                         fotosIncidencias.add(fi);
                     }
                     idao.guardarFotos(fotosIncidencias);
@@ -368,8 +406,10 @@ public class UsuarioServlet extends HttpServlet {
                     request.setAttribute("nombreValido",nombreValido);
                     request.setAttribute("descripcionValida",descripcionValida);
                     request.setAttribute("fechaValida",fechaValida);
+                    request.setAttribute("fechaValida2",fechaValida2);
                     request.setAttribute("otroTipoValida",otroTipoValida);
                     request.setAttribute("fotoValida",fotoValida);
+                    request.setAttribute("extensionValida",extensionValida);
 
                     request.setAttribute("tipos", tipoIncidenciaDao.obtenerTipos() );
                     request.setAttribute("niveles", nivelDao.obtenerNiveles());
@@ -383,19 +423,46 @@ public class UsuarioServlet extends HttpServlet {
             case "actualizarFoto":
                 Part filePart = request.getPart("fotoPerfil"); // Retrieves <input type="file" name="file">
                 String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+                String extensionValida1="";
+                String fotoValida1="";
+                if(fileName.length()==0){
+                    fotoValida1 = "No se ingreso archivo";
+                    request.setAttribute("extensionValida",extensionValida1);
+                    request.setAttribute("fotoValida",fotoValida1);
+                    response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=perfil");
+                    break;
+                }
                 InputStream fileContent = filePart.getInputStream();
                 byte[] fileBytes = fileContent.readAllBytes();
                 FotoPerfil fp = new FotoPerfil();
                 fp.setFotobyte(fileBytes);
                 fp.setNombreFoto(fileName);
+
                 if (usuario1.getFotoPerfil().getIdFoto()==0){
                     int idFoto = uDao.guardarFoto(fp.getFotobyte(),fp.getNombreFoto());
                     fp.setIdFoto(idFoto);
                     usuario1.setFotoPerfil(fp);
                     uDao.FotoUsuario(fp.getIdFoto(),usuario1.getCodigo());
                 }else{
+                    String[] split = fp.getNombreFoto().split("[.]");
+                    String[] fileExtensions = {"jpg", "jpeg", "bmp", "gif", "png"};
+                    boolean match=false;
+                    for(String ext : fileExtensions){
+                        if (ext.equalsIgnoreCase(split[1])) {
+                            match = true;
+                        }
+                    }
+                    if(!match){
+                        extensionValida1="Extension de archivo no valida";
+                        request.setAttribute("extensionValida",extensionValida1);
+                        request.setAttribute("fotoValida",fotoValida1);
+                        response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=perfil");
+                        break;
+                    }
                     uDao.actualizarFoto(fp, usuario1.getFotoPerfil().getIdFoto());
                 }
+                request.setAttribute("fotoValida",fotoValida1);
+                request.setAttribute("extensionValida",extensionValida1);
                 response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=perfil");
                 break;
 

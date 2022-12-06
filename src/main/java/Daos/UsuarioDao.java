@@ -323,7 +323,10 @@ public class UsuarioDao extends DaoBase{
         String regex = "^[A-Za-z0-9]+([._A-Za-z0-9]+)*@" + "pucp.edu.pe";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
-        return matcher.find();
+        String regex1 = "^[A-Za-z0-9]+([._A-Za-z0-9]+)*@" + "pucp.pe";
+        Pattern pattern1 = Pattern.compile(regex1);
+        Matcher matcher1 = pattern1.matcher(email);
+        return (matcher.find() || matcher1.find());
     }
     
     public boolean contrasenaisValid(String contrasenia) {
