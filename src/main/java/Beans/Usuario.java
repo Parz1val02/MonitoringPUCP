@@ -17,6 +17,16 @@ public class Usuario {
     private CategoriaPUCP categoriaPUCP;
     private FotoPerfil fotoPerfil;
 
+    public boolean getPrimerIngreso() {
+        return primerIngreso;
+    }
+
+    public void setPrimerIngreso(boolean primerIngreso) {
+        this.primerIngreso = primerIngreso;
+    }
+
+    private boolean primerIngreso;
+
     public Usuario() {
     }
 
@@ -122,4 +132,6 @@ public class Usuario {
     public void setFotoPerfil(FotoPerfil fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
     }
+
+
 }

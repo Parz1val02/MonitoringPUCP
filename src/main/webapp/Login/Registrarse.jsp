@@ -42,28 +42,32 @@
             <div style="height: 30px; display: block;"></div>
             <h2 class="create-account" style="font-family: 'Arial Black'; font-size: 20px; " align="center">Registrarse</h2>
             <div style="height: 20px; display: block;"></div>
+            <form method="post" action="<%=request.getContextPath()%>/Login?accion=processFirstPassword">
             <div>
                 <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label" style="font-size: 13px; margin: 0px 5px 2px 8px">Correo</label>
                     <div class="col-sm-9" style="margin: 2px 2px 2px 2px">
-                        <input type="correo" class="form-control" id="inputPassword2" placeholder="Ingrese su Correo PUCP">
+                        <input type="correo" class="form-control" id="inputPassword2" name="correo" placeholder="Ingrese su Correo PUCP">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label" style="font-size: 13px; margin: 0px 5px 2px 8px">Codigo PUCP</label>
                     <div class="col-sm-9" style="margin: 2px 2px 2px 2px">
-                        <input type="correo" class="form-control" id="inputPassword" placeholder="Ingrese su Codigo PUCP">
+                        <input type="correo" class="form-control" id="inputPassword" name="codigo" placeholder="Ingrese su Codigo PUCP">
                     </div>
                 </div>
             </div>
+
             <div style="height: 5px; display: block;"></div>
             <div align="center">
-                <button type="button" class="btn btn-outline-dark" style="border-radius: 5px">Aceptar y Continuar</button>
+                <button type="submit" class="btn btn-outline-dark" style="border-radius: 5px">Aceptar y Continuar</button>
             </div>
             <div style="height: 5px; display: block;"></div>
+
             <div align="center">
                 <a style="color: #9f191f; font-size: 13px; font-family: 'Arial';"href="<%=request.getContextPath()%>/Login?accion=iniciar">Regresar a inicio</a>
             </div>
+            </form>
             <div style="height: 15px; display: block;"></div>
         </div>
         <div class="col-sm"></div>

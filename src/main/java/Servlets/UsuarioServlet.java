@@ -65,7 +65,12 @@ public class UsuarioServlet extends HttpServlet {
                     break;
                 case ("listarDestacados") :
                     listaIncidencias = inDao.obtenerIncidencias();
-                    ArrayList<Integer> estados4 = inDao.estados(listaIncidencias,usuario1.getCodigo());
+                    ArrayList<Integer> estados4 = null;
+                    try {
+                        estados4 = inDao.estados(listaIncidencias,usuario1.getCodigo());
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                     request.setAttribute("estados",estados4);
                     request.setAttribute("listaIncidencias",listaIncidencias);
                     view = request.getRequestDispatcher("/Usuario/IncidenciasDestacadas.jsp");
@@ -122,7 +127,13 @@ public class UsuarioServlet extends HttpServlet {
                     break;
                 case("buscarIncidencia"):
                     listaIncidencias = inDao.obtenerIncidencias();
-                    ArrayList<Integer> estados = inDao.estados(listaIncidencias,usuario1.getCodigo());
+                    ArrayList<Integer> estados = null;
+                    try {
+                        estados = inDao.estados(listaIncidencias,usuario1.getCodigo());
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println(listaIncidencias.size());
                     request.setAttribute("estados",estados);
                     request.setAttribute("listaIncidencias",listaIncidencias);
                     view = request.getRequestDispatcher("/Usuario/BuscarIncidencia.jsp");
@@ -162,7 +173,12 @@ public class UsuarioServlet extends HttpServlet {
                     }
                     ArrayList<FotosIncidencias> fotosIncidencias = inDao.fotosInicio(ids);
 
-                    ArrayList<Integer> estados1 = inDao.estados(listaIncidencias,usuario1.getCodigo());
+                    ArrayList<Integer> estados1 = null;
+                    try {
+                        estados1 = inDao.estados(listaIncidencias,usuario1.getCodigo());
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                     request.setAttribute("destacadas",listaIncidencias);
                     request.setAttribute("fotosIndicencias", fotosIncidencias);
                     request.setAttribute("estados",estados1);

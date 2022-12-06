@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.nio.file.Files;
 
 public class UsuarioDao extends DaoBase{
 
@@ -534,19 +535,22 @@ public class UsuarioDao extends DaoBase{
 
         boolean coincideContrasenia= false;
         String contraseniaBaseDatos = null;
+        Usuario usuarioTemp = null;
 
-        if (usuario.getRol().getNombreRol().equals("Seguridad")||usuario.getRol().getNombreRol().equals("Usuario")) {
+        if (usuario.getRol().getNombreRol().equals("Seguridad")||usuario.getRol().getNombreRol().equals("Usuario PUCP")) {
 
-            String sql = "SELECT password FROM telesystem_aa.usuarios where codigo=?;";
+            String sql = "SELECT * FROM telesystem_aa.Usuarios where codigo=? and password=SHA2(?,256);";
 
             try(Connection connection = this.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)){
 
                 pstmt.setString(1, usuario.getCodigo());
+                pstmt.setString(2,primeraContraseniaIngresada);
 
                 try(ResultSet rs = pstmt.executeQuery();){
                     if (rs.next()) {
-                        contraseniaBaseDatos = rs.getString(1);
+                        usuarioTemp = new Usuario();
+                        usuarioTemp.setCodigo(rs.getString(1));
                     }
                 }
             } catch (SQLException e) {
@@ -554,7 +558,7 @@ public class UsuarioDao extends DaoBase{
             }
 
 
-            if (primeraContraseniaIngresada.equalsIgnoreCase(contraseniaBaseDatos)) {
+            if (usuarioTemp.getCodigo()!= null) {
                 coincideContrasenia = true;
             }
 
@@ -565,9 +569,9 @@ public class UsuarioDao extends DaoBase{
 
         boolean primerIngreso = false;
 
-        if (usuario.getRol().getNombreRol().equals("Seguridad") || usuario.getRol().getNombreRol().equals("Usuario")) {
+        if (usuario.getRol().getNombreRol().equals("Usuario PUCP")) {
 
-            String sql = "SELECT primerIngreso FROM Usuarios where codigo=?;";
+            String sql = "SELECT primerIngreso FROM telesystem_aa.Mastertable where codigo=?;";
 
             try(Connection connection = this.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)){
@@ -586,28 +590,86 @@ public class UsuarioDao extends DaoBase{
         }
         return primerIngreso;
     }
+    public Usuario buscarPorIdMasterTable(String codigoUsuario) {
+
+        Usuario usuario = null;
+
+        String sql = "SELECT * FROM telesystem_aa.Mastertable masterT left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = masterT.idCategoriaPUCP where codigo=?;";
+
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1, codigoUsuario);
+            try(ResultSet rs = pstmt.executeQuery()){
+                if (rs.next()) {
+                    usuario = new Usuario();
+                    usuario.setCodigo(rs.getString(1));
+                    usuario.setNombre(rs.getString(2));
+                    usuario.setApellido(rs.getString(3));
+                    usuario.setCorreo(rs.getString(4));
+                    usuario.setDni(rs.getString(5));
+                    usuario.setCelular(rs.getString(6));
+
+                    Rol rol = new Rol();
+                    rol.setIdRol(1);
+                    rol.setNombreRol("Usuario PUCP");
+
+                    usuario.setRol(rol);
+                    CategoriaPUCP categoriaPUCP = new CategoriaPUCP();
+                    categoriaPUCP.setIdCategoria(rs.getInt(7));
+                    categoriaPUCP.setNombreCategoria(rs.getString(9));
+                    usuario.setCategoriaPUCP(categoriaPUCP);
+                    usuario.setPrimerIngreso(rs.getBoolean("primerIngreso"));
+
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return usuario;
+    }
+    public void registroDesdeMastertable(Usuario usuario, String contraseniaPredeterminada){
+        String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil,primerIngreso) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?,?)";
+        int idFoto = 0;
 
 
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, usuario.getCodigo());
+            pstmt.setString(2, usuario.getNombre());
+            pstmt.setString(3, usuario.getApellido());
+            pstmt.setString(4, usuario.getCorreo());
+            pstmt.setString(5, usuario.getDni());
+            pstmt.setBoolean(6, true);
+            pstmt.setString(7, contraseniaPredeterminada);
+            pstmt.setString(8, usuario.getCelular());
+                /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
+                pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
+            //pstmt.setInt(9, usuario.getRol().getIdRol());
+            pstmt.setInt(9, 1);
+            pstmt.setInt(10, usuario.getCategoriaPUCP().getIdCategoria());
+            idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
+            pstmt.setInt(11, idFoto);
+            pstmt.setBoolean(12, true);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void cambiarPrimerIngreso(Usuario usuario){
 
-     public boolean contraValida (String pass,String correo){
-         String sql = "Select * from usuarios where password=sha2(?,256) and correo = ?";
-         boolean valido = false;
-         try(Connection connection = this.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sql)){
+        String sql = "update telesystem_aa.Mastertable SET primerIngreso = ? where codigo = ? ";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
-             pstmt.setString(1,pass);
-             pstmt.setString(2,correo);
-             try(ResultSet rs = pstmt.executeQuery();){
-                 if (rs.next()) {
-                    valido = true;
-                 }
-             }
+            pstmt.setBoolean(1, false);
+            pstmt.setString(2, usuario.getCodigo());
 
-         } catch (SQLException e) {
-             throw new RuntimeException(e);
-         }
-            return valido;
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-     }
+
 
 }
