@@ -4,6 +4,7 @@ import Beans.*;
 import Daos.EstadoIncidenciaDao;
 import Daos.IncidenciaDao;
 
+import Daos.UsuarioDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -88,7 +89,11 @@ public class SeguridadServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String accion = request.getParameter("accion")==null?"listar":request.getParameter("accion");
         IncidenciaDao idao = new IncidenciaDao();
-        Incidencia incidencia =new Incidencia();
+        Incidencia incidencia = new Incidencia();
+
+        UsuarioDao uDao = new UsuarioDao();
+        Usuario usuario1 = (Usuario) session.getAttribute("usuario");
+        RequestDispatcher view ;
         //Incidencia incidencia;
 
         /*if(accion.equals("verDetalle")){
@@ -154,7 +159,52 @@ public class SeguridadServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=verDetalle");
                 }
 
+            case "cambiarContrasena":
+                String correo1 = usuario1.getCorreo();
+                String actual = request.getParameter("contraseñaActual");
+                String nueva = request.getParameter("contraseñaNueva");
+                String repass = request.getParameter("repass");
 
+                //UsuarioDao uDao = new UsuarioDao();
+                System.out.println(actual);
+                System.out.println("usuario1:"+usuario1.getPassword());
+                if(uDao.contraValida(actual,correo1)) {
+
+
+                    //primero se valida que la contraseña sea valida
+                    boolean contrasenaCorrecta = uDao.contrasenaisValid(nueva);
+
+                    if (contrasenaCorrecta) {
+
+                        if (!nueva.equalsIgnoreCase(repass)) { //si cuando confirma la nueva contraseña no es igual
+                            request.setAttribute("msgIguales", "Para confirmar, ambas contrasenas deben ser iguales");
+                            view = request.getRequestDispatcher("/Seguridad/restablecer_contrasena_seguridad.jsp");
+                            view.forward(request, response);
+                            System.out.println("contraseñas nuevas no iguales");
+                            break;
+                        }
+                        if (nueva.equalsIgnoreCase(actual)) {//si la contraseña nueva es igual a la actual----> no se puede
+                            request.setAttribute("msgOld", "Las contrasenas no pueden ser iguales");
+                            view = request.getRequestDispatcher("/Seguridad/restablecer_contrasena_seguridad.jsp");
+                            view.forward(request, response);
+                            System.out.println("contraseñas igual a la original");
+                            break;
+                        }
+
+                        uDao.cambiarContrasenaUsuario(correo1, nueva);
+                        response.sendRedirect(request.getContextPath()+"/SeguridadServlet");
+                    } else {
+                        request.setAttribute("easy", "Digite otra contraseña que cumpla los requerimentos");
+                        view = request.getRequestDispatcher("/Seguridad/restablecer_contrasena_seguridad.jsp");
+                        view.forward(request, response);
+                    }
+                }else{
+                    request.setAttribute("nel", "La contraseña actual del usuario no es correcta");
+                    view = request.getRequestDispatcher("/Seguridad/restablecer_contrasena_seguridad.jsp");
+                    view.forward(request, response);
+                }
+
+                break;
 
 
 
