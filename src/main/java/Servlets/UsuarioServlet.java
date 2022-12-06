@@ -380,38 +380,44 @@ public class UsuarioServlet extends HttpServlet {
                 String repass = request.getParameter("repass");
 
                 //UsuarioDao uDao = new UsuarioDao();
+                 System.out.println(actual);
+                 System.out.println("usuario1:"+usuario1.getPassword());
+                if(uDao.contraValida(actual,correo)) {
 
-                //primero se valida que la contraseña sea valida
-                boolean contrasenaCorrecta = uDao.contrasenaisValid(nueva);
 
-                if (contrasenaCorrecta){
+                    //primero se valida que la contraseña sea valida
+                    boolean contrasenaCorrecta = uDao.contrasenaisValid(nueva);
 
-                    if (nueva.equalsIgnoreCase("") ||  repass.equalsIgnoreCase("")){ //ambos campos no pueden estar vacios
-                        session.setAttribute("msg", "La contrasena no puede estar vacia");
-                        response.sendRedirect(request.getContextPath() + "/UsuarioServlet?accion=restablecerContrasenia");
+                    if (contrasenaCorrecta) {
 
-                    } else if (!nueva.equalsIgnoreCase(repass)) { //si cuando confirma la nueva contraseña no es igual
-                        session.setAttribute("msg","Para confirmar, ambas contrasenas deben ser iguales");
-                        response.sendRedirect(request.getContextPath() + "/UsuarioServlet?accion=restablecerContrasenia");
+                        if (!nueva.equalsIgnoreCase(repass)) { //si cuando confirma la nueva contraseña no es igual
+                            request.setAttribute("msgIguales", "Para confirmar, ambas contrasenas deben ser iguales");
+                            view = request.getRequestDispatcher("/Usuario/CambiarContrasenia.jsp");
+                            view.forward(request, response);
+                            System.out.println("contraseñas nuevas no iguales");
+                            break;
+                        }
+                        if (nueva.equalsIgnoreCase(actual)) {//si la contraseña nueva es igual a la actual----> no se puede
+                            request.setAttribute("msgOld", "Las contrasenas no pueden ser iguales");
+                            view = request.getRequestDispatcher("/Usuario/CambiarContrasenia.jsp");
+                            view.forward(request, response);
+                            System.out.println("contraseñas igual a la original");
+                            break;
+                        }
 
-                    } else if (nueva.equalsIgnoreCase(actual)) {//si la contraseña nueva es igual a la actual----> no se puede
-                        session.setAttribute("msg","las contrasenas no pueden ser iguales");
-                        response.sendRedirect(request.getContextPath() + "/UsuarioServlet?accion=restablecerContrasenia");
+                        uDao.cambiarContrasenaUsuario(correo, nueva);
+                        response.sendRedirect(request.getContextPath()+"/UsuarioServlet");
                     } else {
-
-                        uDao.cambiarContrasenaUsuario(correo,nueva);
-
-
-
+                        request.setAttribute("easy", "Digite otra contraseña que cumpla los requerimentos");
+                        view = request.getRequestDispatcher("/Usuario/CambiarContrasenia.jsp");
+                        view.forward(request, response);
                     }
-
-
-                }else {
-                    session.setAttribute("msg","digite otra contraseña que cumpla los requerimentos");
-                    response.sendRedirect(request.getContextPath() + "/UsuarioServlet?accion=restablecerContrasenia");
+                }else{
+                    request.setAttribute("nel", "La contraseña actual del usuario no es correcta");
+                    view = request.getRequestDispatcher("/Usuario/CambiarContrasenia.jsp");
+                    view.forward(request, response);
                 }
 
-                response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
                 break;
 
         }
