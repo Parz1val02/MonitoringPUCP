@@ -159,7 +159,6 @@ public class UsuarioServlet extends HttpServlet {
                     ArrayList<Integer> ids = new ArrayList<>();
                     for(Incidencia i : listaIncidencias){
                         ids.add(i.getIdIncidencia());
-                        System.out.println(i.getIdIncidencia());
                     }
                     ArrayList<FotosIncidencias> fotosIncidencias = inDao.fotosInicio(ids);
 
@@ -254,109 +253,116 @@ public class UsuarioServlet extends HttpServlet {
                 Incidencia incidencia = new Incidencia();
                 String nombreIncidencia = request.getParameter("nombre_incidencia");
 
-                for (Incidencia i : incidencias){
-                    if(i.getNombreIncidencia().equalsIgnoreCase(nombreIncidencia)){
-                        request.setAttribute("tipos", tipoIncidenciaDao.obtenerTipos() );
-                        request.setAttribute("niveles", nivelDao.obtenerNiveles());
-                        request.setAttribute("zonas", zonaDao.obtenerlistaZonas());
-                        request.setAttribute("msg","el nombre de la incidencia no se puede repetir");
-                        view = request.getRequestDispatcher("/Usuario/RegistrarIncidencia.jsp");
-                        view.forward(request, response);
-                        break;
-                    }
+                String nombreValido = "";
+                if(!uDao.nombreyApellidoValid(nombreIncidencia)){
+                    nombreValido = "El nombre ingresado no es valido";
                 }
 
+
                 String descripcion = request.getParameter("descripcion");
+
+                String descripcionValida="";
+                if(!uDao.nombreyApellidoValid(descripcion)){
+                    descripcionValida = "La descripcion ingresada no es valida";
+                }
 
                 int IDzonaPUCP = Integer.parseInt(request.getParameter("zonaPUCP"));
                 int IDtipoIncidencia = Integer.parseInt(request.getParameter("tipoIncidencia"));
                 int IDnivelUrgencia = Integer.parseInt(request.getParameter("nivelIncidencia"));
-                String fecha = request.getParameter("fecha");
                 int idEstadoIncidencia = 1;
                 //String estado= request.getParameter("estado");
+
                 String otroTipo = request.getParameter("Otros");
-                int a = 0,b=0,c=0,d=0,f=0;
-                if (nombreIncidencia==null){
-                    a=1;
-
-                }else {
-                    if (!nombreIncidencia.isEmpty()){
-                        String validanombre = nombreIncidencia.substring(0,1);
-                        if (validanombre.equals(" ")){
-                            c=1;
-                        }
-                        if (nombreIncidencia.length()==1){
-                            f=1;
-                        }
-                    }else {b=1;
-
-                    }
-                }
+                String fecha = request.getParameter("fecha");
+                String fechaValida="";
                 if (fecha.isEmpty()){
-                    d=1;
+                    fechaValida="La fecha es obligatoria";
                 }
-                if(a==1||b==1 || c==1 || d==1 || f==1){
-                    request.getSession().setAttribute("info", "El nombre ingresado no es válido");
-                    response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=registrarIncidencia");
-                }else {
-                    incidencia.setNombreIncidencia(nombreIncidencia);
-                    incidencia.setFecha(fecha);
-                    incidencia.setValidaIncidencia(true);
-                    incidencia.setContadorReabierto(0);
-                    TipoIncidencia tipoIncidencia1 = new TipoIncidencia();
 
-                    // logica
-                    tipoIncidencia1.setIdTipo(IDtipoIncidencia);
-                    incidencia.setTipoIncidencia(tipoIncidencia1);
 
-                    System.out.println(otroTipo);
-                    if (IDtipoIncidencia == 6){
-                        incidencia.setOtroTipo(otroTipo);
+                incidencia.setNombreIncidencia(nombreIncidencia);
+                incidencia.setFecha(fecha);
+                incidencia.setValidaIncidencia(true);
+                incidencia.setContadorReabierto(0);
+                TipoIncidencia tipoIncidencia1 = new TipoIncidencia();
+
+                // logica
+                tipoIncidencia1.setIdTipo(IDtipoIncidencia);
+                incidencia.setTipoIncidencia(tipoIncidencia1);
+                String otroTipoValida="";
+                if (IDtipoIncidencia == 6){
+                    if(!uDao.nombreyApellidoValid(descripcion)){
+                        otroTipoValida = "El tipo de incidencia ingresada no es valida";
                     }
+                    incidencia.setOtroTipo(otroTipo);
+                }
 
 
-                    NivelUrgencia nivelUrgencia1 = new NivelUrgencia();
-                    nivelUrgencia1.setIdNivelUrgencia(IDnivelUrgencia);
-                    incidencia.setNivelUrgencia(nivelUrgencia1);
+                NivelUrgencia nivelUrgencia1 = new NivelUrgencia();
+                nivelUrgencia1.setIdNivelUrgencia(IDnivelUrgencia);
+                incidencia.setNivelUrgencia(nivelUrgencia1);
 
-                    incidencia.setDescripcion(descripcion);
+                incidencia.setDescripcion(descripcion);
 
-                    EstadoIncidencia estado1 = new EstadoIncidencia();
-                    estado1.setIdEstado(idEstadoIncidencia);
-                    incidencia.setEstadoIncidencia(estado1);
+                EstadoIncidencia estado1 = new EstadoIncidencia();
+                estado1.setIdEstado(idEstadoIncidencia);
+                incidencia.setEstadoIncidencia(estado1);
 
-                    ZonaPUCP zonaPUCP = new ZonaPUCP();
-                    zonaPUCP.setIdZonaPUCP(IDzonaPUCP);
-                    incidencia.setZonaPUCP(zonaPUCP);
+                ZonaPUCP zonaPUCP = new ZonaPUCP();
+                zonaPUCP.setIdZonaPUCP(IDzonaPUCP);
+                incidencia.setZonaPUCP(zonaPUCP);
 
-                    incidencia.setUsuario(usuario1);
+                incidencia.setUsuario(usuario1);
+
+                ArrayList<Part> fileParts = (ArrayList<Part>) request.getParts().stream().filter(part -> "fotoIncidencia".equals(part.getName()) && part.getSize() > 0).collect(Collectors.toList()); // Retrieves <input type="file" name="files" multiple="true">
+                String fotoValida="";
+                if(fileParts.size()==0){
+                    fotoValida = "Se requiere minimo una foto por incidencia";
+                }
+
+                if(nombreValido.length()==0 &&
+                    descripcionValida.length()==0 && fechaValida.length()==0 &&
+                        otroTipoValida.length() == 0 && fotoValida.length()==0){
 
                     idao.crearIncidencia(incidencia);
 
                     incidencia.setIdIncidencia(idao.getIdIncidencia(incidencia));
 
                     ArrayList<FotosIncidencias> fotosIncidencias = new ArrayList<>();
-                    ArrayList<Part> fileParts = (ArrayList<Part>) request.getParts().stream().filter(part -> "fotoIncidencia".equals(part.getName()) && part.getSize() > 0).collect(Collectors.toList()); // Retrieves <input type="file" name="files" multiple="true">
                     for (Part filePart : fileParts) {
                         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
                         InputStream fileContent = filePart.getInputStream();
                         byte[] fileBytes = fileContent.readAllBytes();
                         FotosIncidencias fi = new FotosIncidencias();
-                        System.out.println(fileName);
                         fi.setFotobyte(fileBytes);
                         fi.setNombreFoto(fileName);
                         fi.setIncidencia(incidencia);
                         fotosIncidencias.add(fi);
                     }
                     idao.guardarFotos(fotosIncidencias);
-                    try {
+                    /*try {
                         EnviarCorreoEstado.main(usuario1.getCorreo(),incidencia,1,"");
                     } catch (MessagingException e) {
                         e.printStackTrace();
-                    }
+                    }*/
                     response.sendRedirect(request.getContextPath()+"/UsuarioServlet");
+                    break;
+                }else{
+
+                    request.setAttribute("nombreValido",nombreValido);
+                    request.setAttribute("descripcionValida",descripcionValida);
+                    request.setAttribute("fechaValida",fechaValida);
+                    request.setAttribute("otroTipoValida",otroTipoValida);
+                    request.setAttribute("fotoValida",fotoValida);
+
+                    request.setAttribute("tipos", tipoIncidenciaDao.obtenerTipos() );
+                    request.setAttribute("niveles", nivelDao.obtenerNiveles());
+                    request.setAttribute("zonas", zonaDao.obtenerlistaZonas());
+                    view = request.getRequestDispatcher("/Usuario/RegistrarIncidencia.jsp");
+                    view.forward(request, response);
+                    break;
                 }
-                break;
+
 
             case "actualizarFoto":
                 Part filePart = request.getPart("fotoPerfil"); // Retrieves <input type="file" name="file">

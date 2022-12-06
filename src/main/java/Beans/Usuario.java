@@ -17,15 +17,6 @@ public class Usuario {
     private CategoriaPUCP categoriaPUCP;
     private FotoPerfil fotoPerfil;
 
-    public boolean getPrimerIngreso() {
-        return primerIngreso;
-    }
-
-    public void setPrimerIngreso(boolean primerIngreso) {
-        this.primerIngreso = primerIngreso;
-    }
-
-    private boolean primerIngreso;
     public Usuario() {
     }
 

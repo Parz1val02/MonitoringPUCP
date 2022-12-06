@@ -3,6 +3,9 @@
 <%@ page import="Beans.NivelUrgencia" %>
 <%@ page import="Beans.ZonaPUCP" %>
 <%@ page import="Beans.Incidencia" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.DateFormat" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     ArrayList<TipoIncidencia> tipos = (ArrayList<TipoIncidencia>) request.getAttribute("tipos");
@@ -12,8 +15,31 @@
     ArrayList<NivelUrgencia> niveles = (ArrayList<NivelUrgencia>) request.getAttribute("niveles");
 %>
 <%
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date today = new Date();
     ArrayList<ZonaPUCP> zonas = (ArrayList<ZonaPUCP>) request.getAttribute("zonas");
-    String error = (String) request.getAttribute("msg");
+
+    String nombreValido = (String) request.getAttribute("nombreValido");
+    if(nombreValido==null){
+        nombreValido="";
+    }
+    String descripcionValida = (String) request.getAttribute("descripcionValida");
+    if(descripcionValida==null){
+        descripcionValida="";
+    }
+    String fechaValida = (String) request.getAttribute("fechaValida");
+    if(fechaValida==null){
+        fechaValida="";
+    }
+    String otroTipoValida = (String) request.getAttribute("otroTipoValida");
+    if(otroTipoValida==null){
+        otroTipoValida="";
+    }
+    String fotoValida = (String) request.getAttribute("fotoValida");
+    if(fotoValida==null){
+        fotoValida="";
+    }
+
 %>
 
 <html lang="en"  style="min-height: 100vh">
@@ -56,10 +82,10 @@
     <div class="row" style="min-height: 60vh">
         <div class="page-content fade-in-up col-md-8" style="align-content: center; margin: auto">
             <div class="container" style=" height: 100%">
-                <div class="page-heading" style="text-align: center;margin-bottom: 20px;margin-left: 15%">
+                <div class="page-heading" style="text-align: center; margin:auto">
                     <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Registrar Incidencias</b></h1>
                 </div>
-                <div class="ibox" style="align-content: center; min-height:60%; max-width: 85%; margin-left: 15% " >
+                <div class="ibox" style="align-content: center; min-height:60%; max-width: 85%;margin: auto" >
                     <!--div class="ibox-head">
                         <div class="ibox-title" style="font-size: 20px">Registrar Incidencia</div>
                         <div class="ibox-tools">
@@ -81,8 +107,13 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px">
-                                        <input type="text" class="form-control" id="floatingInputGrid2" placeholder="Nombre Incidencia" name="nombre_incidencia">
+                                        <input type="text" class="form-control <%=nombreValido.length()>0?"is-invalid":""%>" id="floatingInputGrid2" placeholder="Nombre Incidencia" name="nombre_incidencia">
                                         <label for="floatingInputGrid2" class="label-form-flujousuario">Nombre Incidencia</label>
+                                        <%if(nombreValido.length()>0){%>
+                                        <div  class="invalid-feedback">
+                                            <%=nombreValido%>
+                                        </div>
+                                        <%}%>
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +123,12 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px">
-                                        <input type="date" name="fecha" id="date" class="sangria-filter" placeholder="dd-mm-yyyy" min="1997-01-01" max="2030-12-31" style="margin-top: 5px;margin-bottom: 5px">
+                                        <input type="date" name="fecha" id="date" class="sangria-filter <%=fechaValida.length()>0?"is-invalid":""%>" placeholder="dd-mm-yyyy" max="<%=dateFormat.format(today)%>" style="margin-top: 5px;margin-bottom: 5px">
+                                        <%if(fechaValida.length()>0){%>
+                                        <div  class="invalid-feedback">
+                                            <%=fechaValida%>
+                                        </div>
+                                        <%}%>
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +168,12 @@
 
                                         <label for="tipoIncidencia" class="label-form-flujousuario">Tipo de Incidencia</label>
                                     </div>
-                                    <input type="text" class="form-control" id="Otros" placeholder="Tipo" name="Otros" disabled>
+                                    <input type="text" class="form-control <%=otroTipoValida.length()>0?"is-invalid":""%>" id="Otros" placeholder="Otro tipo" name="Otros" disabled >
+                                    <%if(otroTipoValida.length()>0){%>
+                                    <div  class="invalid-feedback">
+                                        <%=otroTipoValida%>
+                                    </div>
+                                    <%}%>
                                     <div style="height: 25px; display: block;"></div>
                                 </div>
                             </div>
@@ -160,8 +201,12 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
-                                        <input type="file" name="fotoIncidencia" id="file2" accept="image/png, image/gif, image/jpeg" multiple/>
-                                        <!--<label for="fileImage" class="labelinputimage">Escoge 3 imagenes</label> -->
+                                        <input type="file" name="fotoIncidencia" id="file2" accept="image/png, image/gif, image/jpeg" multiple />
+                                        <%if(fotoValida.length()>0){%>
+                                        <div  class="invalid-feedback">
+                                            <%=fotoValida%>
+                                        </div>
+                                        <%}%>
                                     </div>
                                 </div>
                             </div>
@@ -172,21 +217,23 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
-                                        <textarea class="form-control" id="floatingInputGrid7" cols="40" rows="5" placeholder="Descripcion" style="height: 133px; width: 100%;overflow: auto;resize: none" name="descripcion"></textarea>
+                                        <textarea class="form-control <%=descripcionValida.length()>0?"is-invalid":""%>" id="floatingInputGrid7" cols="40" rows="5" placeholder="Descripcion" style="height: 133px; width: 100%;overflow: auto;resize: none" name="descripcion" ></textarea>
                                         <label for="floatingInputGrid7" class="label-form-flujousuario">Descripción</label>
+                                        <%if(descripcionValida.length()>0){%>
+                                        <div  class="invalid-feedback">
+                                            <%=descripcionValida%>
+                                        </div>
+                                        <%}%>
                                     </div>
                                 </div>
                                 <div style="color:#FF0000;"><p text-align="center;" style="margin-top: 1px;" class="font-weight-bold">Todos los campos son obligatorios.</p></div>
                                 <div style="color:#FF0000;">
-                                    <%if(error!=null){%>
-                                        <%=error%>
-                                    <%}%>
 
                                 </div>
 
                             </div>
                             <div class="form-group" style="text-align: right">
-                                <button class="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal" href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">Registrar incidencia</button>
+                                <button class="btn btn-primary" type="submit"  href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">Registrar incidencia</button>
                                 <!-- type="submit" debe usarse para enviar datos de un form tener cuidado y revisar-->
                             </div>
                         </form>
@@ -309,7 +356,7 @@
     <!-- Footer -->
 
 <!-- Modal chequer funcionamiento-->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -325,7 +372,7 @@
             </div>
         </div>
     </div>
-</div>
+</div-->
     <!--CUSTOM SCRIPTS-->
     <!--script src="../scripts/flujo-usuario.js"></script> <previsualizador de imagenes-->
     <!-- CORE SCRIPTS-->
@@ -387,5 +434,4 @@
 
 </body>
 </html>
-
 

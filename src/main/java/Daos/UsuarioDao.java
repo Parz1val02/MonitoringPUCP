@@ -13,7 +13,7 @@ public class UsuarioDao extends DaoBase{
 
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
         String sql = "SELECT u.codigo, u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.celular, r.idRoles, r.nombreRol, catpucp.idCategoriaPUCP, catpucp.nombreCategoria,\n" +
-                "fp.idFotoPerfil, fp.nombreFoto, fp.fotoPerfil, u.primerIngreso\n" +
+                "fp.idFotoPerfil, fp.nombreFoto, fp.fotoPerfil\n" +
                 "FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP \n" +
                 "left join FotoPerfil fp on u.idFotoPerfil = fp.idFotoPerfil where validaUsuario = 1 order by u.codigo;";
         try (Connection conn = this.getConnection();
@@ -47,7 +47,6 @@ public class UsuarioDao extends DaoBase{
                 fotoPerfil.setFotobyte(rs.getBytes(15));
                 usuario.setFotoPerfil(fotoPerfil);
 
-                usuario.setPrimerIngreso(rs.getBoolean(16));
                 listaUsuarios.add(usuario);
             }
 
@@ -61,7 +60,7 @@ public class UsuarioDao extends DaoBase{
 
     //crear usuario y guardar en DB
     public void crearUsuario(Usuario usuario){
-        String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil, primerIngreso) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?)";
+        String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?)";
         int idFoto = 0;
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -80,7 +79,6 @@ public class UsuarioDao extends DaoBase{
             pstmt.setInt(10, usuario.getCategoriaPUCP().getIdCategoria());
             idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
             pstmt.setInt(11, idFoto);
-            pstmt.setBoolean(12, usuario.getPrimerIngreso());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -302,7 +300,7 @@ public class UsuarioDao extends DaoBase{
 
     //FUNCION PARA VALIDAR NOMBRE Y APELLIDOS
     public boolean nombreyApellidoValid(String nombre) {
-        String regex = "^[\\w'\\-,.][^_!¡?÷?¿/\\\\+=@#$%ˆ&*(){}|~<>;:[\\]]]{1,}$";
+        String regex = "^[A-Za-zñÑáéíóúÁÉÍÓÚ][^_\\-!¡?÷¿\\+/=@`#$%'ˆ^&*()\\\\\\[\\]{}|~,<>;:]{1,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(nombre);
         return matcher.find();
@@ -321,7 +319,7 @@ public class UsuarioDao extends DaoBase{
         return matcher.find();
     }
     public boolean emailisValid(String email) {
-        String regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "pucp.edu.pe";
+        String regex = "^[A-Za-z0-9]+([._A-Za-z0-9]+)*@" + "pucp.edu.pe";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         return matcher.find();

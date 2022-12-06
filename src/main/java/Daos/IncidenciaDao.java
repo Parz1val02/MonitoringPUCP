@@ -788,8 +788,6 @@ public class IncidenciaDao extends DaoBase{
         for(int a : ids){
             for(FotosIncidencias foto : fotosIncidencias){
                 if(a==foto.getIncidencia().getIdIncidencia()){
-                    System.out.println("a = " + a);
-                    System.out.println("id = " + foto.getIncidencia().getIdIncidencia());
                     fotosOrdenadas.add(foto);
                 }
             }
