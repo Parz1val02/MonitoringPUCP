@@ -11,6 +11,10 @@
 <%
     Incidencia incidencia = (Incidencia) request.getAttribute("Incidencia");
     ArrayList<FotosIncidencias> fotos = (ArrayList<FotosIncidencias>) request.getAttribute("Fotos");
+    String validoComentario = (String) request.getAttribute("validoComentario");
+    if(validoComentario==null){
+        validoComentario="";
+    }
 %>
 <html>
 <head>
@@ -31,9 +35,27 @@
     <style>
         #map { height: 300px; }
     </style>
+    <style>
+
+        .img-container {
+            max-width: 642px;
+            max-height: 376px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .img-container img {
+            max-width: 642px;
+            max-height: 376px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
     <link rel="stylesheet" href="../css/flex.css">
     <link rel="stylesheet" href=../css/style.min.css>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
 </head>
 <body>
@@ -82,11 +104,7 @@
                         <div class="carousel-inner">
                             <%int i=0;%>
                             <%for(FotosIncidencias fotito : fotos){%>
-                            <%if(i==0){%>
-                            <div class="carousel-item active">
-                                <%}else {%>
-                                <div class="carousel-item">
-                                    <%}%>
+                            <div class="carousel-item img-container <%if(i==0){%> active <%}%>">
                                     <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="..." class="d-block w-100">
                                 </div>
                                 <%i++;%>
@@ -117,12 +135,16 @@
                         </div>
                         <div class="form-floating" style="margin-left: 10px">
                             <p>N° veces reabierta: <%=incidencia.getContadorReabierto()%>/5</p>
-                            <p>
-                                ¿Por qué desea reabrir esta incidencia?: <br>
+                            <p>¿Por qué desea reabrir esta incidencia?:</p>
                                 <label for="floatingTextarea2"></label>
-                                <textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" name ="reopen" style="height: 100px"></textarea>
-                            </p>
+                                <textarea class="form-control <%=validoComentario.length()>0?"is-invalid":""%>" placeholder="Deja un comentario aquí" id="floatingTextarea2" name ="reopen" style="height: 100px"></textarea
+                                <%if(validoComentario.length()>0){%>
+                                <div  class="invalid-feedback">
+                                    <%=validoComentario%>
+                                </div>
+                            <%}%>
                         </div>
+                        <br>
                         <%if(session.getAttribute("info")!=null){%>
                         <div class="form-group">
                             <button class="btn btn-danger"><%=session.getAttribute("info")%></button>

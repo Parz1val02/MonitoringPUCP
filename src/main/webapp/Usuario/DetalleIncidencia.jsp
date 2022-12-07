@@ -42,6 +42,24 @@
     <style>
         #map { height: 300px; }
     </style>
+    <style>
+
+        .img-container {
+            max-width: 642px;
+            max-height: 376px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .img-container img {
+            max-width: 642px;
+            max-height: 376px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
 </head>
 <body>
     <!-- HEADER -->
@@ -63,11 +81,7 @@
                     <div class="carousel-inner">
                         <%int i=0;%>
                         <%for(FotosIncidencias fotito : fotos){%>
-                        <%if(i==0){%>
-                        <div class="carousel-item active">
-                            <%}else {%>
-                            <div class="carousel-item">
-                                <%}%>
+                        <div class="carousel-item img-container <%if(i==0){%> active <%}%>">
                             <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="..." class="d-block w-100">
                         </div>
                             <%i++;%>
@@ -128,7 +142,7 @@
                     </div>
                     <div style="height: 30px; display: block;"></div>
                     <div align="right">
-                        <a style="font-size: 15px" href="<%=request.getContextPath()%>/UsuarioServlet"> Volver a la Vista Principal</a>
+                        <a style="font-size: 15px" href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">Regresar a la ventana principal</a>
                     </div>
                 </div>
             </div>

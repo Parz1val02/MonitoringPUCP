@@ -100,7 +100,7 @@ public class SeguridadServlet extends HttpServlet {
         String accion = request.getParameter("accion")==null?"listar":request.getParameter("accion");
         IncidenciaDao idao = new IncidenciaDao();
         Incidencia incidencia = new Incidencia();
-
+        EstadoIncidenciaDao eDao = new EstadoIncidenciaDao();
         UsuarioDao uDao = new UsuarioDao();
         Usuario usuario1 = (Usuario) session.getAttribute("usuario");
         RequestDispatcher view ;
@@ -122,31 +122,15 @@ public class SeguridadServlet extends HttpServlet {
                 String strId = request.getParameter("idIncidencia");
                 if(idao.idValid(strId) && idao.verificarIncidencia(strId)){
                     int idIncidencia = Integer.parseInt(strId);
-                    String fecha = request.getParameter("fecha");
-                    String nombreIncidencia = request.getParameter("nombreIncidencia");
-                    String idTipoIncidencia = request.getParameter("idTipoIncidencia");
-                    //int idZonaPUCP = Integer.parseInt(request.getParameter("zonaPUCP"));
-                    //String nivelUrgencia = request.getParameter("nivel_urgencia");
-                    //String descripcion = request.getParameter("Descripcion");
 
                     int idEstado = Integer.parseInt(request.getParameter("idEstado"));
-
                     String justi = request.getParameter("justificacion");
-
-
-                    //obtener el objeto incidencia de la vista o obtener el id?
-
+                    String justiValido = "";
+                    if(!uDao.nombreyApellidoValid(justi)){
+                        justiValido = "La justificacion ingresada no es valida";
+                    }
+                    //obtener el objeto incidencia de la vista o obtener el id? IDDDDDDDDDDDDDD!!!!!!!!!
                     incidencia = idao.obtenerIncidencia(idIncidencia);
-                    /*incidencia.setNombreIncidencia(nombreIncidencia);
-                    incidencia.setFecha(fecha);
-                    ZonaPUCP zonaPUCP = new ZonaPUCP();
-                    zonaPUCP.setIdZonaPUCP(idZonaPUCP);
-                    incidencia.setZonaPUCP(zonaPUCP);
-
-                    NivelUrgencia nivel = new NivelUrgencia();
-                    nivel.setNivel(nivelUrgencia);
-                    incidencia.setNivelUrgencia(nivel);
-                    incidencia.setDescripcion(descripcion);*/
 
                     EstadoIncidencia estado = new EstadoIncidencia();
                     estado.setIdEstado(idEstado);
@@ -156,7 +140,7 @@ public class SeguridadServlet extends HttpServlet {
                     comentario.setComentario(justi);
                     comentario.setIncidencia(incidencia);
 
-                    if ( justi !=null){
+                    if (justiValido.length()==0){
                         session.setAttribute("msg","Cambio de estado exitoso");
                         //para actualizar el estado y el comentario
                         idao.actualizarIncidencia(incidencia);
@@ -164,7 +148,24 @@ public class SeguridadServlet extends HttpServlet {
                         response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
                     }
                     else { //si no pone la justificacion que se quede en la misma pagina con un aviso que el campo no puede estar vacio
-                        response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=verDetalle");
+                        incidencia = idao.obtenerIncidencia(idIncidencia);
+                        ArrayList<FotosIncidencias> fotos1 = idao.obtenerFotos(idIncidencia);
+                        request.setAttribute("Incidencia", incidencia);
+                        request.setAttribute("Fotos",fotos1);
+                        ArrayList<EstadoIncidencia> estados = eDao.obtenerEstados();
+
+                        for (EstadoIncidencia e:estados) {
+                            ArrayList<EstadoIncidencia> estados1 = new ArrayList<>();
+                            if (e.getEstado().equalsIgnoreCase("registrado")){
+
+                                estados1.add(estados.get(2));
+                                estados1.add(estados.get(3));
+                                request.setAttribute("estados", estados1);
+                            }
+                        }
+                        request.setAttribute("justiValido",justiValido);
+                        view = request.getRequestDispatcher("/Seguridad/VerDetalle.jsp");
+                        view.forward(request, response);
                     }
                 }else {
                 response.sendRedirect(request.getContextPath()+ "/SeguridadServlet");

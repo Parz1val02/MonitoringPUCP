@@ -254,28 +254,41 @@ public class UsuarioServlet extends HttpServlet {
                     Incidencia jijija = idao.obtenerIncidencia(idIncidencia5);
                     int cont = jijija.getContadorReabierto();
                     String comentarioreopen = request.getParameter("reopen");
+                    String validoComentario="";
+                    if(!uDao.nombreyApellidoValid(comentarioreopen)){
+                        validoComentario = "El comentario ingresado no es valido";
+                    }
                     System.out.println(comentarioreopen);
-                    if (cont>=5){
-                        request.getSession().setAttribute("info", "Ya se ha alcanzado el número máximo de reaperturas");
-                        response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=verDetalle&id="+jijija.getIdIncidencia());
-                    }else {
-                        try {
-                            EnviarCorreoEstado.main(usuario1.getCorreo(),jijija,2,"Reabierto");
-                        } catch (MessagingException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            ArrayList<Usuario> listausuariosdestacados = idao.obtenerUsuarioxDestacada(jijija.getIdIncidencia());
-                            if(listausuariosdestacados != null){
-                                for (Usuario u : listausuariosdestacados){
-                                    EnviarCorreoEstado.main(u.getCorreo(),jijija,2,"Reabierto");
-                                }
+                    if(comentarioreopen.length()==0){
+                        if (cont>5){
+                            request.getSession().setAttribute("info", "Ya se ha alcanzado el número máximo de reaperturas");
+                            response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=verDetalle&id="+jijija.getIdIncidencia());
+                        }else {
+                            try {
+                                EnviarCorreoEstado.main(usuario1.getCorreo(),jijija,2,"Reabierto");
+                            } catch (MessagingException e) {
+                                e.printStackTrace();
                             }
-                        } catch (MessagingException e) {
-                            e.printStackTrace();
+                            try {
+                                ArrayList<Usuario> listausuariosdestacados = idao.obtenerUsuarioxDestacada(jijija.getIdIncidencia());
+                                if(listausuariosdestacados != null){
+                                    for (Usuario u : listausuariosdestacados){
+                                        EnviarCorreoEstado.main(u.getCorreo(),jijija,2,"Reabierto");
+                                    }
+                                }
+                            } catch (MessagingException e) {
+                                e.printStackTrace();
+                            }
+                            idao.reabrir(idIncidencia5);
+                            response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
                         }
-                        idao.reabrir(idIncidencia5);
-                        response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
+                    }else{
+                        request.setAttribute("validoComentario",validoComentario);
+                        ArrayList<FotosIncidencias> fotos = inDao.obtenerFotos(jijija.getIdIncidencia());
+                        request.setAttribute("Incidencia",jijija);
+                        request.setAttribute("Fotos",fotos);
+                        view = request.getRequestDispatcher("/Usuario/DetalleReabierto.jsp");
+                        view.forward(request, response);
                     }
                 }else{
                     response.sendRedirect(request.getContextPath()+ "/UsuarioServlet");
@@ -440,7 +453,6 @@ public class UsuarioServlet extends HttpServlet {
                         e.printStackTrace();
                     }*/
                     response.sendRedirect(request.getContextPath()+"/UsuarioServlet");
-                    break;
                 }else{
 
                     request.setAttribute("nombreValido",nombreValido);
@@ -456,9 +468,8 @@ public class UsuarioServlet extends HttpServlet {
                     request.setAttribute("zonas", zonaDao.obtenerlistaZonas());
                     view = request.getRequestDispatcher("/Usuario/RegistrarIncidencia.jsp");
                     view.forward(request, response);
-                    break;
                 }
-
+                break;
 
             case "actualizarFoto":
                 Part filePart = request.getPart("fotoPerfil"); // Retrieves <input type="file" name="file">

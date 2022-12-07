@@ -34,6 +34,24 @@
     <style>
       #map { height: 300px; }
     </style>
+    <style>
+
+      .img-container {
+        max-width: 642px;
+        max-height: 376px;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .img-container img {
+        max-width: 642px;
+        max-height: 376px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
 
     <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
@@ -182,11 +200,7 @@
                       <div class="carousel-inner">
                         <%int i=0;%>
                         <%for(FotosIncidencias fotito : fotos){%>
-                        <%if(i==0){%>
-                        <div class="carousel-item active">
-                          <%}else {%>
-                          <div class="carousel-item">
-                            <%}%>
+                        <div class="carousel-item img-container <%if(i==0){%> active <%}%>">
                             <img src="<%=request.getContextPath()%>/AdminServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="..." class="d-block w-100">
                           </div>
                           <%i++;%>

@@ -13,6 +13,10 @@
     Incidencia incidencia = (Incidencia) request.getAttribute("Incidencia");
     ArrayList<EstadoIncidencia> estados = (ArrayList<EstadoIncidencia>) request.getAttribute("estados");
     ArrayList<FotosIncidencias> fotos = (ArrayList<FotosIncidencias>) request.getAttribute("Fotos");
+    String justiValido = (String) request.getAttribute("justiValido");
+    if(justiValido==null){
+        justiValido="";
+    }
 %>
 <html>
 <head>
@@ -22,7 +26,8 @@
     <title>Ver Detalle Incidencia</title>
 
     <!-- GLOBAL MAINLY STYLES-->
-    <link href="css/main.min.css" rel="stylesheet" />
+    <link href="../css/main.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/flex.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
@@ -34,6 +39,24 @@
             crossorigin=""></script>
     <style>
         #map { height: 300px; }
+    </style>
+    <style>
+
+        .img-container {
+            max-width: 642px;
+            max-height: 376px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .img-container img {
+            max-width: 642px;
+            max-height: 376px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 
     <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -184,11 +207,7 @@
                             <div class="carousel-inner">
                                 <%int i=0;%>
                                 <%for(FotosIncidencias fotito : fotos){%>
-                                <%if(i==0){%>
-                                <div class="carousel-item active">
-                                    <%}else {%>
-                                    <div class="carousel-item">
-                                        <%}%>
+                                <div class="carousel-item img-container <%if(i==0){%> active <%}%>">
                                         <img src="<%=request.getContextPath()%>/SeguridadServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="..." class="d-block w-100">
                                     </div>
                                     <%i++;%>
@@ -215,7 +234,6 @@
                 <p style="margin-top: 20px;margin-left: 10px">Estado de la incidencia </p>
                 <div style =  "margin-left: 10px" class="form-check">
                     <select class="form-select" aria-label="Default select example" name="idEstado" >
-
                         <% for (EstadoIncidencia estado : estados) {%>  <!--compara el estado de la incidencia con las opciones del combo box -->
                         <option value="<%=estado.getIdEstado()%>" <%= incidencia.getEstadoIncidencia().getEstado().equalsIgnoreCase(estado.getEstado())?"selected":""%> > <%=estado.getEstado()%></option>
                         <% }%>
@@ -224,10 +242,15 @@
 
                 <br>
                 <div style =  "margin-left: 10px" class="form-floating">
-                    <p>
-                        Justificacion de la incidencia: <br>
-                        <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px" name="justificacion" required></textarea>
-                    </p>
+                    <p style="margin-top: 20px;margin-left: 10px">Justificación de la incidencia </p>
+                       <br>
+                        <label for="floatingTextarea2"></label>
+                        <textarea class="form-control <%=justiValido.length()>0?"is-invalid":""%>" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px" name="justificacion" required></textarea>
+                        <%if(justiValido.length()>0){%>
+                        <div  class="invalid-feedback">
+                            <%=justiValido%>
+                        </div>
+                        <%}%>
                 </div>
 
                 <button type="submit" class="btn btn-primary" >Aceptar</button>
