@@ -283,26 +283,24 @@
                     <div class="row">
                       <div class="col-md">
                         <div class="form-floating">
-                          <select class="form-select" id="floatingSelectGrid1" name="categoriaPUCP">
-                            <% for (CategoriaPUCP categoriaPUCP: listaCategorias){%>
-
-                              <option value="<%=categoriaPUCP.getIdCategoria()%>"<%=usuario!=null?(usuario.getCategoriaPUCP().getIdCategoria()==categoriaPUCP.getIdCategoria()?"selected":""):""%> ><%= categoriaPUCP.getNombreCategoria()%></option>
-
-                            <% } %>
-                          </select>
-                          <label for="floatingSelectGrid1">Categoría</label>
-                        </div>
-                      </div>
-                      <div class="col-md">
-                        <div class="form-floating">
-                          <select class="form-select" id="floatingSelectGrid2" name="rol">
+                          <select class="form-select" id="floatingSelectGrid1" name="rol">
                             <% for (Rol r: roles){%>
 
                             <option value="<%=r.getIdRol()%>"<%=usuario!=null?(usuario.getRol().getIdRol()==r.getIdRol()?"selected":""):""%>><%= r.getNombreRol()%></option>
 
                             <% } %>
+
+
                           </select>
-                          <label for="floatingSelectGrid2">Rol</label>
+                          <label for="floatingSelectGrid1">Rol</label>
+                        </div>
+                      </div>
+                      <div class="col-md">
+                        <div class="form-floating">
+                          <select class="form-select" id="floatingSelectGrid2" name="categoriaPUCP">
+                            
+                          </select>
+                          <label for="floatingSelectGrid2">Categoría</label>
                         </div>
                       </div>
                       <div style="color:#FF0000;"><p text-align="center;" style="margin-top: 10px;" class="font-weight-bold">Todos los campos son obligatorios.</p></div>
@@ -329,7 +327,9 @@
       </div>
       <!-- PAGINA UTIL -->
   </div>
-
+    <!-- SCRIPTS PARA SELECT DINAMICO -->
+    <script src="../scripts/dynamicSelect.js" type="text/javascript"></script>
+    <!-- FINISH SCRIPTS PARA SELECT DINAMICO -->
     <script src="../scripts/jquery.min.js" type="text/javascript"></script>
     <script src="../scripts/popper.min.js" type="text/javascript"></script>
     <script src="../scripts/bootstrap.min.js" type="text/javascript"></script>

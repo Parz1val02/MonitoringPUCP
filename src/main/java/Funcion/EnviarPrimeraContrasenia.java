@@ -10,7 +10,7 @@ import jakarta.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class EnviarPrimeraContrasenia {
-    public static void main(String correoDestino, int primeraContrasenia)throws MessagingException {
+    public static void main(String correoDestino, String primeraContrasenia)throws MessagingException {
         //public static void llamar(String correoDestino) throws AddressException, MessagingException{
         String correo = "pucpmonitoring2022@gmail.com"; //cambiar correo
         String contra = "cxzmeohuebkelqhc";  //cambiar contraseña
@@ -30,10 +30,8 @@ public class EnviarPrimeraContrasenia {
         mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress(correoDestino));  //TO
         mensaje.setSubject("Cambio de Primera Contraseña - MONITORING PUCP"); //
         //String link = "http://localhost:8080/Login?accion=restablecer";
-        String msg = "Su codigo de autenticacion es: " + primeraContrasenia;
+        String msg = "Su contraseña predeterminada es: " + primeraContrasenia + "   http://localhost:8080/Login?accion=firstpassword";
         mensaje.setText(msg);
-        String msg2 = "http://localhost:8080/Login?accion=firstpassword";
-        mensaje.setText(msg2);
 
         //mensaje.setText("Este es un mensaje que se envia desde JAVA");
 

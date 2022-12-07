@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.nio.file.Files;
 
 public class UsuarioDao extends DaoBase{
 
@@ -13,7 +14,7 @@ public class UsuarioDao extends DaoBase{
 
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
         String sql = "SELECT u.codigo, u.nombre, u.apellido, u.correo, u.DNI, u.validaUsuario, u.password, u.celular, r.idRoles, r.nombreRol, catpucp.idCategoriaPUCP, catpucp.nombreCategoria,\n" +
-                "fp.idFotoPerfil, fp.nombreFoto, fp.fotoPerfil, u.primerIngreso\n" +
+                "fp.idFotoPerfil, fp.nombreFoto, fp.fotoPerfil\n" +
                 "FROM Usuarios u inner join Roles r on r.idRoles = u.idRoles left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = u.idCategoriaPUCP \n" +
                 "left join FotoPerfil fp on u.idFotoPerfil = fp.idFotoPerfil where validaUsuario = 1 order by u.codigo;";
         try (Connection conn = this.getConnection();
@@ -47,7 +48,6 @@ public class UsuarioDao extends DaoBase{
                 fotoPerfil.setFotobyte(rs.getBytes(15));
                 usuario.setFotoPerfil(fotoPerfil);
 
-                usuario.setPrimerIngreso(rs.getBoolean(16));
                 listaUsuarios.add(usuario);
             }
 
@@ -59,34 +59,126 @@ public class UsuarioDao extends DaoBase{
 
     }
 
-    //crear usuario y guardar en DB
-    public void crearUsuario(Usuario usuario){
-        String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil, primerIngreso) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?)";
-        int idFoto = 0;
-        try (Connection connection = this.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+    
+    
+    
+    
+    
+    
+    public ArrayList<Usuario> obtenerListaMasterTable() {
 
-            pstmt.setString(1, usuario.getCodigo());
-            pstmt.setString(2, usuario.getNombre());
-            pstmt.setString(3, usuario.getApellido());
-            pstmt.setString(4, usuario.getCorreo());
-            pstmt.setString(5, usuario.getDni());
-            pstmt.setBoolean(6, true);
-            pstmt.setString(7, usuario.getPassword());
-            pstmt.setString(8, usuario.getCelular());
-            /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
-            pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
-            pstmt.setInt(9, usuario.getRol().getIdRol());
-            pstmt.setInt(10, usuario.getCategoriaPUCP().getIdCategoria());
-            idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
-            pstmt.setInt(11, idFoto);
-            pstmt.setBoolean(12, usuario.getPrimerIngreso());
-            pstmt.executeUpdate();
+        ArrayList<Usuario> listaMasterTable = new ArrayList<>();
+        String sql = "SELECT * FROM telesystem_aa.mastertable masterT left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = masterT.idCategoriaPUCP order by codigo;";
+        try (Connection conn = this.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery( sql);){
+
+            while (rs.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setCodigo(rs.getString(1));
+                usuario.setNombre(rs.getString(2));
+                usuario.setApellido(rs.getString(3));
+                usuario.setCorreo(rs.getString(4));
+                usuario.setDni(rs.getString(5));
+                usuario.setCelular(rs.getString(6));
+
+                /*
+                Rol rol = new Rol();
+                rol.setIdRol(rs.getInt(9));
+                rol.setNombreRol(rs.getString(10));
+                usuario.setRol(rol);*/
+
+                CategoriaPUCP categoriaPUCP = new CategoriaPUCP();
+                categoriaPUCP.setIdCategoria(rs.getInt(7));
+                categoriaPUCP.setNombreCategoria(rs.getString(9));
+                usuario.setCategoriaPUCP(categoriaPUCP);
+
+                /*
+                FotoPerfil fotoPerfil = new FotoPerfil();
+                fotoPerfil.setIdFoto(rs.getInt(13));
+                fotoPerfil.setNombreFoto(rs.getString(14));
+                fotoPerfil.setFotobyte(rs.getBytes(15));
+                usuario.setFotoPerfil(fotoPerfil);
+
+                usuario.setPrimerIngreso(rs.getBoolean(16));*/
+                listaMasterTable.add(usuario);
+            }
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+        }
+
+        return listaMasterTable;
+
+    }
+
+
+
+
+
+    //crear usuario y guardar en DB
+    /*verificar con base de datos que se llenen los campos de primerIngreso en master y no solicite primerIngreso en tabla usuarios*/
+    public void crearUsuario(Usuario usuario){
+
+        if (usuario.getRol().getIdRol()==1) {
+            String sql = "INSERT INTO mastertable (codigo, nombre, apellido, correo, DNI, celular, idCategoriaPUCP,primerIngreso) VALUES (?,?,?,?,?,?,?,?)";
+            //int idFoto = 0;
+            try (Connection connection = this.getConnection();
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setString(1, usuario.getCodigo());
+                pstmt.setString(2, usuario.getNombre());
+                pstmt.setString(3, usuario.getApellido());
+                pstmt.setString(4, usuario.getCorreo());
+                pstmt.setString(5, usuario.getDni());
+                //pstmt.setBoolean(6, true);
+                //pstmt.setString(6, usuario.getPassword());
+                pstmt.setString(6, usuario.getCelular());
+                /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
+                pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
+                //pstmt.setInt(9, usuario.getRol().getIdRol());
+                pstmt.setInt(7, usuario.getCategoriaPUCP().getIdCategoria());
+                /*idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
+                pstmt.setInt(11, idFoto);*/
+                //pstmt.setBoolean(12, 1);
+                 pstmt.setBoolean(8, true);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+
+        } else if (usuario.getRol().getIdRol()==2) {
+            String sql = "INSERT INTO usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?)";
+            int idFoto = 0;
+            try (Connection connection = this.getConnection();
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setString(1, usuario.getCodigo());
+                pstmt.setString(2, usuario.getNombre());
+                pstmt.setString(3, usuario.getApellido());
+                pstmt.setString(4, usuario.getCorreo());
+                pstmt.setString(5, usuario.getDni());
+                pstmt.setBoolean(6, true);
+                pstmt.setString(7, usuario.getPassword());
+                pstmt.setString(8, usuario.getCelular());
+                /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
+                pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
+                //pstmt.setInt(9, usuario.getRol().getIdRol());
+                pstmt.setInt(9, usuario.getRol().getIdRol());
+                pstmt.setNull(10, Types.INTEGER);
+                idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
+                pstmt.setInt(11, idFoto);
+                /*pstmt.setBoolean(12, usuario.getPrimerIngreso());*/
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
+    
+    
+    
+    
     public int guardarFoto(byte[] fotobyte, String nombreFoto) {
         String sql = "INSERT INTO FotoPerfil (fotoPerfil, nombreFoto) values (?,?)";
         int idFoto = 0;
@@ -302,7 +394,7 @@ public class UsuarioDao extends DaoBase{
 
     //FUNCION PARA VALIDAR NOMBRE Y APELLIDOS
     public boolean nombreyApellidoValid(String nombre) {
-        String regex = "^[\\w'\\-,.][^_!¡?÷?¿/\\\\+=@#$%ˆ&*(){}|~<>;:[\\]]]{1,}$";
+        String regex = "^[A-Za-zñÑáéíóúÁÉÍÓÚ][^_\\-!¡?÷¿\\+/=@`#$%'ˆ^&*()\\\\\\[\\]{}|~,<>;:]{1,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(nombre);
         return matcher.find();
@@ -321,10 +413,13 @@ public class UsuarioDao extends DaoBase{
         return matcher.find();
     }
     public boolean emailisValid(String email) {
-        String regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "pucp.edu.pe";
+        String regex = "^[A-Za-z0-9]+([._A-Za-z0-9]+)*@" + "pucp.edu.pe";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
-        return matcher.find();
+        String regex1 = "^[A-Za-z0-9]+([._A-Za-z0-9]+)*@" + "pucp.pe";
+        Pattern pattern1 = Pattern.compile(regex1);
+        Matcher matcher1 = pattern1.matcher(email);
+        return (matcher.find() || matcher1.find());
     }
     
     public boolean contrasenaisValid(String contrasenia) {
@@ -536,19 +631,22 @@ public class UsuarioDao extends DaoBase{
 
         boolean coincideContrasenia= false;
         String contraseniaBaseDatos = null;
+        Usuario usuarioTemp = null;
 
-        if (usuario.getRol().getNombreRol().equals("Seguridad")||usuario.getRol().getNombreRol().equals("Usuario")) {
+        if (usuario.getRol().getNombreRol().equals("Seguridad")||usuario.getRol().getNombreRol().equals("Usuario PUCP")) {
 
-            String sql = "SELECT password FROM telesystem_aa.usuarios where codigo=?;";
+            String sql = "SELECT * FROM telesystem_aa.Usuarios where codigo=? and password=SHA2(?,256);";
 
             try(Connection connection = this.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)){
 
                 pstmt.setString(1, usuario.getCodigo());
+                pstmt.setString(2,primeraContraseniaIngresada);
 
                 try(ResultSet rs = pstmt.executeQuery();){
                     if (rs.next()) {
-                        contraseniaBaseDatos = rs.getString(1);
+                        usuarioTemp = new Usuario();
+                        usuarioTemp.setCodigo(rs.getString(1));
                     }
                 }
             } catch (SQLException e) {
@@ -556,7 +654,7 @@ public class UsuarioDao extends DaoBase{
             }
 
 
-            if (primeraContraseniaIngresada.equalsIgnoreCase(contraseniaBaseDatos)) {
+            if (usuarioTemp.getCodigo()!= null) {
                 coincideContrasenia = true;
             }
 
@@ -567,9 +665,9 @@ public class UsuarioDao extends DaoBase{
 
         boolean primerIngreso = false;
 
-        if (usuario.getRol().getNombreRol().equals("Seguridad") || usuario.getRol().getNombreRol().equals("Usuario")) {
+        if (usuario.getRol().getNombreRol().equals("Usuario PUCP")) {
 
-            String sql = "SELECT primerIngreso FROM Usuarios where codigo=?;";
+            String sql = "SELECT primerIngreso FROM telesystem_aa.Mastertable where codigo=?;";
 
             try(Connection connection = this.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)){
@@ -588,10 +686,86 @@ public class UsuarioDao extends DaoBase{
         }
         return primerIngreso;
     }
+    public Usuario buscarPorIdMasterTable(String codigoUsuario) {
+
+        Usuario usuario = null;
+
+        String sql = "SELECT * FROM telesystem_aa.Mastertable masterT left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = masterT.idCategoriaPUCP where codigo=?;";
+
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1, codigoUsuario);
+            try(ResultSet rs = pstmt.executeQuery()){
+                if (rs.next()) {
+                    usuario = new Usuario();
+                    usuario.setCodigo(rs.getString(1));
+                    usuario.setNombre(rs.getString(2));
+                    usuario.setApellido(rs.getString(3));
+                    usuario.setCorreo(rs.getString(4));
+                    usuario.setDni(rs.getString(5));
+                    usuario.setCelular(rs.getString(6));
+
+                    Rol rol = new Rol();
+                    rol.setIdRol(1);
+                    rol.setNombreRol("Usuario PUCP");
+
+                    usuario.setRol(rol);
+                    CategoriaPUCP categoriaPUCP = new CategoriaPUCP();
+                    categoriaPUCP.setIdCategoria(rs.getInt(7));
+                    categoriaPUCP.setNombreCategoria(rs.getString(9));
+                    usuario.setCategoriaPUCP(categoriaPUCP);
+                    usuario.setPrimerIngreso(rs.getBoolean("primerIngreso"));
+
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return usuario;
+    }
+    public void registroDesdeMastertable(Usuario usuario, String contraseniaPredeterminada){
+        String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil,primerIngreso) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?,?)";
+        int idFoto = 0;
 
 
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, usuario.getCodigo());
+            pstmt.setString(2, usuario.getNombre());
+            pstmt.setString(3, usuario.getApellido());
+            pstmt.setString(4, usuario.getCorreo());
+            pstmt.setString(5, usuario.getDni());
+            pstmt.setBoolean(6, true);
+            pstmt.setString(7, contraseniaPredeterminada);
+            pstmt.setString(8, usuario.getCelular());
+                /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
+                pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
+            //pstmt.setInt(9, usuario.getRol().getIdRol());
+            pstmt.setInt(9, 1);
+            pstmt.setInt(10, usuario.getCategoriaPUCP().getIdCategoria());
+            idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
+            pstmt.setInt(11, idFoto);
+            pstmt.setBoolean(12, true);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void cambiarPrimerIngreso(Usuario usuario){
 
-     public boolean contraValida (String pass,String correo){
+        String sql = "update telesystem_aa.Mastertable SET primerIngreso = ? where codigo = ? ";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setBoolean(1, false);
+            pstmt.setString(2, usuario.getCodigo());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public boolean contraValida (String pass,String correo){
          String sql = "Select * from usuarios where password=sha2(?,256) and correo = ?";
          boolean valido = false;
          try(Connection connection = this.getConnection();
@@ -611,5 +785,7 @@ public class UsuarioDao extends DaoBase{
             return valido;
 
      }
+
+
 
 }

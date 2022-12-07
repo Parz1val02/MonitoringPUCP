@@ -59,7 +59,7 @@
                     </div>
                     <div style="height: 40px; display: block;"></div>
                 </div>
-                <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=cambiarContrasena">
+                <form method="post" action="<%=request.getContextPath()%>/Login?accion=compararPrimeraContrasenia">
                     <div class="col-md-5" style="margin: auto; font-size: 18px">
                         <p style="font-weight: 700; color: #042354"> Contraseña Enviada</p>
                         <label for="contraseñaActual"></label>
@@ -80,9 +80,9 @@
                         <div style="height: 45px; display: block;"></div>
 
                         <label style="justify-content: center; display: flex">
-                            <a href="<%=request.getContextPath()%>/UsuarioServlet" type="submit"
+                            <button type="submit"
                                class="btn btn-primary btn-mg float-right" style="font-size: 15px;
-                            border-color: #042354; background-color: #042354;">Aceptar</a>
+                            border-color: #042354; background-color: #042354;">Aceptar</button>
                             <!--a href="<%//request.getContextPath()%>/UsuarioServlet" style="font-size: 15px"> Volver a la Sesión Principal</a-->
                         </label>
 

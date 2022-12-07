@@ -26,6 +26,7 @@ public class Usuario {
     }
 
     private boolean primerIngreso;
+
     public Usuario() {
     }
 
@@ -131,4 +132,6 @@ public class Usuario {
     public void setFotoPerfil(FotoPerfil fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
     }
+
+
 }
