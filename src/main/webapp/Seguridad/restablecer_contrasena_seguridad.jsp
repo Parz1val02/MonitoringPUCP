@@ -120,16 +120,16 @@
                 <form method="post" class="form" role="form" autocomplete="off" action="<%=request.getContextPath()%>/SeguridadServlet?accion=cambiarContrasena">
                   <div class="form-group">
                     <label for="inputPasswordOld" style="font-weight: bold; font-size: 17px">Contraseña actual</label>
-                    <input type="password" class="form-control" id="inputPasswordOld" required="" style="margin-top: 7px" name="contraseñaActual" required>
+                    <input type="password" class="form-control" id="inputPasswordOld"  style="margin-top: 7px" name="contraseñaActual" required>
                   </div>
                   <div class="form-group">
                     <label for="inputPasswordNew" style="font-weight: bold; padding-top: 18px; font-size: 17px" >Nueva contraseña</label>
-                    <input type="password" class="form-control" id="inputPasswordNew" required="" style="margin-top: 7px" name="contraseñaNueva" required>
+                    <input type="password" class="form-control" id="inputPasswordNew"  style="margin-top: 7px" name="contraseñaNueva" required>
 
                   </div>
                   <div class="form-group">
                     <label for="inputPasswordNewVerify" style="font-weight: bold; padding-top: 18px; font-size: 17px">Confirmar nueva contraseña</label>
-                    <input type="password" class="form-control" id="inputPasswordNewVerify" required="" style="margin-top: 7px" name="repass" required>
+                    <input type="password" class="form-control" id="inputPasswordNewVerify" style="margin-top: 7px" name="repass" required>
 
                   </div>
 
