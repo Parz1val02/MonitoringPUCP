@@ -41,12 +41,12 @@ insert into ZonaPUCP(nombreZona,latitud,longitud) values("Entrada Principal",-12
 
                                                         
 insert into Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil, codigo2fa, activeTime2fa)
-					values (20201696, "Leonardo", "Abanto", "a20201696@pucp.edu.pe", 12345678, true, sha2("clashroyale123",256),"987654321",1,1,null, null, null),
-                    (19905060,"Jorge","Gonzales", "jorege.g@pucp.edu.pe",87654321, true,sha2("tele1000",256),null,1,4,null, null, null),
-                    (20195922,"Carlos","Pisco", "cpisco@pucp.edu.pe",65358947, true,sha2("carlospisco.com",256),976239385,1,5,null, null, null),
-                    (20171198,"Luis","Ramos", "luis.ramost@pucp.edu.pe",78349206, true,sha2("Starlight",256),928374937,1,3,null, null, null),
-                    (20047106,"Hansel","Martinez","martinez.hj@pucp.edu.pe",49543859,true,sha2("propazzz",256),923847189,1,4,null,null,null),
-                    (20113456,"Goku","kakaroto", "goku.kakaroto@pucp.edu.pe", 56546767, true,sha2("milk4355",256),"976976976", 2,null,null, null, null);
+					values (20201696, "Leonardo", "Abanto", "a20201696@pucp.edu.pe", "12345678", true, sha2("clashroyale123",256),"987654321",1,1,null, null, null),
+                    (19905060,"Jorge","Gonzales", "jorege.g@pucp.edu.pe","87654321", true,sha2("tele1000",256),null,1,4,null, null, null),
+                    (20195922,"Carlos","Pisco", "cpisco@pucp.edu.pe","65358947", true,sha2("carlospisco.com",256),"976239385",1,5,null, null, null),
+                    (20171198,"Luis","Ramos", "luis.ramost@pucp.edu.pe","78349206", true,sha2("donlucho",256),"928374937",1,3,null, null, null),
+                    (20047106,"Hansel","Martinez","martinez.hj@pucp.edu.pe","49543859",true,sha2("propazzz",256),"923847189",1,4,null,null,null),
+                    (20113456,"Goku","kakaroto", "goku.kakaroto@pucp.edu.pe", "56546767", true,sha2("milk4355",256),"976976976", 2,null,null, null, null);
                     
 insert into Incidencias (fecha,nombreIncidencia, validaIncidencia, descripcion,
 						 contadorReabierto, otroTipo, idTipoIncidencia, idNivelUrgencia, idEstadoIncidencia,
@@ -67,3 +67,9 @@ insert into Incidencias (fecha,nombreIncidencia, validaIncidencia, descripcion,
 insert into IncidenciasDestacadas (contadorDestacado,idIncidencia) values (1,12),(1,11),(1,2),(1,7),(1,1);
 
 insert into RegistroAdmin (nombreAdmin, passwordAdmin, nombreRol, correo, codigo2fa, activeTime2fa) values("EternalBlue", sha2("EternalBlue",256), "Administrador", "EternalBlue@pucp.edu.pe", null, null);
+insert into MasterTable (codigo, nombre, apellido, correo, DNI,celular,idCategoriaPUCP,primerIngreso)
+values(20201696, "Leonardo", "Abanto", "a20201696@pucp.edu.pe","12345678","987654321",1,0),
+		(19905060,"Jorge","Gonzales", "jorege.g@pucp.edu.pe","87654321",null,4,0),
+        (20195922,"Carlos","Pisco", "cpisco@pucp.edu.pe","65358947","976239385",5,0),
+        (20171198,"Luis","Ramos", "luis.ramost@pucp.edu.pe","78349206","976239385",3,0),
+        (20047106,"Hansel","Martinez","martinez.hj@pucp.edu.pe","49543859","923847189",4,0);

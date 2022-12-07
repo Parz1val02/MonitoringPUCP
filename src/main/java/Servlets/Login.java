@@ -173,7 +173,7 @@ public class Login extends HttpServlet {
                     session.setAttribute("usuario",user);
                     int flag = 0;
                     session.setAttribute("flag",flag);
-                    session.setMaxInactiveInterval(10*60);//10 minutos de inactividad
+                    session.setMaxInactiveInterval(15*60);//15 minutos de inactividad
                     //ingresa
                     if (user.getRol().getNombreRol().equals("Usuario PUCP")){ //compara mayu y minu
                         flag = 1;
