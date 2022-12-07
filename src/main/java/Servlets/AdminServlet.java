@@ -143,7 +143,7 @@ public class AdminServlet extends HttpServlet {
 
         Usuario usuario1 = (Usuario) session.getAttribute("usuario");
 
-        ArrayList<Usuario> listaUsuarios = usuarioDao.obtenerListaUsuarios();
+        listaUsuarios = usuarioDao.obtenerListaUsuarios();
         ArrayList<Usuario> listaMasterTable = usuarioDao.obtenerListaMasterTable();
         RequestDispatcher view;
 
@@ -534,7 +534,7 @@ public class AdminServlet extends HttpServlet {
                         //usuarioUpdate.setIdCategoriaPUCP(categoriaUpdateInt);
                         //usuarioUpdate.setIdRoles(rolUpdateInt);
 
-                        usuarioDao.actualizarUsuario(nombreUpdate,apellidoUpdate,codigoUpdate,correoUpdate,dniUpdate,celularUpdate,categoriaUpdateInt,rolUpdateInt);
+                        //usuarioDao.actualizarUsuario(nombreUpdate,apellidoUpdate,codigoUpdate,correoUpdate,dniUpdate,celularUpdate,categoriaUpdateInt,rolUpdateInt);
                    // uDao.actualizarUsuario(nombreUpdate,apellidoUpdate,codigoUpdate,correoUpdate,dniUpdate,celularUpdate,categoriaUpdateInt,rolUpdateInt);
 
                         response.sendRedirect(request.getContextPath() + "/AdminServlet");

@@ -68,7 +68,7 @@ public class UsuarioDao extends DaoBase{
     public ArrayList<Usuario> obtenerListaMasterTable() {
 
         ArrayList<Usuario> listaMasterTable = new ArrayList<>();
-        String sql = "SELECT * FROM telesystem_aa.mastertable masterT left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = masterT.idCategoriaPUCP order by codigo;";
+        String sql = "SELECT * FROM telesystem_aa.MasterTable masterT left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = masterT.idCategoriaPUCP order by codigo;";
         try (Connection conn = this.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery( sql);){
@@ -227,7 +227,7 @@ public class UsuarioDao extends DaoBase{
     public void actualizarUsuario(Usuario usuario) {
 
         if (usuario.getRol().getIdRol()==2) {
-            String sql = "UPDATE mastertable set codigo=?, nombre=?, apellido=?, correo=?, DNI=?, celular=?, idCategoriaPUCP=?, primerIngreso=? where ";
+            String sql = "UPDATE MasterTable set codigo=?, nombre=?, apellido=?, correo=?, DNI=?, celular=?, idCategoriaPUCP=?, primerIngreso=? where ";
             int idFoto = 0;
             try (Connection connection = this.getConnection();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -256,7 +256,7 @@ public class UsuarioDao extends DaoBase{
     public void crearUsuario(Usuario usuario){
 
         if (usuario.getRol().getIdRol()==1) {
-            String sql = "INSERT INTO mastertable (codigo, nombre, apellido, correo, DNI, celular, idCategoriaPUCP,primerIngreso) VALUES (?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO MasterTable (codigo, nombre, apellido, correo, DNI, celular, idCategoriaPUCP,primerIngreso) VALUES (?,?,?,?,?,?,?,?)";
             //int idFoto = 0;
             try (Connection connection = this.getConnection();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -283,7 +283,7 @@ public class UsuarioDao extends DaoBase{
 
 
         } else if (usuario.getRol().getIdRol()==2) {
-            String sql = "INSERT INTO usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?)";
+            String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?)";
             int idFoto = 0;
             try (Connection connection = this.getConnection();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -609,7 +609,7 @@ public class UsuarioDao extends DaoBase{
 
          boolean usuario_registrado = false;
 
-         String sql = "SELECT * FROM Mastertable where codigo=? and correo = ?;";
+         String sql = "SELECT * FROM MasterTable where codigo=? and correo = ?;";
 
          try(Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)){
@@ -667,7 +667,7 @@ public class UsuarioDao extends DaoBase{
 
         if (usuario.getRol().getNombreRol().equals("Usuario PUCP")) {
 
-            String sql = "SELECT primerIngreso FROM telesystem_aa.Mastertable where codigo=?;";
+            String sql = "SELECT primerIngreso FROM telesystem_aa.MasterTable where codigo=?;";
 
             try(Connection connection = this.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)){
@@ -690,7 +690,7 @@ public class UsuarioDao extends DaoBase{
 
         Usuario usuario = null;
 
-        String sql = "SELECT * FROM telesystem_aa.Mastertable masterT left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = masterT.idCategoriaPUCP where codigo=?;";
+        String sql = "SELECT * FROM telesystem_aa.MasterTable masterT left join CategoriaPUCP catpucp on catpucp.idCategoriaPUCP = masterT.idCategoriaPUCP where codigo=?;";
 
         try(Connection connection = this.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql)){
@@ -753,7 +753,7 @@ public class UsuarioDao extends DaoBase{
     }
     public void cambiarPrimerIngreso(Usuario usuario){
 
-        String sql = "update telesystem_aa.Mastertable SET primerIngreso = ? where codigo = ? ";
+        String sql = "update telesystem_aa.MasterTable SET primerIngreso = ? where codigo = ? ";
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
@@ -766,7 +766,7 @@ public class UsuarioDao extends DaoBase{
         }
     }
     public boolean contraValida (String pass,String correo){
-         String sql = "Select * from usuarios where password=sha2(?,256) and correo = ?";
+         String sql = "Select * from Usuarios where password=sha2(?,256) and correo = ?";
          boolean valido = false;
          try(Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)){
@@ -787,7 +787,7 @@ public class UsuarioDao extends DaoBase{
      }
 
     public boolean contraValidaAdmin (String pass,String correo){
-        String sql = "Select * from registroadmin where passwordAdmin=sha2(?,256) and correo = ?";
+        String sql = "Select * from RegistroAdmin where passwordAdmin=sha2(?,256) and correo = ?";
         boolean valido = false;
         try(Connection connection = this.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql)){
@@ -807,7 +807,7 @@ public class UsuarioDao extends DaoBase{
 
     }
     public void cambiarContrasenaAdmin(String correo, String contrasenia){
-        String sql = "UPDATE registroadmin set passwordAdmin=sha2(?,256) where correo=?";
+        String sql = "UPDATE RegistroAdmin set passwordAdmin=sha2(?,256) where correo=?";
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)){
 
