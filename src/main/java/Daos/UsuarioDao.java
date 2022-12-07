@@ -118,62 +118,7 @@ public class UsuarioDao extends DaoBase{
 
     //crear usuario y guardar en DB
     /*verificar con base de datos que se llenen los campos de primerIngreso en master y no solicite primerIngreso en tabla usuarios*/
-    public void crearUsuario(Usuario usuario){
 
-        if (usuario.getRol().getIdRol()==1) {
-            String sql = "INSERT INTO mastertable (codigo, nombre, apellido, correo, DNI, celular, idCategoriaPUCP,primerIngreso) VALUES (?,?,?,?,?,?,?,?)";
-            //int idFoto = 0;
-            try (Connection connection = this.getConnection();
-                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
-                pstmt.setString(1, usuario.getCodigo());
-                pstmt.setString(2, usuario.getNombre());
-                pstmt.setString(3, usuario.getApellido());
-                pstmt.setString(4, usuario.getCorreo());
-                pstmt.setString(5, usuario.getDni());
-                //pstmt.setBoolean(6, true);
-                //pstmt.setString(6, usuario.getPassword());
-                pstmt.setString(6, usuario.getCelular());
-                /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
-                pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
-                //pstmt.setInt(9, usuario.getRol().getIdRol());
-                pstmt.setInt(7, usuario.getCategoriaPUCP().getIdCategoria());
-                /*idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
-                pstmt.setInt(11, idFoto);*/
-                //pstmt.setBoolean(12, 1);
-                 pstmt.setBoolean(8, true);
-                pstmt.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
-
-        } else if (usuario.getRol().getIdRol()==2) {
-            String sql = "INSERT INTO usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?)";
-            int idFoto = 0;
-            try (Connection connection = this.getConnection();
-                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
-                pstmt.setString(1, usuario.getCodigo());
-                pstmt.setString(2, usuario.getNombre());
-                pstmt.setString(3, usuario.getApellido());
-                pstmt.setString(4, usuario.getCorreo());
-                pstmt.setString(5, usuario.getDni());
-                pstmt.setBoolean(6, true);
-                pstmt.setString(7, usuario.getPassword());
-                pstmt.setString(8, usuario.getCelular());
-                /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
-                pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
-                //pstmt.setInt(9, usuario.getRol().getIdRol());
-                pstmt.setInt(9, usuario.getRol().getIdRol());
-                pstmt.setNull(10, Types.INTEGER);
-                idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
-                pstmt.setInt(11, idFoto);
-                /*pstmt.setBoolean(12, usuario.getPrimerIngreso());*/
-                pstmt.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
     
     
@@ -279,34 +224,89 @@ public class UsuarioDao extends DaoBase{
     }
 
     //Falta metodo para actuallizar foto de perfil
-    public void actualizarUsuario(String nombreUpdate, String apellidoUpdate, String codigoUpdate, String correoUpdate, String dniUpdate, String celularUpdate, int categoriaUpdateInt, int rolUpdateInt) {
+    public void actualizarUsuario(Usuario usuario) {
 
-        String sql = "UPDATE Usuarios SET nombre = ?, apellido = ?, correo = ?, DNI = ?, celular = ?, idRoles = ?, idCategoriaPUCP = ? WHERE codigo = ?";
+        if (usuario.getRol().getIdRol()==2) {
+            String sql = "UPDATE mastertable set codigo=?, nombre=?, apellido=?, correo=?, DNI=?, celular=?, idCategoriaPUCP=?, primerIngreso=? where ";
+            int idFoto = 0;
+            try (Connection connection = this.getConnection();
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setString(1, usuario.getCodigo());
+                pstmt.setString(2, usuario.getNombre());
+                pstmt.setString(3, usuario.getApellido());
+                pstmt.setString(4, usuario.getCorreo());
+                pstmt.setString(5, usuario.getDni());
+                pstmt.setBoolean(6, true);
+                pstmt.setString(7, usuario.getPassword());
+                pstmt.setString(8, usuario.getCelular());
+                /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
+                pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
+                //pstmt.setInt(9, usuario.getRol().getIdRol());
+                pstmt.setInt(9, usuario.getRol().getIdRol());
+                pstmt.setNull(10, Types.INTEGER);
+                idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
+                pstmt.setInt(11, idFoto);
+                /*pstmt.setBoolean(12, usuario.getPrimerIngreso());*/
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    public void crearUsuario(Usuario usuario){
 
-        try (Connection connection = this.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
-
-
-            pstmt.setString(1, nombreUpdate);
-            pstmt.setString(2, apellidoUpdate);
-            pstmt.setString(3, correoUpdate);
-            pstmt.setString(4, dniUpdate);
-            pstmt.setString(5, celularUpdate);
-
-            if (rolUpdateInt==2) {
-                pstmt.setNull(7, Types.INTEGER);
-            } else {
-                pstmt.setInt(7, categoriaUpdateInt);
+        if (usuario.getRol().getIdRol()==1) {
+            String sql = "INSERT INTO mastertable (codigo, nombre, apellido, correo, DNI, celular, idCategoriaPUCP,primerIngreso) VALUES (?,?,?,?,?,?,?,?)";
+            //int idFoto = 0;
+            try (Connection connection = this.getConnection();
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setString(1, usuario.getCodigo());
+                pstmt.setString(2, usuario.getNombre());
+                pstmt.setString(3, usuario.getApellido());
+                pstmt.setString(4, usuario.getCorreo());
+                pstmt.setString(5, usuario.getDni());
+                //pstmt.setBoolean(6, true);
+                //pstmt.setString(6, usuario.getPassword());
+                pstmt.setString(6, usuario.getCelular());
+                /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
+                pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
+                //pstmt.setInt(9, usuario.getRol().getIdRol());
+                pstmt.setInt(7, usuario.getCategoriaPUCP().getIdCategoria());
+                /*idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
+                pstmt.setInt(11, idFoto);*/
+                //pstmt.setBoolean(12, 1);
+                pstmt.setBoolean(8, true);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
 
 
-            pstmt.setInt(6, rolUpdateInt);
-            pstmt.setString(8, codigoUpdate);
-
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } else if (usuario.getRol().getIdRol()==2) {
+            String sql = "INSERT INTO usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?)";
+            int idFoto = 0;
+            try (Connection connection = this.getConnection();
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setString(1, usuario.getCodigo());
+                pstmt.setString(2, usuario.getNombre());
+                pstmt.setString(3, usuario.getApellido());
+                pstmt.setString(4, usuario.getCorreo());
+                pstmt.setString(5, usuario.getDni());
+                pstmt.setBoolean(6, true);
+                pstmt.setString(7, usuario.getPassword());
+                pstmt.setString(8, usuario.getCelular());
+                /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
+                pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
+                //pstmt.setInt(9, usuario.getRol().getIdRol());
+                pstmt.setInt(9, usuario.getRol().getIdRol());
+                pstmt.setNull(10, Types.INTEGER);
+                idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
+                pstmt.setInt(11, idFoto);
+                /*pstmt.setBoolean(12, usuario.getPrimerIngreso());*/
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -786,6 +786,40 @@ public class UsuarioDao extends DaoBase{
 
      }
 
+    public boolean contraValidaAdmin (String pass,String correo){
+        String sql = "Select * from registroadmin where passwordAdmin=sha2(?,256) and correo = ?";
+        boolean valido = false;
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+
+            pstmt.setString(1,pass);
+            pstmt.setString(2,correo);
+            try(ResultSet rs = pstmt.executeQuery();){
+                if (rs.next()) {
+                    valido = true;
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return valido;
+
+    }
+    public void cambiarContrasenaAdmin(String correo, String contrasenia){
+        String sql = "UPDATE registroadmin set passwordAdmin=sha2(?,256) where correo=?";
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)){
+
+            pstmt.setString(1,contrasenia);
+            pstmt.setString(2,correo);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
 
 }

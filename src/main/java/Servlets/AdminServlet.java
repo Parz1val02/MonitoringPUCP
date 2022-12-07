@@ -124,12 +124,14 @@ public class AdminServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
 
-        UsuarioDao usuarioDao = new UsuarioDao();
+        UsuarioDao uDao = new UsuarioDao();
         RolDao rolDao = new RolDao();
         CategoriaDao categoriaDao = new CategoriaDao();
 
-        ArrayList<Usuario> listaUsuarios = usuarioDao.obtenerListaUsuarios();
-        ArrayList<Usuario> listaMasterTable = usuarioDao.obtenerListaMasterTable();
+        Usuario usuario1 = (Usuario) session.getAttribute("usuario");
+
+        ArrayList<Usuario> listaUsuarios = uDao.obtenerListaUsuarios();
+        ArrayList<Usuario> listaMasterTable = uDao.obtenerListaMasterTable();
         RequestDispatcher view;
 
         switch (action) {
@@ -137,7 +139,10 @@ public class AdminServlet extends HttpServlet {
                 String codigo = request.getParameter("codigo");
                 String correo = request.getParameter("correo");
 
-                /*Boolean usuarioPreRegistrado = usuarioDao.consultarMasterTable(codigo,correo);*/
+
+
+
+                /*Boolean usuarioPreRegistrado = uDao.consultarMasterTable(codigo,correo);*/
                 Rol rol1 = new Rol();
                 rol1.setIdRol(Integer.parseInt(request.getParameter("rol")));
                 RolDao rDao = new RolDao();
@@ -152,7 +157,7 @@ public class AdminServlet extends HttpServlet {
                         String codigovalido = "";
 
 
-                        if(!usuarioDao.dniValid(codigo)){
+                        if(!uDao.dniValid(codigo)){
                             codigovalido = "el codigo ingresado no fue correcto";
 
                         }
@@ -170,7 +175,7 @@ public class AdminServlet extends HttpServlet {
 
                         //valida el nombre ingresado
                         String nombrevalido = "";
-                        if(!usuarioDao.nombreyApellidoValid(nombre)){
+                        if(!uDao.nombreyApellidoValid(nombre)){
                             nombrevalido = "el nombre ingresado no es valido";
 
                         }
@@ -178,7 +183,7 @@ public class AdminServlet extends HttpServlet {
                         String apellido = request.getParameter("apellido");
                         //valida el usuario ingresado
                         String apellidovalido = "";
-                        if(!usuarioDao.nombreyApellidoValid(apellido)){
+                        if(!uDao.nombreyApellidoValid(apellido)){
                             apellidovalido = "el apellido ingresado no es valido";
 
 
@@ -187,7 +192,7 @@ public class AdminServlet extends HttpServlet {
 
                         //valida el correo ingresado
                         String correovalido = "";
-                        if(!usuarioDao.emailisValid(correo)){
+                        if(!uDao.emailisValid(correo)){
                             correovalido = "el correo ingresado no es valido";
 
                         }
@@ -203,7 +208,7 @@ public class AdminServlet extends HttpServlet {
                         String dni = request.getParameter("dni");
                         //valida el dni ingresado
                         String dnivalido = "";
-                        if(!usuarioDao.dniValid(dni)){
+                        if(!uDao.dniValid(dni)){
                             dnivalido = "el dni ingresado no es valido";
 
 
@@ -223,7 +228,7 @@ public class AdminServlet extends HttpServlet {
                         String celular = request.getParameter("celular");
                         //valida el celular ingresado
                         String celularvalido = "";
-                        if(!usuarioDao.celularValid(celular)){
+                        if(!uDao.celularValid(celular)){
                             celularvalido = "el celular ingresado no es valido";
 
 
@@ -282,7 +287,7 @@ public class AdminServlet extends HttpServlet {
                                 celularvalido.length() == 0 && celularRepeat.length() == 0){
 
 
-                            usuarioDao.crearUsuario(usuario);
+                            uDao.crearUsuario(usuario);
 
                             response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
                             break;
@@ -312,7 +317,7 @@ public class AdminServlet extends HttpServlet {
                         String codigovalido = "";
 
 
-                        if(!usuarioDao.dniValid(codigo)){
+                        if(!uDao.dniValid(codigo)){
                             codigovalido = "el codigo ingresado no fue correcto";
 
                         }
@@ -330,7 +335,7 @@ public class AdminServlet extends HttpServlet {
 
                         //valida el nombre ingresado
                         String nombrevalido = "";
-                        if(!usuarioDao.nombreyApellidoValid(nombre)){
+                        if(!uDao.nombreyApellidoValid(nombre)){
                             nombrevalido = "el nombre ingresado no es valido";
 
                         }
@@ -338,7 +343,7 @@ public class AdminServlet extends HttpServlet {
                         String apellido = request.getParameter("apellido");
                         //valida el usuario ingresado
                         String apellidovalido = "";
-                        if(!usuarioDao.nombreyApellidoValid(apellido)){
+                        if(!uDao.nombreyApellidoValid(apellido)){
                             apellidovalido = "el apellido ingresado no es valido";
 
 
@@ -347,7 +352,7 @@ public class AdminServlet extends HttpServlet {
 
                         //valida el correo ingresado
                         String correovalido = "";
-                        if(!usuarioDao.emailisValid(correo)){
+                        if(!uDao.emailisValid(correo)){
                             correovalido = "el correo ingresado no es valido";
 
                         }
@@ -363,7 +368,7 @@ public class AdminServlet extends HttpServlet {
                         String dni = request.getParameter("dni");
                         //valida el dni ingresado
                         String dnivalido = "";
-                        if(!usuarioDao.dniValid(dni)){
+                        if(!uDao.dniValid(dni)){
                             dnivalido = "el dni ingresado no es valido";
 
 
@@ -383,7 +388,7 @@ public class AdminServlet extends HttpServlet {
                         String celular = request.getParameter("celular");
                         //valida el celular ingresado
                         String celularvalido = "";
-                        if(!usuarioDao.celularValid(celular)){
+                        if(!uDao.celularValid(celular)){
                             celularvalido = "el celular ingresado no es valido";
 
 
@@ -431,17 +436,21 @@ public class AdminServlet extends HttpServlet {
 
                         Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
 
+                        String idUsuario = request.getParameter("idUsuario");
+
                         if(codigovalido.length()==0 && codigoRepeat.length()==0 &&
                                 nombrevalido.length()==0 && apellidovalido.length()==0 &&
                                 correovalido.length() == 0 && correoRepeat.length()==0 &&
                                 dnivalido.length() ==0 && dniRepeat.length() ==0 &&
                                 celularvalido.length() == 0 && celularRepeat.length() == 0){
 
+                            if(idUsuario==null) {
+                                uDao.crearUsuario(usuario);
 
-                            usuarioDao.crearUsuario(usuario);
+                                response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
+                                break;
+                            }
 
-                            response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
-                            break;
                         }else{
 
                             request.setAttribute("usuario",usuario);
@@ -513,12 +522,59 @@ public class AdminServlet extends HttpServlet {
                     //usuarioUpdate.setIdCategoriaPUCP(categoriaUpdateInt);
                     //usuarioUpdate.setIdRoles(rolUpdateInt);
 
-                    usuarioDao.actualizarUsuario(nombreUpdate,apellidoUpdate,codigoUpdate,correoUpdate,dniUpdate,celularUpdate,categoriaUpdateInt,rolUpdateInt);
+                   // uDao.actualizarUsuario(nombreUpdate,apellidoUpdate,codigoUpdate,correoUpdate,dniUpdate,celularUpdate,categoriaUpdateInt,rolUpdateInt);
 
                     response.sendRedirect(request.getContextPath() + "/AdminServlet");
                 } catch (NumberFormatException e) {
                     response.sendRedirect(request.getContextPath() + "/AdminServlet?action=editar_usuario&id=" + codigoUpdate);
                 }
+                break;
+
+            case "cambiarContrasena":
+                String correo1 = usuario1.getCorreo();
+                String actual = request.getParameter("contraseñaActual");
+                String nueva = request.getParameter("contraseñaNueva");
+                String repass = request.getParameter("repass");
+
+                //UsuarioDao uDao = new UsuarioDao();
+                System.out.println(actual);
+                System.out.println("usuario1:"+usuario1.getPassword());
+                if(uDao.contraValidaAdmin(actual,correo1)) {
+
+
+                    //primero se valida que la contraseña sea valida
+                    boolean contrasenaCorrecta = uDao.contrasenaisValid(nueva);
+
+                    if (contrasenaCorrecta) {
+
+                        if (!nueva.equalsIgnoreCase(repass)) { //si cuando confirma la nueva contraseña no es igual
+                            request.setAttribute("msgIguales", "Para confirmar, ambas contrasenas deben ser iguales");
+                            view = request.getRequestDispatcher("/Administrador/changepassword.jsp");
+                            view.forward(request, response);
+                            System.out.println("contraseñas nuevas no iguales");
+                            break;
+                        }
+                        if (nueva.equalsIgnoreCase(actual)) {//si la contraseña nueva es igual a la actual----> no se puede
+                            request.setAttribute("msgOld", "Las contrasenas no pueden ser iguales");
+                            view = request.getRequestDispatcher("/Administrador/changepassword.jsp");
+                            view.forward(request, response);
+                            System.out.println("contraseñas igual a la original");
+                            break;
+                        }
+
+                        uDao.cambiarContrasenaAdmin(correo1, nueva);
+                        response.sendRedirect(request.getContextPath()+"/AdminServlet");
+                    } else {
+                        request.setAttribute("easy", "Digite otra contraseña que cumpla los requerimentos");
+                        view = request.getRequestDispatcher("/Administrador/changepassword.jsp");
+                        view.forward(request, response);
+                    }
+                }else{
+                    request.setAttribute("nel", "La contraseña actual del usuario no es correcta");
+                    view = request.getRequestDispatcher("/Administrador/changepassword.jsp");
+                    view.forward(request, response);
+                }
+
                 break;
 
 
