@@ -8,6 +8,16 @@
   To change this template use File | Settings | File Templates.
 --%>
 <jsp:useBean id="usuario" type="Beans.Usuario" scope="session"/>
+<%
+    String extensionValida = (String) request.getAttribute("extensionValida");
+    if(extensionValida==null){
+        extensionValida="";
+    }
+    String fotoValida = (String) request.getAttribute("fotoValida");
+    if(fotoValida==null){
+        fotoValida="";
+    }
+%>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -49,7 +59,17 @@
                                     <p class="campos-registrar-usuario" style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Cambiar foto de perfil:</p>
                                 </div>
                                 <div class="form-floating" style="margin-bottom: 15px; margin-left: 20px">
-                                    <input type="file" name="fotoPerfil" id="file" accept="image/png, image/gif, image/jpeg"/>
+                                    <input type="file" name="fotoPerfil" id="file" accept="image/png, image/gif, image/jpeg" class="<%=fotoValida.length()>0?"is-invalid":""%> <%=extensionValida.length()>0?"is-invalid":""%>"/>
+                                    <%if(fotoValida.length()>0){%>
+                                    <div  class="invalid-feedback">
+                                        <%=fotoValida%>
+                                    </div>
+                                    <%}%>
+                                    <%if(extensionValida.length()>0){%>
+                                    <div  class="invalid-feedback">
+                                        <%=extensionValida%>
+                                    </div>
+                                    <%}%>
                                 </div>
                             </div>
 
@@ -152,7 +172,7 @@
         </div>
         <div style="height: 100px; display: block;"></div>
         <!-- Footer -->
-        <footer
+         <footer
                 class="text-center text-lg-start text-white"
                 style="background-color: #042354">
             <!-- Grid container -->

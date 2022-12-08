@@ -4,6 +4,7 @@ import Beans.*;
 import Daos.EstadoIncidenciaDao;
 import Daos.IncidenciaDao;
 
+import Daos.UsuarioDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -11,6 +12,7 @@ import jakarta.servlet.annotation.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -36,29 +38,45 @@ public class SeguridadServlet extends HttpServlet {
                     view.forward(request, response);
                     break;
                 case ("verDetalle"):
-                    int idIncidencia = Integer.parseInt(request.getParameter("id"));
-                    Incidencia incidencia = idao.obtenerIncidencia(idIncidencia);
-                    //System.out.println(incidencia.getNombreIncidencia());
-                    request.setAttribute("Incidencia", incidencia);
+                    String strId = request.getParameter("id");
+                    if(idao.idValid(strId) && idao.verificarIncidencia(strId)){
+                        int idIncidencia = Integer.parseInt(strId);
+                        Incidencia incidencia = idao.obtenerIncidencia(idIncidencia);
+                        ArrayList<FotosIncidencias> fotos1 = idao.obtenerFotos(idIncidencia);
+                        request.setAttribute("Incidencia", incidencia);
+                        request.setAttribute("Fotos",fotos1);
+                        ArrayList<EstadoIncidencia> estados = eDao.obtenerEstados();
 
-                    ArrayList<EstadoIncidencia> estados = eDao.obtenerEstados();
+                        for (EstadoIncidencia e:estados) {
+                            ArrayList<EstadoIncidencia> estados1 = new ArrayList<>();
+                            if (e.getEstado().equalsIgnoreCase("registrado")){
 
-                    for (EstadoIncidencia e:estados) {
-                        ArrayList<EstadoIncidencia> estados1 = new ArrayList<>();
-                        if (e.getEstado().equalsIgnoreCase("registrado")){
-
-                            estados1.add(estados.get(0));
-                            estados1.add(estados.get(2));
-                            request.setAttribute("estados", estados1);
+                                estados1.add(estados.get(2));
+                                estados1.add(estados.get(3));
+                                request.setAttribute("estados", estados1);
+                            }
                         }
+                        view = request.getRequestDispatcher("/Seguridad/VerDetalle.jsp");
+                        view.forward(request, response);
+                    }else{
+                        response.sendRedirect(request.getContextPath()+ "/SeguridadServlet");
                     }
-                    //request.setAttribute("estados", eDao.obtenerEstados());
-                    view = request.getRequestDispatcher("/Seguridad/VerDetalle.jsp");
-                    view.forward(request, response);
                     break;
-
+                case("verFoto"):
+                    strId = request.getParameter("id");
+                    if(idao.idValid(strId) && idao.verificarFoto(strId)){
+                        int idFotito = Integer.parseInt(strId);
+                        FotosIncidencias fotito = idao.sacarFoto(idFotito);
+                        String[] split1 = fotito.getNombreFoto().split("[.]");
+                        response.setContentType("image/"+split1[1]);
+                        try (OutputStream out = response.getOutputStream()) {
+                            out.write(fotito.getFotobyte());
+                        }
+                    }else{
+                        response.sendRedirect(request.getContextPath()+ "/SeguridadServlet");
+                        break;
+                    }
                 case ("restablece"):
-
                     view = request.getRequestDispatcher("/Seguridad/restablecer_contrasena_seguridad.jsp");
                     view.forward(request, response);
                     break;
@@ -81,7 +99,11 @@ public class SeguridadServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String accion = request.getParameter("accion")==null?"listar":request.getParameter("accion");
         IncidenciaDao idao = new IncidenciaDao();
-        Incidencia incidencia =new Incidencia();
+        Incidencia incidencia = new Incidencia();
+        EstadoIncidenciaDao eDao = new EstadoIncidenciaDao();
+        UsuarioDao uDao = new UsuarioDao();
+        Usuario usuario1 = (Usuario) session.getAttribute("usuario");
+        RequestDispatcher view ;
         //Incidencia incidencia;
 
         /*if(accion.equals("verDetalle")){
@@ -96,64 +118,100 @@ public class SeguridadServlet extends HttpServlet {
         }*/
 
         switch (accion){
-
             case "guardar":  //para cambiar el estado de la incidencia y que se muestre en la tabla
+                String strId = request.getParameter("idIncidencia");
+                if(idao.idValid(strId) && idao.verificarIncidencia(strId)){
+                    int idIncidencia = Integer.parseInt(strId);
 
-                int idIncidencia = Integer.parseInt(request.getParameter("idIncidencia"));
-                String fecha = request.getParameter("fecha");
-                String nombreIncidencia = request.getParameter("nombreIncidencia");
-                String idTipoIncidencia = request.getParameter("idTipoIncidencia");
-                //int idZonaPUCP = Integer.parseInt(request.getParameter("zonaPUCP"));
-                //String nivelUrgencia = request.getParameter("nivel_urgencia");
-                //String descripcion = request.getParameter("Descripcion");
+                    int idEstado = Integer.parseInt(request.getParameter("idEstado"));
+                    String justi = request.getParameter("justificacion");
+                    String justiValido = "";
+                    if(!uDao.nombreyApellidoValid(justi)){
+                        justiValido = "La justificacion ingresada no es valida";
+                    }
+                    //obtener el objeto incidencia de la vista o obtener el id? IDDDDDDDDDDDDDD!!!!!!!!!
+                    incidencia = idao.obtenerIncidencia(idIncidencia);
 
-                int idEstado = Integer.parseInt(request.getParameter("idEstado"));
+                    EstadoIncidencia estado = new EstadoIncidencia();
+                    estado.setIdEstado(idEstado);
+                    incidencia.setEstadoIncidencia(estado);
 
-                String justi = request.getParameter("justificacion");
+                    Comentario comentario = new Comentario();
+                    comentario.setComentario(justi);
+                    comentario.setIncidencia(incidencia);
 
+                    if (justiValido.length()==0){
+                        session.setAttribute("msg","Cambio de estado exitoso");
+                        //para actualizar el estado y el comentario
+                        idao.actualizarIncidencia(incidencia);
+                        idao.crearComentario(comentario);
+                        response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
+                    }
+                    else { //si no pone la justificacion que se quede en la misma pagina con un aviso que el campo no puede estar vacio
+                        incidencia = idao.obtenerIncidencia(idIncidencia);
+                        ArrayList<FotosIncidencias> fotos1 = idao.obtenerFotos(idIncidencia);
+                        request.setAttribute("Incidencia", incidencia);
+                        request.setAttribute("Fotos",fotos1);
+                        ArrayList<EstadoIncidencia> estados = eDao.obtenerEstados();
 
-                //obtener el objeto incidencia de la vista o obtener el id?
+                        for (EstadoIncidencia e:estados) {
+                            ArrayList<EstadoIncidencia> estados1 = new ArrayList<>();
+                            if (e.getEstado().equalsIgnoreCase("registrado")){
 
-
-                incidencia = idao.obtenerIncidencia(idIncidencia);
-                /*incidencia.setNombreIncidencia(nombreIncidencia);
-                incidencia.setFecha(fecha);
-                ZonaPUCP zonaPUCP = new ZonaPUCP();
-                zonaPUCP.setIdZonaPUCP(idZonaPUCP);
-                incidencia.setZonaPUCP(zonaPUCP);
-
-                NivelUrgencia nivel = new NivelUrgencia();
-                nivel.setNivel(nivelUrgencia);
-                incidencia.setNivelUrgencia(nivel);
-                incidencia.setDescripcion(descripcion);*/
-
-
-                EstadoIncidencia estado = new EstadoIncidencia();
-                estado.setIdEstado(idEstado);
-                incidencia.setEstadoIncidencia(estado);
-
-                Comentario comentario = new Comentario();
-                comentario.setComentario(justi);
-                comentario.setIncidencia(incidencia);
-
-                if ( justi !=null){
-                    session.setAttribute("msg","Cambio de estado exitoso");
-                    //para actualizar el estado y el comentario
-                    idao.actualizarIncidencia(incidencia);
-                    idao.crearComentario(comentario);
-                    response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
+                                estados1.add(estados.get(2));
+                                estados1.add(estados.get(3));
+                                request.setAttribute("estados", estados1);
+                            }
+                        }
+                        request.setAttribute("justiValido",justiValido);
+                        view = request.getRequestDispatcher("/Seguridad/VerDetalle.jsp");
+                        view.forward(request, response);
+                    }
+                }else {
+                response.sendRedirect(request.getContextPath()+ "/SeguridadServlet");
                 }
-                else { //si no pone la justificacion que se quede en la misma pagina con un aviso que el campo no puede estar vacio
-                    response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=verDetalle");
+                break;
+            case "cambiarContrasena":
+                String correo1 = usuario1.getCorreo();
+                String actual = request.getParameter("contraseñaActual");
+                String nueva = request.getParameter("contraseñaNueva");
+                String repass = request.getParameter("repass");
+
+                //UsuarioDao uDao = new UsuarioDao();
+                System.out.println(actual);
+                System.out.println("usuario1:"+usuario1.getPassword());
+                if(uDao.contraValida(actual,correo1)) {
+                    //primero se valida que la contraseña sea valida
+                    boolean contrasenaCorrecta = uDao.contrasenaisValid(nueva);
+                    if (contrasenaCorrecta) {
+
+                        if (!nueva.equalsIgnoreCase(repass)) { //si cuando confirma la nueva contraseña no es igual
+                            request.setAttribute("msgIguales", "Para confirmar, ambas contrasenas deben ser iguales");
+                            view = request.getRequestDispatcher("/Seguridad/restablecer_contrasena_seguridad.jsp");
+                            view.forward(request, response);
+                            System.out.println("contraseñas nuevas no iguales");
+                            break;
+                        }
+                        if (nueva.equalsIgnoreCase(actual)) {//si la contraseña nueva es igual a la actual----> no se puede
+                            request.setAttribute("msgOld", "Las contrasenas no pueden ser iguales");
+                            view = request.getRequestDispatcher("/Seguridad/restablecer_contrasena_seguridad.jsp");
+                            view.forward(request, response);
+                            System.out.println("contraseñas igual a la original");
+                            break;
+                        }
+                        uDao.cambiarContrasenaUsuario(correo1, nueva);
+                        response.sendRedirect(request.getContextPath()+"/SeguridadServlet");
+                    } else {
+                        request.setAttribute("easy", "Digite otra contraseña que cumpla los requerimentos");
+                        view = request.getRequestDispatcher("/Seguridad/restablecer_contrasena_seguridad.jsp");
+                        view.forward(request, response);
+                    }
+                }else{
+                    request.setAttribute("nel", "La contraseña actual del usuario no es correcta");
+                    view = request.getRequestDispatcher("/Seguridad/restablecer_contrasena_seguridad.jsp");
+                    view.forward(request, response);
                 }
-
-
-
-
-
-
-
+                break;
         }
-
     }
 }

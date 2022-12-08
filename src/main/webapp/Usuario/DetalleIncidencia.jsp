@@ -25,6 +25,7 @@
     <!-- External CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/flex.css">
     <link rel="stylesheet" href="../css/style.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -40,6 +41,24 @@
     <script src="https://kit.fontawesome.com/cd456dd2e78.js" crossorigin="anonymous"></script>
     <style>
         #map { height: 300px; }
+    </style>
+    <style>
+
+        .img-container {
+            max-width: 642px;
+            max-height: 376px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .img-container img {
+            max-width: 642px;
+            max-height: 376px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -57,15 +76,12 @@
         <div class="row">
             <div class="col-md-6" style="margin: auto">
                 <div id="map"></div>
+                <div style="height: 25px; display: block;"></div>
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <%int i=0;%>
                         <%for(FotosIncidencias fotito : fotos){%>
-                        <%if(i==0){%>
-                        <div class="carousel-item active">
-                            <%}else {%>
-                            <div class="carousel-item">
-                                <%}%>
+                        <div class="carousel-item img-container <%if(i==0){%> active <%}%>">
                             <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="..." class="d-block w-100">
                         </div>
                             <%i++;%>
@@ -126,7 +142,7 @@
                     </div>
                     <div style="height: 30px; display: block;"></div>
                     <div align="right">
-                        <a style="font-size: 15px" href="<%=request.getContextPath()%>/UsuarioServlet"> Volver a la Vista Principal</a>
+                        <a style="font-size: 15px" href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">Regresar a la ventana principal</a>
                     </div>
                 </div>
             </div>
@@ -229,10 +245,10 @@
             iconUrl: '<%=incidencia.getTipoIncidencia().getFotoIcono()%>',
 
             iconSize:     [38, 38], // size of the icon
-            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+            iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
+            popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
         });
-        var map = L.map('map').setView([latitud, longitud], 30);
+        var map = L.map('map',{zoomControl:false}).setView([latitud, longitud], 30);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -243,5 +259,6 @@
             .openPopup();
     }
     document.addEventListener("DOMContentLoaded", set_map);
+</script>
 </script>
 </html>

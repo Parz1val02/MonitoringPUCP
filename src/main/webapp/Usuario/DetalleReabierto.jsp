@@ -11,6 +11,10 @@
 <%
     Incidencia incidencia = (Incidencia) request.getAttribute("Incidencia");
     ArrayList<FotosIncidencias> fotos = (ArrayList<FotosIncidencias>) request.getAttribute("Fotos");
+    String validoComentario = (String) request.getAttribute("validoComentario");
+    if(validoComentario==null){
+        validoComentario="";
+    }
 %>
 <html>
 <head>
@@ -31,15 +35,41 @@
     <style>
         #map { height: 300px; }
     </style>
+    <style>
+
+        .img-container {
+            max-width: 642px;
+            max-height: 376px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .img-container img {
+            max-width: 642px;
+            max-height: 376px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
     <link rel="stylesheet" href="../css/flex.css">
     <link rel="stylesheet" href=../css/style.min.css>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
 </head>
 <body>
+    <!-- HEADER -->
+    <div class="container-fluid" style=" padding: 0px">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #042354; height: 100px;justify-content: flex-end">
+            <img src="../images/logoTelesystem.png" alt="logo" style="border-radius: 10px; border-top-style: solid;border-bottom-width: 0;border-bottom-style: solid;border-right-width: 0;border-right-style: solid;border-left-width: 0;border-left-style: solid;margin-top: 0px;margin-right: 25px;height: 67px;width: 220px;border-top-width: 0px; ">
+        </nav>
+    </div>
+    <!-- HEADER -->
+
+    <!-- CONTENT PRINCIPAL -->
+    <div style="height: 15px; display: block;"></div>
     <div class="container" style="margin-top: 50px">
-
-
         <div class="mb-3">
             <label class="form-label">Nombre Incidencia:</label>
             <input type="text" class="form-control" name="nombreIncidencia" value="<%=incidencia.getNombreIncidencia()%>" aria-label="Disabled input example" disabled>
@@ -74,11 +104,7 @@
                         <div class="carousel-inner">
                             <%int i=0;%>
                             <%for(FotosIncidencias fotito : fotos){%>
-                            <%if(i==0){%>
-                            <div class="carousel-item active">
-                                <%}else {%>
-                                <div class="carousel-item">
-                                    <%}%>
+                            <div class="carousel-item img-container <%if(i==0){%> active <%}%>">
                                     <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="..." class="d-block w-100">
                                 </div>
                                 <%i++;%>
@@ -109,12 +135,16 @@
                         </div>
                         <div class="form-floating" style="margin-left: 10px">
                             <p>N° veces reabierta: <%=incidencia.getContadorReabierto()%>/5</p>
-                            <p>
-                                ¿Por qué desea reabrir esta incidencia?: <br>
+                            <p>¿Por qué desea reabrir esta incidencia?:</p>
                                 <label for="floatingTextarea2"></label>
-                                <textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" name ="reopen" style="height: 100px"></textarea>
-                            </p>
+                                <textarea class="form-control <%=validoComentario.length()>0?"is-invalid":""%>" placeholder="Deja un comentario aquí" id="floatingTextarea2" name ="reopen" style="height: 100px"></textarea
+                                <%if(validoComentario.length()>0){%>
+                                <div  class="invalid-feedback">
+                                    <%=validoComentario%>
+                                </div>
+                            <%}%>
                         </div>
+                        <br>
                         <%if(session.getAttribute("info")!=null){%>
                         <div class="form-group">
                             <button class="btn btn-danger"><%=session.getAttribute("info")%></button>
@@ -129,6 +159,91 @@
                     </form>
                 </div>
             </div>
+        <div style="height: 15px; display: block;"></div>
+        <!-- FOOTER -->
+        <footer
+                class="text-center text-lg-start text-white"
+                style="background-color: #042354">
+            <!-- Grid container -->
+            <div class="container p-4 pb-0">
+                <!-- Section: Links -->
+                <section class="">
+                    <!--Grid row-->
+                    <div class="row">
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                            <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">
+                                UBICACIÓN
+                            </h6>
+                            <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px; color: #a9b9d4">
+                                Campus principal
+                                <div style="height: 1px; display: block;"></div>
+                                Av. Universitaria 1801, San Miguel, 15088
+                                <div style="height: 1px; display: block;"></div>
+                                Lima, Perú
+                            </div>
+
+                        </div>
+                        <!-- Grid column -->
+
+                        <hr class="w-100 clearfix d-md-none" />
+
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                            <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">CONTACTO</h6>
+                            <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px; color: #a9b9d4">
+                                Central telefónica 626-2000
+                                <div style="height: 1px; display: block;"></div>
+                                Desde provincias 0800-1-7827 (servicio gratuito)
+                            </div>
+
+
+                        </div>
+                        <!-- Grid column -->
+
+                        <hr class="w-100 clearfix d-md-none" />
+
+                        <!-- Grid column -->
+                        <hr class="w-100 clearfix d-md-none" />
+
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                            <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">MAYOR INFORMACIÓN</h6>
+                            <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px; color: #a9b9d4">
+                                Si necesitas ayuda escribe a:
+                                <div style="height: 1px; display: block;"></div>
+                                <u>asistencia-dti@pucp.edu.pe</u>
+                            </div>
+                        </div>
+                        <!-- Grid column -->
+                    </div>
+                    <!--Grid row-->
+                </section>
+                <!-- Section: Links -->
+
+                <hr class="my-3">
+
+                <!-- Section: Copyright -->
+                <section class="p-3 pt-0" style="background: #042354">
+                    <div class="row d-flex align-items-center">
+                        <!-- Grid column -->
+                        <div class="col-md-7 col-lg-8 text-center text-md-start">
+                            <!-- Copyright -->
+                            <div style="height: 5px; display: block;"></div>
+                            <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px">
+                                © Pontificia Universidad Católica del Perú - Todos los derechos reservados
+                            </div>
+                            <div style="height: 10px; display: block;"></div>
+                            <!-- Copyright -->
+                        </div>
+                        <!-- Grid column -->
+
+                    </div>
+                </section>
+                <!-- Section: Copyright -->
+            </div>
+            <!-- Grid container -->
+        </footer>
     </div>
 </body>
 <script type="text/javascript">
@@ -140,10 +255,10 @@
             iconUrl: '<%=incidencia.getTipoIncidencia().getFotoIcono()%>',
 
             iconSize:     [38, 38], // size of the icon
-            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+            iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
+            popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
         });
-        var map = L.map('map').setView([latitud, longitud], 30);
+        var map = L.map('map',{zoomControl:false}).setView([latitud, longitud], 30);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

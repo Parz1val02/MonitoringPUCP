@@ -64,7 +64,9 @@ public class FormatosServlet extends HttpServlet {
 
                 }
                 break;
-
+            default:
+                response.sendRedirect(request.getContextPath()+ "/SeguridadServlet");
+                break;
         }
     }
 

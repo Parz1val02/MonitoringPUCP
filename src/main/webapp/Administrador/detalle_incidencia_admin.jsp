@@ -1,4 +1,6 @@
-<%@ page import="Beans.Incidencia" %><%--
+<%@ page import="Beans.Incidencia" %>
+<%@ page import="Beans.FotosIncidencias" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: Lenovo
   Date: 21/10/2022
@@ -8,6 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   Incidencia incidencia = (Incidencia) request.getAttribute("Incidencia");
+  ArrayList<FotosIncidencias> fotos = (ArrayList<FotosIncidencias>) request.getAttribute("Fotos");
 %>
 <html lang="en">
 
@@ -30,6 +33,24 @@
             crossorigin=""></script>
     <style>
       #map { height: 300px; }
+    </style>
+    <style>
+
+      .img-container {
+        max-width: 642px;
+        max-height: 376px;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .img-container img {
+        max-width: 642px;
+        max-height: 376px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     </style>
 
     <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -172,17 +193,38 @@
               <div id="map"></div>
               <div style="height: 25px; display: block;"></div>
 
-              <div style =  "margin-left: 10px">
-                <p> Foto:
-                  <a href="#" class="link-primary">Click para ver foto</a>
-                </p>
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6" style="margin: auto">
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <%int i=0;%>
+                        <%for(FotosIncidencias fotito : fotos){%>
+                        <div class="carousel-item img-container <%if(i==0){%> active <%}%>">
+                            <img src="<%=request.getContextPath()%>/AdminServlet?accion=verFoto&id=<%=fotito.getIdFotos()%>" alt="..." class="d-block w-100">
+                          </div>
+                          <%i++;%>
+                          <%}%>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <!-- formato-->
 
 
 
-              <div style =  "margin-left: 10px" class="dropdown">
+              <!--div style =  "margin-left: 10px" class="dropdown">
                 <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Descargar como
                 </a>
@@ -192,7 +234,7 @@
                   <li><a class="dropdown-item" href="#">XML</a></li>
                   <li><a class="dropdown-item" href="#">TXT</a></li>
                 </ul>
-              </div>
+              </div-->
               <br>
 
               <div class="modal-footer">
@@ -215,7 +257,7 @@
                       Se borrará la incidencia
                     </div>
                     <div class="modal-footer">
-                      <a href="<%=request.getContextPath()%>/AdminServlet?accion=incidencias">
+                      <a href="<%=request.getContextPath()%>/AdminServlet?accion=borrarIncidencia&id=<%=incidencia.getIdIncidencia()%>">
                         <button type="button" class="btn btn-primary" >Aceptar</button>
                       </a>
 
@@ -254,10 +296,10 @@
         iconUrl: '<%=incidencia.getTipoIncidencia().getFotoIcono()%>',
 
         iconSize:     [38, 38], // size of the icon
-        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
+        popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
       });
-      var map = L.map('map').setView([latitud, longitud], 30);
+      var map = L.map('map',{zoomControl:false}).setView([latitud, longitud], 30);
 
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

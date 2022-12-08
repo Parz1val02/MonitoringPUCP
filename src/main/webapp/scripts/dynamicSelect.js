@@ -3,12 +3,13 @@ var roles = {
     2:['No tiene categoria']
 }
 
+
 var main = document.getElementById('floatingSelectGrid1');
 var sub = document.getElementById('floatingSelectGrid2');
 
 
-main.addEventListener('change',function() {
-    var selected_option = roles[this.value];
+function selectDinamico(idRol) {
+    var selected_option = roles[idRol];
     while(sub.options.length > 0) {
         sub.options.remove(0);
     }
@@ -16,5 +17,13 @@ main.addEventListener('change',function() {
         let option = new Option(e1,e1);
         sub.appendChild(option);
     });
+}
 
+document.addEventListener("DOMContentLoaded", function(event) {
+    selectDinamico(main.value);
 });
+
+main.addEventListener('change',function() {
+    selectDinamico(this.value);
+});
+

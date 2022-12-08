@@ -34,6 +34,9 @@
                 <span class="brand-mini">AD</span>
               </a>
             </div>
+
+
+
             <div class="flexbox flex-1">
               <!-- START TOP-LEFT TOOLBAR-->
               <ul class="nav navbar-toolbar">
@@ -70,7 +73,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="<%=request.getContextPath()%>/AdminServlet?accion=regitrar_usuario">
+                  <a href="<%=request.getContextPath()%>/AdminServlet?accion=registrar_usuario">
                     <div class="div-barra-lateral">
                       <i class="bi bi-person-plus xaea12 iconos-barra-lateral"></i>
                       <span class="nav-label">Registrar Usuario</span>
@@ -114,6 +117,8 @@
             <div class="page-heading" style="  margin-top: 30px; text-align: center">
               <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Editar usuario</b></h1>
             </div>
+
+
             <div class="page-content fade-in-up">
               <div class="col-md-6" style="margin: 0 auto">
                 <div class="ibox" style="align-content: center">
@@ -122,6 +127,7 @@
                   </div>
                   <div class="ibox-body">
                     <form method="post" action="<%=request.getContextPath()%>/AdminServlet?action=actualizar">
+                      <input type="text" class="form-control" name="idUsuario" value="<%=usuario%>" hidden>
                       <div class="row g-2">
                         <div class="col-md">
                           <div class="form-floating" style="margin-bottom: 5px;">

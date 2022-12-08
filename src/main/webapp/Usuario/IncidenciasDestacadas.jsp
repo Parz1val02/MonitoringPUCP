@@ -71,6 +71,7 @@
                     <!--<th>N° reabierta</th>-->
                     <th>N° destacados</th>
                     <!--<th>¿Reabrir incidencia?</th>-->
+                    <th>Detalles</th>
                     <th></th>
 
                   </tr>
@@ -86,6 +87,9 @@
                     <td><%= incidencia.getEstadoIncidencia().getEstado()%> </td
                     <td></td>
                     <td><%= incidencia.getIncidenciasDestacadas().getContadorDestacado()%> </td>
+                    <td>
+                      <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle2&id=<%=incidencia.getIdIncidencia()%>">Ver detalle</a>
+                    </td>
                     <td>
                       <a type="button" class="btn btn-primary btn-mg float-right"
                          style="font-size: 15px; border-color: #042354; background-color: #042354;"

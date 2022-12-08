@@ -47,6 +47,13 @@
             width: 80% !important;
             height: 80% !important;
         }
+        .cont {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 40px;
+            height: 10px;
+        }
 
     </style>
 
@@ -137,8 +144,9 @@
                 <%session.removeAttribute("msg");%>
                 <% }%>
 
-                <div class="col-2">
-                    <div style =  "margin-left: 10px" class="dropdown">
+                <div class="col-2" >
+
+                    <div style =  "margin-left: 10px" class="cont">
                         <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Descargar como
                         </a>
@@ -148,8 +156,12 @@
                             <li><a class="dropdown-item" href="<%=request.getContextPath()%>/FormatosServlet?formato=excel" download="reporteincidencias.xlsx">EXCEL</a></li>
                             <li><a class="dropdown-item" href="<%=request.getContextPath()%>/FormatosServlet?formato=txt" download="reporte.txt">TEXTO</a></li>
                         </ul>
+
                     </div>
+
                 </div>
+
+
             </div>
         </div>
 
@@ -174,7 +186,7 @@
                             <td><%= incidencia.getNombreIncidencia()%> </td>
                             <td><%= incidencia.getNivelUrgencia().getNivel()%></td>
                             <td><%= incidencia.getDescripcion()%> </td>
-                            <td><a href="<%=request.getContextPath()%>/SeguridadServlet?accion=verDetalle&id=<%=incidencia.getIdIncidencia()%>">ver detalle</a></td>
+                            <td><a href="<%=request.getContextPath()%>/SeguridadServlet?accion=verDetalle&id=<%=incidencia.getIdIncidencia()%>">Ver Detalle</a></td>
 
                         </tr>
                         <% }%>

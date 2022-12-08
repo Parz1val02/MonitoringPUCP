@@ -1,7 +1,12 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
+<%
+  String repitenNew = (String) request.getAttribute("msgIguales");
+  String igualOld = (String) request.getAttribute("msgOld");
+  String easy = (String) request.getAttribute("easy");
+  String nel = (String) request.getAttribute("nel");
+%>
 <html lang="en">
 
   <head>
@@ -91,40 +96,59 @@
     <div class="page-content fade-in-up">
       <div class="ibox">
         <div class="ibox-head">
-          <div class="ibox-title"> Mínimo 8 y máximo 16 caracteres</div>
+          <div class="ibox-title"> La política de contraseñas es:</div>
         </div>
         <div class="ibox-body">
-          <p style="font-size: 15px" >Puede utilizar letras, números y determinados caracteres especiales o una combinación de ellos. <br><br>
+          <p style="font-size: 15px" >
 
-            Para ingresar su contraseña nueva, considere las siguientes restricciones:<br><br>
-            • Que la contraseña contenga al menos un número. <br>
-            • Que la contraseña contenga al menos un caracter especial.<br>
-            • Que la contraseña contenga al menos una mayúscula. <br></p>
+            Al menos 8 caracteres<br>
+
+            Contiene al menos un dígito <br>
+
+            Contiene al menos un alfa char inferior y un alfa char superior <br>
+
+            Contiene al menos un carácter dentro de un conjunto de caracteres especiales (@#%$^ etc.) <br>
+
+            No contiene espacio, tab, etc. <br></p>
+
           <div class="col-md-6 offset-md-3" style="padding-top: 35px">
             <span class="anchor" id="formChangePassword"></span>
             <!-- form card change password -->
             <div >
 
               <div class="card-body">
-                <form class="form" role="form" autocomplete="off">
+                <form method="post" class="form" role="form" autocomplete="off" action="<%=request.getContextPath()%>/SeguridadServlet?accion=cambiarContrasena">
                   <div class="form-group">
                     <label for="inputPasswordOld" style="font-weight: bold; font-size: 17px">Contraseña actual</label>
-                    <input type="password" class="form-control" id="inputPasswordOld" required="" style="margin-top: 7px">
+                    <input type="password" class="form-control" id="inputPasswordOld"  style="margin-top: 7px" name="contraseñaActual" required>
                   </div>
                   <div class="form-group">
                     <label for="inputPasswordNew" style="font-weight: bold; padding-top: 18px; font-size: 17px" >Nueva contraseña</label>
-                    <input type="password" class="form-control" id="inputPasswordNew" required="" style="margin-top: 7px">
-                    <span class="form-text small text-muted">
-                                            La contraseña debe tener 8-16 caracteres, y <em>no</em> contener espacios.
-                                        </span>
+                    <input type="password" class="form-control" id="inputPasswordNew"  style="margin-top: 7px" name="contraseñaNueva" required>
+
                   </div>
                   <div class="form-group">
                     <label for="inputPasswordNewVerify" style="font-weight: bold; padding-top: 18px; font-size: 17px">Confirmar nueva contraseña</label>
-                    <input type="password" class="form-control" id="inputPasswordNewVerify" required="" style="margin-top: 7px">
-                    <span class="form-text small text-muted">
-                                            Para confirmar, escriba su nueva contraseña nuevamente.
-                                        </span>
+                    <input type="password" class="form-control" id="inputPasswordNewVerify" style="margin-top: 7px" name="repass" required>
+
                   </div>
+
+                  <div>
+                    <%if(repitenNew!=null){%>
+                    <p style="color: red"><%=repitenNew%></p>
+                    <%}%>
+                    <%if(igualOld!=null){%>
+                    <p style="color: red"><%=igualOld%></p>
+                    <%}%>
+                    <%if(easy!=null){%>
+                    <p style="color: red"><%=easy%></p>
+                    <%}%>
+                    <%if(nel!=null){%>
+                    <p style="color: red"><%=nel%></p>
+                    <%}%>
+                  </div>
+
+
                   <div class="form-group" style="margin-top: 20px">
                     <button type="submit" class="btn btn-primary btn-lg float-right" style="font-size: 18px; border-color: #042354; background-color: #042354; ">Aceptar y Continuar</button>
                   </div>
