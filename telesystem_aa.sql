@@ -73,3 +73,9 @@ values(20201696, "Leonardo", "Abanto", "a20201696@pucp.edu.pe","12345678","98765
         (20195922,"Carlos","Pisco", "cpisco@pucp.edu.pe","65358947","976239385",5,0),
         (20171198,"Luis","Ramos", "luis.ramost@pucp.edu.pe","78349206","976239385",3,0),
         (20047106,"Hansel","Martinez","martinez.hj@pucp.edu.pe","49543859","923847189",4,0);
+        
+        
+        
+select max(idFotosIncidencias),fotoIncidencia,nombreFoto,idIncidencia from FotosIncidencias where idIncidencia in (12,11,2,7,1) group by idIncidencia;
+
+
