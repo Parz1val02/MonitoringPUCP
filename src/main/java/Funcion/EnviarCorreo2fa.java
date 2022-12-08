@@ -29,7 +29,7 @@ public class EnviarCorreo2fa {
         MimeMessage mensaje = new MimeMessage(s);
         mensaje.setFrom(new InternetAddress(correo)); //FROM
         mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress(correoDestino));  //TO
-        mensaje.setSubject("Cambio de Contraseña - MONITORING PUCP"); //
+        mensaje.setSubject("Envio de codigo doble factor - MONITORING PUCP"); //
         //String link = "http://localhost:8080/Login?accion=restablecer";
         String msg = "Su codigo de autenticacion es: " + codigo2fa;
         mensaje.setText(msg);

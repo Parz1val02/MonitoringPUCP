@@ -137,11 +137,11 @@
                 <div class="col-10" style="">
                     <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Incidencias PUCP</b></h1>
                 </div>
-                <% if (session.getAttribute("msg") != null) { %> <!-- si el cambio del estado es exitoso-->
+                <% if (session.getAttribute("msg") != null) { %>
                 <div>
-                    <div class="alert alert-success" role="alert"><%=session.getAttribute("msg")%></div>
+                    <div class="alert alert-danger" role="alert"><%=session.getAttribute("msg")%></div>
                 </div>
-                <%session.removeAttribute("msg");%> <!-- luego de refrescar la pagina, se elimina el mensaje-->
+                <%session.removeAttribute("msg");%>
                 <% }%>
 
                 <div class="col-2" >
