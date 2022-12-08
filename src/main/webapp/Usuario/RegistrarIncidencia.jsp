@@ -118,7 +118,7 @@
                                         <label for="tipoIncidencia" class="label-form-flujousuario">Tipo de Incidencia</label>
                                     </div>
 
-                                    <!--input type="text" class="form-control" id="Otros" placeholder="tipo" name="Otros" disabled -->
+                                    <input type="text" class="form-control" id="Otros" placeholder="tipo" name="Otros" disabled -->
 
                                 </div>
                             </div>
