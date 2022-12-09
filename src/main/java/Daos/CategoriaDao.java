@@ -4,10 +4,7 @@ import Beans.CategoriaPUCP;
 import Beans.Rol;
 import Beans.Usuario;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class CategoriaDao extends DaoBase {
@@ -32,5 +29,22 @@ public class CategoriaDao extends DaoBase {
         }
 
         return listaCategorias;
+    }
+
+    public boolean verificarCategoria(String id){
+        String sql = "Select idCategoriaPUCP from CategoriaPUCP where idCategoriaPUCP = ?";
+        boolean existe = false;
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1,id);
+            try(ResultSet rs = pstmt.executeQuery();){
+                if(rs.next()){
+                    existe = true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return existe;
     }
 }

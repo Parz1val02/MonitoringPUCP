@@ -3,10 +3,7 @@ package Daos;
 import Beans.CategoriaPUCP;
 import Beans.ZonaPUCP;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class ZonaDao extends DaoBase{
@@ -32,5 +29,22 @@ public class ZonaDao extends DaoBase{
         }
 
         return listaZonas;
+    }
+
+    public boolean verificarZona(String id){
+        String sql = "Select idZonaPUCP from ZonaPUCP where idZonaPUCP = ?";
+        boolean existe = false;
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1,id);
+            try(ResultSet rs = pstmt.executeQuery();){
+                if(rs.next()){
+                    existe = true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return existe;
     }
 }

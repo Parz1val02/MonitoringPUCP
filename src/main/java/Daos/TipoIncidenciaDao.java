@@ -2,10 +2,7 @@ package Daos;
 
 import Beans.TipoIncidencia;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class TipoIncidenciaDao extends DaoBase {
@@ -31,5 +28,22 @@ public class TipoIncidenciaDao extends DaoBase {
         }
 
         return tipos;
+    }
+
+    public boolean verificarTipoIncidencia(String id){
+        String sql = "Select idTipoIncidencia from TipoIncidencia where idTipoIncidencia = ?";
+        boolean existe = false;
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1,id);
+            try(ResultSet rs = pstmt.executeQuery();){
+                if(rs.next()){
+                    existe = true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return existe;
     }
 }

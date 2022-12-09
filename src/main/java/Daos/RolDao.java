@@ -48,4 +48,21 @@ public class RolDao extends DaoBase{
         }
         return rol;
     }
+
+    public boolean verificarRol(String id){
+        String sql = "Select idRoles from Roles where idRoles = ?";
+        boolean existe = false;
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1,id);
+            try(ResultSet rs = pstmt.executeQuery();){
+                if(rs.next()){
+                    existe = true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return existe;
+    }
 }

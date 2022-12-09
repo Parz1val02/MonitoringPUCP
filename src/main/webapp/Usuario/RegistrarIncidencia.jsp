@@ -27,10 +27,6 @@
     if(descripcionValida==null){
         descripcionValida="";
     }
-    String fechaValida = (String) request.getAttribute("fechaValida");
-    if(fechaValida==null){
-        fechaValida="";
-    }
     String fechaValida2 = (String) request.getAttribute("fechaValida2");
     if(fechaValida2==null){
         fechaValida2="";
@@ -46,6 +42,18 @@
     String extensionValida = (String) request.getAttribute("extensionValida");
     if(extensionValida==null){
         extensionValida="";
+    }
+    String zonaValida = (String) request.getAttribute("zonaValida");
+    if(zonaValida==null){
+        zonaValida="";
+    }
+    String tipoValida = (String) request.getAttribute("tipoValida");
+    if(tipoValida==null){
+        tipoValida="";
+    }
+    String nivelValida = (String) request.getAttribute("nivelValida");
+    if(nivelValida==null){
+        nivelValida="";
     }
 
 
@@ -132,12 +140,7 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px">
-                                        <input type="date" name="fecha" id="date" class="sangria-filter <%=fechaValida.length()>0?"is-invalid":""%> <%=fechaValida2.length()>0?"is-invalid":""%>" placeholder="dd-mm-yyyy" max="<%=dateFormat.format(today)%>" style="margin-top: 5px;margin-bottom: 5px">
-                                        <%if(fechaValida.length()>0){%>
-                                        <div  class="invalid-feedback">
-                                            <%=fechaValida%>
-                                        </div>
-                                        <%}%>
+                                        <input type="date" name="fecha" id="date" class="sangria-filter <%=fechaValida2.length()>0?"is-invalid":""%>" placeholder="dd-mm-yyyy" max="<%=dateFormat.format(today)%>" style="margin-top: 5px;margin-bottom: 5px">
                                         <%if(fechaValida2.length()>0){%>
                                         <div  class="invalid-feedback">
                                             <%=fechaValida2%>
@@ -153,13 +156,17 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
-                                        <select class="form-select" id="zonaPUCP" name="zonaPUCP">
+                                        <select class="form-select <%=zonaValida.length()>0?"is-invalid":""%>" id="zonaPUCP" name="zonaPUCP">
                                             <% for (ZonaPUCP zona : zonas) {%>
                                             <option value="<%=zona.getIdZonaPUCP()%>"><%= zona.getNombreZona()%></option>
                                             <% }%>
                                         </select>
-
                                         <label for="zonaPUCP" class="label-form-flujousuario">Zona PUCP</label>
+                                        <%if(zonaValida.length()>0){%>
+                                        <div  class="invalid-feedback">
+                                            <%=zonaValida%>
+                                        </div>
+                                        <%}%>
                                     </div>
                                 </div>
                             </div>
@@ -174,13 +181,17 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating " style="margin-bottom: 15px;">
-                                        <select class="form-select" id="tipoIncidencia" name="tipoIncidencia">
+                                        <select class="form-select <%=tipoValida.length()>0?"is-invalid":""%>" id="tipoIncidencia" name="tipoIncidencia">
                                             <% for (TipoIncidencia tipo : tipos) {%>
                                             <option value="<%=tipo.getIdTipo()%>"><%= tipo.getTipo()%></option>
                                             <% }%>
                                         </select>
-
                                         <label for="tipoIncidencia" class="label-form-flujousuario">Tipo de Incidencia</label>
+                                        <%if(tipoValida.length()>0){%>
+                                        <div  class="invalid-feedback">
+                                            <%=tipoValida%>
+                                        </div>
+                                        <%}%>
                                     </div>
                                     <input type="text" class="form-control <%=otroTipoValida.length()>0?"is-invalid":""%>" id="Otros" placeholder="Otro tipo" name="Otros" disabled >
                                     <%if(otroTipoValida.length()>0){%>
@@ -198,12 +209,17 @@
                                 </div>
                                 <div class="col-md">
                                     <div class="form-floating" style="margin-bottom: 15px;">
-                                        <select class="form-select" id="floatingSelectGrid1" name="nivelIncidencia">
+                                        <select class="form-select <%=nivelValida.length()>0?"is-invalid":""%>" id="floatingSelectGrid1" name="nivelIncidencia">
                                             <% for (NivelUrgencia nivel : niveles) {%>
                                             <option value="<%=nivel.getIdNivelUrgencia()%>"><%= nivel.getNivel()%></option>
                                             <% }%>
                                         </select>
                                         <label for="floatingSelectGrid1" class="label-form-flujousuario">Nivel de Urgencia</label>
+                                        <%if(nivelValida.length()>0){%>
+                                        <div  class="invalid-feedback">
+                                            <%=nivelValida%>
+                                        </div>
+                                        <%}%>
                                     </div>
                                 </div>
                             </div>

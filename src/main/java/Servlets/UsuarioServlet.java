@@ -337,18 +337,43 @@ public class UsuarioServlet extends HttpServlet {
                     descripcionValida = "La descripcion ingresada no es valida";
                 }
 
-                int IDzonaPUCP = Integer.parseInt(request.getParameter("zonaPUCP"));
-                int IDtipoIncidencia = Integer.parseInt(request.getParameter("tipoIncidencia"));
-                int IDnivelUrgencia = Integer.parseInt(request.getParameter("nivelIncidencia"));
+                int IDzonaPUCP = 0;
+                int IDtipoIncidencia = 0;
+                int IDnivelUrgencia = 0;
+
+                String zonaValida="";
+                ZonaDao zdao = new ZonaDao();
+                String idZona =request.getParameter("zonaPUCP");
+                if(!(inDao.idValid(idZona) && zdao.verificarZona(idZona))){
+                    zonaValida="La zona PUCP ingresada no es valida";
+                }else{
+                    IDzonaPUCP=Integer.parseInt(idZona);
+                }
+
+
+                String tipoValida="";
+                TipoIncidenciaDao tdao = new TipoIncidenciaDao();
+                String idTipo = request.getParameter("tipoIncidencia");
+                if(!(inDao.idValid(idTipo) && tdao.verificarTipoIncidencia(idTipo))){
+                    tipoValida = "El tipo de incidencia ingresado no es valido";
+                }else{
+                    IDtipoIncidencia=Integer.parseInt(idTipo);
+                }
+
+                String nivelValida="";
+                NivelUrgenciaDao ndao = new NivelUrgenciaDao();
+                String idNivel = request.getParameter("nivelIncidencia");
+                if(!(inDao.idValid(idNivel) && ndao.verificarNivelUrgencia(idNivel))){
+                    nivelValida="EL nivel de urgencia ingresado no es valido";
+                }else{
+                    IDnivelUrgencia=Integer.parseInt(idNivel);
+                }
+
                 int idEstadoIncidencia = 1;
                 //String estado= request.getParameter("estado");
 
                 String otroTipo = request.getParameter("Otros");
                 String fecha = request.getParameter("fecha");
-                String fechaValida="";
-                if (fecha.isEmpty()){
-                    fechaValida="La fecha es obligatoria";
-                }
 
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -360,10 +385,12 @@ public class UsuarioServlet extends HttpServlet {
                     fechaValida2 = "Ingresar un formato de fecha valido";
                 }
 
+
                 incidencia.setNombreIncidencia(nombreIncidencia);
                 incidencia.setFecha(fecha);
                 incidencia.setValidaIncidencia(true);
                 incidencia.setContadorReabierto(0);
+
                 TipoIncidencia tipoIncidencia1 = new TipoIncidencia();
 
                 // logica
@@ -401,8 +428,9 @@ public class UsuarioServlet extends HttpServlet {
                 }
                 String extensionValida="";
                 if(nombreValido.length()==0 && fechaValida2.length()==0 &&
-                    descripcionValida.length()==0 && fechaValida.length()==0 &&
-                        otroTipoValida.length() == 0 && fotoValida.length()==0){
+                    descripcionValida.length()==0 &&
+                        otroTipoValida.length() == 0 && fotoValida.length()==0 &&
+                        zonaValida.length()==0 && tipoValida.length()==0 && nivelValida.length()==0){
 
                     idao.crearIncidencia(incidencia);
 
@@ -430,11 +458,13 @@ public class UsuarioServlet extends HttpServlet {
                             extensionValida="Extension de archivo no valida";
                             request.setAttribute("nombreValido",nombreValido);
                             request.setAttribute("descripcionValida",descripcionValida);
-                            request.setAttribute("fechaValida",fechaValida);
                             request.setAttribute("fechaValida2",fechaValida2);
                             request.setAttribute("otroTipoValida",otroTipoValida);
                             request.setAttribute("fotoValida",fotoValida);
                             request.setAttribute("extensionValida",extensionValida);
+                            request.setAttribute("zonaValida",zonaValida);
+                            request.setAttribute("tipoValida",tipoValida);
+                            request.setAttribute("nivelValida",nivelValida);
 
                             request.setAttribute("tipos", tipoIncidenciaDao.obtenerTipos() );
                             request.setAttribute("niveles", nivelDao.obtenerNiveles());
@@ -457,11 +487,13 @@ public class UsuarioServlet extends HttpServlet {
 
                     request.setAttribute("nombreValido",nombreValido);
                     request.setAttribute("descripcionValida",descripcionValida);
-                    request.setAttribute("fechaValida",fechaValida);
                     request.setAttribute("fechaValida2",fechaValida2);
                     request.setAttribute("otroTipoValida",otroTipoValida);
                     request.setAttribute("fotoValida",fotoValida);
                     request.setAttribute("extensionValida",extensionValida);
+                    request.setAttribute("zonaValida",zonaValida);
+                    request.setAttribute("tipoValida",tipoValida);
+                    request.setAttribute("nivelValida",nivelValida);
 
                     request.setAttribute("tipos", tipoIncidenciaDao.obtenerTipos() );
                     request.setAttribute("niveles", nivelDao.obtenerNiveles());

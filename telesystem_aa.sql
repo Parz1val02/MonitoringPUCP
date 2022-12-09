@@ -76,6 +76,6 @@ values(20201696, "Leonardo", "Abanto", "a20201696@pucp.edu.pe","12345678","98765
         
         
         
-select max(idFotosIncidencias),fotoIncidencia,nombreFoto,idIncidencia from FotosIncidencias where idIncidencia in (12,11,2,7,1) group by idIncidencia;
+
 
 

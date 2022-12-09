@@ -1,10 +1,7 @@
 package Servlets;
 
 import Beans.*;
-import Daos.CategoriaDao;
-import Daos.IncidenciaDao;
-import Daos.RolDao;
-import Daos.UsuarioDao;
+import Daos.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -142,7 +139,7 @@ public class AdminServlet extends HttpServlet {
         ArrayList<Usuario> listaUsuarios = usuarioDao.obtenerListaUsuarios();
 
         Usuario usuario1 = (Usuario) session.getAttribute("usuario");
-
+        IncidenciaDao inDao = new IncidenciaDao();
         listaUsuarios = usuarioDao.obtenerListaUsuarios();
         ArrayList<Usuario> listaMasterTable = usuarioDao.obtenerListaMasterTable();
         RequestDispatcher view;
@@ -152,17 +149,23 @@ public class AdminServlet extends HttpServlet {
                 String codigo = request.getParameter("codigo");
                 String correo = request.getParameter("correo");
 
-
-
-
                 /*Boolean usuarioPreRegistrado = uDao.consultarMasterTable(codigo,correo);*/
                 Rol rol1 = new Rol();
-                rol1.setIdRol(Integer.parseInt(request.getParameter("rol")));
+
+                String rolValido="";
                 RolDao rDao = new RolDao();
+                String idRol = request.getParameter("rol");
+                int IDrol = 0;
+                if(!(inDao.idValid(idRol) && rDao.verificarRol(idRol))){
+                    rolValido = "El rol ingresado no es valido";
+                }else{
+                    IDrol = Integer.parseInt(idRol);
+                }
+                rol1.setIdRol(IDrol);
                 rol1 = rDao.obtenerRol(rol1.getIdRol());
 
 
-                if(true){
+                if(rolValido.length()==0){
                     //valida el codigo
 
                     //si es que es usuario PUCP, se valida en mastertable
@@ -258,7 +261,7 @@ public class AdminServlet extends HttpServlet {
 
                         }
 
-
+                        String categoriaValida = "";
                         String categoriaPUCPStr = request.getParameter("categoriaPUCP");
                         int categoriaPUCPInt = 0;
                         if (categoriaPUCPStr.equalsIgnoreCase("alumno")) {
@@ -271,18 +274,26 @@ public class AdminServlet extends HttpServlet {
                             categoriaPUCPInt = 4;
                         } else if (categoriaPUCPStr.equalsIgnoreCase("egresado")) {
                             categoriaPUCPInt = 5;
-                        } else if (categoriaPUCPStr.equalsIgnoreCase("no tiene categoria")) {
-                            categoriaPUCPInt = 0;
+                        }else{
+                            categoriaValida="La categoria PUCP ingresada no es valida";
                         }
+
+                        if(categoriaValida.length()>0) {
+                            request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                            request.setAttribute("roles", rolDao.obtenerRoles());
+                            session.setAttribute("categoriaValida", categoriaValida);
+                            view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
+                            view.forward(request, response);
+                            break;
+                        }
+
                         CategoriaPUCP categoriaPUCP1 = new CategoriaPUCP();
                         categoriaPUCP1.setIdCategoria(categoriaPUCPInt);
 
 
 
-
-
                         //Foto
-                        String relativeWebPath = "./images/usuario.png";
+                        String relativeWebPath = "../images/usuario.png";
                         String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
                         File file = new File(absoluteDiskPath);
                         byte[] fileContent = Files.readAllBytes(file.toPath());
@@ -417,22 +428,22 @@ public class AdminServlet extends HttpServlet {
                             }
 
                         }
-
+                        String categoriaValida="";
                         String categoriaPUCPStr = request.getParameter("categoriaPUCP");
                         int categoriaPUCPInt = 0;
-                        if (categoriaPUCPStr.equalsIgnoreCase("alumno")) {
-                            categoriaPUCPInt = 1;
-                        } else if (categoriaPUCPStr.equalsIgnoreCase("administrativo")) {
-                            categoriaPUCPInt = 2;
-                        } else if (categoriaPUCPStr.equalsIgnoreCase("jefe de práctica")) {
-                            categoriaPUCPInt = 3;
-                        } else if (categoriaPUCPStr.equalsIgnoreCase("profesor")) {
-                            categoriaPUCPInt = 4;
-                        } else if (categoriaPUCPStr.equalsIgnoreCase("egresado")) {
-                            categoriaPUCPInt = 5;
-                        } else if (categoriaPUCPStr.equalsIgnoreCase("no tiene categoria")) {
-                            categoriaPUCPInt = 0;
+                        if (!(categoriaPUCPStr.equalsIgnoreCase("no tiene categoria"))) {
+                            categoriaValida="La categoria PUCP ingresada no es valida";
                         }
+
+                        if(categoriaValida.length()>0) {
+                            request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                            request.setAttribute("roles", rolDao.obtenerRoles());
+                            session.setAttribute("categoriaValida", categoriaValida);
+                            view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
+                            view.forward(request, response);
+                            break;
+                        }
+
                         CategoriaPUCP categoriaPUCP1 = new CategoriaPUCP();
                         categoriaPUCP1.setIdCategoria(categoriaPUCPInt);
 
@@ -489,7 +500,9 @@ public class AdminServlet extends HttpServlet {
                 } else {
                     /*request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
                     request.setAttribute("roles", rolDao.obtenerRoles());*/
-                    session.setAttribute("msg", "El usuario no está registrado");
+                    request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                    request.setAttribute("roles", rolDao.obtenerRoles());
+                    session.setAttribute("rolValido", rolValido);
                     view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
                     view.forward(request, response);
                     break;
@@ -499,6 +512,7 @@ public class AdminServlet extends HttpServlet {
             case "actualizar":
                 String codigoUpdate = request.getParameter("codigoPUCP");
                 if(incidenciaDao.idValid(codigoUpdate)&&usuarioDao.verificarUsuario(codigoUpdate)){
+
                     String nombreUpdate = request.getParameter("nombre");
                     String apellidoUpdate = request.getParameter("apellido");
                     String correoUpdate = request.getParameter("correoPUCP");

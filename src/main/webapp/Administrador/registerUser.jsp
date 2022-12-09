@@ -57,6 +57,14 @@
   if(celularRepeat==null){
     celularRepeat="";
   }
+  String rolValido = (String) request.getAttribute("rolValido");
+  if(rolValido==null){
+    rolValido="";
+  }
+  String categoriaValida = (String) request.getAttribute("categoriaValida");
+  if(categoriaValida==null){
+    categoriaValida="";
+  }
 
 %>
 
@@ -283,24 +291,32 @@
                     <div class="row">
                       <div class="col-md">
                         <div class="form-floating">
-                          <select class="form-select" id="floatingSelectGrid1" name="rol">
+                          <select class="form-select <%=rolValido.length()>0?"is-invalid":""%>" id="floatingSelectGrid1" name="rol">
                             <% for (Rol r: roles){%>
 
                             <option value="<%=r.getIdRol()%>"<%=usuario!=null?(usuario.getRol().getIdRol()==r.getIdRol()?"selected":""):""%>><%= r.getNombreRol()%></option>
 
                             <% } %>
-
-
                           </select>
                           <label for="floatingSelectGrid1">Rol</label>
+                          <%if(rolValido.length()>0){%>
+                          <div  class="invalid-feedback">
+                            <%=rolValido%>
+                          </div>
+                          <% } %>
                         </div>
                       </div>
                       <div class="col-md">
                         <div class="form-floating">
-                          <select class="form-select" id="floatingSelectGrid2" name="categoriaPUCP">
+                          <select class="form-select <%=categoriaValida.length()>0?"is-invalid":""%>" id="floatingSelectGrid2" name="categoriaPUCP">
                             
                           </select>
                           <label for="floatingSelectGrid2">Categoría</label>
+                          <%if(categoriaValida.length()>0){%>
+                          <div  class="invalid-feedback">
+                            <%=categoriaValida%>
+                          </div>
+                          <% } %>
                         </div>
                       </div>
                       <div style="color:#FF0000;"><p text-align="center;" style="margin-top: 10px;" class="font-weight-bold">Todos los campos son obligatorios.</p></div>
