@@ -13,6 +13,13 @@
     Incidencia incidencia = (Incidencia) request.getAttribute("Incidencia");
     ArrayList<EstadoIncidencia> estados = (ArrayList<EstadoIncidencia>) request.getAttribute("estados");
     ArrayList<FotosIncidencias> fotos = (ArrayList<FotosIncidencias>) request.getAttribute("Fotos");
+
+    String estadoValido = (String) request.getAttribute("estadoValido");
+    if(estadoValido==null){
+        estadoValido="";
+    }
+
+
     String justiValido = (String) request.getAttribute("justiValido");
     if(justiValido==null){
         justiValido="";
@@ -229,15 +236,20 @@
 
 
             <form method="post" action="<%=request.getContextPath()%>/SeguridadServlet?accion=guardar">
-                <input type="text" class="form-control" name="idIncidencia" value="<%=incidencia.getIdIncidencia()%>" hidden>
+                <input type="text" class="form-control " name="idIncidencia" value="<%=incidencia.getIdIncidencia()%>" hidden>
                 <br>
                 <p style="margin-top: 20px;margin-left: 10px">Estado de la incidencia </p>
                 <div style =  "margin-left: 10px" class="form-check">
-                    <select class="form-select" aria-label="Default select example" name="idEstado" >
+                    <select class="form-select <%=estadoValido.length()>0?"is-invalid":""%>" aria-label="Default select example" name="idEstado" >
                         <% for (EstadoIncidencia estado : estados) {%>  <!--compara el estado de la incidencia con las opciones del combo box -->
                         <option value="<%=estado.getIdEstado()%>" <%= incidencia.getEstadoIncidencia().getEstado().equalsIgnoreCase(estado.getEstado())?"selected":""%> > <%=estado.getEstado()%></option>
                         <% }%>
                     </select>
+                    <%if(estadoValido.length()>0){%>
+                    <div  class="invalid-feedback">
+                        <%=estadoValido%>
+                    </div>
+                    <%}%>
                 </div>
 
                 <br>

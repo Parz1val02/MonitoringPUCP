@@ -451,7 +451,7 @@ public class AdminServlet extends HttpServlet {
                         //Foto
                         String relativeWebPath = "../images/usuario.png";
                         String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
-                        File file = new File(absoluteDiskPath);
+                        File file = new File(relativeWebPath);
                         byte[] fileContent = Files.readAllBytes(file.toPath());
 
                         FotoPerfil fp = new FotoPerfil();

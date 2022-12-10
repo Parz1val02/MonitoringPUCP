@@ -123,7 +123,16 @@ public class SeguridadServlet extends HttpServlet {
                 if(idao.idValid(strId) && idao.verificarIncidencia(strId)){
                     int idIncidencia = Integer.parseInt(strId);
 
-                    int idEstado = Integer.parseInt(request.getParameter("idEstado"));
+                    String estadoValido="";
+                    int IDEstado = 0;
+                    String idEstado=request.getParameter("idEstado");
+                    if(!(eDao.verificarEstado(idEstado) && idao.idValid(idEstado) )){
+                        estadoValido="el estado ingresado no es valido";
+                    }else{
+                        IDEstado=Integer.parseInt(idEstado); //lo castea y guarda
+                    }
+
+
                     String justi = request.getParameter("justificacion");
                     String justiValido = "";
                     if(!uDao.nombreyApellidoValid(justi)){
@@ -133,14 +142,14 @@ public class SeguridadServlet extends HttpServlet {
                     incidencia = idao.obtenerIncidencia(idIncidencia);
 
                     EstadoIncidencia estado = new EstadoIncidencia();
-                    estado.setIdEstado(idEstado);
+                    estado.setIdEstado(IDEstado);
                     incidencia.setEstadoIncidencia(estado);
 
                     Comentario comentario = new Comentario();
                     comentario.setComentario(justi);
                     comentario.setIncidencia(incidencia);
 
-                    if (justiValido.length()==0){
+                    if (justiValido.length()==0  && estadoValido.length()==0){
                         session.setAttribute("msg","Cambio de estado exitoso");
                         //para actualizar el estado y el comentario
                         idao.actualizarIncidencia(incidencia);
@@ -164,6 +173,7 @@ public class SeguridadServlet extends HttpServlet {
                             }
                         }
                         request.setAttribute("justiValido",justiValido);
+                        request.setAttribute("estadoValido",estadoValido);
                         view = request.getRequestDispatcher("/Seguridad/VerDetalle.jsp");
                         view.forward(request, response);
                     }
