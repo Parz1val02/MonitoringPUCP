@@ -36,7 +36,7 @@
     <!-- HEADER -->
     <div class="container-fluid" style=" padding: 0px">
         <jsp:include page="../includes/barra_horizontal.jsp">
-            <jsp:param name="barra" value="PaginaInicio2"/>
+            <jsp:param name="barra" value="BarraHorizontal"/>
         </jsp:include>
     </div>
     <!-- HEADER -->
@@ -117,7 +117,7 @@
     <!-- FOOTER -->
     <div class="container-fluid">
         <jsp:include page="../includes/footer.jsp">
-            <jsp:param name="footer" value="PaginaInicio3"/>
+            <jsp:param name="footer" value="Footer"/>
         </jsp:include>
     </div>
     <!-- FOOTER -->

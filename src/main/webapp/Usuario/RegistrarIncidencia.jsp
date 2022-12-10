@@ -86,7 +86,7 @@
     <!-- HEADER -->
     <div class="container-fluid" style=" padding: 0px">
         <jsp:include page="../includes/barra_horizontal.jsp">
-            <jsp:param name="barra" value="PaginaInicio2"/>
+            <jsp:param name="barra" value="BarraHorizontal"/>
         </jsp:include>
     </div>
     <!-- HEADER -->
