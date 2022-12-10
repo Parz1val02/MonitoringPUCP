@@ -109,6 +109,7 @@
                     <div class="page-heading" style="text-align: center; margin:auto">
                         <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Registrar Incidencias</b></h1>
                     </div>
+                    <div style="height: 50px; display: block;"></div>
                     <div class="ibox" style="align-content: center; min-height:60%; max-width: 85%;margin: auto" >
                         <!--div class="ibox-head">
                             <div class="ibox-title" style="font-size: 20px">Registrar Incidencia</div>
@@ -177,10 +178,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row g-2">
+                                <div style="height: 40px; display: block;"></div>
+                                <div class="row g-2" style="border: black 2px">
                                     <div id="map"></div>
                                     <div style="height: 15px; display: block;"></div>
                                 </div>
+                                <div style="height: 40px; display: block;"></div>
                                 <!-- 3era fila -->
                                 <div class="row g-2">
                                     <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
@@ -311,6 +314,7 @@
         </div>
     </div>
     <!-- END PRINCIPAL-->
+    <div style="height: 100px; display: block;"></div>
 
     <!-- FOOTER -->
     <div class="container-fluid" style="background: #042354; padding: 0px">
