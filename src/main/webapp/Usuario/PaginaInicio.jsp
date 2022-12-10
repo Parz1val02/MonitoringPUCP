@@ -264,7 +264,7 @@
 
             <div style="height: 100px; display: block;"></div>
 
-            <div style="background: #042354">
+            <div style="background: #042354; padding: 0px">
                 <footer class="text-center text-lg-start text-white"
                         style="background-color: #042354; position: absolute;width: 100%">
                     <!-- Grid container -->

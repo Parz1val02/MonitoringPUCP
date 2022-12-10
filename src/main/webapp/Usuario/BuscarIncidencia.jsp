@@ -99,8 +99,9 @@
             </div>
         </div>
         <br>
+
     <!-- FOOTER -->
-    <div class="container-fluid">
+    <div class="container-fluid" style="background: #042354; padding: 0px">
         <jsp:include page="../includes/footer.jsp">
             <jsp:param name="footer" value="Footer"/>
         </jsp:include>

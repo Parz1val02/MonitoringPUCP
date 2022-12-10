@@ -101,301 +101,224 @@
     </div>
     <!-- MENÚ PRINCIPAL -->
 
-<!-- PRINCIPAL -->
-<div class="container-fluid" style="min-height: 60vh; align-content: center;">
-    <div class="row" style="min-height: 60vh">
-        <div class="page-content fade-in-up col-md-8" style="align-content: center; margin: auto">
-            <div class="container" style=" height: 100%">
-                <div class="page-heading" style="text-align: center; margin:auto">
-                    <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Registrar Incidencias</b></h1>
-                </div>
-                <div class="ibox" style="align-content: center; min-height:60%; max-width: 85%;margin: auto" >
-                    <!--div class="ibox-head">
-                        <div class="ibox-title" style="font-size: 20px">Registrar Incidencia</div>
-                        <div class="ibox-tools">
-                            <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
+    <!-- PRINCIPAL -->
+    <div class="container-fluid" style="min-height: 60vh; align-content: center;">
+        <div class="row" style="min-height: 60vh">
+            <div class="page-content fade-in-up col-md-8" style="align-content: center; margin: auto">
+                <div class="container" style=" height: 100%">
+                    <div class="page-heading" style="text-align: center; margin:auto">
+                        <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Registrar Incidencias</b></h1>
+                    </div>
+                    <div class="ibox" style="align-content: center; min-height:60%; max-width: 85%;margin: auto" >
+                        <!--div class="ibox-head">
+                            <div class="ibox-title" style="font-size: 20px">Registrar Incidencia</div>
+                            <div class="ibox-tools">
+                                <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
+                            </div>
+                        </div-->
+                        <div class="ibox-body" >
+                            <%if(session.getAttribute("info")!=null){%>
+                            <div class="alert alert-danger" role="alert">
+                                <%=session.getAttribute("info")%>
+                            </div>
+                            <%}%>
+                            <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=guardar" enctype="multipart/form-data">
+
+                                <!-- 1era fila -->
+                                <div class="row g-2">
+                                    <div class="col-md-4"  style="display: flex; justify-content: center;  flex-direction: column">
+                                        <p class="campos-registrar-usuario">Nombre:</p>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating" style="margin-bottom: 15px">
+                                            <input type="text" class="form-control <%=nombreValido.length()>0?"is-invalid":""%>" id="floatingInputGrid2" placeholder="Nombre Incidencia" name="nombre_incidencia">
+                                            <label for="floatingInputGrid2" class="label-form-flujousuario">Nombre Incidencia</label>
+                                            <%if(nombreValido.length()>0){%>
+                                            <div  class="invalid-feedback">
+                                                <%=nombreValido%>
+                                            </div>
+                                            <%}%>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row g-2">
+                                    <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
+                                        <p class="campos-registrar-usuario">Fecha:</p>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating" style="margin-bottom: 15px">
+                                            <input type="date" name="fecha" id="date" class="sangria-filter <%=fechaValida2.length()>0?"is-invalid":""%>" placeholder="dd-mm-yyyy" max="<%=dateFormat.format(today)%>" style="margin-top: 5px;margin-bottom: 5px">
+                                            <%if(fechaValida2.length()>0){%>
+                                            <div  class="invalid-feedback">
+                                                <%=fechaValida2%>
+                                            </div>
+                                            <%}%>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 2da fila -->
+                                <div class="row g-2">
+                                    <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
+                                        <p class="campos-registrar-usuario">Zona PUCP:</p>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating" style="margin-bottom: 15px;">
+                                            <select class="form-select <%=zonaValida.length()>0?"is-invalid":""%>" id="zonaPUCP" name="zonaPUCP">
+                                                <% for (ZonaPUCP zona : zonas) {%>
+                                                <option value="<%=zona.getIdZonaPUCP()%>"><%= zona.getNombreZona()%></option>
+                                                <% }%>
+                                            </select>
+                                            <label for="zonaPUCP" class="label-form-flujousuario">Zona PUCP</label>
+                                            <%if(zonaValida.length()>0){%>
+                                            <div  class="invalid-feedback">
+                                                <%=zonaValida%>
+                                            </div>
+                                            <%}%>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row g-2">
+                                    <div id="map"></div>
+                                    <div style="height: 15px; display: block;"></div>
+                                </div>
+                                <!-- 3era fila -->
+                                <div class="row g-2">
+                                    <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
+                                        <p class="campos-registrar-usuario">Tipo de Incidencia:</p>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating " style="margin-bottom: 15px;">
+                                            <select class="form-select <%=tipoValida.length()>0?"is-invalid":""%>" id="tipoIncidencia" name="tipoIncidencia">
+                                                <% for (TipoIncidencia tipo : tipos) {%>
+                                                <option value="<%=tipo.getIdTipo()%>"><%= tipo.getTipo()%></option>
+                                                <% }%>
+                                            </select>
+                                            <label for="tipoIncidencia" class="label-form-flujousuario">Tipo de Incidencia</label>
+                                            <%if(tipoValida.length()>0){%>
+                                            <div  class="invalid-feedback">
+                                                <%=tipoValida%>
+                                            </div>
+                                            <%}%>
+                                        </div>
+                                        <input type="text" class="form-control <%=otroTipoValida.length()>0?"is-invalid":""%>" id="Otros" placeholder="Otro tipo" name="Otros" disabled >
+                                        <%if(otroTipoValida.length()>0){%>
+                                        <div  class="invalid-feedback">
+                                            <%=otroTipoValida%>
+                                        </div>
+                                        <%}%>
+                                        <div style="height: 25px; display: block;"></div>
+                                    </div>
+                                </div>
+                                <!-- 4ta fila -->
+                                <div class="row g-2">
+                                    <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
+                                        <p class="campos-registrar-usuario">Nivel de Urgencia:</p>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating" style="margin-bottom: 15px;">
+                                            <select class="form-select <%=nivelValida.length()>0?"is-invalid":""%>" id="floatingSelectGrid1" name="nivelIncidencia">
+                                                <% for (NivelUrgencia nivel : niveles) {%>
+                                                <option value="<%=nivel.getIdNivelUrgencia()%>"><%= nivel.getNivel()%></option>
+                                                <% }%>
+                                            </select>
+                                            <label for="floatingSelectGrid1" class="label-form-flujousuario">Nivel de Urgencia</label>
+                                            <%if(nivelValida.length()>0){%>
+                                            <div  class="invalid-feedback">
+                                                <%=nivelValida%>
+                                            </div>
+                                            <%}%>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 6ta fila -->
+                                <div class="row g-2">
+                                    <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
+                                        <p class="campos-registrar-usuario">Foto:</p>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating" style="margin-bottom: 15px;">
+                                            <input type="file" name="fotoIncidencia" id="file2" accept="image/png, image/gif, image/jpeg" multiple class="<%=fotoValida.length()>0?"is-invalid":""%> <%=extensionValida.length()>0?"is-invalid":""%>"/>
+                                            <%if(fotoValida.length()>0){%>
+                                            <div  class="invalid-feedback">
+                                                <%=fotoValida%>
+                                            </div>
+                                            <%}%>
+                                            <%if(extensionValida.length()>0){%>
+                                            <div  class="invalid-feedback">
+                                                <%=extensionValida%>
+                                            </div>
+                                            <%}%>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 7ma fila -->
+                                <div class="row g-2">
+                                    <div class="col-md-4" style="display: flex; flex-direction: column">
+                                        <p class="campos-registrar-usuario">Descripción:</p>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating" style="margin-bottom: 15px;">
+                                            <textarea class="form-control <%=descripcionValida.length()>0?"is-invalid":""%>" id="floatingInputGrid7" cols="40" rows="5" placeholder="Descripcion" style="height: 133px; width: 100%;overflow: auto;resize: none" name="descripcion" ></textarea>
+                                            <label for="floatingInputGrid7" class="label-form-flujousuario">Descripción</label>
+                                            <%if(descripcionValida.length()>0){%>
+                                            <div  class="invalid-feedback">
+                                                <%=descripcionValida%>
+                                            </div>
+                                            <%}%>
+                                        </div>
+                                    </div>
+                                    <div style="color:#FF0000;"><p text-align="center;" style="margin-top: 1px;" class="font-weight-bold">Todos los campos son obligatorios.</p></div>
+                                    <div style="color:#FF0000;">
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group" style="text-align: right">
+                                    <button class="btn btn-primary" type="submit"  href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">Registrar incidencia</button>
+                                    <!-- type="submit" debe usarse para enviar datos de un form tener cuidado y revisar-->
+                                </div>
+                            </form>
                         </div>
-                    </div-->
-                    <div class="ibox-body" >
-                        <%if(session.getAttribute("info")!=null){%>
-                        <div class="alert alert-danger" role="alert">
-                            <%=session.getAttribute("info")%>
-                        </div>
-                        <%}%>
-                        <form method="post" action="<%=request.getContextPath()%>/UsuarioServlet?accion=guardar" enctype="multipart/form-data">
-
-                            <!-- 1era fila -->
-                            <div class="row g-2">
-                                <div class="col-md-4"  style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Nombre:</p>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-floating" style="margin-bottom: 15px">
-                                        <input type="text" class="form-control <%=nombreValido.length()>0?"is-invalid":""%>" id="floatingInputGrid2" placeholder="Nombre Incidencia" name="nombre_incidencia">
-                                        <label for="floatingInputGrid2" class="label-form-flujousuario">Nombre Incidencia</label>
-                                        <%if(nombreValido.length()>0){%>
-                                        <div  class="invalid-feedback">
-                                            <%=nombreValido%>
-                                        </div>
-                                        <%}%>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row g-2">
-                                <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Fecha:</p>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-floating" style="margin-bottom: 15px">
-                                        <input type="date" name="fecha" id="date" class="sangria-filter <%=fechaValida2.length()>0?"is-invalid":""%>" placeholder="dd-mm-yyyy" max="<%=dateFormat.format(today)%>" style="margin-top: 5px;margin-bottom: 5px">
-                                        <%if(fechaValida2.length()>0){%>
-                                        <div  class="invalid-feedback">
-                                            <%=fechaValida2%>
-                                        </div>
-                                        <%}%>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 2da fila -->
-                            <div class="row g-2">
-                                <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Zona PUCP:</p>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-floating" style="margin-bottom: 15px;">
-                                        <select class="form-select <%=zonaValida.length()>0?"is-invalid":""%>" id="zonaPUCP" name="zonaPUCP">
-                                            <% for (ZonaPUCP zona : zonas) {%>
-                                            <option value="<%=zona.getIdZonaPUCP()%>"><%= zona.getNombreZona()%></option>
-                                            <% }%>
-                                        </select>
-                                        <label for="zonaPUCP" class="label-form-flujousuario">Zona PUCP</label>
-                                        <%if(zonaValida.length()>0){%>
-                                        <div  class="invalid-feedback">
-                                            <%=zonaValida%>
-                                        </div>
-                                        <%}%>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row g-2">
-                                <div id="map"></div>
-                                <div style="height: 15px; display: block;"></div>
-                            </div>
-                            <!-- 3era fila -->
-                            <div class="row g-2">
-                                <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Tipo de Incidencia:</p>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-floating " style="margin-bottom: 15px;">
-                                        <select class="form-select <%=tipoValida.length()>0?"is-invalid":""%>" id="tipoIncidencia" name="tipoIncidencia">
-                                            <% for (TipoIncidencia tipo : tipos) {%>
-                                            <option value="<%=tipo.getIdTipo()%>"><%= tipo.getTipo()%></option>
-                                            <% }%>
-                                        </select>
-                                        <label for="tipoIncidencia" class="label-form-flujousuario">Tipo de Incidencia</label>
-                                        <%if(tipoValida.length()>0){%>
-                                        <div  class="invalid-feedback">
-                                            <%=tipoValida%>
-                                        </div>
-                                        <%}%>
-                                    </div>
-                                    <input type="text" class="form-control <%=otroTipoValida.length()>0?"is-invalid":""%>" id="Otros" placeholder="Otro tipo" name="Otros" disabled >
-                                    <%if(otroTipoValida.length()>0){%>
-                                    <div  class="invalid-feedback">
-                                        <%=otroTipoValida%>
-                                    </div>
-                                    <%}%>
-                                    <div style="height: 25px; display: block;"></div>
-                                </div>
-                            </div>
-                            <!-- 4ta fila -->
-                            <div class="row g-2">
-                                <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Nivel de Urgencia:</p>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-floating" style="margin-bottom: 15px;">
-                                        <select class="form-select <%=nivelValida.length()>0?"is-invalid":""%>" id="floatingSelectGrid1" name="nivelIncidencia">
-                                            <% for (NivelUrgencia nivel : niveles) {%>
-                                            <option value="<%=nivel.getIdNivelUrgencia()%>"><%= nivel.getNivel()%></option>
-                                            <% }%>
-                                        </select>
-                                        <label for="floatingSelectGrid1" class="label-form-flujousuario">Nivel de Urgencia</label>
-                                        <%if(nivelValida.length()>0){%>
-                                        <div  class="invalid-feedback">
-                                            <%=nivelValida%>
-                                        </div>
-                                        <%}%>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 6ta fila -->
-                            <div class="row g-2">
-                                <div class="col-md-4" style="display: flex; justify-content: center;  flex-direction: column">
-                                    <p class="campos-registrar-usuario">Foto:</p>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-floating" style="margin-bottom: 15px;">
-                                        <input type="file" name="fotoIncidencia" id="file2" accept="image/png, image/gif, image/jpeg" multiple class="<%=fotoValida.length()>0?"is-invalid":""%> <%=extensionValida.length()>0?"is-invalid":""%>"/>
-                                        <%if(fotoValida.length()>0){%>
-                                        <div  class="invalid-feedback">
-                                            <%=fotoValida%>
-                                        </div>
-                                        <%}%>
-                                        <%if(extensionValida.length()>0){%>
-                                        <div  class="invalid-feedback">
-                                            <%=extensionValida%>
-                                        </div>
-                                        <%}%>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 7ma fila -->
-                            <div class="row g-2">
-                                <div class="col-md-4" style="display: flex; flex-direction: column">
-                                    <p class="campos-registrar-usuario">Descripción:</p>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-floating" style="margin-bottom: 15px;">
-                                        <textarea class="form-control <%=descripcionValida.length()>0?"is-invalid":""%>" id="floatingInputGrid7" cols="40" rows="5" placeholder="Descripcion" style="height: 133px; width: 100%;overflow: auto;resize: none" name="descripcion" ></textarea>
-                                        <label for="floatingInputGrid7" class="label-form-flujousuario">Descripción</label>
-                                        <%if(descripcionValida.length()>0){%>
-                                        <div  class="invalid-feedback">
-                                            <%=descripcionValida%>
-                                        </div>
-                                        <%}%>
-                                    </div>
-                                </div>
-                                <div style="color:#FF0000;"><p text-align="center;" style="margin-top: 1px;" class="font-weight-bold">Todos los campos son obligatorios.</p></div>
-                                <div style="color:#FF0000;">
-
-                                </div>
-
-                            </div>
-                            <div class="form-group" style="text-align: right">
-                                <button class="btn btn-primary" type="submit"  href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">Registrar incidencia</button>
-                                <!-- type="submit" debe usarse para enviar datos de un form tener cuidado y revisar-->
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
+            <!--div class="col-md-6">
+                <div class="container text-center" style="display: flex; justify-content: center;  flex-direction: column ; height: 100%"  >
+                    < Gallery>
+                    <div id="wrapper" >
+                        <h1 style="margin-bottom:15px ;font-family: 'Open Sans', sans-serif;font-size: 20px;font-weight: bold">Previsualización de Imágenes</h1>
+                        <div id="container-input"  >
+                            <div class="wrap-file">
+                                <div class="content-icon-camera">
+                                    < <input type="file" id="file" name="file[]" accept="image/*" multiple />  >
+                                    <div class="icon-camera"></div>
+                                </div>
+                                <div id="preview-images"></div>
+                            </div>
+                            <button id="publish">Publicar</button>
+                        </div>
+                        <div class="preload">
+                            <img src="assets/images/preload.gif" alt="preload" />
+                        </div>
+                        <h2 id="success"></h2>
+                    </div>
+                    </div>
+                        < Gallery >
+                    </div>
+                </div>
+            </div-->
         </div>
-        <!--div class="col-md-6">
-            <div class="container text-center" style="display: flex; justify-content: center;  flex-direction: column ; height: 100%"  >
-                < Gallery>
-                <div id="wrapper" >
-                    <h1 style="margin-bottom:15px ;font-family: 'Open Sans', sans-serif;font-size: 20px;font-weight: bold">Previsualización de Imágenes</h1>
-                    <div id="container-input"  >
-                        <div class="wrap-file">
-                            <div class="content-icon-camera">
-                                < <input type="file" id="file" name="file[]" accept="image/*" multiple />  >
-                                <div class="icon-camera"></div>
-                            </div>
-                            <div id="preview-images"></div>
-                        </div>
-                        <button id="publish">Publicar</button>
-                    </div>
-                    <div class="preload">
-                        <img src="assets/images/preload.gif" alt="preload" />
-                    </div>
-                    <h2 id="success"></h2>
-                </div>
-                </div>
-                    < Gallery >
-                </div>
-            </div>
-        </div-->
     </div>
-</div>
-<!-- END PRINCIPAL-->
-    <!-- Footer -->
-    <footer
-            class="text-center text-lg-start text-white"
-            style="background-color: #042354">
-        <!-- Grid container -->
-        <div class="container p-4 pb-0">
-            <!-- Section: Links -->
-            <section class="">
-                <!--Grid row-->
-                <div class="row">
-                    <!-- Grid column -->
-                    <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                        <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">
-                            UBICACIÓN
-                        </h6>
-                        <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px; color: #a9b9d4">
-                            Campus principal
-                            <div style="height: 1px; display: block;"></div>
-                            Av. Universitaria 1801, San Miguel, 15088
-                            <div style="height: 1px; display: block;"></div>
-                            Lima, Perú
-                        </div>
+    <!-- END PRINCIPAL-->
 
-                    </div>
-                    <!-- Grid column -->
-
-                    <hr class="w-100 clearfix d-md-none" />
-
-                    <!-- Grid column -->
-                    <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                        <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">CONTACTO</h6>
-                        <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px; color: #a9b9d4">
-                            Central telefónica 626-2000
-                            <div style="height: 1px; display: block;"></div>
-                            Desde provincias 0800-1-7827 (servicio gratuito)
-                        </div>
-
-
-                    </div>
-                    <!-- Grid column -->
-
-                    <hr class="w-100 clearfix d-md-none" />
-
-                    <!-- Grid column -->
-                    <hr class="w-100 clearfix d-md-none" />
-
-                    <!-- Grid column -->
-                    <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                        <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">MAYOR INFORMACIÓN</h6>
-                        <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px; color: #a9b9d4">
-                            Si necesitas ayuda escribe a:
-                            <div style="height: 1px; display: block;"></div>
-                            <u>asistencia-dti@pucp.edu.pe</u>
-                        </div>
-                    </div>
-                    <!-- Grid column -->
-                </div>
-                <!--Grid row-->
-            </section>
-            <!-- Section: Links -->
-
-            <hr class="my-3">
-
-            <!-- Section: Copyright -->
-            <section class="p-3 pt-0" style="background: #042354">
-                <div class="row d-flex align-items-center">
-                    <!-- Grid column -->
-                    <div class="col-md-7 col-lg-8 text-center text-md-start">
-                        <!-- Copyright -->
-                        <div style="height: 5px; display: block;"></div>
-                        <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px">
-                            © Pontificia Universidad Católica del Perú - Todos los derechos reservados
-                        </div>
-                        <div style="height: 10px; display: block;"></div>
-                        <!-- Copyright -->
-                    </div>
-                    <!-- Grid column -->
-
-                </div>
-            </section>
-            <!-- Section: Copyright -->
-        </div>
-        <!-- Grid container -->
-    </footer>
-    <!-- Footer -->
+    <!-- FOOTER -->
+    <div class="container-fluid" style="background: #042354; padding: 0px">
+        <jsp:include page="../includes/footer.jsp">
+            <jsp:param name="footer" value="Footer"/>
+        </jsp:include>
+    </div>
+    <!-- FOOTER -->
 
 <!-- Modal chequer funcionamiento-->
 <!--div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
