@@ -98,8 +98,8 @@
                 </div>
             </div>
             <div class="col-md-6" align="center" style="margin: 10px 0px 10px 0px; background: #FFFFFF; border-radius: 2px; border: 1px solid grey">
-                <div style="margin: 12px">
-                    <div style="height: 10px; display: block;"></div>
+                <div style="margin: auto">
+                    <div style="height: 30px; display: block;"></div>
                     <p style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px; color: #042354">Nombre de la Incidencia</p>
                     <input style="text-align: center" class="form-control" type="text" placeholder="<%=incidencia.getNombreIncidencia()%>" aria-label="Disabled input example" disabled>
                     <div style="height: 25px; display: block;"></div>
@@ -144,6 +144,7 @@
                     <div align="right">
                         <a style="font-size: 15px" href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">Regresar a la ventana principal</a>
                     </div>
+                    <div style="height: 30px; display: block;"></div>
                 </div>
             </div>
         </div>
