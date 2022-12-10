@@ -261,17 +261,19 @@
                 </div>
                 <div style="height: 20px; display: block; background: #dee2e6;"></div>
             </div>
+
+            <div class="container-fluid">
+                <jsp:include page="../includes/footer.jsp">
+                    <jsp:param name="footer" value="Footer"/>
+                </jsp:include>
+            </div>
         </div>
         <!-- CARROUSEL -->
 
         <div style="height: 100px; display: block;"></div>
 
         <!-- FOOTER -->
-        <div class="container-fluid">
-            <jsp:include page="../includes/footer.jsp">
-                <jsp:param name="footer" value="Footer"/>
-            </jsp:include>
-        </div>
+
         <!-- FOOTER -->
 
     </body>
