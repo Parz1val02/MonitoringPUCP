@@ -82,18 +82,25 @@
     </style>
 </head>
 <body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout " >
-<div class="container-fluid" style=" padding: 0px">
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #042354; height: 100px;justify-content: flex-end">
-        <img src="../images/logoTelesystem.png" alt="logo" style="border-top-style: solid;border-bottom-width: 0;border-bottom-style: solid;border-right-width: 0;border-right-style: solid;border-left-width: 0;border-left-style: solid;margin-top: 0px;margin-right: 25px;height: 67px;width: 220px;border-top-width: 0px; ">
-    </nav>
-</div>
+
+    <!-- HEADER -->
+    <div class="container-fluid" style=" padding: 0px">
+        <jsp:include page="../includes/barra_horizontal.jsp">
+            <jsp:param name="barra" value="PaginaInicio2"/>
+        </jsp:include>
+    </div>
+    <!-- HEADER -->
+
+    <!-- MENÚ PRINCIPAL -->
     <div class="boxed-page">
-        <div class="container" >
+        <div class="container">
             <jsp:include page="../includes/navbar.jsp">
-                <jsp:param name="page" value="RegistrarIncidencia"/>
+                <jsp:param name="page" value="PaginaInicio"/>
             </jsp:include>
         </div>
     </div>
+    <!-- MENÚ PRINCIPAL -->
+
 <!-- PRINCIPAL -->
 <div class="container-fluid" style="min-height: 60vh; align-content: center;">
     <div class="row" style="min-height: 60vh">
