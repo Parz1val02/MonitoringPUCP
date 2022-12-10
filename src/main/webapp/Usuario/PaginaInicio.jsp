@@ -262,7 +262,7 @@
                 <div style="height: 20px; display: block; background: #dee2e6;"></div>
             </div>
 
-
+            <div style="height: 100px; display: block;"></div>
 
             <footer class="text-center text-lg-start text-white"
                     style="background-color: #042354; position: absolute;width: 100%">
@@ -351,7 +351,7 @@
         </div>
         <!-- CARROUSEL -->
 
-        <div style="height: 100px; display: block;"></div>
+
 
 
     </body>
