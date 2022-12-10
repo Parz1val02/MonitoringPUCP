@@ -52,15 +52,13 @@
     <body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
         <!-- HEADER -->
         <div class="container-fluid" style=" padding: 0px">
-            <nav class="navbar navbar-expand-lg navbar-light"
-                 style="background-color: #042354; height: 100px;justify-content: flex-end">
-                <img src="../images/logoTelesystem.png" alt="logo"
-                     style="border-radius: 10px; border-top-style: solid;border-bottom-width: 0;border-bottom-style: solid;border-right-width: 0;border-right-style: solid;border-left-width: 0;border-left-style: solid;margin-top: 0px;margin-right: 25px;height: 67px;width: 220px;border-top-width: 0px; ">
-            </nav>
+            <jsp:include page="../includes/barra_horizontal.jsp">
+                <jsp:param name="barra" value="PaginaInicio2"/>
+            </jsp:include>
         </div>
         <!-- HEADER -->
 
-        <!-- BARRA HORIZONTAL -->
+        <!-- MENÚ PRINCIPAL -->
         <div class="boxed-page">
             <div class="container">
                 <jsp:include page="../includes/navbar.jsp">
@@ -68,7 +66,7 @@
                 </jsp:include>
             </div>
         </div>
-        <!-- BARRA HORIZONTAL -->
+        <!-- MENÚ PRINCIPAL -->
 
         <div class="container" align="center">
             <h5 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 22px; color: #042354;">
@@ -350,15 +348,15 @@
                 <!-- Grid container -->
             </footer>
         </div>
-
-
         <!-- CARROUSEL -->
 
         <div style="height: 100px; display: block;"></div>
 
         <!-- FOOTER -->
         <div class="container-fluid">
-
+            <jsp:include page="../includes/footer.jsp">
+                <jsp:param name="footer" value="PaginaInicio3"/>
+            </jsp:include>
         </div>
         <!-- FOOTER -->
 
