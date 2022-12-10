@@ -353,11 +353,7 @@
         <div style="height: 100px; display: block;"></div>
 
         <!-- FOOTER -->
-        <div class="container-fluid">
-            <jsp:include page="../includes/footer.jsp">
-                <jsp:param name="footer" value="Footer"/>
-            </jsp:include>
-        </div>
+
         <!-- FOOTER -->
 
     </body>
