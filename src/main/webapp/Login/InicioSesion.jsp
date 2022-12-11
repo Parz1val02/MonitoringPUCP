@@ -42,7 +42,7 @@
         </div>
         <div class="col-sm" ></div>
         <div class="col-sm-4" align="center"
-             style="margin: 10px 0px 10px 10px; background: #FFFFFF; border-radius: 10px; border: 1px solid grey">
+             style="margin: auto; background: #FFFFFF; border-radius: 10px; border: 1px solid grey">
           <div style="height: 30px; display: block;"></div>
           <h2 class="create-account" style="font-family: 'Arial Black'; font-size: 20px; " align="center">Iniciar
             Sesión</h2>
