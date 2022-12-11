@@ -179,10 +179,12 @@ public class UsuarioServlet extends HttpServlet {
                     }
                     break;
                 case("adddestacar"):
+                    System.out.println("SSSSSIUUUUUUU");
                     strId = request.getParameter("des");
                     if(inDao.idValid(strId) && inDao.verificarIncidencia(strId)){
                         int es = Integer.parseInt(strId);
                         try {
+                            System.out.println("UWUWUWUWUWUW");
                             inDao.destacarIncidenciaAdd(es,usuario1.getCodigo());
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
@@ -273,7 +275,7 @@ public class UsuarioServlet extends HttpServlet {
                                     response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=verDetalle&id="+jijija.getIdIncidencia());
                                 }else {
                                     try {
-                                        EnviarCorreoEstado.main(usuario1.getCorreo(),jijija,2,"Reabierto");
+                                        EnviarCorreoEstado.main(usuario1.getCorreo(),jijija,2,"En Proceso");
                                     } catch (MessagingException e) {
                                         e.printStackTrace();
                                     }
@@ -281,7 +283,7 @@ public class UsuarioServlet extends HttpServlet {
                                         ArrayList<Usuario> listausuariosdestacados = idao.obtenerUsuarioxDestacada(jijija.getIdIncidencia());
                                         if(listausuariosdestacados != null){
                                             for (Usuario u : listausuariosdestacados){
-                                                EnviarCorreoEstado.main(u.getCorreo(),jijija,2,"Reabierto");
+                                                EnviarCorreoEstado.main(u.getCorreo(),jijija,2,"En proceso");
                                             }
                                         }
                                     } catch (MessagingException e) {
