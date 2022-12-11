@@ -296,20 +296,17 @@ public class AdminServlet extends HttpServlet {
 
                         //Foto
 
-                        /*String relativeWebPath = "../images/usuario.png";
-=======
                         String relativeWebPath = "images/usuario.png";
->>>>>>> 732f5056b144ec257621de99aa469036fd30b153
                         String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
                         System.out.println(relativeWebPath);
                         System.out.println(absoluteDiskPath);
                         File file = new File(absoluteDiskPath);
-                        byte[] fileContent = Files.readAllBytes(file.toPath());*/
+                        byte[] fileContent = Files.readAllBytes(file.toPath());
 
                         FotoPerfil fp = new FotoPerfil();
+                        fp.setNombreFoto("usuario.png");
+                        fp.setFotobyte(fileContent);
 
-
-                        fp=null;
 
                         Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
 
@@ -460,7 +457,7 @@ public class AdminServlet extends HttpServlet {
                         //Foto
                         String relativeWebPath = "images/usuario.png";
                         String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
-                        File file = new File(relativeWebPath);
+                        File file = new File(absoluteDiskPath);
                         byte[] fileContent = Files.readAllBytes(file.toPath());
 
                         FotoPerfil fp = new FotoPerfil();
@@ -480,7 +477,6 @@ public class AdminServlet extends HttpServlet {
                                 usuarioDao.crearUsuario(usuario);
 
                                 response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
-                                break;
 
 
                         }else{
@@ -504,10 +500,10 @@ public class AdminServlet extends HttpServlet {
 
                                 view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
                                 view.forward(request, response);
-                                break;
 
 
                         }
+                        break;
                     }
                 } else {
                     //si presenta rol invalido
