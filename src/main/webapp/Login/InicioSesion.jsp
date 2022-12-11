@@ -37,13 +37,10 @@
     <div style="height: 200px; display: block;"></div>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-5" style="margin: 70px 0px 10px 60px">
-          <div class="message">
+        <div class="col-sm-5" style="display: flex; justify-content: center; align-items: center;">
             <h1 align="center" style="font-family: 'Arial Black'; font-size: 60px">Bienvenidos a MONITORING PUCP</h1>
-
-          </div>
         </div>
-        <div class="col-sm"></div>
+        <div class="col-sm" ></div>
         <div class="col-sm-4" align="center"
              style="margin: 10px 0px 10px 10px; background: #FFFFFF; border-radius: 10px; border: 1px solid grey">
           <div style="height: 30px; display: block;"></div>
