@@ -836,6 +836,38 @@ public class UsuarioDao extends DaoBase{
         return existe;
     }
 
+    public boolean verificarEmail(String email){
+        String sql = "Select correo from Usuarios where correo = ?";
+        boolean existe = false;
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1,email);
+            try(ResultSet rs = pstmt.executeQuery();){
+                if(rs.next()){
+                    existe = true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return existe;
+    }
 
+    public String obtenerCodigoPorEmail(String email){
+        String sql = "Select codigo from Usuarios where correo = ?";
+        String codigo="";
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1,email);
+            try(ResultSet rs = pstmt.executeQuery();){
+                if(rs.next()){
+                    codigo = rs.getString(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return codigo;
+    }
 
 }
