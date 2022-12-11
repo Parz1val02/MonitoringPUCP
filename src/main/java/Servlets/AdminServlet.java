@@ -102,6 +102,7 @@ public class AdminServlet extends HttpServlet {
                     strCodigo = request.getParameter("codigo");
                     if(incidenciaDao.idValid(strCodigo)&&usuarioDao.verificarUsuario(strCodigo)){
                         usuarioDao.borrar(strCodigo);
+                        session.setAttribute("estado","borrado exitoso");
                         response.sendRedirect(request.getContextPath() + "/AdminServlet");
                     }else{
                         response.sendRedirect(request.getContextPath() + "/AdminServlet");
@@ -136,7 +137,6 @@ public class AdminServlet extends HttpServlet {
         UsuarioDao usuarioDao = new UsuarioDao();
         RolDao rolDao = new RolDao();
         CategoriaDao categoriaDao = new CategoriaDao();
-        IncidenciaDao incidenciaDao = new IncidenciaDao();
         ArrayList<Usuario> listaUsuarios = usuarioDao.obtenerListaUsuarios();
 
         Usuario usuario1 = (Usuario) session.getAttribute("usuario");
@@ -159,7 +159,7 @@ public class AdminServlet extends HttpServlet {
                 String idRol = request.getParameter("rol");
                 int IDrol = 0;
                 if(!(inDao.idValid(idRol) && rDao.verificarRol(idRol))){
-                    rolValido = "El rol ingresado no es valido";
+                    rolValido = "El rol ingresado no es válido";
                 }else{
                     IDrol = Integer.parseInt(idRol);
                 }
@@ -176,14 +176,14 @@ public class AdminServlet extends HttpServlet {
 
 
                         if(!usuarioDao.dniValid(codigo)){
-                            codigovalido = "el codigo ingresado no fue correcto";
+                            codigovalido = "El código ingresado no es correcto";
 
                         }
                         //valida que no se repita
                         String codigoRepeat = "";
                         for(Usuario u: listaMasterTable){
                             if(u.getCodigo().equalsIgnoreCase(codigo)){
-                                codigoRepeat = "el codigo ingresado ya existe";
+                                codigoRepeat = "El código ingresado ya existe";
                                 break;
 
                             }
@@ -194,7 +194,7 @@ public class AdminServlet extends HttpServlet {
                         //valida el nombre ingresado
                         String nombrevalido = "";
                         if(!usuarioDao.nombreyApellidoValid(nombre)){
-                            nombrevalido = "el nombre ingresado no es valido";
+                            nombrevalido = "El nombre ingresado no es válido";
 
                         }
 
@@ -202,7 +202,7 @@ public class AdminServlet extends HttpServlet {
                         //valida el usuario ingresado
                         String apellidovalido = "";
                         if(!usuarioDao.nombreyApellidoValid(apellido)){
-                            apellidovalido = "el apellido ingresado no es valido";
+                            apellidovalido = "El apellido ingresado no es válido";
 
 
                         }
@@ -211,14 +211,14 @@ public class AdminServlet extends HttpServlet {
                         //valida el correo ingresado
                         String correovalido = "";
                         if(!usuarioDao.emailisValid(correo)){
-                            correovalido = "el correo ingresado no es valido";
+                            correovalido = "El correo ingresado no es válido";
 
                         }
                         //valida que no se repita el correo
                         String correoRepeat = "";
                         for(Usuario u: listaMasterTable){
                             if(u.getCorreo().equalsIgnoreCase(correo)){
-                                correoRepeat = "el correo ingresado ya existe";
+                                correoRepeat = "El correo ingresado ya existe";
                                 break;
                             }
                         }
@@ -227,7 +227,7 @@ public class AdminServlet extends HttpServlet {
                         //valida el dni ingresado
                         String dnivalido = "";
                         if(!usuarioDao.dniValid(dni)){
-                            dnivalido = "el dni ingresado no es valido";
+                            dnivalido = "El dni ingresado no es válido";
 
 
                         }
@@ -246,22 +246,26 @@ public class AdminServlet extends HttpServlet {
                         String celular = request.getParameter("celular");
                         //valida el celular ingresado
                         String celularvalido = "";
-                        if(!usuarioDao.celularValid(celular)){
-                            celularvalido = "el celular ingresado no es valido";
-
-
-                        }
-                        //valida que el usuario no se repita
                         String celularRepeat = "";
-                        for(Usuario u: listaMasterTable){
-                            if(u.getCelular()!=null){
-                                if(u.getCelular().equalsIgnoreCase(celular)){
-                                    celularRepeat = "el celular ingresado ya existe";
+                        if(!(celular.equalsIgnoreCase("No phone") || celular.equalsIgnoreCase(""))){
 
-                                }
+                            if(!usuarioDao.celularValid(celular)){
+                                celularvalido = "El celular ingresado no es válido";
+
                             }
+                            //valida que el usuario no se repita
 
+                            for(Usuario u: listaMasterTable){
+                                if(u.getCelular()!=null){
+                                    if(u.getCelular().equalsIgnoreCase(celular) && u.getCelular()!=null){
+                                        celularRepeat = "El celular ingresado ya existe";
+
+                                    }
+                                }
+
+                            }
                         }
+
 
                         String categoriaValida = "";
                         String categoriaPUCPStr = request.getParameter("categoriaPUCP");
@@ -277,7 +281,7 @@ public class AdminServlet extends HttpServlet {
                         } else if (categoriaPUCPStr.equalsIgnoreCase("egresado")) {
                             categoriaPUCPInt = 5;
                         }else{
-                            categoriaValida="La categoria PUCP ingresada no es valida";
+                            categoriaValida="La categoria PUCP ingresada no es válida";
                         }
 
                         if(categoriaValida.length()>0) {
@@ -316,9 +320,9 @@ public class AdminServlet extends HttpServlet {
                                 dnivalido.length() ==0 && dniRepeat.length() ==0 &&
                                 celularvalido.length() == 0 && celularRepeat.length() == 0){
 
-
+                            // todo -------------- crear usuario en mastertable
                             usuarioDao.crearUsuario(usuario);
-
+                            session.setAttribute("estado","usuario creado en mastertable exitosamente");
                             response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
                             break;
                         }else{
@@ -348,14 +352,14 @@ public class AdminServlet extends HttpServlet {
 
 
                         if(!usuarioDao.dniValid(codigo)){
-                            codigovalido = "el codigo ingresado no fue correcto";
+                            codigovalido = "El código ingresado no es correcto";
 
                         }
                         //valida que no se repita
                         String codigoRepeat = "";
                         for(Usuario u: listaUsuarios){
                             if(u.getCodigo().equalsIgnoreCase(codigo)){
-                                codigoRepeat = "el codigo ingresado ya existe";
+                                codigoRepeat = "El código ingresado ya existe";
                                 break;
 
                             }
@@ -366,7 +370,7 @@ public class AdminServlet extends HttpServlet {
                         //valida el nombre ingresado
                         String nombrevalido = "";
                         if(!usuarioDao.nombreyApellidoValid(nombre)){
-                            nombrevalido = "el nombre ingresado no es valido";
+                            nombrevalido = "El nombre ingresado no es válido";
 
                         }
 
@@ -374,7 +378,7 @@ public class AdminServlet extends HttpServlet {
                         //valida el usuario ingresado
                         String apellidovalido = "";
                         if(!usuarioDao.nombreyApellidoValid(apellido)){
-                            apellidovalido = "el apellido ingresado no es valido";
+                            apellidovalido = "El apellido ingresado no es válido";
 
 
                         }
@@ -383,14 +387,14 @@ public class AdminServlet extends HttpServlet {
                         //valida el correo ingresado
                         String correovalido = "";
                         if(!usuarioDao.emailisValid(correo)){
-                            correovalido = "el correo ingresado no es valido";
+                            correovalido = "El correo ingresado no es válido";
 
                         }
                         //valida que no se repita el correo
                         String correoRepeat = "";
                         for(Usuario u: listaUsuarios){
                             if(u.getCorreo().equalsIgnoreCase(correo)){
-                                correoRepeat = "el correo ingresado ya existe";
+                                correoRepeat = "El correo ingresado ya existe";
                                 break;
                             }
                         }
@@ -399,7 +403,7 @@ public class AdminServlet extends HttpServlet {
                         //valida el dni ingresado
                         String dnivalido = "";
                         if(!usuarioDao.dniValid(dni)){
-                            dnivalido = "el dni ingresado no es valido";
+                            dnivalido = "El dni ingresado no es válido";
 
 
                         }
@@ -418,27 +422,30 @@ public class AdminServlet extends HttpServlet {
                         String celular = request.getParameter("celular");
                         //valida el celular ingresado
                         String celularvalido = "";
-                        if(!usuarioDao.celularValid(celular)){
-                            celularvalido = "el celular ingresado no es valido";
-
-
-                        }
-                        //valida que el usuario no se repita
                         String celularRepeat = "";
-                        for(Usuario u: listaUsuarios){
-                            if(u.getCelular()!=null){
-                                if(u.getCelular().equalsIgnoreCase(celular)){
-                                    celularRepeat = "el celular ingresado ya existe";
+                        if(!(celular.equalsIgnoreCase("No phone") || celular.equalsIgnoreCase(""))){
 
-                                }
+                            if(!usuarioDao.celularValid(celular)){
+                                celularvalido = "El celular ingresado no es válido";
+
                             }
+                            //valida que el usuario no se repita
 
+                            for(Usuario u: listaMasterTable){
+                                if(u.getCelular()!=null){
+                                    if(u.getCelular().equalsIgnoreCase(celular) && u.getCelular()!=null){
+                                        celularRepeat = "El celular ingresado ya existe";
+
+                                    }
+                                }
+
+                            }
                         }
                         String categoriaValida="";
                         String categoriaPUCPStr = request.getParameter("categoriaPUCP");
                         int categoriaPUCPInt = 0;
                         if (!(categoriaPUCPStr.equalsIgnoreCase("no tiene categoria"))) {
-                            categoriaValida="La categoria PUCP ingresada no es valida";
+                            categoriaValida="La categoria PUCP ingresada no es válida";
                         }
 
                         if(categoriaValida.length()>0) {
@@ -455,14 +462,17 @@ public class AdminServlet extends HttpServlet {
 
 
                         //Foto
-                        String relativeWebPath = "images/usuario.png";
+                        FotoPerfil fp = new FotoPerfil();
+                        /*String relativeWebPath = "images/usuario.png";
                         String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
                         File file = new File(absoluteDiskPath);
                         byte[] fileContent = Files.readAllBytes(file.toPath());
 
-                        FotoPerfil fp = new FotoPerfil();
+
                         fp.setFotobyte(fileContent);
-                        fp.setNombreFoto("usuario.png");
+                        fp.setNombreFoto("usuario.png");*/
+
+                        fp=null;
 
                         Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
 
@@ -473,9 +483,9 @@ public class AdminServlet extends HttpServlet {
                                 dnivalido.length() ==0 && dniRepeat.length() ==0 &&
                                 celularvalido.length() == 0 && celularRepeat.length() == 0){
 
-
+                                // todo ---------- Seguridad creado en tabla usuarios
                                 usuarioDao.crearUsuario(usuario);
-
+                                session.setAttribute("estado","seguridad creado en usurios exitosamente");
                                 response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
 
 
@@ -532,7 +542,7 @@ public class AdminServlet extends HttpServlet {
                 idRol = request.getParameter("rol");
                 IDrol = 0;
                 if(!(inDao.idValid(idRol) && rDao.verificarRol(idRol))){
-                    rolValido = "El rol ingresado no es valido";
+                    rolValido = "El rol ingresado no es válido";
                 }else{
                     IDrol = Integer.parseInt(idRol);
                 }
@@ -541,7 +551,7 @@ public class AdminServlet extends HttpServlet {
 
 
 
-                System.out.println(rol1.getIdRol());
+                //System.out.println(rol1.getIdRol());
 
                 if(rolValido.length()==0){
                     //valida el codigo
@@ -555,7 +565,7 @@ public class AdminServlet extends HttpServlet {
                         //valida el nombre ingresado
                         String nombrevalido = "";
                         if(!usuarioDao.nombreyApellidoValid(nombre)){
-                            nombrevalido = "el nombre ingresado no es valido";
+                            nombrevalido = "El nombre ingresado no es válido";
 
                         }
 
@@ -563,7 +573,7 @@ public class AdminServlet extends HttpServlet {
                         //valida el usuario ingresado
                         String apellidovalido = "";
                         if(!usuarioDao.nombreyApellidoValid(apellido)){
-                            apellidovalido = "el apellido ingresado no es valido";
+                            apellidovalido = "El apellido ingresado no es válido";
 
 
                         }
@@ -572,14 +582,14 @@ public class AdminServlet extends HttpServlet {
                         //valida el correo ingresado
                         String correovalido = "";
                         if(!usuarioDao.emailisValid(correo)){
-                            correovalido = "el correo ingresado no es valido";
+                            correovalido = "El correo ingresado no es válido";
 
                         }
                         //valida que no se repita el correo
                         String correoRepeat = "";
                         for(Usuario u: listaMasterTable){
                             if(u.getCorreo().equalsIgnoreCase(correo) && !u.getCodigo().equalsIgnoreCase(codigo)){
-                                correoRepeat = "el correo ingresado ya existe";
+                                correoRepeat = "El correo ingresado ya existe";
                                 break;
                             }
                         }
@@ -588,7 +598,7 @@ public class AdminServlet extends HttpServlet {
                         //valida el dni ingresado
                         String dnivalido = "";
                         if(!usuarioDao.dniValid(dni)){
-                            dnivalido = "el dni ingresado no es valido";
+                            dnivalido = "El dni ingresado no es válido";
 
 
                         }
@@ -607,21 +617,24 @@ public class AdminServlet extends HttpServlet {
                         String celular = request.getParameter("celular");
                         //valida el celular ingresado
                         String celularvalido = "";
-                        if(!usuarioDao.celularValid(celular)){
-                            celularvalido = "el celular ingresado no es valido";
-
-
-                        }
-                        //valida que el celular no se repita
                         String celularRepeat = "";
-                        for(Usuario u: listaMasterTable){
-                            if(u.getCelular()!=null){
-                                if(u.getCelular().equalsIgnoreCase(celular) && !u.getCodigo().equalsIgnoreCase(codigo)){
-                                    celularRepeat = "el celular ingresado ya existe";
+                        if(!(celular.equalsIgnoreCase("No phone") || celular.equalsIgnoreCase(""))){
 
-                                }
+                            if(!usuarioDao.celularValid(celular)){
+                                celularvalido = "El celular ingresado no es válido";
+
                             }
+                            //valida que el usuario no se repita
 
+                            for(Usuario u: listaMasterTable){
+                                if(u.getCelular()!=null){
+                                    if(u.getCelular().equalsIgnoreCase(celular) && u.getCelular()!=null && !u.getCodigo().equalsIgnoreCase(codigo)){
+                                        celularRepeat = "El celular ingresado ya existe";
+
+                                    }
+                                }
+
+                            }
                         }
 
                         String categoriaValida = "";
@@ -638,14 +651,14 @@ public class AdminServlet extends HttpServlet {
                         } else if (categoriaPUCPStr.equalsIgnoreCase("egresado")) {
                             categoriaPUCPInt = 5;
                         }else{
-                            categoriaValida="La categoria PUCP ingresada no es valida";
+                            categoriaValida="La categoria PUCP ingresada no es válida";
                         }
 
                         if(categoriaValida.length()>0) {
                             request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
                             request.setAttribute("roles", rolDao.obtenerRoles());
                             session.setAttribute("categoriaValida", categoriaValida);
-                            System.out.println("categoria valida (Usuario)");
+                            //System.out.println("categoria valida (Usuario)");
                             view = request.getRequestDispatcher("/Administrador/editUser.jsp");
                             view.forward(request, response);
                             break;
@@ -675,9 +688,9 @@ public class AdminServlet extends HttpServlet {
                                 dnivalido.length() ==0 && dniRepeat.length() ==0 &&
                                 celularvalido.length() == 0 && celularRepeat.length() == 0){
 
-
+                            // todo ------- usuario editado en tabla usuarios
                             usuarioDao.actualizarUsuario(usuario);
-
+                            session.setAttribute("estado","cambios realizados exitosamente");
                             response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
                             break;
                         }else{
@@ -698,8 +711,8 @@ public class AdminServlet extends HttpServlet {
                             request.setAttribute("roles", rolDao.obtenerRoles());
 
 
-                            System.out.println("uno de los msgs existe, por lo tanto hay error (Usuario)");
-                            if(nombrevalido.length()!=0){
+                            //System.out.println("uno de los msgs existe, por lo tanto hay error (Usuario)");
+                            /*if(nombrevalido.length()!=0){
                                 System.out.println(nombrevalido);
                             }
                             if(apellidovalido.length()!=0){
@@ -722,7 +735,7 @@ public class AdminServlet extends HttpServlet {
                             }
                             if(celularRepeat.length()!=0){
                                 System.out.println(celularRepeat);
-                            }
+                            }*/
 
 
 
@@ -740,7 +753,7 @@ public class AdminServlet extends HttpServlet {
                         //valida el nombre ingresado
                         String nombrevalido = "";
                         if(!usuarioDao.nombreyApellidoValid(nombre)){
-                            nombrevalido = "el nombre ingresado no es valido";
+                            nombrevalido = "El nombre ingresado no es válido";
 
                         }
 
@@ -748,7 +761,7 @@ public class AdminServlet extends HttpServlet {
                         //valida el usuario ingresado
                         String apellidovalido = "";
                         if(!usuarioDao.nombreyApellidoValid(apellido)){
-                            apellidovalido = "el apellido ingresado no es valido";
+                            apellidovalido = "El apellido ingresado no es válido";
 
 
                         }
@@ -757,14 +770,14 @@ public class AdminServlet extends HttpServlet {
                         //valida el correo ingresado
                         String correovalido = "";
                         if(!usuarioDao.emailisValid(correo)){
-                            correovalido = "el correo ingresado no es valido";
+                            correovalido = "El correo ingresado no es válido";
 
                         }
                         //valida que no se repita el correo
                         String correoRepeat = "";
                         for(Usuario u: listaUsuarios){
                             if(u.getCorreo().equalsIgnoreCase(correo) && !u.getCodigo().equalsIgnoreCase(codigo)){
-                                correoRepeat = "el correo ingresado ya existe";
+                                correoRepeat = "El correo ingresado ya existe";
                                 break;
                             }
                         }
@@ -773,7 +786,7 @@ public class AdminServlet extends HttpServlet {
                         //valida el dni ingresado
                         String dnivalido = "";
                         if(!usuarioDao.dniValid(dni)){
-                            dnivalido = "el dni ingresado no es valido";
+                            dnivalido = "El dni ingresado no es valido";
 
 
                         }
@@ -792,27 +805,30 @@ public class AdminServlet extends HttpServlet {
                         String celular = request.getParameter("celular");
                         //valida el celular ingresado
                         String celularvalido = "";
-                        if(!usuarioDao.celularValid(celular)){
-                            celularvalido = "el celular ingresado no es valido";
-
-
-                        }
-                        //valida que el usuario no se repita
                         String celularRepeat = "";
-                        for(Usuario u: listaUsuarios){
-                            if(u.getCelular()!=null){
-                                if(u.getCelular().equalsIgnoreCase(celular) && !u.getCodigo().equalsIgnoreCase(codigo)){
-                                    celularRepeat = "el celular ingresado ya existe";
+                        if(!(celular.equalsIgnoreCase("No phone") || celular.equalsIgnoreCase(""))){
 
-                                }
+                            if(!usuarioDao.celularValid(celular)){
+                                celularvalido = "El celular ingresado no es válido";
+
                             }
+                            //valida que el usuario no se repita
 
+                            for(Usuario u: listaMasterTable){
+                                if(u.getCelular()!=null){
+                                    if(u.getCelular().equalsIgnoreCase(celular) && u.getCelular()!=null && !u.getCodigo().equalsIgnoreCase(codigo)){
+                                        celularRepeat = "El celular ingresado ya existe";
+
+                                    }
+                                }
+
+                            }
                         }
                         String categoriaValida="";
                         String categoriaPUCPStr = request.getParameter("categoriaPUCP");
                         int categoriaPUCPInt = 0;
                         if (!(categoriaPUCPStr.equalsIgnoreCase("no tiene categoria"))) {
-                            categoriaValida="La categoria PUCP ingresada no es valida";
+                            categoriaValida="La categoria PUCP ingresada no es válida";
                         }
 
                         if(categoriaValida.length()>0) {
@@ -820,7 +836,7 @@ public class AdminServlet extends HttpServlet {
                             request.setAttribute("roles", rolDao.obtenerRoles());
                             session.setAttribute("categoriaValida", categoriaValida);
                             view = request.getRequestDispatcher("/Administrador/editUser.jsp");
-                            System.out.println("la categoria no es valida (Seguridad)");
+                            //System.out.println("la categoria no es valida (Seguridad)");
                             view.forward(request, response);
                             break;
                         }
@@ -848,9 +864,9 @@ public class AdminServlet extends HttpServlet {
                                 dnivalido.length() ==0 && dniRepeat.length() ==0 &&
                                 celularvalido.length() == 0 && celularRepeat.length() == 0){
 
-
+                            //todo ---------- seguridad editado en tabla usuarios
                             usuarioDao.actualizarUsuario(usuario);
-
+                            session.setAttribute("estado","cambios realizados exitosamente");
                             response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
                             break;
 
@@ -872,7 +888,7 @@ public class AdminServlet extends HttpServlet {
                             request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
                             request.setAttribute("roles", rolDao.obtenerRoles());
 
-                            System.out.println("unos de los msgs (Seguridad)");
+                           // System.out.println("unos de los msgs (Seguridad)");
                             view = request.getRequestDispatcher("/Administrador/editUser.jsp");
                             view.forward(request, response);
                             break;
@@ -887,7 +903,7 @@ public class AdminServlet extends HttpServlet {
                     request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
                     request.setAttribute("roles", rolDao.obtenerRoles());
                     session.setAttribute("rolValido", rolValido);
-                    System.out.println("Presenta rol invalido");
+                    //System.out.println("Presenta rol invalido");
                     view = request.getRequestDispatcher("/Administrador/editUser.jsp");
                     view.forward(request, response);
                     break;
@@ -902,8 +918,8 @@ public class AdminServlet extends HttpServlet {
                 String repass = request.getParameter("repass");
 
                 //UsuarioDao uDao = new UsuarioDao();
-                System.out.println(actual);
-                System.out.println("usuario1:"+usuario1.getPassword());
+                //System.out.println(actual);
+                //System.out.println("usuario1:"+usuario1.getPassword());
                 if(usuarioDao.contraValidaAdmin(actual,correo1)) {
 
 
@@ -913,17 +929,17 @@ public class AdminServlet extends HttpServlet {
                     if (contrasenaCorrecta) {
 
                         if (!nueva.equalsIgnoreCase(repass)) { //si cuando confirma la nueva contraseña no es igual
-                            request.setAttribute("msgIguales", "Para confirmar, ambas contrasenas deben ser iguales");
+                            request.setAttribute("msgIguales", "Para confirmar, ambas contraseñas deben ser iguales");
                             view = request.getRequestDispatcher("/Administrador/changepassword.jsp");
                             view.forward(request, response);
-                            System.out.println("contraseñas nuevas no iguales");
+                            //System.out.println("contraseñas nuevas no iguales");
                             break;
                         }
                         if (nueva.equalsIgnoreCase(actual)) {//si la contraseña nueva es igual a la actual----> no se puede
-                            request.setAttribute("msgOld", "Las contrasenas no pueden ser iguales");
+                            request.setAttribute("msgOld", "Las contraseñas no pueden ser iguales");
                             view = request.getRequestDispatcher("/Administrador/changepassword.jsp");
                             view.forward(request, response);
-                            System.out.println("contraseñas igual a la original");
+                            //System.out.println("contraseñas igual a la original");
                             break;
                         }
 

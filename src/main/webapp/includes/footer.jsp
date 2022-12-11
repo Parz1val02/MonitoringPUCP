@@ -31,7 +31,7 @@
                 </div>
                 <!-- Grid column -->
 
-                <hr class="w-100 clearfix d-md-none" />
+                <hr class="w-100 clearfix d-md-none"/>
 
                 <!-- Grid column -->
                 <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
@@ -46,14 +46,15 @@
                 </div>
                 <!-- Grid column -->
 
-                <hr class="w-100 clearfix d-md-none" />
+                <hr class="w-100 clearfix d-md-none"/>
 
                 <!-- Grid column -->
-                <hr class="w-100 clearfix d-md-none" />
+                <hr class="w-100 clearfix d-md-none"/>
 
                 <!-- Grid column -->
                 <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">MAYOR INFORMACIÓN</h6>
+                    <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">MAYOR
+                        INFORMACIÓN</h6>
                     <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px; color: #a9b9d4">
                         Si necesitas ayuda escribe a:
                         <div style="height: 1px; display: block;"></div>

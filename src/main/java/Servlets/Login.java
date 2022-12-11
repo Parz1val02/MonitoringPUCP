@@ -302,7 +302,7 @@ public class Login extends HttpServlet {
                             }
 
                         } else {
-                            session.setAttribute("msg", "Codigo de autenticación no válido");
+                            session.setAttribute("msg", "Código de autenticación no válido");
                             if (usuario.getRol().getNombreRol().equals("Seguridad")) {
                                 RequestDispatcher view = request.getRequestDispatcher("/Login/doblefactor.jsp");
                                 view.forward(request, response);
@@ -331,7 +331,7 @@ public class Login extends HttpServlet {
                         break;
                     }
                 } else {
-                    session.setAttribute("msg", "Su código ha expirado. Solicite nuevo código");
+                    session.setAttribute("msg", "Su código ha expirado. Solicite uno nuevo");
                     if (usuario.getRol().getNombreRol().equals("Seguridad")) {
 
                         RequestDispatcher view = request.getRequestDispatcher("/Login/doblefactor.jsp");
@@ -355,7 +355,7 @@ public class Login extends HttpServlet {
                 if(usuarioMasterterTable){
                     Usuario usuarioMaster = uDao.buscarPorIdMasterTable(codigo);
                     if(uDao.validarPrimerIngreso(usuarioMaster)){
-                        String relativeWebPath = "./images/usuario.png";
+                        String relativeWebPath = "images/usuario.png";
                         String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
                         File file = new File(absoluteDiskPath);
                         byte[] fileContent = Files.readAllBytes(file.toPath());
@@ -462,7 +462,7 @@ public class Login extends HttpServlet {
 
                     if (contrasenaCorrecta) {
                         if (!nueva.equalsIgnoreCase(repass)) { //si cuando confirma la nueva contraseña no es igual
-                            request.setAttribute("msgIguales", "Para confirmar, ambas contrasenas deben ser iguales");
+                            request.setAttribute("msgIguales", "Para confirmar, ambas contraseñas deben ser iguales");
                             request.setAttribute("codigo",code);
                             view = request.getRequestDispatcher("/Login/RecuperarContrasenia.jsp");
                             view.forward(request, response);
@@ -470,7 +470,7 @@ public class Login extends HttpServlet {
                             break;
                         }
                         uDao.cambiarContrasenaConCodigo(code, nueva);
-                        session.setAttribute("msg","Su contraseña fue cambiada con exito");
+                        session.setAttribute("msg","Su contraseña fue cambiada con éxito");
                         RequestDispatcher requestDispatcher= request.getRequestDispatcher("/Login/InicioSesion.jsp");
                         requestDispatcher.forward(request,response);
                     } else {
