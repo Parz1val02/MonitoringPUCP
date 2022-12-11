@@ -117,6 +117,15 @@
                         </div>
                     </div>
                 </div>
+                <% if (session.getAttribute("estado")!=null){%>
+                <div class="alert alert-success" role="alert">
+                    <%=session.getAttribute("estado")%>
+                </div>
+
+                <%
+                        session.removeAttribute("estado");
+                    }
+                %>
                 <div class="page-content fade-in-up">
                     <div class="ibox">
                         <div class="ibox-body">
