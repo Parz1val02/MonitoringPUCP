@@ -91,154 +91,155 @@
 
                 <div style="background: #dee2e6;">
 
-                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="margin-top: 20px; overflow: auto">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"
+                         style="margin-top: 20px; overflow: auto">
                         <div class="carousel-inner">
                             <%int i = 0;%>
                             <% for (Incidencia incidencia : listaIncidencias) {%>
                             <div class="carousel-item <%if(i==0){%> active <%}%>">
-                                    <div class="container bg-grey d">
-                                        <div class="row">
-                                            <div class="col-md-1" style="background: #dee2e6"></div>
-                                            <div class="col-md-6 img-container"
-                                                 style="background: #dee2e6; margin: auto; overflow: auto">
-                                                <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=listaFotos.get(i).getIdFotos()%>"
-                                                     alt=""/>
-                                            </div>
-                                            <div class="col-md-4" style="background: #FFFFFF">
-                                                <div style="border-radius: 2px;border-color: black">
-                                                    <div class="container-fluid" style="padding-top: 4vh;"
-                                                         align="center">
-                                                        <div class="row" align="center">
-                                                            <div class="col-md-7" align="right">
-                                                                <div style="height: 5px; display: block;"></div>
-                                                                <h7 style="font-family: sans-serif,Montserrat; font-weight: 700;
+                                <div class="container bg-grey d">
+                                    <div class="row">
+                                        <div class="col-md-1" style="background: #dee2e6"></div>
+                                        <div class="col-md-6 img-container"
+                                             style="background: #dee2e6; margin: auto; overflow: auto">
+                                            <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=listaFotos.get(i).getIdFotos()%>"
+                                                 alt=""/>
+                                        </div>
+                                        <div class="col-md-4" style="background: #FFFFFF">
+                                            <div style="border-radius: 2px;border-color: black">
+                                                <div class="container-fluid" style="padding-top: 4vh;"
+                                                     align="center">
+                                                    <div class="row" align="center">
+                                                        <div class="col-md-7" align="right">
+                                                            <div style="height: 5px; display: block;"></div>
+                                                            <h7 style="font-family: sans-serif,Montserrat; font-weight: 700;
                                                             font-size: 20px; color: #783bb3;" align="center">
-                                                                    Incidencia #<%=i + 1%>
-                                                                </h7>
-                                                            </div>
-                                                            <div class="col-md-1"></div>
-                                                            <div class="col-md-4">
-                                                                <%if (estados.get(i) == 0) {%>
-                                                                <a type="button"
-                                                                   class="btn btn-primary btn-mg float-right"
-                                                                   style="font-size: 15px; border-color: #042354; background-color: #042354;"
-                                                                   href="<%=request.getContextPath()%>/UsuarioServlet?accion=adddestacar&des=<%=incidencia.getIdIncidencia()%>">
-                                                                    <i class="fa-solid fa-pen">Destacar</i>
-                                                                </a>
-                                                                <%} else if (estados.get(i) == 1) {%>
-                                                                <a type="button"
-                                                                   class="btn btn-primary btn-mg float-right"
-                                                                   style="font-size: 15px; border-color: #042354; background-color: #042354;"
-                                                                   href="<%=request.getContextPath()%>/UsuarioServlet?accion=deletedestacar&des=<%=incidencia.getIdIncidencia()%>">
-                                                                    <i class="fa-solid fa-pen">Quitar Destacado</i>
-                                                                </a>
-                                                                <%}%>
-                                                            </div>
+                                                                Incidencia #<%=i + 1%>
+                                                            </h7>
                                                         </div>
-                                                        <div style="height: 20px; display: block;"></div>
-                                                        <div class="col-md-12" style="margin: 0px">
-                                                            <div class="container-fluid">
-                                                                <div class="row">
-                                                                    <div align="center">
-                                                                        <p style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 20px;
-                                                                        color: #042354; margin: 0px">Nombre de la
-                                                                            Incidencia
-                                                                        </p>
-                                                                        <p style="font-family: sans-serif,Montserrat; font-weight: 450; font-size: 16px;">
-                                                                            <%= incidencia.getNombreIncidencia()%>
-                                                                        </p>
-                                                                    </div>
-                                                                    <div style="height: 15px; display: block;"></div>
-                                                                    <div class="col-sm-7" align="right">
-                                                                        <p style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px;
-                                                                            color: #042354; margin: 0px"># de
-                                                                            Destacadas</p>
-                                                                    </div>
-                                                                    <div class="col-sm-2">
-                                                                        <input class="form-control" type="text"
-                                                                               placeholder="<%=incidencia.getIncidenciasDestacadas().getContadorDestacado()%>"
-                                                                               aria-label="Disabled input example"
-                                                                               disabled style="text-align: center">
-                                                                    </div>
-                                                                    <div class="col-sm-3"></div>
-                                                                </div>
-                                                            </div>
+                                                        <div class="col-md-1"></div>
+                                                        <div class="col-md-4">
+                                                            <%if (estados.get(i) == 0) {%>
+                                                            <a type="button"
+                                                               class="btn btn-primary btn-mg float-right"
+                                                               style="font-size: 15px; border-color: #042354; background-color: #042354;"
+                                                               href="<%=request.getContextPath()%>/UsuarioServlet?accion=adddestacar&des=<%=incidencia.getIdIncidencia()%>">
+                                                                <i class="fa-solid fa-pen">Destacar</i>
+                                                            </a>
+                                                            <%} else if (estados.get(i) == 1) {%>
+                                                            <a type="button"
+                                                               class="btn btn-primary btn-mg float-right"
+                                                               style="font-size: 15px; border-color: #042354; background-color: #042354;"
+                                                               href="<%=request.getContextPath()%>/UsuarioServlet?accion=deletedestacar&des=<%=incidencia.getIdIncidencia()%>">
+                                                                <i class="fa-solid fa-pen">Quitar Destacado</i>
+                                                            </a>
+                                                            <%}%>
                                                         </div>
-                                                        <div style="height: 40px; display: block;"></div>
-                                                        <div class="col-md-12" style="margin: 0px">
-                                                            <div class="container-fluid">
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div class="col-md-12">
-                                                                            <i class="fa fa-calendar"></i>
-                                                                            <h8 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px;
-                                                                            color: #042354; margin: 0px">Fecha
-                                                                            </h8>
-                                                                        </div>
-                                                                        <div class="col-md-12">
-                                                                            <h8 style="font-family: sans-serif,Montserrat; font-weight: 450; font-size: 16px;"><%=incidencia.getFecha()%>
-                                                                            </h8>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="col-md-12">
-                                                                            <i class="fa fa-location-arrow"></i>
-                                                                            <h8 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px;
-                                                                            color: #042354; margin: 0px">Zona PUCP
-                                                                            </h8>
-                                                                        </div>
-                                                                        <div class="col-md-12">
-                                                                            <h8 style="font-family: sans-serif,Montserrat; font-weight: 450; font-size: 16px;"><%=incidencia.getZonaPUCP().getNombreZona()%>
-                                                                            </h8>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div style="height: 30px; display: block;"></div>
-                                                        <div class="col-md-12" style="margin: 0px">
-                                                            <div class="container-fluid">
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div class="col-md-12">
-                                                                            <i class="fa fa-ambulance"></i>
-                                                                            <h8 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px;
-                                                                            color: #042354; margin: 0px">Tipo
-                                                                            </h8>
-                                                                        </div>
-                                                                        <div class="col-md-12">
-                                                                            <h8 style="font-family: sans-serif,Montserrat; font-weight: 450; font-size: 16px;"><%=incidencia.getTipoIncidencia().getTipo()%>
-                                                                            </h8>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="col-md-12">
-                                                                            <i class="material-icons">traffic</i>
-                                                                            <h8 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px;
-                                                                            color: #042354; margin: 0px">Urgencia
-                                                                            </h8>
-                                                                        </div>
-                                                                        <div class="col-md-12">
-                                                                            <h8 style="font-family: sans-serif,Montserrat; font-weight: 450; font-size: 16px;"><%= incidencia.getNivelUrgencia().getNivel()%>
-                                                                            </h8>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div style="height: 50px; display: block;"></div>
-                                                        <div align="center">
-                                                            <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle2&id=<%=incidencia.getIdIncidencia()%>"
-                                                               style="color: #783bb3; font-weight: bold; font-size: 17px">Ver
-                                                                detalle de la incidencia</a>
-                                                        </div>
-                                                        <div style="height: 5px; display: block;"></div>
                                                     </div>
+                                                    <div style="height: 20px; display: block;"></div>
+                                                    <div class="col-md-12" style="margin: 0px">
+                                                        <div class="container-fluid">
+                                                            <div class="row">
+                                                                <div align="center">
+                                                                    <p style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 20px;
+                                                                        color: #042354; margin: 0px">Nombre de la
+                                                                        Incidencia
+                                                                    </p>
+                                                                    <p style="font-family: sans-serif,Montserrat; font-weight: 450; font-size: 16px;">
+                                                                        <%= incidencia.getNombreIncidencia()%>
+                                                                    </p>
+                                                                </div>
+                                                                <div style="height: 15px; display: block;"></div>
+                                                                <div class="col-sm-7" align="right">
+                                                                    <p style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px;
+                                                                            color: #042354; margin: 0px"># de
+                                                                        Destacadas</p>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <input class="form-control" type="text"
+                                                                           placeholder="<%=incidencia.getIncidenciasDestacadas().getContadorDestacado()%>"
+                                                                           aria-label="Disabled input example"
+                                                                           disabled style="text-align: center">
+                                                                </div>
+                                                                <div class="col-sm-3"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div style="height: 40px; display: block;"></div>
+                                                    <div class="col-md-12" style="margin: 0px">
+                                                        <div class="container-fluid">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="col-md-12">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                        <h8 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px;
+                                                                            color: #042354; margin: 0px">Fecha
+                                                                        </h8>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <h8 style="font-family: sans-serif,Montserrat; font-weight: 450; font-size: 16px;"><%=incidencia.getFecha()%>
+                                                                        </h8>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="col-md-12">
+                                                                        <i class="fa fa-location-arrow"></i>
+                                                                        <h8 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px;
+                                                                            color: #042354; margin: 0px">Zona PUCP
+                                                                        </h8>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <h8 style="font-family: sans-serif,Montserrat; font-weight: 450; font-size: 16px;"><%=incidencia.getZonaPUCP().getNombreZona()%>
+                                                                        </h8>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div style="height: 30px; display: block;"></div>
+                                                    <div class="col-md-12" style="margin: 0px">
+                                                        <div class="container-fluid">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="col-md-12">
+                                                                        <i class="fa fa-ambulance"></i>
+                                                                        <h8 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px;
+                                                                            color: #042354; margin: 0px">Tipo
+                                                                        </h8>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <h8 style="font-family: sans-serif,Montserrat; font-weight: 450; font-size: 16px;"><%=incidencia.getTipoIncidencia().getTipo()%>
+                                                                        </h8>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="col-md-12">
+                                                                        <i class="material-icons">traffic</i>
+                                                                        <h8 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px;
+                                                                            color: #042354; margin: 0px">Urgencia
+                                                                        </h8>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <h8 style="font-family: sans-serif,Montserrat; font-weight: 450; font-size: 16px;"><%= incidencia.getNivelUrgencia().getNivel()%>
+                                                                        </h8>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div style="height: 50px; display: block;"></div>
+                                                    <div align="center">
+                                                        <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle2&id=<%=incidencia.getIdIncidencia()%>"
+                                                           style="color: #783bb3; font-weight: bold; font-size: 17px">Ver
+                                                            detalle de la incidencia</a>
+                                                    </div>
+                                                    <div style="height: 5px; display: block;"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-1" style="background: #dee2e6"></div>
                                         </div>
+                                        <div class="col-md-1" style="background: #dee2e6"></div>
                                     </div>
+                                </div>
 
                             </div>
                             <%i++;%>
@@ -261,100 +262,16 @@
                 </div>
                 <div style="height: 20px; display: block; background: #dee2e6;"></div>
             </div>
-
-            <div style="height: 100px; display: block;"></div>
-
-            <div style="background: #042354; padding: 0px">
-                <footer class="text-center text-lg-start text-white"
-                        style="background-color: #042354; position: absolute;width: 100%; padding: 0px">
-                    <!-- Grid container -->
-                    <div class="container p-4 pb-0">
-                        <!-- Section: Links -->
-                        <section class="">
-                            <!--Grid row-->
-                            <div class="row">
-                                <!-- Grid column -->
-                                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                                    <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">
-                                        UBICACIÓN
-                                    </h6>
-                                    <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px; color: #a9b9d4">
-                                        Campus principal
-                                        <div style="height: 1px; display: block;"></div>
-                                        Av. Universitaria 1801, San Miguel, 15088
-                                        <div style="height: 1px; display: block;"></div>
-                                        Lima, Perú
-                                    </div>
-
-                                </div>
-                                <!-- Grid column -->
-
-                                <hr class="w-100 clearfix d-md-none"/>
-
-                                <!-- Grid column -->
-                                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                                    <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">
-                                        CONTACTO</h6>
-                                    <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px; color: #a9b9d4">
-                                        Central telefónica 626-2000
-                                        <div style="height: 1px; display: block;"></div>
-                                        Desde provincias 0800-1-7827 (servicio gratuito)
-                                    </div>
-
-
-                                </div>
-                                <!-- Grid column -->
-
-                                <hr class="w-100 clearfix d-md-none"/>
-
-                                <!-- Grid column -->
-                                <hr class="w-100 clearfix d-md-none"/>
-
-                                <!-- Grid column -->
-                                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                                    <h6 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 18px">MAYOR
-                                        INFORMACIÓN</h6>
-                                    <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px; color: #a9b9d4">
-                                        Si necesitas ayuda escribe a:
-                                        <div style="height: 1px; display: block;"></div>
-                                        <u>asistencia-dti@pucp.edu.pe</u>
-                                    </div>
-                                </div>
-                                <!-- Grid column -->
-                            </div>
-                            <!--Grid row-->
-                        </section>
-                        <!-- Section: Links -->
-
-                        <hr class="my-3">
-
-                        <!-- Section: Copyright -->
-                        <section class="p-3 pt-0" style="background: #042354">
-                            <div class="row d-flex align-items-center">
-                                <!-- Grid column -->
-                                <div class="col-md-7 col-lg-8 text-center text-md-start">
-                                    <!-- Copyright -->
-                                    <div style="height: 5px; display: block;"></div>
-                                    <div style="font-family: sans-serif,Montserrat; font-weight: 350;font-size: 14px">
-                                        © Pontificia Universidad Católica del Perú - Todos los derechos reservados
-                                    </div>
-                                    <div style="height: 10px; display: block;"></div>
-                                    <!-- Copyright -->
-                                </div>
-                                <!-- Grid column -->
-
-                            </div>
-                        </section>
-                        <!-- Section: Copyright -->
-                    </div>
-                    <!-- Grid container -->
-                </footer>
-            </div>
         </div>
-        <!-- CARROUSEL -->
+        <div style="height: 100px; display: block;"></div>
 
 
-
-
+        <!-- FOOTER -->
+        <div class="container-fluid" style="background: #042354; padding: 0px">
+            <jsp:include page="../includes/footer.jsp">
+                <jsp:param name="footer" value="Footer"/>
+            </jsp:include>
+        </div>
+        <!-- FOOTER -->
     </body>
 </html>

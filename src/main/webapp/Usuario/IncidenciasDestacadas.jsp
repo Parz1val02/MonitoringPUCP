@@ -20,17 +20,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Incidencias Destacadas</title>
     <meta name="viewport" content="width=device-width initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="../css/datatables.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css"
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../css/datatables.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="../css/style.min.css">
     <style>
       .google-maps {
         position: relative;
-        padding-bottom: 75%; // Esta es la relación de aspecto
-      height: 0;
+        padding-bottom: 75%;
+      / / Esta es la relación de aspecto height: 0;
         overflow: hidden;
       }
+
       .google-maps iframe {
         position: absolute;
         top: 0;
@@ -85,17 +88,22 @@
                 </thead>
 
                 <tbody>
-                  <%int i=0;%>
-                  <% for(Incidencia incidencia : listaIncidencias) {%>
-                  <%if (estados.get(i)==1) {%>
+                  <%int i = 0;%>
+                  <% for (Incidencia incidencia : listaIncidencias) {%>
+                  <%if (estados.get(i) == 1) {%>
                   <tr>
-                    <td><%= incidencia.getNombreIncidencia()%> </td>
-                    <td><%= incidencia.getUsuario().getNombre()%></td>
-                    <td><%= incidencia.getEstadoIncidencia().getEstado()%> </td
+                    <td><%= incidencia.getNombreIncidencia()%>
+                    </td>
+                    <td><%= incidencia.getUsuario().getNombre()%>
+                    </td>
+                    <td><%= incidencia.getEstadoIncidencia().getEstado()%>
+                    </td
                     <td></td>
-                    <td><%= incidencia.getIncidenciasDestacadas().getContadorDestacado()%> </td>
+                    <td><%= incidencia.getIncidenciasDestacadas().getContadorDestacado()%>
+                    </td>
                     <td>
-                      <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle2&id=<%=incidencia.getIdIncidencia()%>">Ver detalle</a>
+                      <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetalle2&id=<%=incidencia.getIdIncidencia()%>">Ver
+                        detalle</a>
                     </td>
                     <td>
                       <a type="button" class="btn btn-primary btn-mg float-right"
@@ -127,93 +135,9 @@
     </div>
     <!-- FOOTER -->
 
-    <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Detalle Incidencia</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form onsubmit="return false">
-              <div class="row g-2">
-                <div class="col-md">
-                  <div style =  "margin-left: 10px" class="input-group mb-3">
-                    <label>Fecha: </label>
-                    <label>
-                      <input style =  "margin-left: 10px" class="form-control" type="text" placeholder="Fecha">
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md">
-                  <div style =  "margin-left: 10px" class="input-group mb-3">
-                    <label>Nombre: </label>
-                    <label>
-                      <input style =  "margin-left: 10px" class="form-control" type="text" placeholder="Nombre">
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="row g-2">
-                <div class="col-md">
-                  <div style =  "margin-left: 10px" class="input-group mb-3">
-                    <label>Incidencia: </label>
-                    <label>
-                      <input style =  "margin-left: 10px" class="form-control" type="text" placeholder="Incidencia">
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md">
-                  <div style =  "margin-left: 10px" class="input-group mb-3">
-                    <label>Tipo de incidencia: </label>
-                    <label>
-                      <input style =  "margin-left: 10px" class="form-control" type="text" placeholder="Tipo de Incidencia">
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div style =  "margin-left: 10px">
-                <p>  Zona PUCP: </p>
-              </div>
-            </form>
 
-            <div  class="google-maps" style="text-align: center">  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d9080.838408815116!2d-77.0851327328001!3d-12.069237033787196!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd7a0bfb797e5862e!2sPontificia%20Universidad%20Cat%C3%B3lica%20del%20Per%C3%BA!5e0!3m2!1ses!2spe!4v1665201780059!5m2!1ses!2spe" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> </div>
-
-            <br>
-            <div style =  "margin-left: 10px">
-              <p> Foto:
-                <a href="#" class="link-primary">Click para ver foto</a>
-              </p>
-            </div>
-
-            <br><br>
-            <div style =  "margin-left: 10px" class="form-floating">
-              <p>
-                Descripción del problema: <br>
-                <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Detalles de tu incidencia" id="floatingTextarea1" style="height: 100px"></textarea>
-              </p>
-            </div>
-            <br><br>
-            <div style =  "margin-left: 10px" class="form-floating">
-
-              <p align="right">N° veces reabierta: 1/5</p>
-              <p>
-                ¿Por qué desea reabrir esta incidencia?: <br>
-                <label for="floatingTextarea2"></label><textarea class="form-control" placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px"></textarea>
-              </p>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" >Registrar reapertura</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar reapertura</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+         tabindex="-1">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -224,7 +148,9 @@
             Se actualizó correctamente el estado de la incidencia
           </div>
           <div class="modal-footer">
-            <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Regresar a la ventana principal</button>
+            <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Regresar a la
+              ventana principal
+            </button>
           </div>
         </div>
       </div>
@@ -239,10 +165,12 @@
     <script src="../scripts/datatables.min.js" type="text/javascript"></script>
     <!-- CORE SCRIPTS-->
     <script src="../scripts/app.min.js" type="text/javascript"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+            crossorigin="anonymous"></script>
     <!-- PAGE LEVEL SCRIPTS-->
     <script type="text/javascript">
-      $(function() {
+      $(function () {
         $('#example-table').DataTable({
           lengthMenu: [5, 10, 15],
           language: {

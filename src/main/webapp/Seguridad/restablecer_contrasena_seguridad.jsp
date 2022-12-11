@@ -105,7 +105,7 @@
 
             Contiene al menos un dígito <br>
 
-            Contiene al menos un alfa char inferior y un alfa char superior <br>
+            Contiene al menos una letra mayúcula y una minúscula <br>
 
             Contiene al menos un carácter dentro de un conjunto de caracteres especiales (@#%$^ etc.) <br>
 

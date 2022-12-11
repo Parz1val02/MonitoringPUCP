@@ -62,7 +62,7 @@
             </div>
             <div>
                 <i class="material-icons">check</i>
-                <h7>Contiene al menos un alfa char inferior y un alfa char superior</h7>
+                <h7>Contiene al menos una letra mayúcula y una minúscula</h7>
             </div>
             <div>
                 <i class="material-icons">check</i>

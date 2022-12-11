@@ -25,8 +25,9 @@ public class Login extends HttpServlet {
         HttpSession session = request.getSession();
         String accion = request.getParameter("accion") == null ? "iniciar" : request.getParameter("accion");
         RequestDispatcher view;
-        IncidenciaDao iDao = new IncidenciaDao();
         UsuarioDao uDao = new UsuarioDao();
+        IncidenciaDao iDao = new IncidenciaDao();
+        HttpSession session1 = request.getSession();
         switch (accion) {
             case ("registrar"):
                 session = request.getSession();
@@ -34,23 +35,37 @@ public class Login extends HttpServlet {
                     view = request.getRequestDispatcher("/Login/Registrarse.jsp");
                     view.forward(request, response);
                 } else {
-                    response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
+                    Usuario usuario = (Usuario) session1.getAttribute("usuario");
+                    switch (usuario.getRol().getNombreRol()) {
+                        case "Usuario PUCP":
+                            response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
+                            break;
+                        case "Seguridad":
+                            response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
+                            break;
+                        case "Administrador":
+                            response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                            break;
+                    }
                 }
                 break;
             case ("iniciar"):
-                HttpSession session1 = request.getSession();
                 if (session1.getAttribute("usuario") == null) {
                     view = request.getRequestDispatcher("/Login/InicioSesion.jsp");
                     view.forward(request, response);
                 } else {
-                        Usuario usuario = (Usuario) session1.getAttribute("usuario");
-                        if (usuario.getRol().getNombreRol().equals("Usuario PUCP")) {
+                    Usuario usuario = (Usuario) session1.getAttribute("usuario");
+                    switch (usuario.getRol().getNombreRol()) {
+                        case "Usuario PUCP":
                             response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
-                        } else if (usuario.getRol().getNombreRol().equals("Seguridad")) {
+                            break;
+                        case "Seguridad":
                             response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
-                        } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
+                            break;
+                        case "Administrador":
                             response.sendRedirect(request.getContextPath() + "/AdminServlet");
-                        }
+                            break;
+                    }
                 }
                 break;
             case ("olvidar"):
@@ -59,7 +74,18 @@ public class Login extends HttpServlet {
                     view = request.getRequestDispatcher("/Login/OlvidarContrasenia.jsp");
                     view.forward(request, response);
                 } else {
-                    response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
+                    Usuario usuario = (Usuario) session1.getAttribute("usuario");
+                    switch (usuario.getRol().getNombreRol()) {
+                        case "Usuario PUCP":
+                            response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
+                            break;
+                        case "Seguridad":
+                            response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
+                            break;
+                        case "Administrador":
+                            response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                            break;
+                    }
                 }
                 break;
             case ("logout"):
@@ -131,7 +157,7 @@ public class Login extends HttpServlet {
                         response.sendRedirect(request.getContextPath() + "/Login");
                     }
                 } else {
-                    Usuario usuario = (Usuario) session.getAttribute("usuario");
+                    Usuario usuario = (Usuario) session1.getAttribute("usuario");
                     switch (usuario.getRol().getNombreRol()) {
                         case "Usuario PUCP":
                             response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
@@ -152,7 +178,7 @@ public class Login extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
         String accion = request.getParameter("accion")==null?"iniciar2":request.getParameter("accion"); /*para el nuevo switch case 2fa*/
         HttpSession session = request.getSession();
         String username = request.getParameter("email");
@@ -186,7 +212,7 @@ public class Login extends HttpServlet {
             view.forward(request, response);
         }
         */
-        
+
         /*DOBLE FACTOR DOPOST. LUEGO DE INGRESAR CREDENCIALES, ENTRA AQUI. INCLUYE VALIDACIONES*/
         switch (accion) {
             case "iniciar2":
@@ -210,9 +236,9 @@ public class Login extends HttpServlet {
                         uDao.guardarCodigo2fa(codigo2fa,(Usuario) session.getAttribute("usuario"));
                         Temporizador2FA temporizador2FA =  new Temporizador2FA(120, (Usuario) session.getAttribute("usuario") );
                         try {
-                        EnviarCorreo2fa.main(username,codigo2fa);
+                            EnviarCorreo2fa.main(username,codigo2fa);
                         } catch (MessagingException e) {
-                        e.printStackTrace();
+                            e.printStackTrace();
                         }
 
                         /* response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor"); */
@@ -276,7 +302,7 @@ public class Login extends HttpServlet {
                             }
 
                         } else {
-                            session.setAttribute("msg", "Codigo de autenticación no válido");
+                            session.setAttribute("msg", "Código de autenticación no válido");
                             if (usuario.getRol().getNombreRol().equals("Seguridad")) {
                                 RequestDispatcher view = request.getRequestDispatcher("/Login/doblefactor.jsp");
                                 view.forward(request, response);
@@ -296,21 +322,21 @@ public class Login extends HttpServlet {
                             view.forward(request, response);
                             /* response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");*/
 
-                            } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
+                        } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
                             RequestDispatcher view = request.getRequestDispatcher("/Login/doblefactor.jsp");
                             view.forward(request, response);
                             /*response.sendRedirect(request.getContextPath() + "/AdminServlet?accion=doblefactor");*/
 
-                            }
+                        }
                         break;
                     }
                 } else {
-                    session.setAttribute("msg", "Su código ha expirado. Solicite nuevo código");
+                    session.setAttribute("msg", "Su código ha expirado. Solicite uno nuevo");
                     if (usuario.getRol().getNombreRol().equals("Seguridad")) {
 
                         RequestDispatcher view = request.getRequestDispatcher("/Login/doblefactor.jsp");
                         view.forward(request, response);
-                       /* response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");*/
+                        /* response.sendRedirect(request.getContextPath() + "/SeguridadServlet?accion=doblefactor");*/
 
                     } else if (usuario.getRol().getNombreRol().equals("Administrador")) {
 
@@ -329,7 +355,7 @@ public class Login extends HttpServlet {
                 if(usuarioMasterterTable){
                     Usuario usuarioMaster = uDao.buscarPorIdMasterTable(codigo);
                     if(uDao.validarPrimerIngreso(usuarioMaster)){
-                        String relativeWebPath = "./images/usuario.png";
+                        String relativeWebPath = "images/usuario.png";
                         String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
                         File file = new File(absoluteDiskPath);
                         byte[] fileContent = Files.readAllBytes(file.toPath());
@@ -439,7 +465,7 @@ public class Login extends HttpServlet {
 
                     if (contrasenaCorrecta) {
                         if (!nueva.equalsIgnoreCase(repass)) { //si cuando confirma la nueva contraseña no es igual
-                            request.setAttribute("msgIguales", "Para confirmar, ambas contrasenas deben ser iguales");
+                            request.setAttribute("msgIguales", "Para confirmar, ambas contraseñas deben ser iguales");
                             request.setAttribute("codigo",code);
                             view = request.getRequestDispatcher("/Login/RecuperarContrasenia.jsp");
                             view.forward(request, response);
@@ -447,7 +473,7 @@ public class Login extends HttpServlet {
                             break;
                         }
                         uDao.cambiarContrasenaConCodigo(code, nueva);
-                        session.setAttribute("msg","Su contraseña fue cambiada con exito");
+                        session.setAttribute("msg","Su contraseña fue cambiada con éxito");
                         RequestDispatcher requestDispatcher= request.getRequestDispatcher("/Login/InicioSesion.jsp");
                         requestDispatcher.forward(request,response);
                     } else {
@@ -463,10 +489,7 @@ public class Login extends HttpServlet {
             default:
                 response.sendRedirect(request.getContextPath() + "/Login");
         }
-           /*DOBLE FACTOR DOPOST. LUEGO DE INGRESAR CREDENCIALES, ENTRA AQUI. INCLUYE VALIDACIONES*/
-        
-        
-        
-        
+        /*DOBLE FACTOR DOPOST. LUEGO DE INGRESAR CREDENCIALES, ENTRA AQUI. INCLUYE VALIDACIONES*/
+
     }
 }

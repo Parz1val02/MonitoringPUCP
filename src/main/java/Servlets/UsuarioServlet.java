@@ -179,15 +179,17 @@ public class UsuarioServlet extends HttpServlet {
                     }
                     break;
                 case("adddestacar"):
+                    System.out.println("SSSSSIUUUUUUU");
                     strId = request.getParameter("des");
                     if(inDao.idValid(strId) && inDao.verificarIncidencia(strId)){
                         int es = Integer.parseInt(strId);
                         try {
+                            System.out.println("UWUWUWUWUWUW");
                             inDao.destacarIncidenciaAdd(es,usuario1.getCodigo());
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }
-                        response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=inicio");
+                        response.sendRedirect(request.getContextPath());
                     /*view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
                     view.forward(request, response);*/
                     }else{
@@ -256,40 +258,51 @@ public class UsuarioServlet extends HttpServlet {
                     String comentarioreopen = request.getParameter("reopen");
                     String validoComentario="";
                     if(!uDao.nombreyApellidoValid(comentarioreopen)){
-                        validoComentario = "El comentario ingresado no es valido";
+                        validoComentario = "El comentario ingresado no es válido";
                     }
                     System.out.println(comentarioreopen);
-                    if(comentarioreopen.length()==0){
-                        if (cont>5){
+                    /*if(comentarioreopen.length()==0){*/
+                        if (cont>=5){
                             request.getSession().setAttribute("info", "Ya se ha alcanzado el número máximo de reaperturas");
                             response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=verDetalle&id="+jijija.getIdIncidencia());
                         }else {
-                            try {
-                                EnviarCorreoEstado.main(usuario1.getCorreo(),jijija,2,"Reabierto");
-                            } catch (MessagingException e) {
-                                e.printStackTrace();
-                            }
-                            try {
-                                ArrayList<Usuario> listausuariosdestacados = idao.obtenerUsuarioxDestacada(jijija.getIdIncidencia());
-                                if(listausuariosdestacados != null){
-                                    for (Usuario u : listausuariosdestacados){
-                                        EnviarCorreoEstado.main(u.getCorreo(),jijija,2,"Reabierto");
+                            if(!uDao.nombreyApellidoValid(comentarioreopen)){
+
+                            }else {
+                                if (comentarioreopen.length()>45){
+                                    validoComentario = "El comentario no puede superar los 45 caracteres";
+                                    request.getSession().setAttribute("info1", validoComentario);
+                                    response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=verDetalle&id="+jijija.getIdIncidencia());
+                                }else {
+                                    try {
+                                        EnviarCorreoEstado.main(usuario1.getCorreo(),jijija,2,"En Proceso");
+                                    } catch (MessagingException e) {
+                                        e.printStackTrace();
                                     }
+                                    try {
+                                        ArrayList<Usuario> listausuariosdestacados = idao.obtenerUsuarioxDestacada(jijija.getIdIncidencia());
+                                        if(listausuariosdestacados != null){
+                                            for (Usuario u : listausuariosdestacados){
+                                                EnviarCorreoEstado.main(u.getCorreo(),jijija,2,"En proceso");
+                                            }
+                                        }
+                                    } catch (MessagingException e) {
+                                        e.printStackTrace();
+                                    }
+                                    idao.reabrir(idIncidencia5, comentarioreopen,usuario1.getCodigo());
+                                    response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
                                 }
-                            } catch (MessagingException e) {
-                                e.printStackTrace();
+
                             }
-                            idao.reabrir(idIncidencia5);
-                            response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
                         }
-                    }else{
+                    /*}else{
                         request.setAttribute("validoComentario",validoComentario);
                         ArrayList<FotosIncidencias> fotos = inDao.obtenerFotos(jijija.getIdIncidencia());
                         request.setAttribute("Incidencia",jijija);
                         request.setAttribute("Fotos",fotos);
                         view = request.getRequestDispatcher("/Usuario/DetalleReabierto.jsp");
                         view.forward(request, response);
-                    }
+                    }*/
                 }else{
                     response.sendRedirect(request.getContextPath()+ "/UsuarioServlet");
                 }
@@ -326,7 +339,7 @@ public class UsuarioServlet extends HttpServlet {
 
                 String nombreValido = "";
                 if(!uDao.nombreyApellidoValid(nombreIncidencia)){
-                    nombreValido = "El nombre ingresado no es valido";
+                    nombreValido = "El nombre ingresado no es válido";
                 }
 
 
@@ -334,7 +347,7 @@ public class UsuarioServlet extends HttpServlet {
 
                 String descripcionValida="";
                 if(!uDao.nombreyApellidoValid(descripcion)){
-                    descripcionValida = "La descripcion ingresada no es valida";
+                    descripcionValida = "La descripción ingresada no es válida";
                 }
 
                 int IDzonaPUCP = 0;
@@ -345,7 +358,7 @@ public class UsuarioServlet extends HttpServlet {
                 ZonaDao zdao = new ZonaDao();
                 String idZona =request.getParameter("zonaPUCP");
                 if(!(inDao.idValid(idZona) && zdao.verificarZona(idZona))){
-                    zonaValida="La zona PUCP ingresada no es valida";
+                    zonaValida="La zona PUCP ingresada no es válida";
                 }else{
                     IDzonaPUCP=Integer.parseInt(idZona);
                 }
@@ -355,7 +368,7 @@ public class UsuarioServlet extends HttpServlet {
                 TipoIncidenciaDao tdao = new TipoIncidenciaDao();
                 String idTipo = request.getParameter("tipoIncidencia");
                 if(!(inDao.idValid(idTipo) && tdao.verificarTipoIncidencia(idTipo))){
-                    tipoValida = "El tipo de incidencia ingresado no es valido";
+                    tipoValida = "El tipo de incidencia ingresado no es válido";
                 }else{
                     IDtipoIncidencia=Integer.parseInt(idTipo);
                 }
@@ -364,7 +377,7 @@ public class UsuarioServlet extends HttpServlet {
                 NivelUrgenciaDao ndao = new NivelUrgenciaDao();
                 String idNivel = request.getParameter("nivelIncidencia");
                 if(!(inDao.idValid(idNivel) && ndao.verificarNivelUrgencia(idNivel))){
-                    nivelValida="EL nivel de urgencia ingresado no es valido";
+                    nivelValida="EL nivel de urgencia ingresado no es válido";
                 }else{
                     IDnivelUrgencia=Integer.parseInt(idNivel);
                 }
@@ -382,7 +395,7 @@ public class UsuarioServlet extends HttpServlet {
                     format.parse(fecha);
                 }
                 catch(ParseException e) {
-                    fechaValida2 = "Ingresar un formato de fecha valido";
+                    fechaValida2 = "Ingresar un formato de fecha válido";
                 }
 
 
@@ -399,7 +412,7 @@ public class UsuarioServlet extends HttpServlet {
                 String otroTipoValida="";
                 if (IDtipoIncidencia == 6){
                     if(!uDao.nombreyApellidoValid(descripcion)){
-                        otroTipoValida = "El tipo de incidencia ingresada no es valida";
+                        otroTipoValida = "El tipo de incidencia ingresada no es válida";
                     }
                     incidencia.setOtroTipo(otroTipo);
                 }
@@ -424,7 +437,7 @@ public class UsuarioServlet extends HttpServlet {
                 ArrayList<Part> fileParts = (ArrayList<Part>) request.getParts().stream().filter(part -> "fotoIncidencia".equals(part.getName()) && part.getSize() > 0).collect(Collectors.toList()); // Retrieves <input type="file" name="files" multiple="true">
                 String fotoValida="";
                 if(fileParts.size()==0){
-                    fotoValida = "Se requiere minimo una foto por incidencia";
+                    fotoValida = "Se requiere mínimo una foto por incidencia";
                 }
                 String extensionValida="";
                 if(nombreValido.length()==0 && fechaValida2.length()==0 &&
@@ -455,7 +468,7 @@ public class UsuarioServlet extends HttpServlet {
                             }
                         }
                         if(!match){
-                            extensionValida="Extension de archivo no valida";
+                            extensionValida="Extension de archivo no válida";
                             request.setAttribute("nombreValido",nombreValido);
                             request.setAttribute("descripcionValida",descripcionValida);
                             request.setAttribute("fechaValida2",fechaValida2);
@@ -509,10 +522,11 @@ public class UsuarioServlet extends HttpServlet {
                 String extensionValida1="";
                 String fotoValida1="";
                 if(fileName.length()==0){
-                    fotoValida1 = "No se ingreso archivo";
+                    fotoValida1 = "No se subió archivo";
                     request.setAttribute("extensionValida",extensionValida1);
                     request.setAttribute("fotoValida",fotoValida1);
-                    response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=perfil");
+                    view = request.getRequestDispatcher("/Usuario/UsuarioPerfil.jsp");
+                    view.forward(request, response);
                     break;
                 }
                 InputStream fileContent = filePart.getInputStream();
@@ -536,16 +550,15 @@ public class UsuarioServlet extends HttpServlet {
                         }
                     }
                     if(!match){
-                        extensionValida1="Extension de archivo no valida";
+                        extensionValida1="Extensión de archivo no válida";
                         request.setAttribute("extensionValida",extensionValida1);
                         request.setAttribute("fotoValida",fotoValida1);
-                        response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=perfil");
+                        view = request.getRequestDispatcher("/Usuario/UsuarioPerfil.jsp");
+                        view.forward(request, response);
                         break;
                     }
                     uDao.actualizarFoto(fp, usuario1.getFotoPerfil().getIdFoto());
                 }
-                request.setAttribute("fotoValida",fotoValida1);
-                request.setAttribute("extensionValida",extensionValida1);
                 response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=perfil");
                 break;
 
@@ -566,14 +579,14 @@ public class UsuarioServlet extends HttpServlet {
                     if (contrasenaCorrecta) {
 
                         if (!nueva.equalsIgnoreCase(repass)) { //si cuando confirma la nueva contraseña no es igual
-                            request.setAttribute("msgIguales", "Para confirmar, ambas contrasenas deben ser iguales");
+                            request.setAttribute("msgIguales", "Para confirmar, ambas contraseñas deben ser iguales");
                             view = request.getRequestDispatcher("/Usuario/CambiarContrasenia.jsp");
                             view.forward(request, response);
                             System.out.println("contraseñas nuevas no iguales");
                             break;
                         }
                         if (nueva.equalsIgnoreCase(actual)) {//si la contraseña nueva es igual a la actual----> no se puede
-                            request.setAttribute("msgOld", "Las contrasenas no pueden ser iguales");
+                            request.setAttribute("msgOld", "Las contraseñas no pueden ser iguales");
                             view = request.getRequestDispatcher("/Usuario/CambiarContrasenia.jsp");
                             view.forward(request, response);
                             System.out.println("contraseñas igual a la original");

@@ -65,7 +65,16 @@ public class FormatosServlet extends HttpServlet {
                 }
                 break;
             default:
-                response.sendRedirect(request.getContextPath()+ "/SeguridadServlet");
+                response.setContentType("text/plain");
+                response.setHeader("Content-disposition", "attachment; filename=reporte.txt");
+
+                try(OutputStream out = response.getOutputStream()) {
+
+                    GenerarPdf genPdf = new GenerarPdf();
+                    genPdf.crearTxt(out); //lo que devuelve el servlet
+
+                }
+            
                 break;
         }
     }

@@ -17,6 +17,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static java.nio.file.Files.newOutputStream;
 
@@ -540,7 +542,7 @@ public class IncidenciaDao extends DaoBase{
                      "inner join EstadoIncidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
                      "left join IncidenciasDestacadas d on i.idIncidencia = d.idIncidencia\n" +
                      "left join Usuarios u on i.codigousuario = u.codigo \n" +
-                     "left join ZonaPUCP z on i.idZonaPUCP=z.idZonaPUCP where validaIncidencia = 1 order by d.contadorDestacado DESC;")) {
+                     "left join ZonaPUCP z on i.idZonaPUCP=z.idZonaPUCP where validaIncidencia = 1 order by i.fecha DESC, d.contadorDestacado  DESC")) {
             int i = 0;
             while (rs.next() & i<5) {
                 Incidencia incidencia = new Incidencia();
@@ -666,14 +668,28 @@ public class IncidenciaDao extends DaoBase{
             throw new RuntimeException(e);
         }
     }
-    public void reabrir(int id) {
+    public void reabrir(int id, String comentario, String codigo) {
         //con borrado logico
         String sql = "UPDATE Incidencias SET idEstadoIncidencia=2, contadorReabierto = contadorReabierto+1 where idIncidencia  = ?" ;
-
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
             pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        String sql1 = "insert into Comentario (comentarios, fecha, codigoUsuario, idIncidencia) values(?,?,?,?)";
+        String dateTime = DateTimeFormatter.ofPattern("MMM dd yyyy, hh:mm:ss a").format(LocalDateTime.now());
+        try (Connection c = this.getConnection();
+             PreparedStatement pstmt = c.prepareStatement(sql1)) {
+            pstmt.setString(1, comentario);
+            pstmt.setString(2,dateTime);  //preguntar a jandro
+            pstmt.setString(3,codigo);
+            pstmt.setInt(4,id);
+
+
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
