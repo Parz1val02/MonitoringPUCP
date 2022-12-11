@@ -29,9 +29,17 @@ public class EnviarCorreo2fa {
         MimeMessage mensaje = new MimeMessage(s);
         mensaje.setFrom(new InternetAddress(correo)); //FROM
         mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress(correoDestino));  //TO
-        mensaje.setSubject("Envio de codigo doble factor - MONITORING PUCP"); //
+        mensaje.setSubject("Confirmación Ingreso con Doble Factor - Monitoring PUCP"); //
         //String link = "http://localhost:8080/Login?accion=restablecer";
-        String msg = "Su codigo de autenticacion es: " + codigo2fa;
+
+        //String msg = "Su codigo de autenticacion es: " + codigo2fa;
+        String msg = "Hola! Bienvenido/a a Monitoring PUCP.\n" +
+                "\n" +
+                "Tu código de doble factor es el siguiente:\n" +  codigo2fa +
+                "\n" +
+                "\n" +
+                "\n" +
+                "Monitoring PUCP" ;
         mensaje.setText(msg);
         //mensaje.setText("Este es un mensaje que se envia desde JAVA");
 
