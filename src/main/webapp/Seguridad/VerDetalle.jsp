@@ -255,54 +255,49 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-
-                <form method="post" action="<%=request.getContextPath()%>/SeguridadServlet?accion=guardar">
-                    <input type="text" class="form-control " name="idIncidencia"
-                           value="<%=incidencia.getIdIncidencia()%>" hidden>
-                    <br>
-                    <p style="margin-top: 20px;margin-left: 10px">Estado de la incidencia </p>
-                    <div style="margin-left: 10px" class="form-check">
-                        <select class="form-select <%=estadoValido.length()>0?"is-invalid":""%>"
-                                aria-label="Default select example" name="idEstado">
-                            <% for (EstadoIncidencia estado : estados) {%>
-                            <!--compara el estado de la incidencia con las opciones del combo box -->
-                            <option value="<%=estado.getIdEstado()%>" <%= incidencia.getEstadoIncidencia().getEstado().equalsIgnoreCase(estado.getEstado()) ? "selected" : ""%> ><%=estado.getEstado()%>
-                            </option>
-                            <% }%>
-                        </select>
-                        <%if (estadoValido.length() > 0) {%>
-                        <div class="invalid-feedback">
-                            <%=estadoValido%>
-                        </div>
-                        <%}%>
-                    </div>
-
-                    <br>
-                    <div style="margin-left: 10px" class="form-floating">
-                        <p style="margin-top: 20px;margin-left: 10px">Justificación de la incidencia </p>
+                    <form method="post" action="<%=request.getContextPath()%>/SeguridadServlet?accion=guardar">
+                        <input type="text" class="form-control " name="idIncidencia"
+                               value="<%=incidencia.getIdIncidencia()%>" hidden>
                         <br>
-                        <label for="floatingTextarea2"></label>
-                        <textarea class="form-control <%=justiValido.length()>0?"is-invalid":""%>"
-                                  placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px"
-                                  name="justificacion" required></textarea>
-                        <%if (justiValido.length() > 0) {%>
-                        <div class="invalid-feedback">
-                            <%=justiValido%>
+                        <p style="margin-top: 20px;margin-left: 10px">Estado de la incidencia </p>
+                        <div style="margin-left: 10px" class="form-check">
+                            <select class="form-select <%=estadoValido.length()>0?"is-invalid":""%>"
+                                    aria-label="Default select example" name="idEstado">
+                                <% for (EstadoIncidencia estado : estados) {%>
+                                <!--compara el estado de la incidencia con las opciones del combo box -->
+                                <option value="<%=estado.getIdEstado()%>" <%= incidencia.getEstadoIncidencia().getEstado().equalsIgnoreCase(estado.getEstado()) ? "selected" : ""%> ><%=estado.getEstado()%>
+                                </option>
+                                <% }%>
+                            </select>
+                            <%if (estadoValido.length() > 0) {%>
+                            <div class="invalid-feedback">
+                                <%=estadoValido%>
+                            </div>
+                            <%}%>
                         </div>
-                        <%}%>
-                    </div>
+                        <br>
+                        <p style="margin-top: 20px;margin-left: 10px">Justificación de la incidencia </p>
+                        <div style="margin-left: 10px" class="form-floating">
+                            <label for="floatingTextarea2"></label>
+                            <textarea class="form-control <%=justiValido.length()>0?"is-invalid":""%>"
+                                      placeholder="Deja un comentario aquí" id="floatingTextarea2" style="height: 100px"
+                                      name="justificacion" required></textarea>
+                            <%if (justiValido.length() > 0) {%>
+                            <div class="invalid-feedback">
+                                <%=justiValido%>
+                            </div>
+                            <%}%>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Aceptar</button>
 
-                    <button type="submit" class="btn btn-primary">Aceptar</button>
+                        <a href="<%=request.getContextPath()%>/SeguridadServlet" class="btn btn-danger">Cancelar</a>
 
-                    <a href="<%=request.getContextPath()%>/SeguridadServlet" class="btn btn-danger">Cancelar</a>
-
-                </form>
-
+                    </form>
+                </div>
             </div>
         </div>
-        </div>
+
 
         <script src="scripts/jquery.min.js" type="text/javascript"></script>
         <script src="scripts/popper.min.js" type="text/javascript"></script>
