@@ -244,7 +244,7 @@
                         </div>
                         <div class="col-md">
                           <div class="form-floating" style="margin-bottom: 5px;">
-                            <input type="text" class="form-control <%=(celularvalido.length()>0 || celularRepeat.length()>0)?"is-invalid":""%>" id="floatingInputGrid6" placeholder="Celular" name="celular" value="<%=usuario.getCelular()%>">
+                            <input type="text" class="form-control <%=(celularvalido.length()>0 || celularRepeat.length()>0)?"is-invalid":""%>" id="floatingInputGrid6" placeholder="Celular" name="celular" value="<%=usuario.getCelular()==null?"No tiene celular":usuario.getCelular()%>">
                             <label for="floatingInputGrid6">Celular</label>
                             <%if(celularvalido.length()>0){%>
                             <div  class="invalid-feedback">
