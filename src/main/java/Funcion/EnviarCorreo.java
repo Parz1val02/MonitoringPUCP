@@ -32,7 +32,18 @@ public class EnviarCorreo {
         mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress(correoDestino));  //TO
         mensaje.setSubject("Cambio de Contraseña - MONITORING PUCP"); //
         String link = "http://localhost:8080/Login?accion=restablecer&code="+codigoUsuario;
-        mensaje.setText(link);
+        String msg = "Hola! \n" +
+                "\n" +
+                "Recibimos una solicitud para restablecer tu contraseña de Monitoring PUCP.\n" +
+                "\n" +
+                "Cree una nueva contraseña ingresando al siguiente link.\n" + link +
+                "\n" +
+                "\n" +
+                "¿No solicitaste este cambio? Ignora este correo por favor. \n" +
+                "\n" +
+                "Monitoring PUCP";
+
+        mensaje.setText(msg);
         //mensaje.setText("Este es un mensaje que se envia desde JAVA");
 
         Transport t = s.getTransport("smtp");
