@@ -25,7 +25,6 @@ public class Login extends HttpServlet {
         HttpSession session = request.getSession();
         String accion = request.getParameter("accion") == null ? "iniciar" : request.getParameter("accion");
         RequestDispatcher view;
-        IncidenciaDao iDao = new IncidenciaDao();
         UsuarioDao uDao = new UsuarioDao();
         switch (accion) {
             case ("registrar"):
@@ -131,7 +130,7 @@ public class Login extends HttpServlet {
                         response.sendRedirect(request.getContextPath() + "/Login");
                     }
                 } else {
-                    Usuario usuario = (Usuario) session.getAttribute("usuario");
+                    Usuario usuario = (Usuario) session1.getAttribute("usuario");
                     switch (usuario.getRol().getNombreRol()) {
                         case "Usuario PUCP":
                             response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
