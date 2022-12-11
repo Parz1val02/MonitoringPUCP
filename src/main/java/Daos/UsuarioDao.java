@@ -224,38 +224,46 @@ public class UsuarioDao extends DaoBase{
     }
 
     //Falta metodo para actuallizar foto de perfil
+    /** todo: metodo actualizar similar a guardar*/
+    //Everything se actualiza en la tabla usuarios
     public void actualizarUsuario(Usuario usuario) {
 
-        if (usuario.getRol().getIdRol()==2) {
-            String sql = "UPDATE MasterTable set codigo=?, nombre=?, apellido=?, correo=?, DNI=?, celular=?, idCategoriaPUCP=?, primerIngreso=? where ";
-            int idFoto = 0;
-            try (Connection connection = this.getConnection();
-                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
-                pstmt.setString(1, usuario.getCodigo());
-                pstmt.setString(2, usuario.getNombre());
-                pstmt.setString(3, usuario.getApellido());
-                pstmt.setString(4, usuario.getCorreo());
-                pstmt.setString(5, usuario.getDni());
-                pstmt.setBoolean(6, true);
-                pstmt.setString(7, usuario.getPassword());
-                pstmt.setString(8, usuario.getCelular());
-                /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
-                pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
-                //pstmt.setInt(9, usuario.getRol().getIdRol());
-                pstmt.setInt(9, usuario.getRol().getIdRol());
-                pstmt.setNull(10, Types.INTEGER);
-                idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
-                pstmt.setInt(11, idFoto);
-                /*pstmt.setBoolean(12, usuario.getPrimerIngreso());*/
-                pstmt.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+        String codigoID = usuario.getCodigo();
+        String sql = "UPDATE usuarios set nombre=?, apellido=?, correo=?, DNI=?, celular=?, idCategoriaPUCP=?, validaUsuario=? ,idRoles=? where codigo = "+codigoID;
+        //int idFoto = 0;
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setString(1, usuario.getNombre());
+            pstmt.setString(2, usuario.getApellido());
+            pstmt.setString(3, usuario.getCorreo());
+            pstmt.setString(4, usuario.getDni());
+            pstmt.setString(5, usuario.getCelular());
+            if(usuario.getRol().getIdRol()==1){
+                pstmt.setInt(6, usuario.getCategoriaPUCP().getIdCategoria());
+            }else if(usuario.getRol().getIdRol()==2){
+                pstmt.setNull(6, Types.INTEGER);
             }
+
+            pstmt.setBoolean(7, true);
+            pstmt.setInt(8,usuario.getRol().getIdRol());
+            /*FileInputStream fin = new FileInputStream(usuario.getFotoPerfil());
+            pstmt.setBinaryStream(10, fin, (int) usuario.getFotoPerfil().length());*/
+            //pstmt.setInt(9, usuario.getRol().getIdRol());
+            //pstmt.setInt(9, usuario.getRol().getIdRol());
+            //pstmt.setNull(10, Types.INTEGER);
+            //idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
+            //pstmt.setInt(11, idFoto);
+            /*pstmt.setBoolean(12, usuario.getPrimerIngreso());*/
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+
     }
     public void crearUsuario(Usuario usuario){
 
-        if (usuario.getRol().getIdRol()==1) {
+        if (usuario.getRol().getIdRol()==1) { //Usuario en mastertable
             String sql = "INSERT INTO MasterTable (codigo, nombre, apellido, correo, DNI, celular, idCategoriaPUCP,primerIngreso) VALUES (?,?,?,?,?,?,?,?)";
             //int idFoto = 0;
             try (Connection connection = this.getConnection();
@@ -282,7 +290,7 @@ public class UsuarioDao extends DaoBase{
             }
 
 
-        } else if (usuario.getRol().getIdRol()==2) {
+        } else if (usuario.getRol().getIdRol()==2) { //Seguridad en tabla usuarios
             String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?)";
             int idFoto = 0;
             try (Connection connection = this.getConnection();
@@ -301,7 +309,7 @@ public class UsuarioDao extends DaoBase{
                 pstmt.setInt(9, usuario.getRol().getIdRol());
                 pstmt.setNull(10, Types.INTEGER);
                 idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
-                pstmt.setInt(11, idFoto);
+                pstmt.setNull(11, idFoto);
                 /*pstmt.setBoolean(12, usuario.getPrimerIngreso());*/
                 pstmt.executeUpdate();
             } catch (SQLException e) {

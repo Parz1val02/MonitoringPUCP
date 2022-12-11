@@ -146,6 +146,7 @@ public class AdminServlet extends HttpServlet {
 
         switch (action) {
             case "guardar":
+
                 String codigo = request.getParameter("codigo");
                 String correo = request.getParameter("correo");
 
@@ -293,14 +294,15 @@ public class AdminServlet extends HttpServlet {
 
 
                         //Foto
-                        String relativeWebPath = "../images/usuario.png";
+                        /*String relativeWebPath = "../images/usuario.png";
                         String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
                         File file = new File(absoluteDiskPath);
-                        byte[] fileContent = Files.readAllBytes(file.toPath());
+                        byte[] fileContent = Files.readAllBytes(file.toPath());*/
 
                         FotoPerfil fp = new FotoPerfil();
-                        fp.setFotobyte(fileContent);
-                        fp.setNombreFoto("usuario.png");
+
+
+                        fp=null;
 
                         Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
 
@@ -460,7 +462,6 @@ public class AdminServlet extends HttpServlet {
 
                         Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
 
-                        String idUsuario = request.getParameter("idUsuario");
 
                         if(codigovalido.length()==0 && codigoRepeat.length()==0 &&
                                 nombrevalido.length()==0 && apellidovalido.length()==0 &&
@@ -468,12 +469,12 @@ public class AdminServlet extends HttpServlet {
                                 dnivalido.length() ==0 && dniRepeat.length() ==0 &&
                                 celularvalido.length() == 0 && celularRepeat.length() == 0){
 
-                            if(idUsuario==null) {
+
                                 usuarioDao.crearUsuario(usuario);
 
                                 response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
                                 break;
-                            }
+
 
                         }else{
 
@@ -492,12 +493,17 @@ public class AdminServlet extends HttpServlet {
 
                             request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
                             request.setAttribute("roles", rolDao.obtenerRoles());
-                            view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
-                            view.forward(request, response);
-                            break;
+
+
+                                view = request.getRequestDispatcher("/Administrador/registerUser.jsp");
+                                view.forward(request, response);
+                                break;
+
+
                         }
                     }
                 } else {
+                    //si presenta rol invalido
                     /*request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
                     request.setAttribute("roles", rolDao.obtenerRoles());*/
                     request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
@@ -510,55 +516,381 @@ public class AdminServlet extends HttpServlet {
 
 
             case "actualizar":
-                String codigoUpdate = request.getParameter("codigoPUCP");
-                if(incidenciaDao.idValid(codigoUpdate)&&usuarioDao.verificarUsuario(codigoUpdate)){
+                //aaaaa
 
-                    String nombreUpdate = request.getParameter("nombre");
-                    String apellidoUpdate = request.getParameter("apellido");
-                    String correoUpdate = request.getParameter("correoPUCP");
-                    String dniUpdate = request.getParameter("dni");
-                    String celularUpdate = request.getParameter("celular");
-                    String categoriaUpdateStr = request.getParameter("categoriaPUCP");
-                    String rolUpdateStr = request.getParameter("rol");
+                codigo = request.getParameter("idUsuario");
+                correo = request.getParameter("correoPUCP");
 
-                    int categoriaUpdateInt = 0;
-                    /*Usuario usuarioUpdate = new Usuario();
-                    usuarioUpdate.setNombre(nombreUpdate);
-                    usuarioUpdate.setApellido(apellidoUpdate);
-                    usuarioUpdate.setCodigo(codigoUpdate);
-                    usuarioUpdate.setCorreo(correoUpdate);
-                    usuarioUpdate.setDni(dniUpdate);
-                    usuarioUpdate.setCelular(celularUpdate);*/
-                    if (categoriaUpdateStr.equalsIgnoreCase("alumno")) {
-                        categoriaUpdateInt = 1;
-                    } else if (categoriaUpdateStr.equalsIgnoreCase("administrativo")) {
-                        categoriaUpdateInt = 2;
-                    } else if (categoriaUpdateStr.equalsIgnoreCase("jefe de práctica")) {
-                        categoriaUpdateInt = 3;
-                    } else if (categoriaUpdateStr.equalsIgnoreCase("profesor")) {
-                        categoriaUpdateInt = 4;
-                    } else if (categoriaUpdateStr.equalsIgnoreCase("egresado")) {
-                        categoriaUpdateInt = 5;
-                    } /*else if (categoriaUpdateStr.equalsIgnoreCase("no tiene categoria")) {
-                        categoriaUpdateInt = 0;
-                    }*/
+                /*Boolean usuarioPreRegistrado = uDao.consultarMasterTable(codigo,correo);*/
+                rol1 = new Rol();
 
-                    try {
-                        int rolUpdateInt = Integer.parseInt(rolUpdateStr);
-                        //usuarioUpdate.setIdCategoriaPUCP(categoriaUpdateInt);
-                        //usuarioUpdate.setIdRoles(rolUpdateInt);
-
-                        //usuarioDao.actualizarUsuario(nombreUpdate,apellidoUpdate,codigoUpdate,correoUpdate,dniUpdate,celularUpdate,categoriaUpdateInt,rolUpdateInt);
-                   // uDao.actualizarUsuario(nombreUpdate,apellidoUpdate,codigoUpdate,correoUpdate,dniUpdate,celularUpdate,categoriaUpdateInt,rolUpdateInt);
-
-                        response.sendRedirect(request.getContextPath() + "/AdminServlet");
-                    } catch (NumberFormatException e) {
-                        response.sendRedirect(request.getContextPath() + "/AdminServlet?action=editar_usuario&id=" + codigoUpdate);
-                    }
+                rolValido="";
+                rDao = new RolDao();
+                idRol = request.getParameter("rol");
+                IDrol = 0;
+                if(!(inDao.idValid(idRol) && rDao.verificarRol(idRol))){
+                    rolValido = "El rol ingresado no es valido";
                 }else{
-                    response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                    IDrol = Integer.parseInt(idRol);
                 }
-                break;
+                rol1.setIdRol(IDrol);
+                rol1 = rDao.obtenerRol(rol1.getIdRol());
+
+
+
+                System.out.println(rol1.getIdRol());
+
+                if(rolValido.length()==0){
+                    //valida el codigo
+
+                    //si es que es usuario PUCP, se valida en mastertable
+                    if (rol1.getIdRol()==1) {
+
+
+                        String nombre = request.getParameter("nombre");
+
+                        //valida el nombre ingresado
+                        String nombrevalido = "";
+                        if(!usuarioDao.nombreyApellidoValid(nombre)){
+                            nombrevalido = "el nombre ingresado no es valido";
+
+                        }
+
+                        String apellido = request.getParameter("apellido");
+                        //valida el usuario ingresado
+                        String apellidovalido = "";
+                        if(!usuarioDao.nombreyApellidoValid(apellido)){
+                            apellidovalido = "el apellido ingresado no es valido";
+
+
+                        }
+
+
+                        //valida el correo ingresado
+                        String correovalido = "";
+                        if(!usuarioDao.emailisValid(correo)){
+                            correovalido = "el correo ingresado no es valido";
+
+                        }
+                        //valida que no se repita el correo
+                        String correoRepeat = "";
+                        for(Usuario u: listaMasterTable){
+                            if(u.getCorreo().equalsIgnoreCase(correo) && !u.getCodigo().equalsIgnoreCase(codigo)){
+                                correoRepeat = "el correo ingresado ya existe";
+                                break;
+                            }
+                        }
+
+                        String dni = request.getParameter("dni");
+                        //valida el dni ingresado
+                        String dnivalido = "";
+                        if(!usuarioDao.dniValid(dni)){
+                            dnivalido = "el dni ingresado no es valido";
+
+
+                        }
+                        //valida que el dni no se repita
+                        String dniRepeat = "";
+                        for(Usuario u: listaMasterTable){
+                            if(u.getDni().equalsIgnoreCase(dni) && !u.getCodigo().equalsIgnoreCase(codigo)) {
+                                dniRepeat = "El dni ingresado ya existe";
+                                break;
+                            }
+                        }
+
+
+                        //boolean valida = Boolean.parseBoolean(request.getParameter("valida"));
+                        String password = "password";
+                        String celular = request.getParameter("celular");
+                        //valida el celular ingresado
+                        String celularvalido = "";
+                        if(!usuarioDao.celularValid(celular)){
+                            celularvalido = "el celular ingresado no es valido";
+
+
+                        }
+                        //valida que el celular no se repita
+                        String celularRepeat = "";
+                        for(Usuario u: listaMasterTable){
+                            if(u.getCelular()!=null){
+                                if(u.getCelular().equalsIgnoreCase(celular) && !u.getCodigo().equalsIgnoreCase(codigo)){
+                                    celularRepeat = "el celular ingresado ya existe";
+
+                                }
+                            }
+
+                        }
+
+                        String categoriaValida = "";
+                        String categoriaPUCPStr = request.getParameter("categoriaPUCP");
+                        int categoriaPUCPInt = 0;
+                        if (categoriaPUCPStr.equalsIgnoreCase("alumno")) {
+                            categoriaPUCPInt = 1;
+                        } else if (categoriaPUCPStr.equalsIgnoreCase("administrativo")) {
+                            categoriaPUCPInt = 2;
+                        } else if (categoriaPUCPStr.equalsIgnoreCase("jefe de práctica")) {
+                            categoriaPUCPInt = 3;
+                        } else if (categoriaPUCPStr.equalsIgnoreCase("profesor")) {
+                            categoriaPUCPInt = 4;
+                        } else if (categoriaPUCPStr.equalsIgnoreCase("egresado")) {
+                            categoriaPUCPInt = 5;
+                        }else{
+                            categoriaValida="La categoria PUCP ingresada no es valida";
+                        }
+
+                        if(categoriaValida.length()>0) {
+                            request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                            request.setAttribute("roles", rolDao.obtenerRoles());
+                            session.setAttribute("categoriaValida", categoriaValida);
+                            System.out.println("categoria valida (Usuario)");
+                            view = request.getRequestDispatcher("/Administrador/editUser.jsp");
+                            view.forward(request, response);
+                            break;
+                        }
+
+                        CategoriaPUCP categoriaPUCP1 = new CategoriaPUCP();
+                        categoriaPUCP1.setIdCategoria(categoriaPUCPInt);
+
+
+
+                        //Foto
+                        /*String relativeWebPath = "../images/usuario.png";
+                        String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
+                        File file = new File(absoluteDiskPath);
+                        byte[] fileContent = Files.readAllBytes(file.toPath());*/
+
+                        FotoPerfil fp = new FotoPerfil();
+
+
+                        fp=null;
+
+                        Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
+
+                        if(
+                                nombrevalido.length()==0 && apellidovalido.length()==0 &&
+                                correovalido.length() == 0 && correoRepeat.length()==0 &&
+                                dnivalido.length() ==0 && dniRepeat.length() ==0 &&
+                                celularvalido.length() == 0 && celularRepeat.length() == 0){
+
+
+                            usuarioDao.actualizarUsuario(usuario);
+
+                            response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
+                            break;
+                        }else{
+
+                            request.setAttribute("usuario",usuario);
+
+
+                            request.setAttribute("nombrevalido",nombrevalido);
+                            request.setAttribute("apellidovalido",apellidovalido);
+                            request.setAttribute("correovalido",correovalido);
+                            request.setAttribute("correoRepeat",correoRepeat);
+                            request.setAttribute("dnivalido",dnivalido);
+                            request.setAttribute("dniRepeat", dniRepeat);
+                            request.setAttribute("celularvalido",celularvalido);
+                            request.setAttribute("celularRepeat",celularRepeat);
+
+                            request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                            request.setAttribute("roles", rolDao.obtenerRoles());
+
+
+                            System.out.println("uno de los msgs existe, por lo tanto hay error (Usuario)");
+                            if(nombrevalido.length()!=0){
+                                System.out.println(nombrevalido);
+                            }
+                            if(apellidovalido.length()!=0){
+                                System.out.println(apellidovalido);
+                            }
+                            if(correovalido.length()!=0){
+                                System.out.println(correovalido);
+                            }
+                            if(correoRepeat.length()!=0){
+                                System.out.println(correoRepeat);
+                            }
+                            if(dnivalido.length()!=0){
+                                System.out.println(dnivalido);
+                            }
+                            if(dniRepeat.length()!=0){
+                                System.out.println(dniRepeat);
+                            }
+                            if(celularvalido.length()!=0){
+                                System.out.println(celularvalido);
+                            }
+                            if(celularRepeat.length()!=0){
+                                System.out.println(celularRepeat);
+                            }
+
+
+
+
+                            view = request.getRequestDispatcher("/Administrador/editUser.jsp");
+                            view.forward(request, response);
+                            break;
+                        }
+
+                    } else if (rol1.getIdRol()==2) {
+
+
+                        String nombre = request.getParameter("nombre");
+
+                        //valida el nombre ingresado
+                        String nombrevalido = "";
+                        if(!usuarioDao.nombreyApellidoValid(nombre)){
+                            nombrevalido = "el nombre ingresado no es valido";
+
+                        }
+
+                        String apellido = request.getParameter("apellido");
+                        //valida el usuario ingresado
+                        String apellidovalido = "";
+                        if(!usuarioDao.nombreyApellidoValid(apellido)){
+                            apellidovalido = "el apellido ingresado no es valido";
+
+
+                        }
+
+
+                        //valida el correo ingresado
+                        String correovalido = "";
+                        if(!usuarioDao.emailisValid(correo)){
+                            correovalido = "el correo ingresado no es valido";
+
+                        }
+                        //valida que no se repita el correo
+                        String correoRepeat = "";
+                        for(Usuario u: listaUsuarios){
+                            if(u.getCorreo().equalsIgnoreCase(correo) && !u.getCodigo().equalsIgnoreCase(codigo)){
+                                correoRepeat = "el correo ingresado ya existe";
+                                break;
+                            }
+                        }
+
+                        String dni = request.getParameter("dni");
+                        //valida el dni ingresado
+                        String dnivalido = "";
+                        if(!usuarioDao.dniValid(dni)){
+                            dnivalido = "el dni ingresado no es valido";
+
+
+                        }
+                        //valida que el dni no se repita
+                        String dniRepeat = "";
+                        for(Usuario u: listaUsuarios){
+                            if(u.getDni().equalsIgnoreCase(dni) && !u.getCodigo().equalsIgnoreCase(codigo)) {
+                                dniRepeat = "El dni ingresado ya existe";
+                                break;
+                            }
+                        }
+
+
+                        //boolean valida = Boolean.parseBoolean(request.getParameter("valida"));
+                        String password = "password";
+                        String celular = request.getParameter("celular");
+                        //valida el celular ingresado
+                        String celularvalido = "";
+                        if(!usuarioDao.celularValid(celular)){
+                            celularvalido = "el celular ingresado no es valido";
+
+
+                        }
+                        //valida que el usuario no se repita
+                        String celularRepeat = "";
+                        for(Usuario u: listaUsuarios){
+                            if(u.getCelular()!=null){
+                                if(u.getCelular().equalsIgnoreCase(celular) && !u.getCodigo().equalsIgnoreCase(codigo)){
+                                    celularRepeat = "el celular ingresado ya existe";
+
+                                }
+                            }
+
+                        }
+                        String categoriaValida="";
+                        String categoriaPUCPStr = request.getParameter("categoriaPUCP");
+                        int categoriaPUCPInt = 0;
+                        if (!(categoriaPUCPStr.equalsIgnoreCase("no tiene categoria"))) {
+                            categoriaValida="La categoria PUCP ingresada no es valida";
+                        }
+
+                        if(categoriaValida.length()>0) {
+                            request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                            request.setAttribute("roles", rolDao.obtenerRoles());
+                            session.setAttribute("categoriaValida", categoriaValida);
+                            view = request.getRequestDispatcher("/Administrador/editUser.jsp");
+                            System.out.println("la categoria no es valida (Seguridad)");
+                            view.forward(request, response);
+                            break;
+                        }
+
+                        CategoriaPUCP categoriaPUCP1 = new CategoriaPUCP();
+                        categoriaPUCP1.setIdCategoria(categoriaPUCPInt);
+
+
+                        //Foto
+                        /*String relativeWebPath = "../images/usuario.png";
+                        String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
+                        File file = new File(relativeWebPath);
+                        byte[] fileContent = Files.readAllBytes(file.toPath());*/
+
+                        FotoPerfil fp = null;
+                        /*fp.setFotobyte(fileContent);
+                        fp.setNombreFoto("usuario.png");*/
+
+                        Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
+
+
+
+                        if(nombrevalido.length()==0 && apellidovalido.length()==0 &&
+                                correovalido.length() == 0 && correoRepeat.length()==0 &&
+                                dnivalido.length() ==0 && dniRepeat.length() ==0 &&
+                                celularvalido.length() == 0 && celularRepeat.length() == 0){
+
+
+                            usuarioDao.actualizarUsuario(usuario);
+
+                            response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
+                            break;
+
+
+                        }else{
+
+                            request.setAttribute("usuario",usuario);
+
+
+                            request.setAttribute("nombrevalido",nombrevalido);
+                            request.setAttribute("apellidovalido",apellidovalido);
+                            request.setAttribute("correovalido",correovalido);
+                            request.setAttribute("correoRepeat",correoRepeat);
+                            request.setAttribute("dnivalido",dnivalido);
+                            request.setAttribute("dniRepeat", dniRepeat);
+                            request.setAttribute("celularvalido",celularvalido);
+                            request.setAttribute("celularRepeat",celularRepeat);
+
+                            request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                            request.setAttribute("roles", rolDao.obtenerRoles());
+
+                            System.out.println("unos de los msgs (Seguridad)");
+                            view = request.getRequestDispatcher("/Administrador/editUser.jsp");
+                            view.forward(request, response);
+                            break;
+
+
+                        }
+                    }
+                } else {
+                    //si presenta rol invalido
+                    /*request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                    request.setAttribute("roles", rolDao.obtenerRoles());*/
+                    request.setAttribute("listaCategorias",categoriaDao.obtenerlistaCategorias());
+                    request.setAttribute("roles", rolDao.obtenerRoles());
+                    session.setAttribute("rolValido", rolValido);
+                    System.out.println("Presenta rol invalido");
+                    view = request.getRequestDispatcher("/Administrador/editUser.jsp");
+                    view.forward(request, response);
+                    break;
+                }
+
+
 
             case "cambiarContrasena":
                 String correo1 = usuario1.getCorreo();
