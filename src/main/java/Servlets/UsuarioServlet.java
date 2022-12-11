@@ -187,7 +187,7 @@ public class UsuarioServlet extends HttpServlet {
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }
-                        response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=inicio");
+                        response.sendRedirect(request.getContextPath());
                     /*view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
                     view.forward(request, response);*/
                     }else{
@@ -265,27 +265,32 @@ public class UsuarioServlet extends HttpServlet {
                             response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=verDetalle&id="+jijija.getIdIncidencia());
                         }else {
                             if(!uDao.nombreyApellidoValid(comentarioreopen)){
-                                validoComentario = "El comentario ingresado no es valido";
-                                request.getSession().setAttribute("info1", validoComentario);
-                                response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=verDetalle&id="+jijija.getIdIncidencia());
+
                             }else {
-                                try {
-                                    EnviarCorreoEstado.main(usuario1.getCorreo(),jijija,2,"Reabierto");
-                                } catch (MessagingException e) {
-                                    e.printStackTrace();
-                                }
-                                try {
-                                    ArrayList<Usuario> listausuariosdestacados = idao.obtenerUsuarioxDestacada(jijija.getIdIncidencia());
-                                    if(listausuariosdestacados != null){
-                                        for (Usuario u : listausuariosdestacados){
-                                            EnviarCorreoEstado.main(u.getCorreo(),jijija,2,"Reabierto");
-                                        }
+                                if (comentarioreopen.length()>45){
+                                    validoComentario = "El comentario no puede superar los 45 caracteres";
+                                    request.getSession().setAttribute("info1", validoComentario);
+                                    response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=verDetalle&id="+jijija.getIdIncidencia());
+                                }else {
+                                    try {
+                                        EnviarCorreoEstado.main(usuario1.getCorreo(),jijija,2,"Reabierto");
+                                    } catch (MessagingException e) {
+                                        e.printStackTrace();
                                     }
-                                } catch (MessagingException e) {
-                                    e.printStackTrace();
+                                    try {
+                                        ArrayList<Usuario> listausuariosdestacados = idao.obtenerUsuarioxDestacada(jijija.getIdIncidencia());
+                                        if(listausuariosdestacados != null){
+                                            for (Usuario u : listausuariosdestacados){
+                                                EnviarCorreoEstado.main(u.getCorreo(),jijija,2,"Reabierto");
+                                            }
+                                        }
+                                    } catch (MessagingException e) {
+                                        e.printStackTrace();
+                                    }
+                                    idao.reabrir(idIncidencia5, comentarioreopen,usuario1.getCodigo());
+                                    response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
                                 }
-                                idao.reabrir(idIncidencia5, comentarioreopen,usuario1.getCodigo());
-                                response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
+
                             }
                         }
                     /*}else{
