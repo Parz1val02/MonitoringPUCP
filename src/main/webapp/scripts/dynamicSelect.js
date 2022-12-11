@@ -3,7 +3,7 @@ var roles = {
     2:['No tiene categoria']
 }
 
-
+var newsub = document.getElementById('floatingInputGrid100')?document.getElementById('floatingInputGrid100').value:"";
 var main = document.getElementById('floatingSelectGrid1');
 var sub = document.getElementById('floatingSelectGrid2');
 
@@ -15,6 +15,10 @@ function selectDinamico(idRol) {
     }
     Array.from(selected_option).forEach(function (e1) {
         let option = new Option(e1,e1);
+        if (newsub!=="" && newsub===e1) {
+            option.selected = true;
+            newsub = "";
+        }
         sub.appendChild(option);
     });
 }
