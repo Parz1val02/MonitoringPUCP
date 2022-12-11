@@ -259,7 +259,7 @@ public class UsuarioServlet extends HttpServlet {
                         validoComentario = "El comentario ingresado no es válido";
                     }
                     System.out.println(comentarioreopen);
-                    if(comentarioreopen.length()==0){
+                    /*if(comentarioreopen.length()==0){*/
                         if (cont>=5){
                             request.getSession().setAttribute("info", "Ya se ha alcanzado el número máximo de reaperturas");
                             response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=verDetalle&id="+jijija.getIdIncidencia());
@@ -282,14 +282,14 @@ public class UsuarioServlet extends HttpServlet {
                             idao.reabrir(idIncidencia5);
                             response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
                         }
-                    }else{
+                    /*}else{
                         request.setAttribute("validoComentario",validoComentario);
                         ArrayList<FotosIncidencias> fotos = inDao.obtenerFotos(jijija.getIdIncidencia());
                         request.setAttribute("Incidencia",jijija);
                         request.setAttribute("Fotos",fotos);
                         view = request.getRequestDispatcher("/Usuario/DetalleReabierto.jsp");
                         view.forward(request, response);
-                    }
+                    }*/
                 }else{
                     response.sendRedirect(request.getContextPath()+ "/UsuarioServlet");
                 }

@@ -30,6 +30,13 @@
         <link rel="stylesheet" type="text/css"
               href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="../css/style.min.css">
+        <style>
+            .form-control:disabled {
+                background-color: #e9ecef;
+                opacity: 1;
+                font-size: 15px;
+            }
+        </style>
     </head>
     <body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
         <!-- HEADER -->
