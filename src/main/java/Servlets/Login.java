@@ -354,7 +354,7 @@ public class Login extends HttpServlet {
                 boolean usuarioMasterterTable = uDao.consultarMasterTable(codigo,mail);
                 if(usuarioMasterterTable){
                     Usuario usuarioMaster = uDao.buscarPorIdMasterTable(codigo);
-                    if(uDao.validarPrimerIngreso(usuarioMaster)){
+                    if(uDao.validarPrimerIngreso(usuarioMaster) && !uDao.verificarUsuario(codigo)){
                         String relativeWebPath = "images/usuario.png";
                         String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
                         File file = new File(absoluteDiskPath);
