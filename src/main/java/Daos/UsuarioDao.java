@@ -724,7 +724,7 @@ public class UsuarioDao extends DaoBase{
         return usuario;
     }
     public void registroDesdeMastertable(Usuario usuario, String contraseniaPredeterminada){
-        String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil,primerIngreso) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?,?)";
+        String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?)";
         int idFoto = 0;
 
 
@@ -745,7 +745,6 @@ public class UsuarioDao extends DaoBase{
             pstmt.setInt(10, usuario.getCategoriaPUCP().getIdCategoria());
             idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
             pstmt.setInt(11, idFoto);
-            pstmt.setBoolean(12, true);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
