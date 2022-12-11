@@ -35,14 +35,10 @@
             .img-container {
                 max-width: 642px;
                 max-height: 376px;
-                width: 100%;
-                height: 100%;
                 overflow: hidden;
             }
 
             .img-container img {
-                max-width: 642px;
-                max-height: 376px;
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
@@ -103,7 +99,7 @@
                                         <div class="col-md-6 img-container"
                                              style="background: #dee2e6; margin: auto; overflow: auto">
                                             <img src="<%=request.getContextPath()%>/UsuarioServlet?accion=verFoto&id=<%=listaFotos.get(i).getIdFotos()%>"
-                                                 alt=""/>
+                                                 alt="" class="d-block w-100"/>
                                         </div>
                                         <div class="col-md-4" style="background: #FFFFFF">
                                             <div style="border-radius: 2px;border-color: black">
