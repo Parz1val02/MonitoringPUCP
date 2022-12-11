@@ -465,17 +465,15 @@ public class AdminServlet extends HttpServlet {
 
 
                         //Foto
-                        FotoPerfil fp = new FotoPerfil();
-                        /*String relativeWebPath = "images/usuario.png";
+                        FotoPerfil fp = new FotoPerfil();String relativeWebPath = "images/usuario.png";
                         String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
                         File file = new File(absoluteDiskPath);
                         byte[] fileContent = Files.readAllBytes(file.toPath());
 
 
                         fp.setFotobyte(fileContent);
-                        fp.setNombreFoto("usuario.png");*/
+                        fp.setNombreFoto("usuario.png");
 
-                        fp=null;
                         
                         GeneradorDeContrasenha generadorDeContrasenha = new GeneradorDeContrasenha();
                         String password = generadorDeContrasenha.crearPassword();
