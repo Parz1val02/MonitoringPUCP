@@ -281,6 +281,7 @@
                         </div>
                         <div class="col-md">
                           <div class="form-floating">
+                            <input type="text" hidden id="floatingInputGrid100" value="<%=usuario.getCategoriaPUCP()==null?"":usuario.getCategoriaPUCP().getNombreCategoria()%>">
                             <select class="form-select <%=categoriaValida.length()>0?"is-invalid":""%>" id="floatingSelectGrid2" name="categoriaPUCP">
 
                             </select>
