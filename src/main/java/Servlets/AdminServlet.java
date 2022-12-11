@@ -246,22 +246,26 @@ public class AdminServlet extends HttpServlet {
                         String celular = request.getParameter("celular");
                         //valida el celular ingresado
                         String celularvalido = "";
-                        if(!usuarioDao.celularValid(celular)){
-                            celularvalido = "el celular ingresado no es valido";
-
-
-                        }
-                        //valida que el usuario no se repita
                         String celularRepeat = "";
-                        for(Usuario u: listaMasterTable){
-                            if(u.getCelular()!=null){
-                                if(u.getCelular().equalsIgnoreCase(celular)){
-                                    celularRepeat = "el celular ingresado ya existe";
+                        if(!(celular.equalsIgnoreCase("No phone") || celular.equalsIgnoreCase(""))){
 
-                                }
+                            if(!usuarioDao.celularValid(celular)){
+                                celularvalido = "el celular ingresado no es valido";
+
                             }
+                            //valida que el usuario no se repita
 
+                            for(Usuario u: listaMasterTable){
+                                if(u.getCelular()!=null){
+                                    if(u.getCelular().equalsIgnoreCase(celular) && u.getCelular()!=null){
+                                        celularRepeat = "el celular ingresado ya existe";
+
+                                    }
+                                }
+
+                            }
                         }
+
 
                         String categoriaValida = "";
                         String categoriaPUCPStr = request.getParameter("categoriaPUCP");
@@ -418,21 +422,24 @@ public class AdminServlet extends HttpServlet {
                         String celular = request.getParameter("celular");
                         //valida el celular ingresado
                         String celularvalido = "";
-                        if(!usuarioDao.celularValid(celular)){
-                            celularvalido = "el celular ingresado no es valido";
-
-
-                        }
-                        //valida que el usuario no se repita
                         String celularRepeat = "";
-                        for(Usuario u: listaUsuarios){
-                            if(u.getCelular()!=null){
-                                if(u.getCelular().equalsIgnoreCase(celular)){
-                                    celularRepeat = "el celular ingresado ya existe";
+                        if(!(celular.equalsIgnoreCase("No phone") || celular.equalsIgnoreCase(""))){
 
-                                }
+                            if(!usuarioDao.celularValid(celular)){
+                                celularvalido = "el celular ingresado no es valido";
+
                             }
+                            //valida que el usuario no se repita
 
+                            for(Usuario u: listaMasterTable){
+                                if(u.getCelular()!=null){
+                                    if(u.getCelular().equalsIgnoreCase(celular) && u.getCelular()!=null){
+                                        celularRepeat = "el celular ingresado ya existe";
+
+                                    }
+                                }
+
+                            }
                         }
                         String categoriaValida="";
                         String categoriaPUCPStr = request.getParameter("categoriaPUCP");
@@ -607,21 +614,24 @@ public class AdminServlet extends HttpServlet {
                         String celular = request.getParameter("celular");
                         //valida el celular ingresado
                         String celularvalido = "";
-                        if(!usuarioDao.celularValid(celular)){
-                            celularvalido = "el celular ingresado no es valido";
-
-
-                        }
-                        //valida que el celular no se repita
                         String celularRepeat = "";
-                        for(Usuario u: listaMasterTable){
-                            if(u.getCelular()!=null){
-                                if(u.getCelular().equalsIgnoreCase(celular) && !u.getCodigo().equalsIgnoreCase(codigo)){
-                                    celularRepeat = "el celular ingresado ya existe";
+                        if(!(celular.equalsIgnoreCase("No phone") || celular.equalsIgnoreCase(""))){
 
-                                }
+                            if(!usuarioDao.celularValid(celular)){
+                                celularvalido = "el celular ingresado no es valido";
+
                             }
+                            //valida que el usuario no se repita
 
+                            for(Usuario u: listaMasterTable){
+                                if(u.getCelular()!=null){
+                                    if(u.getCelular().equalsIgnoreCase(celular) && u.getCelular()!=null && !u.getCodigo().equalsIgnoreCase(codigo)){
+                                        celularRepeat = "el celular ingresado ya existe";
+
+                                    }
+                                }
+
+                            }
                         }
 
                         String categoriaValida = "";
@@ -792,21 +802,24 @@ public class AdminServlet extends HttpServlet {
                         String celular = request.getParameter("celular");
                         //valida el celular ingresado
                         String celularvalido = "";
-                        if(!usuarioDao.celularValid(celular)){
-                            celularvalido = "el celular ingresado no es valido";
-
-
-                        }
-                        //valida que el usuario no se repita
                         String celularRepeat = "";
-                        for(Usuario u: listaUsuarios){
-                            if(u.getCelular()!=null){
-                                if(u.getCelular().equalsIgnoreCase(celular) && !u.getCodigo().equalsIgnoreCase(codigo)){
-                                    celularRepeat = "el celular ingresado ya existe";
+                        if(!(celular.equalsIgnoreCase("No phone") || celular.equalsIgnoreCase(""))){
 
-                                }
+                            if(!usuarioDao.celularValid(celular)){
+                                celularvalido = "el celular ingresado no es valido";
+
                             }
+                            //valida que el usuario no se repita
 
+                            for(Usuario u: listaMasterTable){
+                                if(u.getCelular()!=null){
+                                    if(u.getCelular().equalsIgnoreCase(celular) && u.getCelular()!=null && !u.getCodigo().equalsIgnoreCase(codigo)){
+                                        celularRepeat = "el celular ingresado ya existe";
+
+                                    }
+                                }
+
+                            }
                         }
                         String categoriaValida="";
                         String categoriaPUCPStr = request.getParameter("categoriaPUCP");
