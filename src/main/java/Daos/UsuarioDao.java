@@ -639,10 +639,8 @@ public class UsuarioDao extends DaoBase {
      }
     public boolean compararPrimeraContrasenia(String primeraContraseniaIngresada, Usuario usuario) {
 
-        boolean coincideContrasenia= false;
-        String contraseniaBaseDatos = null;
-        Usuario usuarioTemp = null;
-
+        boolean coincideContrasenia= false;;
+        String codigtemporal="";
         if (usuario.getRol().getNombreRol().equals("Seguridad")||usuario.getRol().getNombreRol().equals("Usuario PUCP")) {
 
             String sql = "SELECT * FROM telesystem_aa.Usuarios where codigo=? and password=SHA2(?,256);";
@@ -655,8 +653,8 @@ public class UsuarioDao extends DaoBase {
 
                 try(ResultSet rs = pstmt.executeQuery();){
                     if (rs.next()) {
-                        usuarioTemp = new Usuario();
-                        usuarioTemp.setCodigo(rs.getString(1));
+                        /*usuarioTemp = new Usuario();*/
+                        codigtemporal = (rs.getString(1));
                     }
                 }
             } catch (SQLException e) {
@@ -664,7 +662,8 @@ public class UsuarioDao extends DaoBase {
             }
 
 
-            if (usuarioTemp.getCodigo()!= null) {
+
+            if (!codigtemporal.equals("")) {
                 coincideContrasenia = true;
             }
 
@@ -734,7 +733,7 @@ public class UsuarioDao extends DaoBase {
         return usuario;
     }
     public void registroDesdeMastertable(Usuario usuario, String contraseniaPredeterminada){
-        String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil,primerIngreso) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?,?)";
+        String sql = "INSERT INTO Usuarios (codigo, nombre, apellido, correo, DNI, validaUsuario, password, celular, idRoles, idCategoriaPUCP, idFotoPerfil) VALUES (?,?,?,?,?,?,sha2(?,256),?,?,?,?)";
         int idFoto = 0;
 
 
@@ -755,7 +754,7 @@ public class UsuarioDao extends DaoBase {
             pstmt.setInt(10, usuario.getCategoriaPUCP().getIdCategoria());
             idFoto = guardarFoto(usuario.getFotoPerfil().getFotobyte(), usuario.getFotoPerfil().getNombreFoto());
             pstmt.setInt(11, idFoto);
-            pstmt.setBoolean(12, true);
+
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

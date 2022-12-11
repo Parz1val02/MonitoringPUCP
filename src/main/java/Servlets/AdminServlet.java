@@ -5,6 +5,9 @@ import Daos.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import Funcion.EnviarCorreoPassSeguridad;
+import Funcion.GeneradorDeContrasenha;
+import jakarta.mail.MessagingException;
 
 import java.io.File;
 import java.io.IOException;
@@ -322,7 +325,7 @@ public class AdminServlet extends HttpServlet {
 
                             // todo -------------- crear usuario en mastertable
                             usuarioDao.crearUsuario(usuario);
-                            session.setAttribute("estado","usuario creado en mastertable exitosamente");
+                            session.setAttribute("estado","Usuario creado en mastertable exitosamente");
                             response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
                             break;
                         }else{
@@ -418,7 +421,7 @@ public class AdminServlet extends HttpServlet {
 
 
                         //boolean valida = Boolean.parseBoolean(request.getParameter("valida"));
-                        String password = "password";
+                        //String password = "password";
                         String celular = request.getParameter("celular");
                         //valida el celular ingresado
                         String celularvalido = "";
@@ -473,7 +476,11 @@ public class AdminServlet extends HttpServlet {
                         fp.setNombreFoto("usuario.png");*/
 
                         fp=null;
+                        
+                        GeneradorDeContrasenha generadorDeContrasenha = new GeneradorDeContrasenha();
+                        String password = generadorDeContrasenha.crearPassword();
 
+                        
                         Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
 
 
@@ -485,7 +492,14 @@ public class AdminServlet extends HttpServlet {
 
                                 // todo ---------- Seguridad creado en tabla usuarios
                                 usuarioDao.crearUsuario(usuario);
-                                session.setAttribute("estado","seguridad creado en usurios exitosamente");
+                                session.setAttribute("estado","Seguridad creado en usuarios exitosamente");
+                                /*enviar correo al seguridad*/
+                                try {
+                                    EnviarCorreoPassSeguridad.main(usuario.getCorreo(),password);
+                                } catch (MessagingException e) {
+                                    e.printStackTrace();
+                                }
+                                /*enviar correo al seguridad*/
                                 response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
 
 
@@ -690,7 +704,7 @@ public class AdminServlet extends HttpServlet {
 
                             // todo ------- usuario editado en tabla usuarios
                             usuarioDao.actualizarUsuario(usuario);
-                            session.setAttribute("estado","cambios realizados exitosamente");
+                            session.setAttribute("estado","Cambios realizados exitosamente");
                             response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
                             break;
                         }else{
@@ -866,7 +880,7 @@ public class AdminServlet extends HttpServlet {
 
                             //todo ---------- seguridad editado en tabla usuarios
                             usuarioDao.actualizarUsuario(usuario);
-                            session.setAttribute("estado","cambios realizados exitosamente");
+                            session.setAttribute("estado","Cambios realizados exitosamente");
                             response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
                             break;
 
