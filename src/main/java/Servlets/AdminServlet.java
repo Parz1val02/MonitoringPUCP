@@ -322,7 +322,7 @@ public class AdminServlet extends HttpServlet {
 
                             // todo -------------- crear usuario en mastertable
                             usuarioDao.crearUsuario(usuario);
-                            session.setAttribute("estado","usuario creado en mastertable exitosamente");
+                            session.setAttribute("estado","Usuario creado en mastertable exitosamente");
                             response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
                             break;
                         }else{
@@ -485,7 +485,7 @@ public class AdminServlet extends HttpServlet {
 
                                 // todo ---------- Seguridad creado en tabla usuarios
                                 usuarioDao.crearUsuario(usuario);
-                                session.setAttribute("estado","seguridad creado en usurios exitosamente");
+                                session.setAttribute("estado","Seguridad creado en usuarios exitosamente");
                                 response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
 
 
@@ -690,7 +690,7 @@ public class AdminServlet extends HttpServlet {
 
                             // todo ------- usuario editado en tabla usuarios
                             usuarioDao.actualizarUsuario(usuario);
-                            session.setAttribute("estado","cambios realizados exitosamente");
+                            session.setAttribute("estado","Cambios realizados exitosamente");
                             response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
                             break;
                         }else{
@@ -866,7 +866,7 @@ public class AdminServlet extends HttpServlet {
 
                             //todo ---------- seguridad editado en tabla usuarios
                             usuarioDao.actualizarUsuario(usuario);
-                            session.setAttribute("estado","cambios realizados exitosamente");
+                            session.setAttribute("estado","Cambios realizados exitosamente");
                             response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
                             break;
 
