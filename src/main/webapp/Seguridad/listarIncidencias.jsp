@@ -193,6 +193,8 @@
                                         <th>Nivel de Urgencia</th>
                                         <th>Descripción</th>
                                         <th>Detalle</th>
+                                        <th>N° veces reabierta</th>
+                                      
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -209,6 +211,7 @@
                                         <td>
                                             <a href="<%=request.getContextPath()%>/SeguridadServlet?accion=verDetalle&id=<%=incidencia.getIdIncidencia()%>">Ver
                                                 Detalle</a></td>
+                                        <td><%= incidencia.getContadorReabierto()%> </td>
 
                                     </tr>
                                     <% }%>
