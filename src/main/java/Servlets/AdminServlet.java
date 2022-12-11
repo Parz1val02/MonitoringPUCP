@@ -24,6 +24,7 @@ public class AdminServlet extends HttpServlet {
 
             String accion = request.getParameter("accion")==null?"tabla_usuarios":request.getParameter("accion");
             RequestDispatcher view;
+
             UsuarioDao usuarioDao = new UsuarioDao();
             IncidenciaDao incidenciaDao = new IncidenciaDao();
             CategoriaDao categoriaDao = new CategoriaDao();
@@ -294,8 +295,14 @@ public class AdminServlet extends HttpServlet {
 
 
                         //Foto
+
                         /*String relativeWebPath = "../images/usuario.png";
+=======
+                        String relativeWebPath = "images/usuario.png";
+>>>>>>> 732f5056b144ec257621de99aa469036fd30b153
                         String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
+                        System.out.println(relativeWebPath);
+                        System.out.println(absoluteDiskPath);
                         File file = new File(absoluteDiskPath);
                         byte[] fileContent = Files.readAllBytes(file.toPath());*/
 
@@ -451,7 +458,7 @@ public class AdminServlet extends HttpServlet {
 
 
                         //Foto
-                        String relativeWebPath = "../images/usuario.png";
+                        String relativeWebPath = "images/usuario.png";
                         String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
                         File file = new File(relativeWebPath);
                         byte[] fileContent = Files.readAllBytes(file.toPath());

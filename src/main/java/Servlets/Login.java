@@ -25,6 +25,7 @@ public class Login extends HttpServlet {
         HttpSession session = request.getSession();
         String accion = request.getParameter("accion") == null ? "iniciar" : request.getParameter("accion");
         RequestDispatcher view;
+        IncidenciaDao iDao = new IncidenciaDao();
         UsuarioDao uDao = new UsuarioDao();
         switch (accion) {
             case ("registrar"):
@@ -61,11 +62,6 @@ public class Login extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
                 }
                 break;
-            case ("restablecer"):
-                view = request.getRequestDispatcher("/Usuario/CambiarContrasenia.jsp");
-                view.forward(request, response);
-                break;
-
             case ("logout"):
                 HttpSession session2 = request.getSession();
                 session2.removeAttribute("usuario");
@@ -123,12 +119,37 @@ public class Login extends HttpServlet {
                 }
                 break;
             /*DOBLE FACTOR DOGET*/
-
-            /**/
+            case("restablecer"):
+                session = request.getSession();
+                if (session.getAttribute("usuario") == null) {
+                    String codigo = request.getParameter("code");
+                    if(iDao.idValid(codigo)&&uDao.verificarUsuario(codigo)){
+                        request.setAttribute("codigo",codigo);
+                        view = request.getRequestDispatcher("/Login/RecuperarContrasenia.jsp");
+                        view.forward(request, response);
+                    }else{
+                        response.sendRedirect(request.getContextPath() + "/Login");
+                    }
+                } else {
+                    Usuario usuario = (Usuario) session.getAttribute("usuario");
+                    switch (usuario.getRol().getNombreRol()) {
+                        case "Usuario PUCP":
+                            response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
+                            break;
+                        case "Seguridad":
+                            response.sendRedirect(request.getContextPath() + "/SeguridadServlet");
+                            break;
+                        case "Administrador":
+                            response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                            break;
+                    }
+                }
+                break;
             default:
                 response.sendRedirect(request.getContextPath() + "/Login");
         }
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
@@ -136,7 +157,7 @@ public class Login extends HttpServlet {
         HttpSession session = request.getSession();
         String username = request.getParameter("email");
         String password = request.getParameter("password");
-
+        IncidenciaDao iDao= new IncidenciaDao();
         UsuarioDao uDao = new UsuarioDao();
         Usuario user = uDao.ingresarLogin(username,password); //recibo usuario y password
 
@@ -385,8 +406,57 @@ public class Login extends HttpServlet {
                     break;
                 }
 
+            case("olvida"):
+                String email = request.getParameter("email");
+                if (uDao.emailisValid(email) && uDao.verificarEmail(email)){
+                    try {
+                        EnviarCorreo.main(email, uDao.obtenerCodigoPorEmail(email));
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
+                    response.sendRedirect(request.getContextPath() + "/Login");
+                }
+                else {
+                    request.setAttribute("correoValido", "El correo ingresado no es válido");
+                    RequestDispatcher view = request.getRequestDispatcher("/Login/OlvidarContrasenia.jsp");
+                    view.forward(request, response);
+                }
+                break;
+            case ("recuperar"):
+                String code = request.getParameter("codigo");
+                String nueva = request.getParameter("contraseñaNueva");
+                String repass = request.getParameter("repass");
+                RequestDispatcher view;
+                //UsuarioDao uDao = new UsuarioDao();
+                System.out.println("usuario1:"+user.getPassword());
+                if(iDao.idValid(code)&&uDao.verificarUsuario(code)) {
 
+                    //primero se valida que la contraseña sea valida
+                    boolean contrasenaCorrecta = uDao.contrasenaisValid(nueva);
 
+                    if (contrasenaCorrecta) {
+                        if (!nueva.equalsIgnoreCase(repass)) { //si cuando confirma la nueva contraseña no es igual
+                            request.setAttribute("msgIguales", "Para confirmar, ambas contrasenas deben ser iguales");
+                            request.setAttribute("codigo",code);
+                            view = request.getRequestDispatcher("/Login/RecuperarContrasenia.jsp");
+                            view.forward(request, response);
+                            System.out.println("contraseñas nuevas no iguales");
+                            break;
+                        }
+                        uDao.cambiarContrasenaConCodigo(code, nueva);
+                        session.setAttribute("msg","Su contraseña fue cambiada con exito");
+                        RequestDispatcher requestDispatcher= request.getRequestDispatcher("/Login/InicioSesion.jsp");
+                        requestDispatcher.forward(request,response);
+                    } else {
+                        request.setAttribute("easy", "Digite otra contraseña que cumpla los requerimentos");
+                        request.setAttribute("codigo",code);
+                        view = request.getRequestDispatcher("/Login/RecuperarContrasenia.jsp");
+                        view.forward(request, response);
+                    }
+                }else{
+                    response.sendRedirect(request.getContextPath() + "/Login");
+                }
+                break;
             default:
                 response.sendRedirect(request.getContextPath() + "/Login");
         }

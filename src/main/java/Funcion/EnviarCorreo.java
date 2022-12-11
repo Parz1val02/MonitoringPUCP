@@ -12,7 +12,7 @@ import java.util.Properties;
 //para enviar correo al olvidar contraseña y registrarse
 public class EnviarCorreo {
 
-    public static void main(String correoDestino)throws MessagingException {
+    public static void main(String correoDestino, String codigoUsuario)throws MessagingException {
 
         String correo = "pucpmonitoring2022@gmail.com"; //cambiar correo
         String contra = "cxzmeohuebkelqhc";  //cambiar contraseña
@@ -31,7 +31,7 @@ public class EnviarCorreo {
         mensaje.setFrom(new InternetAddress(correo)); //FROM
         mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress(correoDestino));  //TO
         mensaje.setSubject("Cambio de Contraseña - MONITORING PUCP"); //
-        String link = "http://localhost:8080/Login?accion=restablecer";
+        String link = "http://localhost:8080/Login?accion=restablecer&code="+codigoUsuario;
         mensaje.setText(link);
         //mensaje.setText("Este es un mensaje que se envia desde JAVA");
 

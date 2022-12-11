@@ -1,5 +1,7 @@
+
 package Daos;
 import Beans.*;
+import Daos.DaoBase;
 
 import java.io.*;
 import java.sql.*;
@@ -8,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.nio.file.Files;
 
-public class UsuarioDao extends DaoBase{
+public class UsuarioDao extends DaoBase {
 
     public ArrayList<Usuario> obtenerListaUsuarios() {
 
@@ -845,6 +847,52 @@ public class UsuarioDao extends DaoBase{
         return existe;
     }
 
+    public boolean verificarEmail(String email){
+        String sql = "Select correo from Usuarios where correo = ?";
+        boolean existe = false;
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1,email);
+            try(ResultSet rs = pstmt.executeQuery();){
+                if(rs.next()){
+                    existe = true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return existe;
+    }
 
+    public String obtenerCodigoPorEmail(String email){
+        String sql = "Select codigo from Usuarios where correo = ?";
+        String codigo="";
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1,email);
+            try(ResultSet rs = pstmt.executeQuery();){
+                if(rs.next()){
+                    codigo = rs.getString(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return codigo;
+    }
+
+
+    public void cambiarContrasenaConCodigo(String codigo, String contrasenia){
+        String sql = "UPDATE Usuarios set password=sha2(?,256) where codigo=?";
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1,contrasenia);
+            pstmt.setString(2,codigo);
+            pstmt.executeUpdate(); }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
+
