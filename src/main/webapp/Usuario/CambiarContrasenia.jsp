@@ -42,12 +42,12 @@
         <div align="center">
             <h4 style="font-family: sans-serif,Montserrat; font-weight: 700;
             font-size: 30px; color: #042354">Cambio de Contraseña</h4>
-            <div style="font-size: 15px">
+            <div style="font-size: 17px">
                 Considerar que el mínimo son 8 y máximo, 16 caracteres que puede ingresar
             </div>
             <div style="height: 25px; display: block;"></div>
         </div>
-        <div style="height: 40px; display: block;"></div>
+        <div style="height: 10px; display: block;"></div>
         <div class="row" style="font-size: 17px">
             <div class="col-md-1"></div>
             <div class="col-md-5" style="margin: 0 auto">

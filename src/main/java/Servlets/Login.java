@@ -382,27 +382,30 @@ public class Login extends HttpServlet {
                 String confirmContrasenia =request.getParameter("repass");
 
                 if(uDao.compararPrimeraContrasenia(contraseniaActual,usuario2)){
-                    if(contraseniaNueva.equals(confirmContrasenia)){
-                        uDao.cambiarContrasenaUsuario(usuario2.getCorreo(),contraseniaNueva);
-                        uDao.cambiarPrimerIngreso(usuario2);
-                        int flag = 1;
-                        session.setAttribute("flag",flag);
-                        response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
-
+                    boolean contraseniaCorrecta = uDao.contrasenaisValid(contraseniaNueva);
+                    if(contraseniaCorrecta){
+                        if(contraseniaNueva.equals(confirmContrasenia)){
+                            uDao.cambiarContrasenaUsuario(usuario2.getCorreo(),contraseniaNueva);
+                            uDao.cambiarPrimerIngreso(usuario2);
+                            int flag = 1;
+                            session.setAttribute("flag",flag);
+                            response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
+                        } else {
+                            session.setAttribute("msgRepetido","Las contraseñas ingresadas no coinciden");
+                            RequestDispatcher requestDispatcher= request.getRequestDispatcher("/Login/ContraseniaPredeterminada.jsp");
+                            requestDispatcher.forward(request,response);
+                        }
                         break;
-                    } else {
-                        session.setAttribute("msg","Las contraseñas ingresadas no coinciden");
+
+                    }else {
+                        session.setAttribute("msgIncorrecto","Digite otra contraseña que cumpla los requerimentos ");
                         RequestDispatcher requestDispatcher= request.getRequestDispatcher("/Login/ContraseniaPredeterminada.jsp");
                         requestDispatcher.forward(request,response);
-
-                        break;
                     }
-
                 } else {
-                    session.setAttribute("msg","La contraseña actual no es correcta");
+                    session.setAttribute("msgContrasPredeterminadaX","La contraseña enviada no es correcta");
                     RequestDispatcher requestDispatcher= request.getRequestDispatcher("/Login/ContraseniaPredeterminada.jsp");
                     requestDispatcher.forward(request,response);
-
                     break;
                 }
 
