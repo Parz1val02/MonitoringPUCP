@@ -870,4 +870,16 @@ public class UsuarioDao extends DaoBase{
         return codigo;
     }
 
+
+    public void cambiarContrasenaConCodigo(String codigo, String contrasenia){
+         String sql = "UPDATE Usuarios set password=sha2(?,256) where codigo=?";
+         try (Connection connection = getConnection();
+              PreparedStatement pstmt = connection.prepareStatement(sql)){
+             pstmt.setString(1,contrasenia);
+             pstmt.setString(2,codigo);
+             pstmt.executeUpdate(); }
+         catch (SQLException e) {
+             throw new RuntimeException(e);
+         }
+     }
 }

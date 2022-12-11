@@ -25,6 +25,7 @@ public class Login extends HttpServlet {
         HttpSession session = request.getSession();
         String accion = request.getParameter("accion") == null ? "iniciar" : request.getParameter("accion");
         RequestDispatcher view;
+        IncidenciaDao iDao = new IncidenciaDao();
         UsuarioDao uDao = new UsuarioDao();
         switch (accion) {
             case ("registrar"):
@@ -61,11 +62,6 @@ public class Login extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
                 }
                 break;
-            case ("restablecer"):
-                view = request.getRequestDispatcher("/Usuario/CambiarContrasenia.jsp");
-                view.forward(request, response);
-                break;
-
             case ("logout"):
                 HttpSession session2 = request.getSession();
                 session2.removeAttribute("usuario");
@@ -135,7 +131,7 @@ public class Login extends HttpServlet {
                         response.sendRedirect(request.getContextPath() + "/Login");
                     }
                 } else {
-                    Usuario usuario = (Usuario) session1.getAttribute("usuario");
+                    Usuario usuario = (Usuario) session.getAttribute("usuario");
                     switch (usuario.getRol().getNombreRol()) {
                         case "Usuario PUCP":
                             response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
@@ -161,7 +157,7 @@ public class Login extends HttpServlet {
         HttpSession session = request.getSession();
         String username = request.getParameter("email");
         String password = request.getParameter("password");
-
+        IncidenciaDao iDao= new IncidenciaDao();
         UsuarioDao uDao = new UsuarioDao();
         Usuario user = uDao.ingresarLogin(username,password); //recibo usuario y password
 
