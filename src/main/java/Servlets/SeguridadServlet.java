@@ -127,7 +127,7 @@ public class SeguridadServlet extends HttpServlet {
                     int IDEstado = 0;
                     String idEstado=request.getParameter("idEstado");
                     if(!(eDao.verificarEstado(idEstado) && idao.idValid(idEstado) )){
-                        estadoValido="el estado ingresado no es valido";
+                        estadoValido="El estado ingresado no es válido";
                     }else{
                         IDEstado=Integer.parseInt(idEstado); //lo castea y guarda
                     }
@@ -136,7 +136,7 @@ public class SeguridadServlet extends HttpServlet {
                     String justi = request.getParameter("justificacion");
                     String justiValido = "";
                     if(!uDao.nombreyApellidoValid(justi)){
-                        justiValido = "La justificacion ingresada no es valida";
+                        justiValido = "La justificación ingresada no es válida";
                     }
                     //obtener el objeto incidencia de la vista o obtener el id? IDDDDDDDDDDDDDD!!!!!!!!!
                     incidencia = idao.obtenerIncidencia(idIncidencia);
@@ -196,14 +196,14 @@ public class SeguridadServlet extends HttpServlet {
                     if (contrasenaCorrecta) {
 
                         if (!nueva.equalsIgnoreCase(repass)) { //si cuando confirma la nueva contraseña no es igual
-                            request.setAttribute("msgIguales", "Para confirmar, ambas contrasenas deben ser iguales");
+                            request.setAttribute("msgIguales", "Para confirmar, ambas contraseñas deben ser iguales");
                             view = request.getRequestDispatcher("/Seguridad/restablecer_contrasena_seguridad.jsp");
                             view.forward(request, response);
                             System.out.println("contraseñas nuevas no iguales");
                             break;
                         }
                         if (nueva.equalsIgnoreCase(actual)) {//si la contraseña nueva es igual a la actual----> no se puede
-                            request.setAttribute("msgOld", "Las contrasenas no pueden ser iguales");
+                            request.setAttribute("msgOld", "Las contraseñas no pueden ser iguales");
                             view = request.getRequestDispatcher("/Seguridad/restablecer_contrasena_seguridad.jsp");
                             view.forward(request, response);
                             System.out.println("contraseñas igual a la original");
