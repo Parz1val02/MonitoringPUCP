@@ -418,7 +418,7 @@ public class AdminServlet extends HttpServlet {
 
 
                         //boolean valida = Boolean.parseBoolean(request.getParameter("valida"));
-                        String password = "password";
+                        //String password = "password";
                         String celular = request.getParameter("celular");
                         //valida el celular ingresado
                         String celularvalido = "";
@@ -473,7 +473,11 @@ public class AdminServlet extends HttpServlet {
                         fp.setNombreFoto("usuario.png");*/
 
                         fp=null;
+                        
+                        GeneradorDeContrasenha generadorDeContrasenha = new GeneradorDeContrasenha();
+                        String password = generadorDeContrasenha.crearPassword();
 
+                        
                         Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
 
 
@@ -486,6 +490,13 @@ public class AdminServlet extends HttpServlet {
                                 // todo ---------- Seguridad creado en tabla usuarios
                                 usuarioDao.crearUsuario(usuario);
                                 session.setAttribute("estado","Seguridad creado en usuarios exitosamente");
+                                /*enviar correo al seguridad*/
+                                try {
+                                    EnviarCorreoPassSeguridad.main(usuario.getCorreo(),password);
+                                } catch (MessagingException e) {
+                                    e.printStackTrace();
+                                }
+                                /*enviar correo al seguridad*/
                                 response.sendRedirect(request.getContextPath() + "/AdminServlet"); //falta comentar
 
 
