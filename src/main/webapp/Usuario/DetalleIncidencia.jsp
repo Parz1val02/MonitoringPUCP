@@ -176,7 +176,7 @@
                         <div style="height: 30px; display: block;"></div>
                         <div align="right">
                             <a style="font-size: 15px"
-                               href="<%=request.getContextPath()%>/UsuarioServlet?accion=listar">Regresar a la ventana
+                               href="<%=request.getContextPath()%>/UsuarioServlet">Regresar a la ventana
                                 principal</a>
                         </div>
                         <div style="height: 30px; display: block;"></div>
