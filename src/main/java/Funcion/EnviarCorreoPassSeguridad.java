@@ -39,8 +39,19 @@ public class EnviarCorreoPassSeguridad {
         mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress(correoDestino));  //TO
         mensaje.setSubject("Contraseña predeterminada Seguridad en MonitoringPUCP"); //
         //String link = "http://localhost:8080/Login?accion=restablecer";
-        String msg = "Su contraseña predeterminada es: " + primeraContrasenia;
-        mensaje.setText(msg);
+
+
+        String msg1 = "Hola! Bienvenido/a a Monitoring PUCP.\n" +
+                "\n" + "Se le ha registrado como Seguridad en Monitoring PUCP." + "\n" +
+                "Ingresa la siguiente contraseña predeterminada para iniciar sesión en la plataforma.\n" + primeraContrasenia +
+                "\n" +
+                "\n" +
+                "Se le recomienda cambiar su contraseña apenas ingrese. \n" +
+                "\n" +
+                "Monitoring PUCP";
+
+        //String msg = "Su contraseña predeterminada es: " + primeraContrasenia;
+        mensaje.setText(msg1);
 
         //mensaje.setText("Este es un mensaje que se envia desde JAVA");
 
