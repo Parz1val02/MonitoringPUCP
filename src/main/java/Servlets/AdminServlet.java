@@ -5,6 +5,9 @@ import Daos.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import Funcion.EnviarCorreoPassSeguridad;
+import Funcion.GeneradorDeContrasenha;
+import jakarta.mail.MessagingException;
 
 import java.io.File;
 import java.io.IOException;
