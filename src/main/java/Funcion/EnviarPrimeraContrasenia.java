@@ -28,10 +28,23 @@ public class EnviarPrimeraContrasenia {
         MimeMessage mensaje = new MimeMessage(s);
         mensaje.setFrom(new InternetAddress(correo)); //FROM
         mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress(correoDestino));  //TO
-        mensaje.setSubject("Cambio de Primera Contraseña - MONITORING PUCP"); //
-        //String link = "http://localhost:8080/Login?accion=restablecer";
-        String msg = "Su contraseña predeterminada es: " + primeraContrasenia + "   http://localhost:8080/Login?accion=firstpassword";
-        mensaje.setText(msg);
+        mensaje.setSubject("Contraseña - Registro en Monitoring PUCP"); //
+       //String link = "http://localhost:8080/Login?accion=restablecer";
+        //String msg = "Su contraseña predeterminada es: " + primeraContrasenia + "   http://localhost:8080/Login?accion=firstpassword";
+        String link= "http://localhost:8080/Login?accion=firstpassword";
+
+
+        String msg1 = "Hola! Bienvenido/a a Monitoring PUCP.\n" +
+                "\n" +
+                "Ingresa la siguiente contraseña predeterminada para culminar su registro en la plataforma.\n" + primeraContrasenia +
+                "\n" +
+                "\n" +
+                "En el siguiente link: " + "\n" + link + "\n" +
+                "¿No solicitaste este cambio? Ignora este correo por favor. \n" +
+                "\n" +
+                "Monitoring PUCP";
+
+        mensaje.setText(msg1);
 
         //mensaje.setText("Este es un mensaje que se envia desde JAVA");
 
