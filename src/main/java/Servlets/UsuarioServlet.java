@@ -260,7 +260,7 @@ public class UsuarioServlet extends HttpServlet {
                     }
                     System.out.println(comentarioreopen);
                     if(comentarioreopen.length()==0){
-                        if (cont>5){
+                        if (cont>=5){
                             request.getSession().setAttribute("info", "Ya se ha alcanzado el número máximo de reaperturas");
                             response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=verDetalle&id="+jijija.getIdIncidencia());
                         }else {
