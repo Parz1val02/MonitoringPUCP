@@ -31,7 +31,7 @@ public class EnviarPrimeraContrasenia {
         mensaje.setSubject("Contraseña - Registro en Monitoring PUCP"); //
        //String link = "http://localhost:8080/Login?accion=restablecer";
         //String msg = "Su contraseña predeterminada es: " + primeraContrasenia + "   http://localhost:8080/Login?accion=firstpassword";
-        String link= "http://localhost:8080/Login?accion=firstpassword";
+        String link= "http://34.83.95.78:8080/MonitoringPUCP-1.0-SNAPSHOT/Login?accion=firstpassword";
 
 
         String msg1 = "Hola! Bienvenido/a a Monitoring PUCP.\n" +

@@ -31,7 +31,7 @@ public class EnviarCorreo {
         mensaje.setFrom(new InternetAddress(correo)); //FROM
         mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress(correoDestino));  //TO
         mensaje.setSubject("Cambio de Contraseña - MONITORING PUCP"); //
-        String link = "http://localhost:8080/Login?accion=restablecer&code="+codigoUsuario;
+        String link = "http://34.83.95.78:8080/MonitoringPUCP-1.0-SNAPSHOT/Login?accion=restablecer&code="+codigoUsuario;
         String msg = "Hola! \n" +
                 "\n" +
                 "Recibimos una solicitud para restablecer tu contraseña de Monitoring PUCP.\n" +

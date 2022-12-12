@@ -70,9 +70,9 @@
               crossorigin="anonymous">
         <link rel="stylesheet" type="text/css"
               href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href=../css/style.min.css>
+        <link rel="stylesheet" href=css/style.min.css>
         <!-- CSS de registrar-flujo-usuarioo -->
-        <link rel="stylesheet" href="../css/Registrar_FlujoUsuario.css">
+        <link rel="stylesheet" href="css/Registrar_FlujoUsuario.css">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
               integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
               crossorigin=""/>

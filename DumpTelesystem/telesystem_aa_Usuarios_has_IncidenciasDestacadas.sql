@@ -42,10 +42,10 @@ CREATE TABLE `Usuarios_has_IncidenciasDestacadas` (
 LOCK TABLES `Usuarios_has_IncidenciasDestacadas` WRITE;
 /*!40000 ALTER TABLE `Usuarios_has_IncidenciasDestacadas` DISABLE KEYS */;
 INSERT INTO `Usuarios_has_IncidenciasDestacadas` VALUES
-('20201696',1),
+('20171198',1),
+('20195922',4),
 ('20201696',2),
 ('20201696',3),
-('20201696',4),
 ('20201696',5);
 /*!40000 ALTER TABLE `Usuarios_has_IncidenciasDestacadas` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -59,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-11 19:01:13
+-- Dump completed on 2022-12-11 20:28:05

@@ -48,7 +48,7 @@ CREATE TABLE `Incidencias` (
   CONSTRAINT `fk_Incidencia_Usuarios1` FOREIGN KEY (`codigoUsuario`) REFERENCES `Usuarios` (`codigo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Incidencia_table11` FOREIGN KEY (`idEstadoIncidencia`) REFERENCES `EstadoIncidencia` (`idEstadoIncidencia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Incidencias_ZonaPUCP1` FOREIGN KEY (`idZonaPUCP`) REFERENCES `ZonaPUCP` (`idZonaPUCP`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -58,9 +58,9 @@ CREATE TABLE `Incidencias` (
 LOCK TABLES `Incidencias` WRITE;
 /*!40000 ALTER TABLE `Incidencias` DISABLE KEYS */;
 INSERT INTO `Incidencias` VALUES
-(1,'2022-12-09','Accidente de tránsito',1,'Camioneta se chocó y derribó un muro',0,NULL,1,3,1,'20202330',12),
-(2,'2022-12-11','Accidente en semana de Ingeniería',1,'Lesión de alumna en evento',0,NULL,1,2,1,'20202330',11),
-(3,'2022-12-09','Robo de bicicleta',1,'Se robaron mi bicicleta cerca de generales letras',0,NULL,2,2,1,'20202073',4),
+(1,'2022-12-09','Accidente de tránsito',1,'Camioneta se chocó y derribó un muro',0,NULL,1,3,1,'20201696',12),
+(2,'2022-12-11','Accidente en semana de Ingeniería',1,'Lesión de alumna en evento',0,NULL,1,2,1,'20195922',11),
+(3,'2022-12-09','Robo de bicicleta',1,'Se robaron mi bicicleta cerca de generales letras',0,NULL,2,2,1,'20171198',4),
 (4,'2022-12-11','Robo en comedor central',1,'Sujetos armados ingresaron y robaron',0,NULL,2,3,1,'20201696',7),
 (5,'2022-12-10','Problemas en la graduación',1,'No dejan entrar a las personas',0,'Alerta',6,1,1,'20171198',5);
 /*!40000 ALTER TABLE `Incidencias` ENABLE KEYS */;
@@ -75,4 +75,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-11 19:01:13
+-- Dump completed on 2022-12-11 20:28:05

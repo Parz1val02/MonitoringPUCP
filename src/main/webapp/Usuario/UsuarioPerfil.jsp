@@ -29,7 +29,7 @@
               crossorigin="anonymous">
         <link rel="stylesheet" type="text/css"
               href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="../css/style.min.css">
+        <link rel="stylesheet" href="css/style.min.css">
         <style>
             .form-control:disabled {
                 background-color: #e9ecef;

@@ -48,8 +48,8 @@
                 object-fit: cover;
             }
         </style>
-        <link rel="stylesheet" href="../css/flex.css">
-        <link rel="stylesheet" href=../css/style.min.css>
+        <link rel="stylesheet" href="css/flex.css">
+        <link rel="stylesheet" href="css/style.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
               crossorigin="anonymous">

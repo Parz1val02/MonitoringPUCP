@@ -48,12 +48,7 @@ LOCK TABLES `MasterTable` WRITE;
 INSERT INTO `MasterTable` VALUES
 ('20171198','Luis','Ramos','luis.ramost@pucp.edu.pe','78349206','928374937',3,0),
 ('20195922','Carlos','Pisco','cpisco@pucp.edu.pe','65358947','976239385',5,0),
-('20200334','Gil','Zanabria','a20200334@pucp.edu.pe','87654321',NULL,4,0),
-('20200638','Alejandro','Gutierrez','a20200638@pucp.edu.pe','49543859','956031478',4,0),
-('20200839','Diego','Lavado','a20200839@pucp.edu.pe','41597284','94712498',1,0),
-('20201696','Leonardo','Abanto','a20201696@pucp.edu.pe','61485249','987654321',1,0),
-('20202073','Rodrigo','Barrios','a20202073@pucp.edu.pe','79134126',NULL,1,0),
-('20202330','Dana','Nolasco','a20202330@pucp.edu.pe','61472198','923417981',2,0);
+('20201696','Leonardo','Abanto','a20201696@pucp.edu.pe','61485249','987654321',1,0);
 /*!40000 ALTER TABLE `MasterTable` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -66,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-11 19:01:13
+-- Dump completed on 2022-12-11 20:28:05

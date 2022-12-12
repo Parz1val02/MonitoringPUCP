@@ -43,7 +43,7 @@ CREATE TABLE `RegistroAdmin` (
 LOCK TABLES `RegistroAdmin` WRITE;
 /*!40000 ALTER TABLE `RegistroAdmin` DISABLE KEYS */;
 INSERT INTO `RegistroAdmin` VALUES
-(1,'EternalBlue','77132cf4bc995966fd786d7b541c330c7c14542a77999ba315d28d64c8891105','Administrador','EternalBlue@pucp.edu.pe',NULL,NULL);
+(1,'EternalBlue','53e5a84fd38c5f0864994678f388beed42230498fbbefab983a1d27aad446f3a','Administrador','EternalBlue@pucp.edu.pe',NULL,NULL);
 /*!40000 ALTER TABLE `RegistroAdmin` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-11 19:01:13
+-- Dump completed on 2022-12-11 20:28:05
