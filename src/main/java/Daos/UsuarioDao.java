@@ -231,7 +231,7 @@ public class UsuarioDao extends DaoBase {
     public void actualizarUsuario(Usuario usuario) {
 
         String codigoID = usuario.getCodigo();
-        String sql = "UPDATE usuarios set nombre=?, apellido=?, correo=?, DNI=?, celular=?, idCategoriaPUCP=?, validaUsuario=? ,idRoles=? where codigo = "+codigoID;
+        String sql = "UPDATE Usuarios set nombre=?, apellido=?, correo=?, DNI=?, celular=?, idCategoriaPUCP=?, validaUsuario=? ,idRoles=? where codigo = "+codigoID;
         //int idFoto = 0;
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
