@@ -93,7 +93,11 @@ public class UsuarioServlet extends HttpServlet {
                     if(inDao.idValid(strId) && inDao.verificarIncidencia(strId)){
                         int idIncidencia3 = Integer.parseInt(strId);
                         incidencia = inDao.obtenerIncidencia(idIncidencia3);
+                        int cont = incidencia.getContadorReabierto();
                         ArrayList<FotosIncidencias> fotos = inDao.obtenerFotos(idIncidencia3);
+                        if(cont<5){
+                            request.getSession().setAttribute("info", null);
+                        }
                         request.setAttribute("Incidencia",incidencia);
                         request.setAttribute("Fotos",fotos);
                         view = request.getRequestDispatcher("/Usuario/DetalleReabierto.jsp");

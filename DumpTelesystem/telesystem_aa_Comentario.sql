@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS `Comentario`;
 CREATE TABLE `Comentario` (
   `idComentario` int(11) NOT NULL AUTO_INCREMENT,
   `comentarios` text DEFAULT NULL,
-  `fecha` date DEFAULT NULL,
+  `fecha` varchar(45) DEFAULT NULL,
   `codigoUsuario` varchar(8) NOT NULL,
   `idIncidencia` int(11) NOT NULL,
   PRIMARY KEY (`idComentario`),
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-11 23:27:00
+-- Dump completed on 2022-12-12  1:55:54

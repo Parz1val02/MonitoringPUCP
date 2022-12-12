@@ -6,6 +6,9 @@ import Daos.IncidenciaDao;
 
 import Daos.UsuarioDao;
 import Funcion.Capitalize;
+import Funcion.EnviarCorreoEstado;
+import Funcion.EnviarCorreoEstadoSeguridad;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -148,7 +151,26 @@ public class SeguridadServlet extends HttpServlet {
                     comentario.setComentario(Capitalize.capitalize(justi));
                     comentario.setIncidencia(incidencia);
 
+                    String correoUsuario = incidencia.getUsuario().getCorreo();
+
+
                     if (justiValido.length()==0  && estadoValido.length()==0){
+                        try {
+                            EnviarCorreoEstadoSeguridad.main(correoUsuario,incidencia,2,"Atendido",justi);
+                        } catch (MessagingException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            ArrayList<Usuario> listausuariosdestacados = idao.obtenerUsuarioxDestacada(incidencia.getIdIncidencia());
+                            if(listausuariosdestacados != null){
+                                for (Usuario u : listausuariosdestacados){
+                                    EnviarCorreoEstado.main(u.getCorreo(),incidencia,2,"Atendido");
+                                }
+                            }
+                        } catch (MessagingException e) {
+                            e.printStackTrace();
+                        }
+
                         session.setAttribute("msg","Cambio de estado exitoso");
                         //para actualizar el estado y el comentario
                         idao.actualizarIncidencia(incidencia);
