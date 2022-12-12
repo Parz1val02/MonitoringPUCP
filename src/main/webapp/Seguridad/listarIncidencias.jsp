@@ -143,15 +143,14 @@
                         <div class="col-10" style="">
                             <h1 class="page-title" style="font-size: 40px; font-weight: bold"><b>Incidencias PUCP</b>
                             </h1>
-                        </div>
-                        <% if (session.getAttribute("msg") != null) { %>
-                        <div>
-                            <div class="alert alert-success" role="alert"><%=session.getAttribute("msg")%>
+                            <% if (session.getAttribute("msg") != null) { %>
+                            <div>
+                                <div class="alert alert-success" role="alert"><%=session.getAttribute("msg")%>
+                                </div>
                             </div>
+                            <%session.removeAttribute("msg");%>
+                            <% }%>
                         </div>
-                        <%session.removeAttribute("msg");%>
-                        <% }%>
-
                         <div class="col-2">
 
                             <div style="margin-left: 10px" class="cont">
