@@ -368,7 +368,8 @@ public class Login extends HttpServlet {
                         fp.setNombreFoto("usuario.png");
 
                         usuarioMaster.setFotoPerfil(fp);
-
+                        int flag = 2;
+                        session.setAttribute("flag",flag);
                         session.setAttribute("usuario",usuarioMaster);
 
                         GeneradorDeContrasenha generadorDeContrasenha=new GeneradorDeContrasenha();
