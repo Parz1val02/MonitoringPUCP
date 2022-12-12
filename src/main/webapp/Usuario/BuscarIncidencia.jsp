@@ -92,7 +92,7 @@
                                             </a>
                                             <%} else if (estados.get(i) == 1) {%>
                                             <a type="button" class="btn btn-danger btn-mg float-right"
-                                               style="font-size: 15px; border-color: #042354; background-color: #042354;"
+                                               style="font-size: 15px;"
                                                href="<%=request.getContextPath()%>/UsuarioServlet?accion=deletedestacar&des=<%=incidencia.getIdIncidencia()%>">
                                                 <i class="fa-solid fa-pen">Quitar Destacado</i>
                                             </a>
