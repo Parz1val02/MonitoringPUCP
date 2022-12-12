@@ -363,6 +363,7 @@ public class UsuarioDao extends DaoBase {
                         Rol rol = new Rol();
                         rol.setNombreRol(rs.getString(4));
                         usuario.setRol(rol);
+                        usuario.setValida(true);
                     }
                 }
             } catch (SQLException e) {
