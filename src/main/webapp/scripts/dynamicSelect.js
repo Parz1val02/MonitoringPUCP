@@ -1,5 +1,5 @@
 var roles = {
-    1:['Alumno','Administrativo','Jefe de Práctica','Profesor','Egresado'],
+    1:['Alumno','Administrativo','Jefe de práctica','Profesor','Egresado'],
     2:['No tiene categoria']
 }
 
