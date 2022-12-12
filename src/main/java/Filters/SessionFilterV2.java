@@ -48,6 +48,8 @@ public class SessionFilterV2 implements Filter {
             res.sendRedirect(req.getContextPath() + "/Login?accion=2fa");
         } else if (flag==0 && usuario1.getRol().getNombreRol().equals("Administrador")) {
             res.sendRedirect(req.getContextPath() + "/Login?accion=2fa");
+        }else if (flag==2) {
+            res.sendRedirect(req.getContextPath() + "/Login?accion=firstpassword");
         }
 
 
