@@ -268,32 +268,33 @@ public class UsuarioServlet extends HttpServlet {
                             response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=verDetalle&id="+jijija.getIdIncidencia());
                         }else {
                             if(!uDao.nombreyApellidoValid(comentarioreopen)){
-
+                                validoComentario = "El comentario ingresado no es válido";
+                                int idIncidencia3 = Integer.parseInt(strId);
+                                Incidencia incidencia = inDao.obtenerIncidencia(idIncidencia3);
+                                ArrayList<FotosIncidencias> fotos = inDao.obtenerFotos(idIncidencia3);
+                                request.setAttribute("Incidencia",incidencia);
+                                request.setAttribute("Fotos",fotos);
+                                request.getSession().setAttribute("validoComentario", validoComentario);
+                                view = request.getRequestDispatcher("/Usuario/DetalleReabierto.jsp");
+                                view.forward(request, response);
                             }else {
-                                if (comentarioreopen.length()>45){
-                                    validoComentario = "El comentario no puede superar los 45 caracteres";
-                                    request.getSession().setAttribute("info1", validoComentario);
-                                    response.sendRedirect(request.getContextPath()+"/UsuarioServlet?accion=verDetalle&id="+jijija.getIdIncidencia());
-                                }else {
-                                    try {
-                                        EnviarCorreoEstado.main(usuario1.getCorreo(),jijija,2,"En Proceso");
-                                    } catch (MessagingException e) {
-                                        e.printStackTrace();
-                                    }
-                                    try {
-                                        ArrayList<Usuario> listausuariosdestacados = idao.obtenerUsuarioxDestacada(jijija.getIdIncidencia());
-                                        if(listausuariosdestacados != null){
-                                            for (Usuario u : listausuariosdestacados){
-                                                EnviarCorreoEstado.main(u.getCorreo(),jijija,2,"En proceso");
-                                            }
-                                        }
-                                    } catch (MessagingException e) {
-                                        e.printStackTrace();
-                                    }
-                                    idao.reabrir(idIncidencia5, Capitalize.capitalize(comentarioreopen),usuario1.getCodigo());
-                                    response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
+                                try {
+                                    EnviarCorreoEstado.main(usuario1.getCorreo(),jijija,2,"En Proceso");
+                                } catch (MessagingException e) {
+                                    e.printStackTrace();
                                 }
-
+                                try {
+                                    ArrayList<Usuario> listausuariosdestacados = idao.obtenerUsuarioxDestacada(jijija.getIdIncidencia());
+                                    if(listausuariosdestacados != null){
+                                        for (Usuario u : listausuariosdestacados){
+                                            EnviarCorreoEstado.main(u.getCorreo(),jijija,2,"En proceso");
+                                        }
+                                    }
+                                } catch (MessagingException e) {
+                                    e.printStackTrace();
+                                }
+                                idao.reabrir(idIncidencia5, Capitalize.capitalize(comentarioreopen),usuario1.getCodigo());
+                                response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
                             }
                         }
                     /*}else{

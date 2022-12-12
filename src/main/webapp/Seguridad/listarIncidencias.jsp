@@ -146,7 +146,7 @@
                         </div>
                         <% if (session.getAttribute("msg") != null) { %>
                         <div>
-                            <div class="alert alert-danger" role="alert"><%=session.getAttribute("msg")%>
+                            <div class="alert alert-success" role="alert"><%=session.getAttribute("msg")%>
                             </div>
                         </div>
                         <%session.removeAttribute("msg");%>

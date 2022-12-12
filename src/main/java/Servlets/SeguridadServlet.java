@@ -52,8 +52,8 @@ public class SeguridadServlet extends HttpServlet {
                             ArrayList<EstadoIncidencia> estados1 = new ArrayList<>();
                             if (e.getEstado().equalsIgnoreCase("registrado")){
 
+                                estados1.add(estados.get(0));
                                 estados1.add(estados.get(2));
-                                estados1.add(estados.get(3));
                                 request.setAttribute("estados", estados1);
                             }
                         }
@@ -167,8 +167,6 @@ public class SeguridadServlet extends HttpServlet {
                         for (EstadoIncidencia e:estados) {
                             ArrayList<EstadoIncidencia> estados1 = new ArrayList<>();
                             if (e.getEstado().equalsIgnoreCase("registrado")){
-
-                                estados1.add(estados.get(0));
                                 estados1.add(estados.get(2));
                                 request.setAttribute("estados", estados1);
                             }
