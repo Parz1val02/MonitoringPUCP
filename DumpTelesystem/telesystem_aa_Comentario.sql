@@ -26,8 +26,8 @@ DROP TABLE IF EXISTS `Comentario`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Comentario` (
   `idComentario` int(11) NOT NULL AUTO_INCREMENT,
-  `comentarios` varchar(45) DEFAULT NULL,
-  `fecha` varchar(45) DEFAULT NULL,
+  `comentarios` text DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
   `codigoUsuario` varchar(8) NOT NULL,
   `idIncidencia` int(11) NOT NULL,
   PRIMARY KEY (`idComentario`),
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-11 20:28:05
+-- Dump completed on 2022-12-11 23:27:00
