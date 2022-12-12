@@ -2,6 +2,7 @@ package Servlets;
 
 import Beans.*;
 import Daos.*;
+import Funcion.Capitalize;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -315,7 +316,7 @@ public class AdminServlet extends HttpServlet {
                         fp.setFotobyte(fileContent);
 
 
-                        Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
+                        Usuario usuario = new Usuario(codigo,Capitalize.capitalize(nombre),Capitalize.capitalize(apellido),correo,dni,celular,fp,rol1,categoriaPUCP1,password);
 
                         if(codigovalido.length()==0 && codigoRepeat.length()==0 &&
                                 nombrevalido.length()==0 && apellidovalido.length()==0 &&
@@ -479,7 +480,7 @@ public class AdminServlet extends HttpServlet {
                         String password = generadorDeContrasenha.crearPassword();
 
                         
-                        Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
+                        Usuario usuario = new Usuario(codigo,Capitalize.capitalize(nombre),Capitalize.capitalize(apellido),correo,dni,celular,fp,rol1,categoriaPUCP1,password);
 
 
                         if(codigovalido.length()==0 && codigoRepeat.length()==0 &&
@@ -692,7 +693,7 @@ public class AdminServlet extends HttpServlet {
 
                         fp=null;
 
-                        Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
+                        Usuario usuario = new Usuario(codigo,Capitalize.capitalize(nombre),Capitalize.capitalize(apellido),correo,dni,celular,fp,rol1,categoriaPUCP1,password);
 
                         if(
                                 nombrevalido.length()==0 && apellidovalido.length()==0 &&
@@ -867,7 +868,7 @@ public class AdminServlet extends HttpServlet {
                         /*fp.setFotobyte(fileContent);
                         fp.setNombreFoto("usuario.png");*/
 
-                        Usuario usuario = new Usuario(codigo,nombre,apellido,correo,dni,celular,fp,rol1,categoriaPUCP1,password);
+                        Usuario usuario = new Usuario(codigo,Capitalize.capitalize(nombre),Capitalize.capitalize(apellido),correo,dni,celular,fp,rol1,categoriaPUCP1,password);
 
 
 

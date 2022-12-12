@@ -2,6 +2,7 @@ package Servlets;
 
 import Beans.*;
 import Daos.*;
+import Funcion.Capitalize;
 import Funcion.EnviarCorreo2fa;
 import Funcion.EnviarCorreoEstado;
 import jakarta.mail.MessagingException;
@@ -189,7 +190,7 @@ public class UsuarioServlet extends HttpServlet {
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }
-                        response.sendRedirect(request.getContextPath());
+                        response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?accion=inicio");
                     /*view = request.getRequestDispatcher("/Usuario/PaginaInicio.jsp");
                     view.forward(request, response);*/
                     }else{
@@ -289,7 +290,7 @@ public class UsuarioServlet extends HttpServlet {
                                     } catch (MessagingException e) {
                                         e.printStackTrace();
                                     }
-                                    idao.reabrir(idIncidencia5, comentarioreopen,usuario1.getCodigo());
+                                    idao.reabrir(idIncidencia5, Capitalize.capitalize(comentarioreopen),usuario1.getCodigo());
                                     response.sendRedirect(request.getContextPath()+ "/UsuarioServlet?=listar");
                                 }
 
@@ -399,7 +400,7 @@ public class UsuarioServlet extends HttpServlet {
                 }
 
 
-                incidencia.setNombreIncidencia(nombreIncidencia);
+                incidencia.setNombreIncidencia(Capitalize.capitalize(nombreIncidencia));
                 incidencia.setFecha(fecha);
                 incidencia.setValidaIncidencia(true);
                 incidencia.setContadorReabierto(0);
@@ -414,7 +415,7 @@ public class UsuarioServlet extends HttpServlet {
                     if(!uDao.nombreyApellidoValid(descripcion)){
                         otroTipoValida = "El tipo de incidencia ingresada no es válida";
                     }
-                    incidencia.setOtroTipo(otroTipo);
+                    incidencia.setOtroTipo(Capitalize.capitalize(otroTipo));
                 }
 
 
@@ -422,7 +423,7 @@ public class UsuarioServlet extends HttpServlet {
                 nivelUrgencia1.setIdNivelUrgencia(IDnivelUrgencia);
                 incidencia.setNivelUrgencia(nivelUrgencia1);
 
-                incidencia.setDescripcion(descripcion);
+                incidencia.setDescripcion(Capitalize.capitalize(descripcion));
 
                 EstadoIncidencia estado1 = new EstadoIncidencia();
                 estado1.setIdEstado(idEstadoIncidencia);

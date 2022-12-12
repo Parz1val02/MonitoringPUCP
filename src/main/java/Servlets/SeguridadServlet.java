@@ -5,6 +5,7 @@ import Daos.EstadoIncidenciaDao;
 import Daos.IncidenciaDao;
 
 import Daos.UsuarioDao;
+import Funcion.Capitalize;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -146,7 +147,7 @@ public class SeguridadServlet extends HttpServlet {
                     incidencia.setEstadoIncidencia(estado);
 
                     Comentario comentario = new Comentario();
-                    comentario.setComentario(justi);
+                    comentario.setComentario(Capitalize.capitalize(justi));
                     comentario.setIncidencia(incidencia);
 
                     if (justiValido.length()==0  && estadoValido.length()==0){
