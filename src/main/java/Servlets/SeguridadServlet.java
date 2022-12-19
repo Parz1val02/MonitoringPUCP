@@ -137,7 +137,7 @@ public class SeguridadServlet extends HttpServlet {
 
                     String justi = request.getParameter("justificacion");
                     String justiValido = "";
-                    if(!uDao.nombreyApellidoValid(justi)){
+                    if(!uDao.inputValid(justi)){
                         justiValido = "La justificación ingresada no es válida";
                     }
                     //obtener el objeto incidencia de la vista o obtener el id? IDDDDDDDDDDDDDD!!!!!!!!!

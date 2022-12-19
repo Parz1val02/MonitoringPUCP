@@ -76,7 +76,7 @@
             </p>
             <br>
             <h5 style="font-family: sans-serif,Montserrat; font-weight: 700; font-size: 19px; color: #042354;">
-                Te presentamos las 5 incidencias más destacadas de la plataforma:
+                Te presentamos las 5 incidencias más relevantes de la plataforma:
             </h5>
         </div>
         <div style="height: 40px; display: block;"></div>

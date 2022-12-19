@@ -542,7 +542,7 @@ public class IncidenciaDao extends DaoBase{
                      "inner join EstadoIncidencia e on i.idEstadoIncidencia = e.idEstadoIncidencia\n" +
                      "left join IncidenciasDestacadas d on i.idIncidencia = d.idIncidencia\n" +
                      "left join Usuarios u on i.codigousuario = u.codigo \n" +
-                     "left join ZonaPUCP z on i.idZonaPUCP=z.idZonaPUCP where i.validaIncidencia = 1 and i.idEstadoIncidencia<>4 order by i.fecha DESC, d.contadorDestacado  DESC")) {
+                     "left join ZonaPUCP z on i.idZonaPUCP=z.idZonaPUCP where i.validaIncidencia = 1 and i.idEstadoIncidencia<>4 and d.contadorDestacado<>0 order by i.fecha DESC, d.contadorDestacado  DESC")) {
             int i = 0;
             while (rs.next() & i<5) {
                 Incidencia incidencia = new Incidencia();

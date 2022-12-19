@@ -410,6 +410,12 @@ public class UsuarioDao extends DaoBase {
         Matcher matcher = pattern.matcher(nombre);
         return matcher.find();
     }
+    public boolean inputValid(String nombre) {
+        String regex = "^[A-Za-zñÑáéíóúÁÉÍÓÚ][^_\\-÷\\+/=@`#$%'ˆ^&*()\\\\\\[\\]{}|~<>]{1,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(nombre);
+        return matcher.find();
+    }
     //FUNCION PARA VALIDAR DNI Y CODIGOPUCP
     public boolean dniValid(String dni) {
         String regex = "^[0-9]{8,8}$";

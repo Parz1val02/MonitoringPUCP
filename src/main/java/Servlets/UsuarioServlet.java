@@ -262,7 +262,7 @@ public class UsuarioServlet extends HttpServlet {
                     int cont = jijija.getContadorReabierto();
                     String comentarioreopen = request.getParameter("reopen");
                     String validoComentario="";
-                    if(!uDao.nombreyApellidoValid(comentarioreopen)){
+                    if(!uDao.inputValid(comentarioreopen)){
                         validoComentario = "El comentario ingresado no es válido";
                     }
                     System.out.println(comentarioreopen);
@@ -342,7 +342,7 @@ public class UsuarioServlet extends HttpServlet {
                 String descripcion = request.getParameter("descripcion");
 
                 String descripcionValida="";
-                if(!uDao.nombreyApellidoValid(descripcion)){
+                if(!uDao.inputValid(descripcion)){
                     descripcionValida = "La descripción ingresada no es válida";
                 }
 
